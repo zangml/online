@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koala.learn.dao.LabInstanceMapper">
+  <resultMap id="BaseResultMap" type="com.koala.learn.entity.LabInstance">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="lab_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="result" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="group_instance_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, lab_id, create_time, result, group_instance_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lab_instance
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lab_instance
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.koala.learn.entity.LabInstance" keyProperty="id" useGeneratedKeys="true">
+    insert into lab_instance (id, user_id, lab_id, 
+      create_time, result, group_instance_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{labId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{result,jdbcType=INTEGER}, #{groupInstanceId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.koala.learn.entity.LabInstance">
+    insert into lab_instance
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="labId != null">
+        lab_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="result != null">
+        result,
+      </if>
+      <if test="groupInstanceId != null">
+        group_instance_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="labId != null">
+        #{labId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null">
+        #{result,jdbcType=INTEGER},
+      </if>
+      <if test="groupInstanceId != null">
+        #{groupInstanceId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.koala.learn.entity.LabInstance">
+    update lab_instance
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="labId != null">
+        lab_id = #{labId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null">
+        result = #{result,jdbcType=INTEGER},
+      </if>
+      <if test="groupInstanceId != null">
+        group_instance_id = #{groupInstanceId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.koala.learn.entity.LabInstance">
+    update lab_instance
+    set user_id = #{userId,jdbcType=INTEGER},
+      lab_id = #{labId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      result = #{result,jdbcType=INTEGER},
+      group_instance_id = #{groupInstanceId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByLabUser" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from lab_instance
+    WHERE user_id = #{userId}
+    and lab_id = #{labId}
+    and group_instance_id = #{groupInstanceId}
+  </select>
+
+  <select id="selectFinishByLabUser" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from lab_instance
+    WHERE user_id = #{userId}
+    and lab_id = #{labId}
+    and result = 1
+    and group_instance_id = #{groupInstanceId}
+  </select>
+</mapper>

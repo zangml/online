@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.koala.learn.dao.UserTestMapper" >
+  <resultMap id="BaseResultMap" type="com.koala.learn.entity.UserTest" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="test_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="finish" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="test_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.koala.learn.entity.UserTest" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="test_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="finish" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="test_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="answer" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, test_id, finish, test_type
+  </sql>
+  <sql id="Blob_Column_List" >
+    answer
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user_test
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_test
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.koala.learn.entity.UserTest" >
+    insert into user_test (id, user_id, test_id, 
+      finish, test_type, answer
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{testId,jdbcType=INTEGER}, 
+      #{finish,jdbcType=INTEGER}, #{testType,jdbcType=VARCHAR}, #{answer,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.koala.learn.entity.UserTest" >
+    insert into user_test
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="testId != null" >
+        test_id,
+      </if>
+      <if test="finish != null" >
+        finish,
+      </if>
+      <if test="testType != null" >
+        test_type,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="testId != null" >
+        #{testId,jdbcType=INTEGER},
+      </if>
+      <if test="finish != null" >
+        #{finish,jdbcType=INTEGER},
+      </if>
+      <if test="testType != null" >
+        #{testType,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.koala.learn.entity.UserTest" >
+    update user_test
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="testId != null" >
+        test_id = #{testId,jdbcType=INTEGER},
+      </if>
+      <if test="finish != null" >
+        finish = #{finish,jdbcType=INTEGER},
+      </if>
+      <if test="testType != null" >
+        test_type = #{testType,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.koala.learn.entity.UserTest" >
+    update user_test
+    set user_id = #{userId,jdbcType=INTEGER},
+      test_id = #{testId,jdbcType=INTEGER},
+      finish = #{finish,jdbcType=INTEGER},
+      test_type = #{testType,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.koala.learn.entity.UserTest" >
+    update user_test
+    set user_id = #{userId,jdbcType=INTEGER},
+      test_id = #{testId,jdbcType=INTEGER},
+      finish = #{finish,jdbcType=INTEGER},
+      test_type = #{testType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

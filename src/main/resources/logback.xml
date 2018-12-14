@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>工业互联网在线实验平台 %logger{36}.%M - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="file"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--消息过滤 debug执行日志，否则抛弃-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY </onMismatch>
+        </filter>
+        <!--日志输出的文件名，路径项目根目录-->
+        <file>learn.log</file>
+        <!--时间回滚，当天的记录记录在当天的已时间命名的文件中-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>learn.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- keep 3 days' worth of history -->
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss} %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- geelynote mybatis log 日志 -->
+
+    <logger name="com.koala.learn.dao" level="DEBUG"/>
+
+
+
+    <root level="info">
+        <appender-ref ref="file"/>
+        <appender-ref ref="console"/>
+    </root>
+</configuration>

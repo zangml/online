@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.koala.learn.dao.DividerMapper" >
+  <resultMap id="BaseResultMap" type="com.koala.learn.entity.Divider" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="radio" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="des" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="label" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, type, radio, des, label
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from divider
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from divider
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.koala.learn.entity.Divider" >
+    insert into divider (id, name, type, 
+      radio, des, label)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{radio,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.koala.learn.entity.Divider" >
+    insert into divider
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="radio != null" >
+        radio,
+      </if>
+      <if test="des != null" >
+        des,
+      </if>
+      <if test="label != null" >
+        label,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="radio != null" >
+        #{radio,jdbcType=VARCHAR},
+      </if>
+      <if test="des != null" >
+        #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null" >
+        #{label,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.koala.learn.entity.Divider" >
+    update divider
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="radio != null" >
+        radio = #{radio,jdbcType=VARCHAR},
+      </if>
+      <if test="des != null" >
+        des = #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null" >
+        label = #{label,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.koala.learn.entity.Divider" >
+    update divider
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      radio = #{radio,jdbcType=VARCHAR},
+      des = #{des,jdbcType=VARCHAR},
+      label = #{label,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from divider
+  </select>
+</mapper>

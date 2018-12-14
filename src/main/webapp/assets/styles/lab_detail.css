@@ -1,0 +1,182 @@
+body{
+    height: 100%;
+}
+hr{
+    width: 100%;
+    height: 1px;
+    color:rgb(135,135,135);
+    border-top:1px solid #555555;
+}
+div.categoryWithCarousel{
+    width: 100%;
+    position:absolute;
+    height: 100%;
+}
+div.categoryWithCarousel div.headbar{
+    background-color: rgb(14,14,14);
+    height: 60px;
+    width: 100%;
+}
+div.categoryWithCarousel div.head{
+    width: 250px;
+    background-color: rgb(14,14,14);
+    height: 60px;
+    line-height: 60px;
+    font-size: 25px;
+    font-weight: bold;
+    margin-left: 00px;
+    margin-right: 30px;
+    display: inline-block;
+}
+div.categoryWithCarousel div.head a{
+    color: rgb(113,177,194);
+}
+div.categoryWithCarousel div.rightMenu{
+    display: inline-block;
+}
+div.categoryWithCarousel div.rightMenu a{
+    font-size: 16px;
+    color: white;
+    text-decoration:none;
+}
+
+
+.a1{
+    font-size: 18px;
+    line-height: 2;
+}
+.text1{
+    float: left;
+    position: relative;
+    left: 50%;
+    clear: both;
+}
+.text2{
+    text-align: center;
+    color: white;
+    position: relative;
+    left:-50%
+}
+
+#border1{
+    padding-bottom: 3px;
+    border-bottom: 1px solid rgb(59,60,61);
+    width: 90%;
+}
+div.categoryWithCarousel div.rightMenu span{
+    line-height: 60px;
+    margin: 0px 20px 0px 20px;
+}
+div.categoryWithCarousel div.rightMenu img{
+    height: 30px;
+}
+div.carousel-of-product{
+    height: 510px;
+    width:1024px;
+    margin:0px auto;
+}
+img.carouselImage{
+    height: 510px !important;
+}
+div.carouselBackgroundDiv{
+    width:100%;
+    height:510px;
+    background-color:#E8E8E8;
+    position:absolute;
+    top:36px;
+    z-index:-1;
+}
+#left{
+    background: rgb(245,245,245);
+    width: 300px;
+    height: 900px;
+    float: left;
+    position: absolute;
+    overflow: auto;
+    top: 60px;
+
+}
+#right{
+    background: yellow;
+    width: 1000px;
+    height: 500px;
+    float: right;
+    position: absolute;
+    overflow: auto;
+    top: 60px;
+
+}
+.divcss5{ width:100%;padding:0px;border:0px solid #F00}
+.divcss5_pic{
+    margin-left: 0px;
+    width:100%;
+    height: 290px;
+    border:0px solid #00F;
+    /*overflow: scroll;*/
+    background:rgb(29,31,32);
+    background-image: url(http://pic.58pic.com/58pic/15/16/66/958PICK58PICH6s_1024.jpg);
+    background-position: center;
+    background-size: 100% auto;
+    display: block;
+    padding: 60px 20px 10px 20px;
+    float: left;
+}
+.divcss5_content{
+    margin-left: 0px;
+    width: 100%;
+    height: 950px;
+    border:0px solid #00F;
+    background-color: white;
+    display: block;
+    padding: 40px 200px;
+    float: left;
+
+}
+
+.clear{ clear:both}
+
+.button {
+    background-color: rgb(43,144,250);
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 22px;
+    margin: 4px 5px;
+    cursor: pointer;
+    border-radius: 3px;
+    width: 190px;
+    height:55px;
+    line-height: 55px;
+    left: -50%;
+    position: relative;
+
+}
+.sbutton {
+    float: left;
+    position: relative;
+    left: 50%;
+    clear: both;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.end{
+    background-color: rgb(35,36,38);
+    width: 100%;
+    height: 100px;
+    display: block;
+    padding: 40px 200px;
+    float: left;
+}
+.task{
+    height: 120px;
+    width: 100%;
+    border-bottom: 1px solid rgb(213,213,213);
+    float: left;
+}
+.number{
+    color: rgb(117,117,117);
+    font-size: 28px;
+    margin-right: 190px;
+}

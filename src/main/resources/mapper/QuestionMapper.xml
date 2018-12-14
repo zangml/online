@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.koala.learn.dao.QuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.koala.learn.entity.Question" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="created_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="comment_count" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="module_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.koala.learn.entity.Question" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="created_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="comment_count" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="module_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, user_id, created_date, comment_count, module_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from question
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from question
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.koala.learn.entity.Question" >
+    insert into question (id, title, user_id, 
+      created_date, comment_count, module_id, 
+      content)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{createdDate,jdbcType=TIMESTAMP}, #{commentCount,jdbcType=INTEGER}, #{moduleId,jdbcType=INTEGER}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.koala.learn.entity.Question" >
+    insert into question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="createdDate != null" >
+        created_date,
+      </if>
+      <if test="commentCount != null" >
+        comment_count,
+      </if>
+      <if test="moduleId != null" >
+        module_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="createdDate != null" >
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentCount != null" >
+        #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="moduleId != null" >
+        #{moduleId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.koala.learn.entity.Question" >
+    update question
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="createdDate != null" >
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentCount != null" >
+        comment_count = #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="moduleId != null" >
+        module_id = #{moduleId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.koala.learn.entity.Question" >
+    update question
+    set title = #{title,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      comment_count = #{commentCount,jdbcType=INTEGER},
+      module_id = #{moduleId,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.koala.learn.entity.Question" >
+    update question
+    set title = #{title,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      comment_count = #{commentCount,jdbcType=INTEGER},
+      module_id = #{moduleId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getQuestions" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from question
+    WHERE module_id = #{moduleId}
+    <if test="userId != 0">
+      and where user_id = #{userId}
+    </if>
+    order by created_date desc
+    limit #{offset},#{limit}
+  </select>
+  <update id="updateCommentCount">
+    UPDATE question
+    set comment_count = #{commentCount}
+    where id=#{id}
+  </update>
+</mapper>

@@ -1,0 +1,273 @@
+div.footer{
+    margin: 0px 0px;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #e7e7e7;
+}
+div.footer_ensure{
+    margin-top: 24px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+div.footer_desc{
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #e7e7e7;
+    padding-top: 30px;
+    margin: 0px 20px;
+}
+div.footer_desc div.descColumn{
+    width: 20%;
+    float: left;
+    padding-left: 15px;
+}
+div.footer_desc div.descColumn span.descColumnTitle{
+    color: #646464;
+    font-weight: bold;
+    font-size: 16px;
+}
+div.footer_desc a{
+    display: block;
+    padding-top: 3px;
+}
+body{
+    font-size: 12px;
+    font-family: Arial;
+}
+a{
+    color:#999;
+}
+a:hover{
+    text-decoration:none;
+    color: black;
+}
+div.homepageCategoryProducts{
+    background-color: #F5F5F5;
+    padding: 50px 10px 50px 10px;
+    margin: 10px auto;
+    max-width: 1013px;
+}
+div.productItem{
+    width: 189px;
+    height: 285px;
+    border: 1px solid white;
+    background-color: white;
+    margin: 8px 4px;
+    float: left;
+    cursor: pointer;
+}
+div.productItem span.productItemDesc{
+    font-size: 12px;
+    color: #666666;
+    display: block;
+    padding: 16px;
+}
+div.productItem span.productPrice{
+    font-size: 16px;
+    color: #FF003A;
+    display: block;
+    padding-left: 16px;
+    margin-top: -10px;
+}
+div.productItem img{
+    width: 187px;
+    height: 190px;
+}
+div.productItem  img:hover{
+    opacity: 0.7;
+    filter: alpha(opacity = 70);
+}
+div.eachHomepageCategoryProducts{
+    margin: 0px 0px 40px 0px;
+}
+a.productItemDescLink{
+    display: inline-block;
+    height: 66px;
+    text-decoration:none;
+}
+span.categoryTitle{
+    font-size: 16px;
+    margin-left: 30px;
+    color: #646464;
+    font-weight: bold;
+}
+div.left-mark{
+    display: inline-block;
+    height: 20px;
+    vertical-align: top;
+    width: 5px;
+    background-color: #19C8A9;
+}
+img.endpng{
+    display: block;
+    width: 82px;
+    margin: 0 auto;
+}
+div.categoryWithCarousel{
+    width: 100%;
+    position:relative;
+}
+div.categoryWithCarousel div.headbar{
+    background-color: rgb(48,54,69);
+    height: 60px;
+}
+div.categoryWithCarousel div.head{
+    width: 200px;
+    background-color: rgb(48,54,69);
+    height: 60px;
+    line-height: 60px;
+    font-size: 25px;
+    font-weight: bold;
+    color: rgb(113,177,194);
+    margin-left: 00px;
+    margin-right: 30px;
+    display: inline-block;
+}
+div.categoryWithCarousel div.rightMenu{
+    display: inline-block;
+}
+div.categoryWithCarousel div.rightMenu a{
+    font-size: 16px;
+    color: white;
+    text-decoration:none;
+}
+div.categoryWithCarousel div.rightMenu span{
+    line-height: 60px;
+    margin: 0px 20px 0px 20px;
+}
+div.categoryWithCarousel div.rightMenu img{
+    height: 30px;
+}
+div.carousel-of-product{
+    height: 510px;
+    width:1024px;
+    margin:0px auto;
+}
+img.carouselImage{
+    height: 510px !important;
+}
+div.carouselBackgroundDiv{
+    width:100%;
+    height:510px;
+    background-color:#E8E8E8;
+    position:absolute;
+    top:36px;
+    z-index:-1;
+}
+.divcss5{ width:100%;padding:0px;border:0px solid #F00}
+.divcss5_content{
+    margin-left: 0px;
+    width: 100%;
+    height: 1800px;
+    border:0px solid #00F;
+    background-color: rgb(242,242,242);
+    display: block;
+    padding: 25px 100px;
+    float: left;
+
+}
+.divcss5_content_top1{
+    height: 350px;
+    background-color: white;
+    float: left;
+    margin-bottom: 20px;
+}
+div.item img{
+    width:100%;
+    height: auto;
+}
+div#carousel-example-generic{
+    width: 100%;
+    height: 350px;
+    margin:0 auto;
+    background-position: center;
+    display: block;
+
+}
+.divcss5_content_top2{
+    height: 350px;
+    background-color: white;
+    float: left;
+    margin-bottom: 20px;
+}
+.top2_head{
+    background-color: rgb(66,182,238);
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 15px;
+    color: white;
+}
+.top_content{
+    background-color: white;
+    padding: 10px 10px;
+}
+div.top_content a:hover{
+    color: rgb(66,182,238);
+}
+
+.divcss5_content_bottom{
+    width: 100%;
+    height: 1400px;
+    background-color: white;
+    float: left;
+    padding: 20px 20px;
+}
+.phm{
+    height: 150px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px dashed rgb(218,218,218);
+}
+div.phm a:hover{
+    color: rgb(66,182,238);
+}
+.phm_pic{
+    margin-right: 15px;
+    width: 90px;height: 90px;
+    background-image: url(http://upfiles.heclouds.com/forum-app/2016/07/28/f1f4a8bf0ff092713c8a120ab1fa7e34.png);
+    float: left;
+    background-position: center;
+    background-size: 100% auto;
+
+}
+.phm_text{
+    text-align: center;
+    align-content: center;
+    font-size: 16px;
+    float: left;
+    padding:5px 3px;
+    margin-top: 20px;
+}
+
+
+.clear{ clear:both}
+ul.circle {list-style-type:circle;}
+.spani{
+    margin-top: 20px;
+    float: right;
+}
+.button {
+    background-color: rgb(66,182,238);
+    border: none;
+    color: white;
+    padding: 5px 2px;
+    width: 60px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 15px;
+    margin-top: 16px;
+    float: right;
+    margin-right:20px;
+}
+.end{
+    background-color: rgb(35,36,38);
+    width: 100%;
+    height: 100px;
+    display: block;
+    padding: 40px 200px;
+    float: left;
+}
