@@ -15,6 +15,8 @@
     <link href="http://how2j.cn/study/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
     <script src="http://how2j.cn/study/js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <script src="http://echarts.baidu.com/dist/echarts.min.js"></script>
+    <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.min.js"></script>
+    <script src="http://echarts.baidu.com/resource/echarts-gl-latest/dist/echarts-gl.min.js"></script>
     <script  src="<%=basePath%>assets/js/index.js"></script>
     <link rel="stylesheet" href="<%=basePath%>assets/css/style.css">
     <link href="<%=basePath%>assets/styles/lab_1.css" rel="stylesheet">
@@ -50,11 +52,11 @@
                         <div class="input-group-btn">
                             <button id="btnType" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">实验数据降维散点图<span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <li><a href="#" onclick="changeType(0,'实验数据降维散点图')">实验数据降维散点图</a></li>
+                                <li><a href="#" onclick="changeType(0,'PCA降维二维散点图')">实验数据降维散点图</a></li>
                                 <li><a href="#" onclick="changeType(1,'单一属性类别分析')">单一属性类别分析</a></li>
                                 <li><a href="#" onclick="changeType(2,'二维属性类别分析')">二维属性类别分析</a></li>
                                 <li><a href="#" onclick="changeType(3,'特征相关性分析')">特征相关性分析</a></li>
-                                <li><a href="#" onclick="changeType(4,'单一属性预测分析')">单一属性预测分析</a></li>
+                                <li><a href="#" onclick="changeType(6,'PCA降维三维散点图')">PCA降维三维散点图</a></li>
                             </ul>
                         </div><!-- /btn-group -->
                     </div>
@@ -96,13 +98,14 @@
                                 <div class="modal-body">
                                     <div id="wrapper" class="row" style="margin-left: 8px;margin-right: 8px">
                                         <div id="typeSelector"class="input-group-btn">
-                                            <button  id="btnType1" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">实验数据降维散点图 <span class="caret"></span></button>
+                                            <button  id="btnType1" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">请选择类别 <span class="caret"></span></button>
                                             <ul class="dropdown-menu">
-                                                <li><a href="#" onclick="changeSelectType(0,'实验数据降维散点图')">实验数据降维散点图</a></li>
+                                                <li><a href="#" onclick="changeSelectType(0,'PCA降维二维散点图')">PCA降维二维散点图</a></li>
                                                 <li><a href="#" onclick="changeSelectType(1,'单一属性类别分析')">单一属性类别分析</a></li>
                                                 <li><a href="#" onclick="changeSelectType(2,'二维属性类别分析')">二维属性类别分析</a></li>
                                                 <li><a href="#" onclick="changeSelectType(3,'特征相关性分析')">特征相关性分析</a></li>
-                                                <li><a href="#" onclick="changeSelectType(4,'单一属性预测分析')">单一属性预测分析</a></li>
+                                                <li><a href="#" onclick="changeSelectType(6,'PCA降维三维散点图')">PCA降维三维散点图</a></li>
+
 
                                             </ul>
                                         </div><!-- /btn-group -->
@@ -135,16 +138,20 @@
                     ${lab.title}</a>
                     &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp &nbsp&nbsp
                     <hr>
-                    <p style="color: white">1.实验数据</p>
+                    <div class="border1">
+                    <a href="nowhere" style="color: green">&#8730</a>
+                    <a class="a3"><strong> 1、数据预处理</strong></a>
+                    </div><p></p>
+                    <p style="color: white">2.数据可视化</p>
 
                     <p style="color: white">点击添加，添加用户可见的可视化项。并对每个可视化项添加说明</p>
         </br>
         <a href="/design/${lab.id}/lab_2" class="button1" style="background-color: white" ><b>下一步</b></a> </br>
         <p></p>
-                <div class="border1"><a class="a3" href="#nowhere"><strong> 2.时间窗特征提取</strong></a></div>
-                <div class="border1"><a class="a3" href="#nowhere"><strong> 3.算法选择及调参</strong></a></div>
-                <div class="border1"><a class="a3" href="#nowhere"><strong> 4.划分测试集和训练集</strong></a></div>
-                <div class="border1"><a class="a3" href="#nowhere"><strong> 5.查看训练结果</strong></a></div>
+                <div class="border1"><a class="a3" href="#nowhere"><strong> 3.特征提取</strong></a></div>
+                <div class="border1"><a class="a3" href="#nowhere"><strong> 4.算法选择及调参</strong></a></div>
+                <div class="border1"><a class="a3" href="#nowhere"><strong> 5.划分测试集和训练集</strong></a></div>
+                <div class="border1"><a class="a3" href="#nowhere"><strong> 6.查看训练结果</strong></a></div>
         </span>
         </div>
 

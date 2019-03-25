@@ -258,17 +258,21 @@
                     <hr>
                   <div class="border1">
                     <a href="nowhere" style="color: green">&#8730</a>
-                    <a class="a3"><strong> 1、实验数据</strong></a>
+                    <a class="a3"><strong> 1、数据预处理</strong></a>
                   </div><p></p>
                   <div class="border1">
                     <a href="nowhere" style="color: green">&#8730</a>
-                    <a class="a3" ><strong> 2、时间窗特征提取</strong></a>
+                    <a class="a3" ><strong> 2、数据可视化</strong></a>
                   </div><p></p>
                   <div class="border1">
                     <a href="nowhere" style="color: green">&#8730</a>
-                    <a class="a3" ><strong> 3、算法选择及调优</strong></a>
+                    <a class="a3" ><strong> 3、特征提取</strong></a>
                   </div><p></p>
-                    <p style="color: white">4、划分训练集和测试集</p>
+                  <div class="border1">
+                    <a href="nowhere" style="color: green">&#8730</a>
+                    <a class="a3" ><strong> 4、算法选择及调优</strong></a>
+                  </div><p></p>
+                    <p style="color: white">5、划分训练集和测试集</p>
         <form action="/design/${lab.id}/lab_5" method="post">
             <textarea  id="divideText" rows="8" name="des" class="form-control" placeholder="划分训练集和测试集的依据"></textarea>
 
@@ -276,7 +280,7 @@
 
         </form>
         <p></p>
-                <div class="border1"><a class="a3" href="#nowhere"><strong> 5.查看训练结果</strong></a></div>
+                <div class="border1"><a class="a3" href="#nowhere"><strong> 6.查看训练结果</strong></a></div>
                 </span>
 
         </div>

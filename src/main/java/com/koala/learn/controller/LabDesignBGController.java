@@ -120,9 +120,17 @@ public class LabDesignBGController {
             options = ViewUtils.resloveRegAttribute(instances,param.get("attribute1").toString());
         }else if (type == ViewUtils.VIEW_REG_RELATIVE){
             options = ViewUtils.resloveRegRelative(lab.getFile());
+        }else if (type == ViewUtils.VIEW_PCA_3){
+            EchartOptions3D options3D =new EchartOptions3D();
+            options3D = ViewUtils.reslovePCA3(instances);
+            String key = RedisKeyUtil.getAttributeKey(param.toString(),type,id);
+            Gson gson = new Gson();
+            String json = gson.toJson(options3D);
+            mJedisAdapter.set(key,json);
+            return json;
+        }else if (type == ViewUtils.VIEW_REG_PCA){
+            options = ViewUtils.resloveRegPCA(instances);
         }
-
-
         String key = RedisKeyUtil.getAttributeKey(param.toString(),type,id);
         Gson gson = new Gson();
         String json = gson.toJson(options);
@@ -165,6 +173,24 @@ public class LabDesignBGController {
 
         File out = mDesignBGService.addFeature(session,feature,param, lab);
         mDesignBGService.saveFeature(lab,feature,param);
+
+        mJedisAdapter.lpush(fileKey,out.getAbsolutePath());
+        System.out.println(out);
+        return ServerResponse.createBySuccess(out.getName());
+    }
+    @RequestMapping(path = "/design/{labId}/part2/pre/add/{featureId}")
+    @ResponseBody
+    public ServerResponse addPre(@RequestParam Map<String,String> param,
+                                     @PathVariable("labId") Integer labId,
+                                     @PathVariable("featureId") Integer featureId,
+                                     HttpSession session) throws Exception {
+
+        Lab lab = mLabMapper.selectByPrimaryKey(labId);
+        Feature feature = mFeatureMapper.selectByPrimaryKey(featureId);
+        String fileKey = RedisKeyUtil.getFileKey(labId);
+
+        File out = mDesignBGService.addFeature(session,feature,param, lab);
+        mDesignBGService.savePre(lab,feature,param);
 
         mJedisAdapter.lpush(fileKey,out.getAbsolutePath());
         System.out.println(out);

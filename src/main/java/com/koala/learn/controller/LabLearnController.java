@@ -15,6 +15,8 @@ import com.koala.learn.utils.treat.ViewUtils;
 import com.koala.learn.vo.FeatureVo;
 import com.koala.learn.vo.LabViewVo;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,9 +91,24 @@ public class LabLearnController {
         instance.setCreateTime(new Date());
         instance.setResult(0);
         mLabInstanceMapper.insert(instance);
-        return "redirect:/learn/lab1/" + labId + "/" + instance.getId();
+        return "redirect:/learn/lab0/" + labId + "/" + instance.getId();
     }
 
+    @RequestMapping("/learn/lab0/{labId}/{instance}")
+    public String goLab0(@PathVariable("labId") Integer labId, @PathVariable("instance") Integer instanceId, Model model, HttpSession session) {
+        String key = RedisKeyUtil.getPreKey(labId);
+        List<String> list = mJedisAdapter.lrange(key, 0, mJedisAdapter.llen(key));
+        List<FeatureVo> vos = new ArrayList<>();
+        for (String str : list) {
+            vos.add(mGson.fromJson(str, FeatureVo.class));
+        }
+        model.addAttribute("instance", instanceId);
+        model.addAttribute("vos", vos);
+        System.out.println(vos);
+        model.addAttribute("labId", labId);
+        model.addAttribute("des", mJedisAdapter.get(RedisKeyUtil.getFeatureDesKey(labId)));
+        return "learn/lab_0";
+    }
     @RequestMapping("/learn/lab1/{labId}/{instance}")
     public String goLab1(@PathVariable("labId") Integer labId, @PathVariable("instance") Integer instanceId, Model model, HttpSession session) {
         model.addAttribute("instance", instanceId);
@@ -135,7 +152,7 @@ public class LabLearnController {
             for (Classifier classifier : classifierList) {
                 List<ClassifierParam> paramList = mLabService.getParamByClassifierId(classifier.getId());
                 classifier.setParams(paramList);
-           }
+            }
             System.out.println(lab.getLableType());
             model.addAttribute("classifierList", classifierList);
         }else if(lab.getLableType()==0) {
@@ -184,20 +201,22 @@ public class LabLearnController {
             } else {
                 res.add(Arrays.asList("算法", "可释方差值", "平均绝对误差", "均方根误差", "中值绝对误差", "R方值"));
             }
-//          List<String> echatsOptions = new ArrayList<>();
+            List<String> echatsOptions = new ArrayList<>();
             List<String> classifierNameList = new ArrayList<>();
             classifierNameList.add("快速特征选择");
             String relative = mJedisAdapter.get(RedisKeyUtil.getAttributeKey(null, 3, labId));
             if (relative != null) {
                 mJedisAdapter.set(RedisKeyUtil.getAttributeKey(null, 3, labId), relative);
-//                echatsOptions.add(relative);
+                echatsOptions.add(relative);
             } else {
-//                echatsOptions.add(mGson.toJson(ViewUtils.resloveRelative(lab.getFile())));
+                echatsOptions.add(mGson.toJson(ViewUtils.resloveRelative(lab.getFile())));
             }
             for (String str : classifierList) {
                 Classifier classifier = mGson.fromJson(str, Classifier.class);
                 classifierNameList.add(classifier.getName());
 
+
+                EchatsOptions eo = null;
                 if (lab.getLableType() == 1) {
                     Result result = mLabLearnService.findCache(labId, instanceId, classifier);
                     if (result != null) {
@@ -205,8 +224,11 @@ public class LabLearnController {
                                 result.getRecall() + "", result.getAccuracy() + "",
                                 result.getPrecision() + "", result.getfMeasure() + "", result.getRocArea() + "");
                         res.add(cache);
-                        EchatsOptions eo = null;
-                        eo = mLabDesignerService.getEchartsOptions(lab, result.getFeatureImportances(), classifier);
+
+                        if(!CollectionUtils.isEmpty(result.getFeatureImportances())) {
+                            eo = mLabDesignerService.getEchartsOptions(lab, result.getFeatureImportances(), classifier);
+                            echatsOptions.add(mGson.toJson(eo));
+                        }
                     } else {
                         logger.info("start----cal");
                         result = mLabLearnService.cal(labId, instanceId, session, classifier);
@@ -219,7 +241,11 @@ public class LabLearnController {
                                     result.getRecall() + "", result.getAccuracy() + "",
                                     result.getPrecision() + "", result.getfMeasure() + "", result.getRocArea() + "");
                             res.add(resList);
-//                        eo = mLabDesignerService.getEchartsOptions(lab,result.getFeatureImportances(),classifier);
+
+                            if (!CollectionUtils.isEmpty(result.getFeatureImportances())) {
+                                eo = mLabDesignerService.getEchartsOptions(lab, result.getFeatureImportances(), classifier);
+                                echatsOptions.add(mGson.toJson(eo));
+                            }
                         }
                     }
                 } else if (lab.getLableType() == 0) {
@@ -229,9 +255,9 @@ public class LabLearnController {
                                 regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
                                 regResult.getSquaredError() + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
                         res.add(cache);
-                        EchatsOptions eo = null;
-                        if(regResult.getFeatureImportances()!=null){
-                        eo = mLabDesignerService.getEchartsOptions(lab, regResult.getFeatureImportances(), classifier);
+                        if(!CollectionUtils.isEmpty(regResult.getFeatureImportances())) {
+                            eo = mLabDesignerService.getEchartsOptions(lab,regResult.getFeatureImportances(), classifier);
+                            echatsOptions.add(mGson.toJson(eo));
                         }
                     }else {
                         logger.info("start----cal");
@@ -245,11 +271,13 @@ public class LabLearnController {
                                     regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
                                     regResult.getSquaredError() + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
                             res.add(resList);
-//                        eo = mLabDesignerService.getEchartsOptions(lab,result.getFeatureImportances(),classifier);
+                            if(!CollectionUtils.isEmpty(regResult.getFeatureImportances())) {
+                                eo = mLabDesignerService.getEchartsOptions(lab,regResult.getFeatureImportances(), classifier);
+                                echatsOptions.add(mGson.toJson(eo));
+                            }
                         }
                     }
                 }
-//               echatsOptions.add(mGson.toJson(eo));
             }
 
             LabInstance labInstance = mLabInstanceMapper.selectByPrimaryKey(instanceId);
@@ -262,7 +290,7 @@ public class LabLearnController {
                 mLabInstanceMapper.updateByPrimaryKey(instances);
                 model.addAttribute("res", res);
                 instances.setResult(1);
-//                model.addAttribute("options",echatsOptions);
+                model.addAttribute("options",echatsOptions);
                 model.addAttribute("classNames", classifierNameList);
                 model.addAttribute("lab", mLabMapper.selectByPrimaryKey(labId));
                 return "learn/lab_5";

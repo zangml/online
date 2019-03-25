@@ -180,6 +180,20 @@ public class LabDesignerService {
         return voList;
     }
 
+    public List<FeatureVo> selectAllPre(){
+        List<Feature> pres = mFeatureMapper.selectPre();
+        List<FeatureVo> voList = new ArrayList<>();
+        for (Feature feature:pres){
+            FeatureVo vo = new FeatureVo();
+            System.out.println("预处理算法");
+            vo.setFeature(feature);
+            List<FeatureParam> paramList = mFeatureParamMapper.selectAllByFeatureId(feature.getId());
+            vo.setParamList(paramList);
+            voList.add(vo);
+        }
+        return voList;
+    }
+
     public LabGroup selectByGroupId(Integer groupId){
         return mLabGroupMapper.selectByPrimaryKey(groupId);
     }

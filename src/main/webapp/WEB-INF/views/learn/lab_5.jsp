@@ -264,22 +264,26 @@
                     <hr>
                   <div class="border1">
                     <a href="nowhere" style="color: green">&#8730</a>
-                    <a class="a3"><strong> 1、实验数据</strong></a>
+                    <a class="a3"><strong> 1、数据预处理</strong></a>
+                   </div><p></p>
+                 <div class="border1">
+                    <a href="nowhere" style="color: green">&#8730</a>
+                    <a class="a3"><strong> 2、数据可视化</strong></a>
                   </div><p></p>
                   <div class="border1">
                     <a href="nowhere" style="color: green">&#8730</a>
-                    <a class="a3" ><strong> 2、时间窗特征提取</strong></a>
+                    <a class="a3" ><strong> 3、特征提取</strong></a>
                   </div><p></p>
                   <div class="border1">
                     <a href="nowhere" style="color: green">&#8730</a>
-                    <a class="a3" ><strong> 3、算法选择及调优</strong></a>
+                    <a class="a3" ><strong> 4、算法选择及调优</strong></a>
                   </div><p></p>
                    <div class="border1">
                     <a href="nowhere" style="color: green">&#8730</a>
-                    <a class="a3" ><strong> 4、划分测试数据和训练数据</strong></a>
+                    <a class="a3" ><strong> 5、划分测试数据和训练数据</strong></a>
                   </div><p></p>
         <p></p>
-                 <p style="color: white">5、查看训练结果</p>
+                 <p style="color: white">6、查看训练结果</p>
                 </span>
 
         </div>

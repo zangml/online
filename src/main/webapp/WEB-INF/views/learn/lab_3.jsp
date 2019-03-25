@@ -260,21 +260,25 @@
                     <hr>
                   <div class="border1">
                     <a href="nowhere" style="color: green">&#8730</a>
-                    <a class="a3"><strong> 1、实验数据</strong></a>
+                    <a class="a3"><strong> 1、数据预处理</strong></a>
                   </div><p></p>
                   <div class="border1">
                     <a href="nowhere" style="color: green">&#8730</a>
-                    <a class="a3" ><strong> 2、时间窗特征提取</strong></a>
+                    <a class="a3" ><strong> 2、数据可视化</strong></a>
                   </div><p></p>
-                    <p style="color: white">3.算法选择及调优</p>
+                     <div class="border1">
+                    <a href="nowhere" style="color: green">&#8730</a>
+                    <a class="a3"><strong> 3、特征提取</strong></a>
+                  </div><p></p>
+                    <p style="color: white">4.算法选择及调优</p>
                     <p style="color: white">${des}</p>
         <a href="/learn/lab4/${lab.id}/${instance}" class="button1" style="background-color: white" ><b>已完成，下一步</b></a> </br>
 
                      </form>
                      </br>
                      <p></p>
-                 <div class="border1"><a class="a3" href="#nowhere"><strong> 4.划分测试集和训练集</strong></a></div>
-                <div class="border1"><a class="a3" href="#nowhere"><strong> 5.查看训练结果</strong></a></div>
+                 <div class="border1"><a class="a3" href="#nowhere"><strong> 5.划分测试集和训练集</strong></a></div>
+                <div class="border1"><a class="a3" href="#nowhere"><strong> 6.查看训练结果</strong></a></div>
                 </span>
         </div>
     </div>

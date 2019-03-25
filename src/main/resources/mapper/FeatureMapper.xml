@@ -86,5 +86,15 @@
     SELECT
     <include refid="Base_Column_List" />
     from feature
+    where feature_type =1
+    or feature_type =2
+  </select>
+
+  <select id="selectPre" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from feature
+    where feature_type =0
+    or feature_type =3
   </select>
 </mapper>

@@ -11,6 +11,7 @@ public class EchatsOptions {
     private LegendBean legend;
     private List<XAxisBean> xAxis;
     private List<YAxisBean> yAxis;
+
     private List<SeriesBean> series;
 
     public TitleBean getTitle() {

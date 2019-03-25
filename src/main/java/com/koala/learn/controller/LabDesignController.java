@@ -123,16 +123,20 @@ public class LabDesignController {
 
         try {
             Lab lab = mLabDesignerService.createLab(groupId, labName);
-            if (lab.getLableType()==1) {
-                return "redirect:/design/" + lab.getId() + "/lab_1";
-            }else{
-                return "redirect:/design/" + lab.getId() + "/lab_1_reg";
-            }
+            return "redirect:/design/" + lab.getId() + "/lab_0";
         } catch (IOException e) {
             e.printStackTrace();
         }
         return "common/error";
 
+    }
+
+    @RequestMapping("/design/{labId}/lab_0")
+    public String goLab0(@PathVariable("labId") Integer labId, Model model, HttpSession session) throws IOException {
+        List<FeatureVo> voList = mLabDesignerService.selectAllPre();
+        model.addAttribute("vos", voList);
+        model.addAttribute("labId", labId);
+        return "design/lab_0";
     }
 
     @RequestMapping("/design/{labId}/lab_1")
@@ -145,20 +149,13 @@ public class LabDesignController {
         model.addAttribute("attributes", attributeList);
         System.out.println(attributeList.toString());
         System.out.println(attributeList.size());
-        return "design/lab_1";
+        if(lab.getLableType()==1){
+            return "design/lab_1";}
+        else {
+            return  "design/lab_1_reg";
+        }
     }
-    @RequestMapping("/design/{labId}/lab_1_reg")
-    public String goLab1Reg(@PathVariable("labId") Integer labId, Model model, HttpSession session) throws IOException {
-        Lab lab = mLabMapper.selectByPrimaryKey(new Integer(labId));
-        model.addAttribute("lab", lab);
-        session.setAttribute("lab", lab);
 
-        List<String> attributeList = mLabDesignerService.resolveAttribute(new File(lab.getFile()));
-        model.addAttribute("attributes", attributeList);
-        System.out.println(attributeList.toString());
-        System.out.println(attributeList.size());
-        return "design/lab_1_reg";
-    }
 
     @RequestMapping("/design/{labId}/lab_2")
     public String goLab2(@PathVariable("labId") Integer labId, Model model) {

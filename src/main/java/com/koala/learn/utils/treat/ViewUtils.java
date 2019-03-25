@@ -2,6 +2,7 @@ package com.koala.learn.utils.treat;
 
 import com.google.gson.Gson;
 import com.koala.learn.Const;
+import com.koala.learn.entity.EchartOptions3D;
 import com.koala.learn.entity.EchatsOptions;
 import com.koala.learn.utils.Complex;
 import com.koala.learn.utils.PythonUtils;
@@ -33,6 +34,9 @@ public class ViewUtils {
     public static final int VIEW_RELATIVE = 3;
     public static final int VIEW_REG_ATTRI=4;
     public static final int VIEW_REG_RELATIVE =5;
+    public static final int VIEW_PCA_3 =6;
+    public static final int VIEW_REG_PCA =7;
+
 
     private static final int INTERNAL = 80;
 
@@ -186,6 +190,78 @@ public class ViewUtils {
                 }
             }
         }
+        return options;
+    }
+
+    public static EchartOptions3D reslovePCA3(Instances instances) throws Exception {
+        instances.setClassIndex(instances.numAttributes()-1);
+        EchartOptions3D options3D =new EchartOptions3D();
+        PrincipalComponents pca = new PrincipalComponents();
+        pca.setInputFormat(instances);
+        pca.setOptions(new String[]{"-M","3"});
+        Instances res = Filter.useFilter(instances,pca);
+
+
+        List<double[]> data =new ArrayList<double[]>();
+        Attribute attribute = instances.attribute(0);
+        Attribute attribute1 = instances.attribute(1);
+        Attribute attribute2 = instances.attribute(2);
+
+        for (int i = 0; i < instances.size(); i++) {
+            double[] dataitem = new double[3];
+            Instance instance = instances.get(i);
+            dataitem[0] = instance.value(attribute);
+            dataitem[1] = instance.value(attribute1);
+            dataitem[2] = instance.value(attribute2);
+            data.add(dataitem);
+        }
+
+        options3D.setBackground("#fff");
+        options3D.setxAxis3D(new EchartOptions3D.XAxisBean3D());
+        options3D.setyAxis3D(new EchartOptions3D.YAxisBean3D());
+        options3D.setzAxis3D(new EchartOptions3D.ZAxisBean3D());
+        options3D.setGrid3D(new EchartOptions3D.Grid3DBean());
+        options3D.setTooltip(new EchartOptions3D.TooltipBean3D());
+        options3D.setSeries(new EchartOptions3D.SeriesBean3D(data));
+
+        return options3D;
+    }
+
+    public static EchatsOptions resloveRegPCA(Instances instances) throws Exception {
+        instances.setClassIndex(instances.numAttributes() - 1);
+        PrincipalComponents pca = new PrincipalComponents();
+        pca.setInputFormat(instances);
+        pca.setOptions(new String[]{"-M", "2"});
+        Instances res = Filter.useFilter(instances, pca);
+
+        EchatsOptions options = new EchatsOptions();
+        options.setTitle(new EchatsOptions.TitleBean("",""));
+        options.setXAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
+        options.setYAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
+
+
+        List<EchatsOptions.SeriesBean> seriesBeans = new ArrayList<EchatsOptions.SeriesBean>();
+        Set<String> labels = new HashSet<>();
+        options.setLegend(new EchatsOptions.LegendBean(new ArrayList<String>(labels)));
+
+        Attribute attribute = instances.attribute(0);
+        Attribute attribute1 = instances.attribute(1);
+
+        List<double[]> dataPca = new ArrayList<double[]>();
+        for (int i = 0; i < instances.size(); i++) {
+            double[] data = new double[2];
+            Instance instance = instances.get(i);
+            data[1] = instance.value(attribute1);
+            data[0] = instance.value(attribute);
+            dataPca.add(data);
+        }
+        EchatsOptions.SeriesBean normal = new EchatsOptions.SeriesBean();
+        normal.setType("scatter");
+        normal.setItemStyle(new EchatsOptions.SeriesBean.ItemStyleBean(new EchatsOptions.SeriesBean.ItemStyleBean.NormalBean("")));
+        normal.setSymbolSize(4);
+        normal.setData(dataPca);
+        seriesBeans.add(normal);
+        options.setSeries(seriesBeans);
         return options;
     }
 
