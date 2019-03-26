@@ -5,12 +5,14 @@ import org.apache.commons.lang.StringUtils;
 import java.util.List;
 
 public class EchartOptions3D {
+
     private TooltipBean3D tooltip;
     private XAxisBean3D xAxis3D;
     private YAxisBean3D yAxis3D;
     private ZAxisBean3D zAxis3D;
-
     private SeriesBean3D series;
+
+
 
     private String background; //背景颜色设为白色
 
