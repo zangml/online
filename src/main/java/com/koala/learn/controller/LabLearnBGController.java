@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class LabLearnBGController {
+public class  LabLearnBGController {
 
     @Autowired
     Gson mGson;
@@ -122,6 +122,7 @@ public class LabLearnBGController {
                                      @RequestParam Map<String,String> param,
                                      HttpSession session){
         try {
+            System.out.println("数据集划分的参数"+param.toString());
             String fileInstanceKey = RedisKeyUtil.getFileInstanceKey(labId,instanceId);
             String key = RedisKeyUtil.getDividerInstanceKey(labId,instanceId);
             Divider d = mDividerMapper.selectByPrimaryKey(Integer.valueOf(param.get("dividerId")));
