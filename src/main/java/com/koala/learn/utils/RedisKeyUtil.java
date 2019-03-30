@@ -30,6 +30,7 @@ public class RedisKeyUtil {
     private static String BIZ_PREHANDLE = "PRE_HANDLE";
     private static String BIZ_CLASSIFIER = "CLASSIFIER";
     private static String BIZ_FEATURE_DES = "FEATURE_DES";
+    private static String BIZ_PRE_DES = "PRE_DES";
     private static String BIZ_CLASSIFIER_DES = "CLASSIFIER_DES";
     private static String BIZ_DIVIDER = "DIVIDER";
     private static String BIZ_DIVIDER_DES = "DIVIDER_DES";
@@ -105,6 +106,9 @@ public class RedisKeyUtil {
 
     public static String getFeatureDesKey(Integer labId){
         return BIZ_FEATURE_DES+SPLIT+labId;
+    }
+    public static String getPreDesKey(Integer labId){
+        return BIZ_PRE_DES+SPLIT+labId;
     }
 
     public static String getClassifierDesKey(Integer labId){

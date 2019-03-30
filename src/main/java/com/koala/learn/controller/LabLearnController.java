@@ -100,7 +100,7 @@ public class LabLearnController {
         model.addAttribute("vos", vos);
         System.out.println(vos);
         model.addAttribute("labId", labId);
-        model.addAttribute("des", mJedisAdapter.get(RedisKeyUtil.getFeatureDesKey(labId)));
+        model.addAttribute("des", mJedisAdapter.get(RedisKeyUtil.getPreDesKey(labId)));
         return "learn/lab_0";
     }
     @RequestMapping("/learn/lab1/{labId}/{instance}")
@@ -219,7 +219,7 @@ public class LabLearnController {
                                 result.getPrecision() + "", result.getfMeasure() + "", result.getRocArea() + "");
                         res.add(cache);
 
-                        if(!CollectionUtils.isEmpty(result.getFeatureImportances())) {
+                          if(!CollectionUtils.isEmpty(result.getFeatureImportances())) {
                             eo = mLabDesignerService.getEchartsOptions(lab, result.getFeatureImportances(), classifier);
                             echatsOptions.add(mGson.toJson(eo));
                         }

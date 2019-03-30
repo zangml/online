@@ -13,6 +13,7 @@ import com.koala.learn.service.LabLearnService;
 import com.koala.learn.utils.*;
 import com.koala.learn.vo.FeatureVo;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -140,8 +141,12 @@ public class LabDesignController {
     }
 
     @RequestMapping("/design/{labId}/lab_1")
-    public String goLab1(@PathVariable("labId") Integer labId, Model model, HttpSession session) throws IOException {
+    public String goLab1(String des,@PathVariable("labId") Integer labId, Model model, HttpSession session) throws IOException {
         Lab lab = mLabMapper.selectByPrimaryKey(new Integer(labId));
+        if (StringUtils.isNotBlank(des)) {
+            String key = RedisKeyUtil.getPreDesKey(lab.getId());
+            mAdapter.set(key, des);
+        }
         model.addAttribute("lab", lab);
         session.setAttribute("lab", lab);
 
@@ -258,7 +263,7 @@ public class LabDesignController {
                 mAdapter.set(labResKey, resParam);
                 if (lab.getLableType() == 1) {
                     Result result = mGson.fromJson(resParam, Result.class);
-                    if (result.getFeatureImportances() != null) {
+                    if (!CollectionUtils.isEmpty(result.getFeatureImportances())) {
                         EchatsOptions eo = mLabDesignerService.getEchartsOptions(lab, result.getFeatureImportances(), classifier);
                         echatsOptions.add(mGson.toJson(eo));
                     }
@@ -267,7 +272,7 @@ public class LabDesignController {
                             result.getfMeasure(), result.getRocArea()));
                 } else if (lab.getLableType() == 0) {
                     RegResult regResult = mGson.fromJson(resParam, RegResult.class);
-                    if (regResult.getFeatureImportances()!=null ) {
+                    if (!CollectionUtils.isEmpty(regResult.getFeatureImportances()) ) {
                         EchatsOptions eo = mLabDesignerService.getEchartsOptions(lab, regResult.getFeatureImportances(), classifier);
                         echatsOptions.add(mGson.toJson(eo));
                     }
@@ -313,4 +318,3 @@ public class LabDesignController {
         return "design/updateClassifier";
     }
 }
-// 数据集  综述
