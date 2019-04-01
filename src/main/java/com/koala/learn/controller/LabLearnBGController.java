@@ -72,7 +72,7 @@ public class  LabLearnBGController {
         Feature feature = mFeatureMapper.selectByPrimaryKey(featureId);
         LabInstance instance = mLabInstanceMapper.selectByPrimaryKey(instanceId);
         try {
-            mLabLearnService.addFeature(session, lab,feature,param,instance);
+            mLabLearnService.addFeature(session,lab,feature,param,instance);
             return ServerResponse.createBySuccess();
         } catch (IOException e) {
             e.printStackTrace();
