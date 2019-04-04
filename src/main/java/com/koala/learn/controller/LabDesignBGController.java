@@ -121,7 +121,7 @@ public class LabDesignBGController {
         }else if (type == ViewUtils.VIEW_REG_RELATIVE){
             options = ViewUtils.resloveRegRelative(lab.getFile());
         }else if (type == ViewUtils.VIEW_PCA_3){
-            EchartOptions3D options3D =new EchartOptions3D();
+            EchartOptions3D options3D = new EchartOptions3D();
             options3D = ViewUtils.reslovePCA3(instances);
             String key = RedisKeyUtil.getAttributeKey(param.toString(),type,id);
             Gson gson = new Gson();

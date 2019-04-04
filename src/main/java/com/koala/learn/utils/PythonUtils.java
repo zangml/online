@@ -34,7 +34,7 @@ public class PythonUtils {
     public static void main(String[] args)  {
         //String out = execPy("python /Users/zangmenglei/Python/LR.py penalty=l2  tol=0.0001 random_state=None fit_intercept=True solver=sag multi_class=ovr class_weight=None C=1.0 train=/Users/zangmenglei/train.csv test=/Users/zangmenglei/test.csv");
         //System.out.println(out);
-        String out = execPy("python /usr/local/sk/GBDT.py n_estimators=100 learning_rate=1 subsample=1.0 max_depth=3 min_samples_split=2 min_samples_leaf=1 train=/Users/zangmenglei/PHM/137/random0.8diabeteswindow-L2-S1train.csv test=/Users/zangmenglei/PHM/137/random0.8diabeteswindow-L2-S1test.csv");
+        String out = execPy("python /usr/local/sk/LocalOutlierFactor.py contamination=0.001 path=/Users/zangmenglei/PHM/341/diabetes.csv opath=/Users/zangmenglei/PHM/341/diabeteslof-lof0.001.csv");
         System.out.println(out);
     }
 }

@@ -134,7 +134,7 @@ public class WxLabLearnController {
         }
         classifier.setParams(paramList);
         mJedisAdapter.lpush(key,mGson.toJson(classifier));
-        return ServerResponse.createBySuccess();
+        return ServerResponse.createBySuccessMessage("选择算法完成");
     }
 
 

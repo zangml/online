@@ -83,7 +83,7 @@ public class RedisKeyUtil {
     }
 
     public static String getAttributeKey(String attribute,Integer viewType,Integer labId){
-        if (viewType==0 || viewType == 3){
+        if (viewType==0 || viewType == 3 || viewType == 6){
             return BIZ_ATTRIBUTEVIEW + SPLIT + labId+SPLIT+viewType;
         }
         return BIZ_ATTRIBUTEVIEW + SPLIT + labId+SPLIT+attribute+SPLIT+viewType;

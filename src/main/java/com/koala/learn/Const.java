@@ -28,4 +28,6 @@ public class Const {
 
     public static String ISOLATIONFOREST_FEATURE ="/usr/local/sk/IsolationForest.py"; //封装的Isolationpython文件
 
+    public static String LOCALOUTLIERFACTOR_FEATURE ="/usr/local/sk/LocalOutlierFactor.py"; //封装的LocalOutlierFactorn文件
+
 }

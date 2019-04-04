@@ -188,7 +188,7 @@ public class LabLearnService {
         if (cacheValue != null){
             Result result = mGson.fromJson(cacheValue,Result.class);
             String resKey = RedisKeyUtil.getResInstanceKey(labId,instanceId,classifier);
-            System.out.println(resKey);
+            System.out.println("此结果是从缓存中获取的"+resKey);
             mJedisAdapter.hset(resKey,"Accuracy",result.getAccuracy()+"");
             mJedisAdapter.hset(resKey,"Precision",result.getPrecision()+"");
             mJedisAdapter.hset(resKey,"Recall",result.getRecall()+"");
@@ -210,7 +210,7 @@ public class LabLearnService {
         if (cacheValue != null){
             RegResult regResult = mGson.fromJson(cacheValue,RegResult.class);
             String resKey = RedisKeyUtil.getResInstanceKey(labId,instanceId,classifier);
-            System.out.println(resKey);
+            System.out.println("此结果是从缓存中获取的"+resKey);
             mJedisAdapter.hset(resKey,"varianceScore",regResult.getVarianceScore()+"");
             mJedisAdapter.hset(resKey,"absoluteError",regResult.getAbsoluteError()+"");
             mJedisAdapter.hset(resKey,"squaredError",regResult.getSquaredError()+"");
