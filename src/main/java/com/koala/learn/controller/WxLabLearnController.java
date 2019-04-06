@@ -9,6 +9,7 @@ import com.koala.learn.dao.*;
 import com.koala.learn.entity.*;
 import com.koala.learn.service.LabLearnService;
 import com.koala.learn.service.LabService;
+import com.koala.learn.service.UserService;
 import com.koala.learn.utils.RedisKeyUtil;
 import com.koala.learn.utils.divider.IDivider;
 import org.slf4j.Logger;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -61,20 +64,52 @@ public class WxLabLearnController {
     @Autowired
     DividerMapper mDividerMapper;
 
+    @Autowired
 
+    ClassifierMapper mClassifierMapper;
 
     @Autowired
-    ClassifierMapper mClassifierMapper;
+    UserService mUserService;
+
+    @Autowired
+    GroupInstanceMapper groupInstanceMapper;
     private static Logger logger = LoggerFactory.getLogger(LabLearnController.class);
 
 
-   //创建groupInstances
-    @RequestMapping("labs/group/{groupId}")
+
+    //用户登录
+
+    @RequestMapping("login")
     @ResponseBody
-    public ServerResponse createGroupInstance(@PathVariable("groupId") Integer groupId){
-        Integer instanceId = mLabService.createGroupInstance(groupId);
-        return ServerResponse.createBySuccess(instanceId);
+    public Map<String,Object> login(String username, String password,boolean rememberme, HttpServletResponse response) {
+
+        Map<String, Object> map = mUserService.login(username, password);
+        if (map.containsKey("ticket")) {
+            Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
+            cookie.setPath("/");
+            if (rememberme) {
+                cookie.setMaxAge(3600 * 24 * 15);
+            }
+            response.addCookie(cookie);
+        }
+        return map;
     }
+
+
+   //创建groupInstances
+   @RequestMapping("labs/group/{groupId}")
+   @ResponseBody
+   public ServerResponse createGroupInstance(@PathVariable("groupId") Integer groupId){
+       GroupInstance groupInstance = new GroupInstance();
+       groupInstance.setCreateTime(new Date());
+       groupInstance.setGroupId(groupId);
+       groupInstance.setState(0);
+      // groupInstance.setUserId(mHolder.getUser().getId());
+       groupInstanceMapper.insert(groupInstance);
+       Integer instanceId = groupInstance.getId();
+       return ServerResponse.createBySuccess(instanceId);
+   }
+
 
 
     //创建实验实例instance
@@ -83,7 +118,7 @@ public class WxLabLearnController {
     public ServerResponse createInstance(@PathVariable("groupInstance") Integer groupInstance,
                                                  @PathVariable("labId") Integer labId) {
         LabInstance instance = new LabInstance();
-        instance.setUserId(mHolder.getUser().getId());
+     //   instance.setUserId(mHolder.getUser().getId());
         instance.setLabId(labId);
         instance.setGroupInstanceId(groupInstance);
         instance.setCreateTime(new Date());
