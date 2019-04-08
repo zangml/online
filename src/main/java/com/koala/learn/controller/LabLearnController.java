@@ -247,7 +247,7 @@ public class LabLearnController {
                     if (regResult != null) {
                         List<String> cache = Arrays.asList(classifier.getName(),
                                 regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
-                                regResult.getSquaredError() + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
+                               Math.sqrt(regResult.getSquaredError()) + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
                         res.add(cache);
                         if(!CollectionUtils.isEmpty(regResult.getFeatureImportances())) {
                             eo = mLabDesignerService.getEchartsOptions(lab,regResult.getFeatureImportances(), classifier);
@@ -263,7 +263,7 @@ public class LabLearnController {
                         } else {
                             List<String> resList = Arrays.asList(classifier.getName(),
                                     regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
-                                    regResult.getSquaredError() + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
+                                    Math.sqrt(regResult.getSquaredError()) + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
                             res.add(resList);
                             if(!CollectionUtils.isEmpty(regResult.getFeatureImportances())) {
                                 eo = mLabDesignerService.getEchartsOptions(lab,regResult.getFeatureImportances(), classifier);

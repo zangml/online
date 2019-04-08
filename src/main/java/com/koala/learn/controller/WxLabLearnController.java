@@ -160,7 +160,6 @@ public class WxLabLearnController {
 
         LabInstance instance = mLabInstanceMapper.selectByPrimaryKey(instanceId);
         String key = RedisKeyUtil.getClassifierInstanceKey(labId,instance.getId());
-        System.out.println("");
 
         for (ClassifierParam cp:paramList){
             if (param.containsKey(cp.getParamName())){

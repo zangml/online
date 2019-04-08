@@ -277,7 +277,7 @@ public class LabDesignController {
                         echatsOptions.add(mGson.toJson(eo));
                     }
                     System.out.println(regResult);
-                    res.add(Arrays.asList(classifier.getName(), regResult.getVarianceScore(), regResult.getAbsoluteError(), regResult.getSquaredError(),
+                    res.add(Arrays.asList(classifier.getName(), regResult.getVarianceScore(), regResult.getAbsoluteError(),Math.sqrt(regResult.getSquaredError()),
                             regResult.getMedianSquaredError(), regResult.getR2Score()));
                 } else {
                     ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
