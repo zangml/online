@@ -15,7 +15,7 @@ public class WxComponentService {
     public File handleOcSvm(double nu,File input) throws IOException {
         input = WekaUtils.arff2csv(input);
         File out=new File(Const.ROOT_FOR_DATA_WX,
-                input.getName().replace(".arff", "") +"nu" +nu + ".csv");
+                input.getName().replace(".csv", "") +"nu" +nu + ".csv");
         String ocsvmdec = "python "+ Const.OCSVM_FOR_WX+ " nu="+nu
                 +" path="+input.getAbsolutePath()+" opath="+out;
         System.out.println(ocsvmdec);
@@ -26,8 +26,9 @@ public class WxComponentService {
 
     public File handleIsolation(double contamination,File input) throws IOException {
         input = WekaUtils.arff2csv(input);
-        File out=new File(Const.ROOT_FOR_DATA_WX, input.getName().replace(".arff", "") +"con" +contamination+ ".csv");
-        String isoLationmdec = "python "+ Const.ISOLATIONFOREST_FOR_WX+ " nu="+contamination
+        File out=new File(Const.ROOT_FOR_DATA_WX,
+                input.getName().replace(".csv", "") +"con" +contamination+ ".csv");
+        String isoLationmdec = "python "+ Const.ISOLATIONFOREST_FOR_WX+ " contamination="+contamination
                 +" path="+input.getAbsolutePath()+" opath="+out;
         System.out.println(isoLationmdec);
         PythonUtils.execPy(isoLationmdec);
