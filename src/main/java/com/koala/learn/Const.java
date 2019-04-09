@@ -30,4 +30,16 @@ public class Const {
 
     public static String LOCALOUTLIERFACTOR_FEATURE ="/usr/local/sk/LocalOutlierFactor.py"; //封装的LocalOutlierFactorn文件
 
+    public static String DATA_FOR_SMOTE="/usr/local/data/wx/dataForSmote.arff"; //微信调用Smote组件时用于展示的数据集
+
+    public static String DATA_FOR_OCSVM="/usr/local/data/wx/dataForOCSVM.arff";//微信调用OneClassSVM组件时用于展示的数据集
+
+    public static String OCSVM_FOR_WX="/usr/local/sk/OneClassSVMForWx.py";//封装的微信调用OneClassSVM算法
+
+    public static String ROOT_FOR_DATA_WX="/usr/local/data/wx/result/";//微信调用组件算法产生的输出文件
+
+    public static String DATA_FOR_ISOLATIONFOREST="/usr/local/data/wx/dataForIsoLationForest.arff";//微信调用OneClassSVM组件时用于展示的数据集
+
+    public static String ISOLATIONFOREST_FOR_WX="/usr/local/sk/IsoLationForestForWx.py";//封装的微信调用OneClassSVM算法
+
 }

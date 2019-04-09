@@ -49,12 +49,12 @@ public class SMOTEFeature implements IFeature {
     }
 
     public static void main(String[] args) throws IOException {
-        String[] options = {"-S", String.valueOf(6), "-P", "200.0", "-K", "5"};
+        String[] options = {"-S", String.valueOf(1), "-P", "500.0", "-K", "5"};
         SMOTEFeature feature = new SMOTEFeature();
         feature.setOptions(options);
         ArffLoader loader = new ArffLoader();
-        loader.setFile(new File("H:/tem/learn/36/test.arff"));
+        loader.setFile(new File("/Users/zangmenglei/test/dataForSmote.arff"));
         Instances input = loader.getDataSet();
-        feature.filter(input,null,new File("H:/tem/learn/36/smotetest.arff"));
+        feature.filter(input,null,new File("/Users/zangmenglei/test/dataForSmoteOut.arff"));
     }
 }

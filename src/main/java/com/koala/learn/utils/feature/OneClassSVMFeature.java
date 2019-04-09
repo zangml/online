@@ -23,10 +23,6 @@ public class OneClassSVMFeature implements IFeature {
             file = WekaUtils.arff2csv(file);
         }
         try{
-            if (file.getAbsolutePath().endsWith("arff"))
-            {
-                out = new File(out.getAbsolutePath().replace("arff","csv"));
-            }
             String ocsvmdec = "python "+ Const.ONECLASSSVM_FEATURE+ " nu="+nu
                     +" path="+file.getAbsolutePath()+" opath="+out;
             System.out.println(ocsvmdec);

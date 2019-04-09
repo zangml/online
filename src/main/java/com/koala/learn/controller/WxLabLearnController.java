@@ -11,7 +11,9 @@ import com.koala.learn.service.LabLearnService;
 import com.koala.learn.service.LabService;
 import com.koala.learn.service.UserService;
 import com.koala.learn.utils.RedisKeyUtil;
+import com.koala.learn.utils.WekaUtils;
 import com.koala.learn.utils.divider.IDivider;
+import com.koala.learn.utils.treat.ViewUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import weka.core.Instances;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -147,6 +150,48 @@ public class WxLabLearnController {
         }
     }
 
+    //数据可视化
+
+    @RequestMapping(path = "/view/{id}/attribute/{type}")
+    @ResponseBody
+    public ServerResponse getAttributeView(@PathVariable("id") final int id, @RequestParam final Map<String,Object> param, @PathVariable("type") final Integer type) throws Exception {
+        Lab lab = mLabMapper.selectByPrimaryKey(id);
+        System.out.println(lab.getFile());
+        Instances instances = WekaUtils.readFromFile(lab.getFile());
+        String value = mJedisAdapter.get(RedisKeyUtil.getAttributeKey(param.toString(),type,id));
+        if ( value != null){
+            return ServerResponse.createBySuccessMessage("参数错误");
+        }
+        EchatsOptions options = null;
+        if (type == ViewUtils.VIEW_PCA){
+            options = ViewUtils.reslovePCA(instances);
+        }else if (type == ViewUtils.VIEW_ATTRI){
+            options = ViewUtils.resloveAttribute(instances,param.get("attribute1").toString());
+        }else if (type == ViewUtils.VIEW_MULATTRI){
+            options = ViewUtils.resloveMulAttribute(instances,param);
+        }else if (type == ViewUtils.VIEW_RELATIVE){
+            System.out.println("特征相关性分析");
+            options = ViewUtils.resloveRelative(lab.getFile());
+        }else if (type == ViewUtils.VIEW_REG_ATTRI){
+            options = ViewUtils.resloveRegAttribute(instances,param.get("attribute1").toString());
+        }else if (type == ViewUtils.VIEW_REG_RELATIVE){
+            options = ViewUtils.resloveRegRelative(lab.getFile());
+        }else if (type == ViewUtils.VIEW_PCA_3){
+            EchartOptions3D options3D =ViewUtils.reslovePCA3(instances);
+            String key = RedisKeyUtil.getAttributeKey(param.toString(),type,id);
+            Gson gson = new Gson();
+            String json = gson.toJson(options3D);
+            mJedisAdapter.set(key,json);
+            return ServerResponse.createBySuccess(json);
+        }else if (type == ViewUtils.VIEW_REG_PCA){
+            options = ViewUtils.resloveRegPCA(instances);
+        }
+        String key = RedisKeyUtil.getAttributeKey(param.toString(),type,id);
+        Gson gson = new Gson();
+        String json = gson.toJson(options);
+        mJedisAdapter.set(key,json);
+        return ServerResponse.createBySuccess(json);
+    }
 
     //选择算法模型
     @RequestMapping("learn/{labId}/{instance}/classifier/{classifierId}")
