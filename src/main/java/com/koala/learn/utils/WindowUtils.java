@@ -72,7 +72,6 @@ public class WindowUtils {
                             sb.append(properties[k]).append(",");
                         }
                     }
-
                 }
                 sb.append(records.get(i).substring(0,1));
                 writer.write(sb.toString());
@@ -109,6 +108,7 @@ public class WindowUtils {
         writer.write("@data\n");
 
         for (int i=0;i<instances.size();i=i+step){
+
             StringBuilder sb = new StringBuilder();
             if ((i+window)<instances.size()){
                 for (int j=0;j<window;j++){
@@ -124,7 +124,6 @@ public class WindowUtils {
                     sb.append(line.substring(0,line.lastIndexOf(',')));
                     sb.append(",");
                 }
-
             }
             try {
                 sb.append(instances.get(i).stringValue(instances.numAttributes()-1));
@@ -140,10 +139,10 @@ public class WindowUtils {
     }
 
     public static void main(String[] args) throws IOException {
-        File in = new File("E:/tem/learn/78/plantdata.arff");
+        File in = new File("/Users/zangmenglei/test/diabetes.arff");
         ArffLoader loader = new ArffLoader();
         loader.setSource(in);
-        File out = new File("E:/tem/learn/78/windowplantdata.arff");
-        window(loader.getDataSet(),2,1,out);
+        File out = new File("/Users/zangmenglei/test/diabetes_out_window.arff");
+        window(loader.getDataSet(),3,2,out);
     }
 }

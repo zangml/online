@@ -49,6 +49,8 @@ public class ViewUtils {
         map.put(VIEW_REG_ATTRI,"单一属性预测分析");
         return map;
     }
+
+    //单一属性故障分析
     public static EchatsOptions resloveAttribute(Instances instances, String attributeName){
         instances.setClassIndex(instances.numAttributes()-1);
         List<String> xData = new ArrayList<String>();
@@ -133,36 +135,37 @@ public class ViewUtils {
         return options;
     }
 
+    //二维属性故障分析
     public static EchatsOptions resloveMulAttribute(Instances instances,Map<String,Object> map) throws Exception {
-        instances.setClassIndex(instances.numAttributes()-1);
+        instances.setClassIndex(instances.numAttributes() - 1);
 
         EchatsOptions options = new EchatsOptions();
-        options.setTitle(new EchatsOptions.TitleBean("",""));
-        options.setXAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
-        options.setYAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
+        options.setTitle(new EchatsOptions.TitleBean("", ""));
+        options.setXAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value", true, new EchatsOptions.XAxisBean.AxisLabelBean())}));
+        options.setYAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value", true, new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
 
         List<EchatsOptions.SeriesBean> seriesBeans = new ArrayList<EchatsOptions.SeriesBean>();
 
         Set<String> labels = new HashSet<>();
-        for (int i=0;i<instances.size();i++){
+        for (int i = 0; i < instances.size(); i++) {
             try {
-                labels.add(instances.get(i).stringValue(instances.numAttributes()-1));
-            }catch (Exception e){
-                labels.add(instances.get(i).value(instances.numAttributes()-1)+"");
+                labels.add(instances.get(i).stringValue(instances.numAttributes() - 1));
+            } catch (Exception e) {
+                labels.add(instances.get(i).value(instances.numAttributes() - 1) + "");
 
             }
         }
 
-        int step = 1*labels.size();
-        Map<String,List<List<Double>>> dataMap = new HashMap<>();
-        for (String label:labels){
+        int step = 2 * labels.size();
+        Map<String, List<List<Double>>> dataMap = new HashMap<>();
+        for (String label : labels) {
             EchatsOptions.SeriesBean normal = new EchatsOptions.SeriesBean();
             normal.setName(label);
             normal.setType("scatter");
             normal.setItemStyle(new EchatsOptions.SeriesBean.ItemStyleBean(new EchatsOptions.SeriesBean.ItemStyleBean.NormalBean("")));
             List<List<Double>> nData = new ArrayList<List<Double>>();
-            dataMap.put(label,nData);
-            normal.setSymbolSize(3);
+            dataMap.put(label, nData);
+            normal.setSymbolSize(4);
             normal.setData(nData);
             seriesBeans.add(normal);
         }
@@ -172,20 +175,20 @@ public class ViewUtils {
         Attribute attribute1 = instances.attribute(map.get("attribute1").toString());
         Attribute attribute2 = instances.attribute(map.get("attribute2").toString());
 
-        for (int i=0;i<instances.size();i++){
-            if (i%step != 0){
+        for (int i = 0; i < instances.size(); i++) {
+            if (i % step != 0) {
                 continue;
             }
             Instance instance = instances.get(i);
             String classId = null;
             try {
-                classId = instance.stringValue(instance.numAttributes()-1);
-            }catch (Exception e){
-                classId = instance.value(instance.numAttributes()-1)+"";
+                classId = instance.stringValue(instance.numAttributes() - 1);
+            } catch (Exception e) {
+                classId = instance.value(instance.numAttributes() - 1) + "";
             }
-            for (String label:labels){
-                if (classId.equals(label)){
-                    dataMap.get(label).add(Arrays.asList(new Double[]{instance.value(attribute1),instance.value(attribute2)}));
+            for (String label : labels) {
+                if (classId.equals(label)) {
+                    dataMap.get(label).add(Arrays.asList(new Double[]{instance.value(attribute1), instance.value(attribute2)}));
                     break;
                 }
             }
@@ -193,6 +196,7 @@ public class ViewUtils {
         return options;
     }
 
+    // pca降至三维
     public static EchartOptions3D reslovePCA3(Instances instances) throws Exception {
         instances.setClassIndex(instances.numAttributes()-1);
         EchartOptions3D options3D =new EchartOptions3D();
@@ -203,13 +207,13 @@ public class ViewUtils {
 
 
         List<double[]> data =new ArrayList<double[]>();
-        Attribute attribute = instances.attribute(0);
-        Attribute attribute1 = instances.attribute(1);
-        Attribute attribute2 = instances.attribute(2);
+        Attribute attribute = res.attribute(0);
+        Attribute attribute1 = res.attribute(1);
+        Attribute attribute2 = res.attribute(2);
 
-        for (int i = 0; i < instances.size(); i++) {
+        for (int i = 0; i < res.size(); i++) {
             double[] dataitem = new double[3];
-            Instance instance = instances.get(i);
+            Instance instance = res.get(i);
             dataitem[0] = instance.value(attribute);
             dataitem[1] = instance.value(attribute1);
             dataitem[2] = instance.value(attribute2);
@@ -227,6 +231,7 @@ public class ViewUtils {
         return options3D;
     }
 
+    //pca降维 回归算法
     public static EchatsOptions resloveRegPCA(Instances instances) throws Exception {
         instances.setClassIndex(instances.numAttributes() - 1);
         PrincipalComponents pca = new PrincipalComponents();
@@ -244,15 +249,15 @@ public class ViewUtils {
         Set<String> labels = new HashSet<>();
         options.setLegend(new EchatsOptions.LegendBean(new ArrayList<String>(labels)));
 
-        Attribute attribute = instances.attribute(0);
-        Attribute attribute1 = instances.attribute(1);
+        Attribute attribute = res.attribute(0);
+        Attribute attribute1 = res.attribute(1);
 
         List<double[]> dataPca = new ArrayList<double[]>();
-        for (int i = 0; i < instances.size(); i++) {
+        for (int i = 0; i < res.size(); i++) {
             double[] data = new double[2];
-            Instance instance = instances.get(i);
-            data[1] = instance.value(attribute1);
+            Instance instance = res.get(i);
             data[0] = instance.value(attribute);
+            data[1] = instance.value(attribute1);
             dataPca.add(data);
         }
         EchatsOptions.SeriesBean normal = new EchatsOptions.SeriesBean();
@@ -265,6 +270,7 @@ public class ViewUtils {
         return options;
     }
 
+    //pca 降维 分类
     public static EchatsOptions reslovePCA(Instances instances) throws Exception {
         instances.setClassIndex(instances.numAttributes()-1);
         PrincipalComponents pca = new PrincipalComponents();
@@ -280,11 +286,11 @@ public class ViewUtils {
         List<EchatsOptions.SeriesBean> seriesBeans = new ArrayList<EchatsOptions.SeriesBean>();
 
         Set<String> labels = new HashSet<>();
-        for (int i=0;i<instances.size();i++){
+        for (int i=0;i<res.size();i++){
             try {
-                labels.add(instances.get(i).stringValue(instances.numAttributes()-1));
+                labels.add(res.get(i).stringValue(res.numAttributes()-1));
             }catch (Exception e){
-                labels.add(instances.get(i).value(instances.numAttributes()-1)+"");
+                labels.add(res.get(i).value(res.numAttributes()-1)+"");
 
             }
         }
@@ -304,11 +310,11 @@ public class ViewUtils {
         }
         options.setSeries(seriesBeans);
 
-        for (int i=0;i<instances.size();i++){
+        for (int i=0;i<res.size();i++){
             if (i%step != 0){
                 continue;
             }
-            Instance instance = instances.get(i);
+            Instance instance = res.get(i);
             String classId = null;
             try {
                 classId = instance.stringValue(instance.numAttributes()-1);
@@ -325,6 +331,8 @@ public class ViewUtils {
         return options;
     }
 
+
+    //特征相关性分析
     public static EchatsOptions resloveRelative(String file) throws Exception {
         String cmd = "python "+Const.RELATIVE_CMD+" path="+file;
         String res = PythonUtils.execPy(cmd);
@@ -346,6 +354,8 @@ public class ViewUtils {
         seriesBean.setData(vo.getRelativeValue());
         return options;
     }
+
+    //特征相关性分析回归
     public static EchatsOptions resloveRegRelative(String file) throws Exception {
         String cmd = "python "+Const.REG_RELATIVE_CMD+" path="+file;
         String res = PythonUtils.execPy(cmd);
@@ -367,6 +377,8 @@ public class ViewUtils {
         seriesBean.setData(vo.getRelativeValue());
         return options;
     }
+
+
     public static EchatsOptions resloveRegAttribute (Instances instances, String attributeName){
         EchatsOptions options = new EchatsOptions();
         options.setTitle(new EchatsOptions.TitleBean("属性与结果分布关系",""));
@@ -380,7 +392,7 @@ public class ViewUtils {
         seriesBean.setSymbolSize(4);
         seriesBean.setItemStyle(new EchatsOptions.SeriesBean.ItemStyleBean(
                 new EchatsOptions.SeriesBean.ItemStyleBean.NormalBean("#ff0000")));
-        List<double[]> data = new ArrayList<double[]>();
+        List<double[]> data = new ArrayList<>();
         Attribute attribute= instances.attribute(attributeName);
         Attribute attribute1= instances.attribute(instances.numAttributes()-1);
         for(int i = 0; i<instances.size();i++){

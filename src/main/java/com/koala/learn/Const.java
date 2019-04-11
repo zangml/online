@@ -42,4 +42,8 @@ public class Const {
 
     public static String ISOLATIONFOREST_FOR_WX="/usr/local/sk/IsoLationForestForWx.py";//封装的微信调用Isolation算法
 
+    public static String DATA_FOR_FFT_WX="/usr/local/data/wx/dataForFFT.arff";//微信调用fft组件时用于展示的数据集
+
+    public static String FFT_FOR_WX="/usr/local/sk/fftForWx.py";//封装的微信调用fft算法
+
 }

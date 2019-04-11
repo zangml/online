@@ -14,6 +14,7 @@ import com.koala.learn.utils.RedisKeyUtil;
 import com.koala.learn.utils.WekaUtils;
 import com.koala.learn.utils.divider.IDivider;
 import com.koala.learn.utils.treat.ViewUtils;
+import com.koala.learn.utils.treat.WxViewUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,7 +108,6 @@ public class WxLabLearnController {
        groupInstance.setCreateTime(new Date());
        groupInstance.setGroupId(groupId);
        groupInstance.setState(0);
-      // groupInstance.setUserId(mHolder.getUser().getId());
        groupInstanceMapper.insert(groupInstance);
        Integer instanceId = groupInstance.getId();
        return ServerResponse.createBySuccess(instanceId);
@@ -158,19 +158,15 @@ public class WxLabLearnController {
         Lab lab = mLabMapper.selectByPrimaryKey(id);
         System.out.println(lab.getFile());
         Instances instances = WekaUtils.readFromFile(lab.getFile());
-        String value = mJedisAdapter.get(RedisKeyUtil.getAttributeKey(param.toString(),type,id));
-        if ( value != null){
-            return ServerResponse.createBySuccessMessage("参数错误");
-        }
+
         EchatsOptions options = null;
         if (type == ViewUtils.VIEW_PCA){
-            options = ViewUtils.reslovePCA(instances);
+            options = WxViewUtils.reslovePCA(instances,12);
         }else if (type == ViewUtils.VIEW_ATTRI){
             options = ViewUtils.resloveAttribute(instances,param.get("attribute1").toString());
         }else if (type == ViewUtils.VIEW_MULATTRI){
-            options = ViewUtils.resloveMulAttribute(instances,param);
+            options = WxViewUtils.resloveMulAttribute12Step(instances,param);
         }else if (type == ViewUtils.VIEW_RELATIVE){
-            System.out.println("特征相关性分析");
             options = ViewUtils.resloveRelative(lab.getFile());
         }else if (type == ViewUtils.VIEW_REG_ATTRI){
             options = ViewUtils.resloveRegAttribute(instances,param.get("attribute1").toString());
@@ -182,15 +178,11 @@ public class WxLabLearnController {
             Gson gson = new Gson();
             String json = gson.toJson(options3D);
             mJedisAdapter.set(key,json);
-            return ServerResponse.createBySuccess(json);
+            return ServerResponse.createBySuccess(options3D);
         }else if (type == ViewUtils.VIEW_REG_PCA){
             options = ViewUtils.resloveRegPCA(instances);
         }
-        String key = RedisKeyUtil.getAttributeKey(param.toString(),type,id);
-        Gson gson = new Gson();
-        String json = gson.toJson(options);
-        mJedisAdapter.set(key,json);
-        return ServerResponse.createBySuccess(json);
+        return ServerResponse.createBySuccess(options);
     }
 
     //选择算法模型

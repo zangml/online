@@ -220,6 +220,12 @@ public class EchatsOptions {
     }
 
     public static class XAxisBean {
+        public XAxisBean(String name,String type, boolean scale, AxisLabelBean axisLabel) {
+            this.name=name;
+            this.type = type;
+            this.scale = scale;
+            this.axisLabel = axisLabel;
+        }
         public XAxisBean(String type, boolean scale, AxisLabelBean axisLabel) {
             this.type = type;
             this.scale = scale;
@@ -233,10 +239,19 @@ public class EchatsOptions {
          */
 
 
+        private String name;
         private String type;
         private boolean scale;
         private AxisLabelBean axisLabel;
         private List<String> data;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
 
         public List<String> getData() {
             return data;
@@ -303,6 +318,12 @@ public class EchatsOptions {
             this.scale = scale;
             this.axisLabel = axisLabel;
         }
+        public YAxisBean(String name ,String type, boolean scale, AxisLabelBeanX axisLabel) {
+            this.name=name;
+            this.type = type;
+            this.scale = scale;
+            this.axisLabel = axisLabel;
+        }
 
         /**
          * type : value
@@ -311,10 +332,19 @@ public class EchatsOptions {
          */
 
 
+        private String name;
         private String type;
         private boolean scale;
         private AxisLabelBeanX axisLabel;
         private List<?> data;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
 
         public List<?> getData() {
             return data;

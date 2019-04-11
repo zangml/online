@@ -5,7 +5,7 @@ import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
 import com.koala.learn.entity.EchatsOptions;
 import com.koala.learn.service.WxComponentService;
-import com.koala.learn.utils.treat.ViewUtils;
+import com.koala.learn.utils.treat.WxViewUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +17,7 @@ import weka.filters.supervised.instance.SMOTE;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 
 
 @Controller
@@ -33,7 +34,7 @@ public class WxLabComponentController {
     public ServerResponse<EchatsOptions> getSmoteData(){
         EchatsOptions options =new EchatsOptions();
         try {
-            options= ViewUtils.reslovePCA(new Instances(new FileReader(Const.DATA_FOR_SMOTE)));
+            options= WxViewUtils.reslovePCA(new Instances(new FileReader(Const.DATA_FOR_SMOTE)),12);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,7 +45,7 @@ public class WxLabComponentController {
     @RequestMapping(value = "get_smote")
     @ResponseBody
     public ServerResponse<EchatsOptions> handleSmote(@RequestParam(value = "k_neighbors",defaultValue = "5") Integer kNeighbors,
-                                                     @RequestParam(value = "ratio",defaultValue = "100")Integer ratio){
+                                                     @RequestParam(value = "ratio",defaultValue = "500")Integer ratio){
 
         EchatsOptions echatsOptions =new EchatsOptions();
 
@@ -55,8 +56,8 @@ public class WxLabComponentController {
             String[] options = {"-S", String.valueOf(1), "-P", String.valueOf(ratio), "-K", String.valueOf(kNeighbors)};
             smote.setInputFormat(instances);
             smote.setOptions(options);
-            Filter.useFilter(instances, smote);
-            echatsOptions=ViewUtils.reslovePCA(instances);
+            Instances instances1 = Filter.useFilter(instances, smote);
+            echatsOptions=WxViewUtils.reslovePCA(instances1,12);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,7 +75,7 @@ public class WxLabComponentController {
 
         Instances instances=new Instances(new FileReader(out.getAbsolutePath()));
 
-        EchatsOptions options =ViewUtils.reslovePCA(instances);
+        EchatsOptions options =WxViewUtils.reslovePCA(instances,1);
 
         return ServerResponse.createBySuccess(options);
 
@@ -90,11 +91,26 @@ public class WxLabComponentController {
 
         Instances instances=new Instances(new FileReader(out.getAbsolutePath()));
 
-        EchatsOptions options =ViewUtils.reslovePCA(instances);
+        EchatsOptions options =WxViewUtils.reslovePCA(instances,1);
 
         return ServerResponse.createBySuccess(options);
 
     }
 
+
+    @RequestMapping("get_fft")
+    @ResponseBody
+    public ServerResponse<EchatsOptions> handleFFT(@RequestParam(value = "attribute",defaultValue = "current") String attribute) throws IOException {
+
+        File input =new File(Const.DATA_FOR_FFT_WX);
+
+        File out=wxComponentService.handleFFT(attribute,input);
+
+        Instances instances=new Instances(new FileReader(out.getAbsolutePath()));
+
+        EchatsOptions options=WxViewUtils.resloveFFT(instances);
+
+        return ServerResponse.createBySuccess(options);
+    }
 
 }
