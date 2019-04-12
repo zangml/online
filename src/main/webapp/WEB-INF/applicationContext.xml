@@ -81,6 +81,7 @@
     <bean id="ocsvm" class="com.koala.learn.utils.feature.OneClassSVMFeature" />
     <bean id="isolation" class="com.koala.learn.utils.feature.IsolationForestFeature" />
     <bean id="lof" class="com.koala.learn.utils.feature.LocalOutlierFactorFeature" />
+    <bean id="normal" class="com.koala.learn.utils.feature.NormalizationFeature" />
 
 
     <bean class="com.google.gson.Gson" />

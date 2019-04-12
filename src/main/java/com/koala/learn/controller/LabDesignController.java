@@ -275,11 +275,12 @@ public class LabDesignController {
                     if (!CollectionUtils.isEmpty(regResult.getFeatureImportances()) ) {
                         EchatsOptions eo = mLabDesignerService.getEchartsOptions(lab, regResult.getFeatureImportances(), classifier);
                         echatsOptions.add(mGson.toJson(eo));
+                        System.out.println(regResult.getFeatureImportances());
                     }
                     System.out.println(regResult);
                     res.add(Arrays.asList(classifier.getName(), regResult.getVarianceScore(), regResult.getAbsoluteError(),Math.sqrt(regResult.getSquaredError()),
                             regResult.getMedianSquaredError(), regResult.getR2Score()));
-                } else {
+                 } else {
                     ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
                     AbstractClassifier classify = (AbstractClassifier) ac.getBean(classifier.getPath());
 

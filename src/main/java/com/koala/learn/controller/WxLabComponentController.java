@@ -3,11 +3,14 @@ package com.koala.learn.controller;
 
 import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
-import com.koala.learn.entity.EchatsOptions;
+import com.koala.learn.dao.ClassifierMapper;
+import com.koala.learn.dao.LabMapper;
+import com.koala.learn.entity.*;
 import com.koala.learn.service.WxComponentService;
 import com.koala.learn.utils.treat.WxViewUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +21,8 @@ import weka.filters.supervised.instance.SMOTE;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -28,6 +33,12 @@ public class WxLabComponentController {
 
     @Autowired
     WxComponentService wxComponentService;
+
+    @Autowired
+    ClassifierMapper mClassifierMapper;
+
+    @Autowired
+    LabMapper mLabMapper;
 
     @RequestMapping(value = "init_smote")
     @ResponseBody
@@ -97,7 +108,6 @@ public class WxLabComponentController {
 
     }
 
-
     @RequestMapping("get_fft")
     @ResponseBody
     public ServerResponse<EchatsOptions> handleFFT(@RequestParam(value = "attribute",defaultValue = "current") String attribute) throws IOException {
@@ -112,5 +122,16 @@ public class WxLabComponentController {
 
         return ServerResponse.createBySuccess(options);
     }
+
+    @RequestMapping("{labType}/{classifierId}/get_algorithm")
+    @ResponseBody
+    public ServerResponse<List<List<String>>> handleAlgorithm(@RequestParam Map<String,String> param,
+                                          @PathVariable("labType") Integer labType,
+                                          @PathVariable("classifierId") Integer classifierId) {
+         return wxComponentService.getAlgorithm(param,classifierId,labType);
+    }
+
+
+
 
 }

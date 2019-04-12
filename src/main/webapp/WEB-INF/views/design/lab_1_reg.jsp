@@ -57,9 +57,9 @@
 
                     <div class="col-sm-3" style="margin-left: 100px;">
                         <div class="input-group-btn">
-                            <button id="btnType" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">单一属性预测分析<span class="caret"></span></button>
+                            <button id="btnType" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">特征重要性分析<span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <li><a href="#" onclick="changeType(4,'单一属性预测分析')">单一属性预测分析</a></li>
+                                <%--<li><a href="#" onclick="changeType(4,'单一属性预测分析')">单一属性预测分析</a></li>--%>
                                 <li><a href="#" onclick="changeType(5,'特征重要性分析')">特征重要性分析</a></li>
                                 <li><a href="#" onclick="changeType(6,'PCA降维三维散点图')">PCA降维三维散点图</a></li>
                                 <li><a href="#" onclick="changeType(7,'PCA降维二维散点图')">PCA降维二维散点图</a></li>
@@ -107,7 +107,7 @@
                                         <div id="typeSelector"class="input-group-btn">
                                             <button  id="btnType1" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">单一属性预测分析 <span class="caret"></span></button>
                                             <ul class="dropdown-menu">
-                                                <li><a href="#" onclick="changeSelectType(4,'单一属性预测分析')">单一属性预测分析</a></li>
+                                                <%--<li><a href="#" onclick="changeSelectType(4,'单一属性预测分析')">单一属性预测分析</a></li>--%>
                                                 <li><a href="#" onclick="changeSelectType(5,'特征重要性分析')">特征重要性分析</a></li>
                                                 <li><a href="#" onclick="changeSelectType(6,'PCA降维三维散点图')">PCA降维三维散点图</a></li>
                                                 <li><a href="#" onclick="changeSelectType(7,'PCA降维二维散点图')">PCA降维二维散点图</a></li>
