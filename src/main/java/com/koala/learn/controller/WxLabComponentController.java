@@ -78,7 +78,7 @@ public class WxLabComponentController {
 
     @RequestMapping("get_oneclasssvm")
     @ResponseBody
-    public ServerResponse<EchatsOptions> handleOneClassSVM(@RequestParam(value = "nu",defaultValue = "0.003") Double nu) throws Exception {
+    public ServerResponse<EchatsOptions> handleOneClassSVM(@RequestParam(value = "nu",defaultValue = "0.03") Double nu) throws Exception {
 
         File input =new File(Const.DATA_FOR_OCSVM);
 
@@ -94,7 +94,7 @@ public class WxLabComponentController {
 
     @RequestMapping("get_isolation")
     @ResponseBody
-    public ServerResponse<EchatsOptions> handleIsoLationForest(@RequestParam(value = "contamination",defaultValue = "0.003") Double contamination) throws Exception {
+    public ServerResponse<EchatsOptions> handleIsoLationForest(@RequestParam(value = "contamination",defaultValue = "0.02") Double contamination) throws Exception {
 
         File input =new File(Const.DATA_FOR_ISOLATIONFOREST);
 
@@ -107,6 +107,29 @@ public class WxLabComponentController {
         return ServerResponse.createBySuccess(options);
 
     }
+
+    @RequestMapping("init_normalization")
+    @ResponseBody
+    public ServerResponse<EchatsOptions> initNormalization(){
+        EchatsOptions options =new EchatsOptions();
+        try {
+            options= WxViewUtils.resloveNormalization(new Instances(new FileReader(Const.DATA_FOR_NORMALIZATION)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ServerResponse.createBySuccess(options);
+    }
+
+    @RequestMapping("get_normalization")
+    @ResponseBody
+    public ServerResponse<EchatsOptions> handleNormalization() throws Exception {
+        File input =new File(Const.DATA_FOR_NORMALIZATION);
+        File out=wxComponentService.handleNormalization(input);
+        Instances instances=new Instances(new FileReader(out.getAbsolutePath()));
+        EchatsOptions options =WxViewUtils.resloveNormalization(instances);
+        return ServerResponse.createBySuccess(options);
+    }
+
 
     @RequestMapping("get_fft")
     @ResponseBody
@@ -123,6 +146,8 @@ public class WxLabComponentController {
         return ServerResponse.createBySuccess(options);
     }
 
+
+
     @RequestMapping("{labType}/{classifierId}/get_algorithm")
     @ResponseBody
     public ServerResponse<List<List<String>>> handleAlgorithm(@RequestParam Map<String,String> param,
@@ -130,7 +155,6 @@ public class WxLabComponentController {
                                           @PathVariable("classifierId") Integer classifierId) {
          return wxComponentService.getAlgorithm(param,classifierId,labType);
     }
-
 
 
 

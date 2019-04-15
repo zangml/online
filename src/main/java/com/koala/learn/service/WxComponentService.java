@@ -75,6 +75,22 @@ public class WxComponentService {
         return out;
     }
 
+    public File handleNormalization(File input) throws IOException {
+        input= WekaUtils.arff2csv(input);
+        File out=new File(Const.ROOT_FOR_DATA_WX,
+                input.getName().replace(".csv", "") +"Normal(0,1)" + ".csv");
+        if(out.exists()){
+            out=WekaUtils.csv2arff(out);
+            return out;
+        }
+        String normaldec = "python "+ Const.NORMALIZATION_FOR_WX
+                +" path="+input.getAbsolutePath()+" opath="+out;
+        System.out.println(normaldec);
+        PythonUtils.execPy(normaldec);
+        out=WekaUtils.csv2arff(out);
+        return out;
+    }
+
     public File handleFFT(String attribute,File input) throws IOException {
         input = WekaUtils.arff2csv(input);
         File out = new File(Const.ROOT_FOR_DATA_WX,

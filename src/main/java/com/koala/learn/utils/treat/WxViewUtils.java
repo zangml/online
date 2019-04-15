@@ -1,9 +1,13 @@
 package com.koala.learn.utils.treat;
+import com.google.gson.Gson;
+import com.koala.learn.Const;
 import com.koala.learn.entity.EchatsOptions;
 import java.util.*;
 import java.util.List;
 
 
+import com.koala.learn.utils.PythonUtils;
+import com.koala.learn.vo.RelativeVo;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -171,6 +175,80 @@ public class WxViewUtils {
         return options;
     }
 
+    //pca降维 回归算法
+    public static EchatsOptions resloveRegPCAWx(Instances instances,int step) throws Exception {
+        instances.setClassIndex(instances.numAttributes() - 1);
+        PrincipalComponents pca = new PrincipalComponents();
+        pca.setInputFormat(instances);
+        pca.setOptions(new String[]{"-M", "2"});
+        Instances res = Filter.useFilter(instances, pca);
+
+        EchatsOptions options = new EchatsOptions();
+        options.setTitle(new EchatsOptions.TitleBean("",""));
+        options.setXAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
+        options.setYAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
+
+
+        List<EchatsOptions.SeriesBean> seriesBeans = new ArrayList<EchatsOptions.SeriesBean>();
+        Set<String> labels = new HashSet<>();
+        options.setLegend(new EchatsOptions.LegendBean(new ArrayList<String>(labels)));
+
+        Attribute attribute = res.attribute(0);
+        Attribute attribute1 = res.attribute(1);
+
+        List<double[]> dataPca = new ArrayList<double[]>();
+        for (int i = 0; i < res.size(); i++) {
+            if (i % step != 0) {
+                continue;
+            }
+            double[] data = new double[2];
+            Instance instance = res.get(i);
+            data[0] = instance.value(attribute);
+            data[1] = instance.value(attribute1);
+            dataPca.add(data);
+        }
+        EchatsOptions.SeriesBean normal = new EchatsOptions.SeriesBean();
+        normal.setType("scatter");
+        normal.setItemStyle(new EchatsOptions.SeriesBean.ItemStyleBean(new EchatsOptions.SeriesBean.ItemStyleBean.NormalBean("")));
+        normal.setSymbolSize(4);
+        normal.setData(dataPca);
+        seriesBeans.add(normal);
+        options.setSeries(seriesBeans);
+        return options;
+    }
+    public static EchatsOptions resloveNormalization(Instances instances) throws Exception {
+        EchatsOptions options = new EchatsOptions();
+        options.setTitle(new EchatsOptions.TitleBean("数据分布","以每个特征的样本均值表示"));
+        options.setTooltip(new EchatsOptions.TooltipBean());
+        EchatsOptions.XAxisBean xAxisBean = new EchatsOptions.XAxisBean("category",true,null);
+        List<String> attributeList = new ArrayList<>();
+        for (int i=0;i<instances.numAttributes()-1;i++){
+            attributeList.add(instances.attribute(i).name());
+        }
+        xAxisBean.setData(attributeList);
+        options.setXAxis(Arrays.asList(xAxisBean));
+        EchatsOptions.YAxisBean yAxisBean = new EchatsOptions.YAxisBean("value",true,null);
+        options.setYAxis(Arrays.asList(yAxisBean));
+        options.setLegend(new EchatsOptions.LegendBean(Arrays.asList("")));
+        EchatsOptions.SeriesBean seriesBean = new EchatsOptions.SeriesBean();
+        seriesBean.setType("bar");
+        seriesBean.setName("数据分布");
+        options.setSeries(Arrays.asList(seriesBean));
+        List<Double> dataList=new ArrayList<>();
+        for(int i=0;i<instances.numAttributes()-1;i++){
+            Attribute attribute =instances.attribute(i);
+            double sum=0;
+            for (int j = 0; j < instances.size(); j++) {
+                Instance instance = instances.get(i);
+                sum=sum+instance.value(attribute);
+            }
+            double average=sum/instances.size();
+            dataList.add(average);
+        }
+
+        seriesBean.setData(dataList);
+        return options;
+    }
 }
 
 // 降维 在二维、三维可视化

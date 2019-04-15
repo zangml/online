@@ -56,4 +56,8 @@ public class Const {
 
     public static final String NORMALIZATION_FEATURE ="/usr/local/sk/Normalization.py"; //封装的OneClassSVMpython文件
 
+    public static final String DATA_FOR_NORMALIZATION ="/usr/local/data/wx/dataForNormalization.arff"; //用于微信调用的归一化数据
+
+    public static final String NORMALIZATION_FOR_WX ="/usr/local/sk/Normalization.py"; //封装的数据归一化文件
+
 }
