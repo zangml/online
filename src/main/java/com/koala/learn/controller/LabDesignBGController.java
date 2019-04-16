@@ -8,9 +8,11 @@ import com.koala.learn.dao.LabMapper;
 import com.koala.learn.dao.FeatureMapper;
 import com.koala.learn.entity.*;
 import com.koala.learn.service.LabDesignBGService;
+import com.koala.learn.service.WxComponentService;
 import com.koala.learn.utils.RedisKeyUtil;
 import com.koala.learn.utils.WekaUtils;
 import com.koala.learn.utils.treat.ViewUtils;
+import com.koala.learn.utils.treat.WxViewUtils;
 import com.koala.learn.vo.PointVo;
 import com.koala.learn.vo.ViewType;
 
@@ -31,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +72,8 @@ public class LabDesignBGController {
     @Autowired
     Gson gson;
 
+    @Autowired
+    WxComponentService wxComponentService;
     private static Logger logger = LoggerFactory.getLogger(LabDesignBGController.class);
 
     @RequestMapping(path = "/file/{id}")
@@ -120,6 +125,10 @@ public class LabDesignBGController {
             options = ViewUtils.resloveRegAttribute(instances,param.get("attribute1").toString());
         }else if (type == ViewUtils.VIEW_REG_RELATIVE){
             options = ViewUtils.resloveRegRelative(lab.getFile());
+        }else if (type == ViewUtils.VIEW_FFT){
+            File out=wxComponentService.handleFFT(param.get("attribute1").toString(),new File(lab.getFile()));
+            Instances instances1=new Instances(new FileReader(out.getAbsolutePath()));
+            options = WxViewUtils.resloveFFT(instances1);
         }else if (type == ViewUtils.VIEW_PCA_3){
             EchartOptions3D options3D = new EchartOptions3D();
             options3D = ViewUtils.reslovePCA3(instances);

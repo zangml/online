@@ -36,6 +36,7 @@ public class ViewUtils {
     public static final int VIEW_REG_RELATIVE =5;
     public static final int VIEW_PCA_3 =6;
     public static final int VIEW_REG_PCA =7;
+    public static final int VIEW_FFT=8;
 
 
     private static final int INTERNAL = 80;

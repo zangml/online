@@ -82,6 +82,7 @@
     <bean id="isolation" class="com.koala.learn.utils.feature.IsolationForestFeature" />
     <bean id="lof" class="com.koala.learn.utils.feature.LocalOutlierFactorFeature" />
     <bean id="normal" class="com.koala.learn.utils.feature.NormalizationFeature" />
+    <bean id="time" class="com.koala.learn.utils.feature.TimeFeature" />
 
 
     <bean class="com.google.gson.Gson" />
