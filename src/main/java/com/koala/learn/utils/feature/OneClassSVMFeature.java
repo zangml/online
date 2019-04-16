@@ -19,6 +19,9 @@ public class OneClassSVMFeature implements IFeature {
 
     @Override
     public File filter(Instances input, File file, File out) throws IOException {
+        if (out.exists()) {
+            return out;
+        }
         if(file.getAbsolutePath().endsWith("arff")) {
             file = WekaUtils.arff2csv(file);
         }
@@ -28,6 +31,7 @@ public class OneClassSVMFeature implements IFeature {
             System.out.println(ocsvmdec);
             PythonUtils.execPy(ocsvmdec);
             out=WekaUtils.csv2arff(out);
+            return out;
         }catch(Exception e) {
             e.printStackTrace();
         }

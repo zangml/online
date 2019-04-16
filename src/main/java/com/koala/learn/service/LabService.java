@@ -334,6 +334,9 @@ public class LabService {
                     String[] types = new String[]{"varianceScore","absoluteError","squaredError","medianSquaredError","r2Score"};
                     for (String type:types){
                         String value = mJedisAdapter.hget(key,type);
+                        if(type.equals("squaredError")){
+                            value=Math.sqrt(Double.valueOf(value))+"";
+                        }
                         logger.info("value-----------------------"+value);
                         data.add(Double.valueOf(value));
                     }
@@ -392,7 +395,8 @@ public class LabService {
         System.out.println(key);
         if(lab.getLableType()==0) {
             String value= mJedisAdapter.hget(key).get("squaredError");
-            System.out.println(value);
+            double value1=Math.sqrt(Double.valueOf(value));
+            value=value1+"";
             logger.info(value);
             return value.substring(0, value.length() > 5 ? 5 : value.length());
         }else{

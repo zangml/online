@@ -124,11 +124,13 @@ public class LabLearnService {
         IFeature filter = (IFeature) ac.getBean(feature.getLabel());
         filter.setOptions(options);
         ArffLoader loader = new ArffLoader();
+        if(input.getAbsolutePath().endsWith("csv")){
+            input=WekaUtils.csv2arff(input);
+        }
         loader.setFile(input);
         Instances instances = loader.getDataSet();
         instances.setClassIndex(instances.numAttributes()-1);
-        filter.filter(instances,input,output);
-        output=WekaUtils.csv2arff(output);
+        output=filter.filter(instances,input,output);
         mJedisAdapter.lpush(fileKey,output.getAbsolutePath());
 
 

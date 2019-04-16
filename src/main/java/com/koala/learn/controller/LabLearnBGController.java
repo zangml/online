@@ -131,6 +131,9 @@ public class  LabLearnBGController {
             param.put("labId",labId+"");
             mJedisAdapter.set(key,mGson.toJson(d));
             File input = new File(mJedisAdapter.lrange(fileInstanceKey,0,1).get(0));
+            if(input.getAbsolutePath().endsWith("csv")){
+                input=WekaUtils.csv2arff(input);
+            }
             ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
             IDivider divider = (IDivider) ac.getBean(param.get("type"));
             divider.divide(input,param);

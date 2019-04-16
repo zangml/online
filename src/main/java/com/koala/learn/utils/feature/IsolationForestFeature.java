@@ -18,6 +18,9 @@ public class IsolationForestFeature implements IFeature {
 
     @Override
     public File filter(Instances input, File file, File out) throws IOException {
+        if (out.exists()) {
+            return out;
+        }
         if(file.getAbsolutePath().endsWith("arff")) {
             file = WekaUtils.arff2csv(file);
         }
@@ -31,6 +34,7 @@ public class IsolationForestFeature implements IFeature {
             System.out.println(ifdec);
             PythonUtils.execPy(ifdec);
             out=WekaUtils.csv2arff(out);
+            return out;
         }catch(Exception e) {
             e.printStackTrace();
         }

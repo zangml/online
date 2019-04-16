@@ -203,7 +203,7 @@ public class LabLearnController {
                 mJedisAdapter.set(RedisKeyUtil.getAttributeKey(null, 3, labId), relative);
                 echatsOptions.add(relative);
             } else {
-                echatsOptions.add(mGson.toJson(ViewUtils.resloveRelative(lab.getFile())));
+                echatsOptions.add(mGson.toJson(ViewUtils.resloveRegRelative(lab.getFile())));
             }
             for (String str : classifierList) {
                 Classifier classifier = mGson.fromJson(str, Classifier.class);

@@ -22,6 +22,9 @@ public class WavedecFeature implements IFeature {
 
     @Override
     public File filter(Instances input, File file, File out) throws IOException {
+        if (out.exists()) {
+            return out;
+        }
 
         if(file.getAbsolutePath().endsWith("arff")) {
             file = WekaUtils.arff2csv(file);
@@ -36,6 +39,7 @@ public class WavedecFeature implements IFeature {
             System.out.println(wavedec);
             PythonUtils.execPy(wavedec);
             out=WekaUtils.csv2arff(out);
+            return out;
         }catch(Exception e) {
             e.printStackTrace();
         }

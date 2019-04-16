@@ -64,6 +64,8 @@
                                 <li><a href="#" onclick="changeType(5,'特征重要性分析')">特征重要性分析</a></li>
                                 <li><a href="#" onclick="changeType(6,'PCA降维三维散点图')">PCA降维三维散点图</a></li>
                                 <li><a href="#" onclick="changeType(7,'PCA降维二维散点图')">PCA降维二维散点图</a></li>
+                                <li><a href="#" onclick="changeType(8,'FFT频谱图')">FFT频谱图</a></li>
+
                             </ul>
                         </div><!-- /btn-group -->
                     </div>
@@ -149,7 +151,7 @@
     function changeType(a,b) {
         type = a;
         $("#btnType").text(b);
-        if (type==1||type==4){
+        if (type==1||type==4||type==8){
             $("#attribute2").hide();
             $("#attribute1").show();
         }else if (type==2){

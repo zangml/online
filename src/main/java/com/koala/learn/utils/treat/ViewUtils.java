@@ -336,6 +336,7 @@ public class ViewUtils {
     //特征相关性分析
     public static EchatsOptions resloveRelative(String file) throws Exception {
         String cmd = "python "+Const.RELATIVE_CMD+" path="+file;
+        System.out.println("现做"+cmd);
         String res = PythonUtils.execPy(cmd);
         Gson gson = new Gson();
         RelativeVo vo = gson.fromJson(res,RelativeVo.class);
@@ -360,6 +361,9 @@ public class ViewUtils {
     public static EchatsOptions resloveRegRelative(String file) throws Exception {
         String cmd = "python "+Const.REG_RELATIVE_CMD+" path="+file;
         String res = PythonUtils.execPy(cmd);
+        if(res.isEmpty()){
+            return null;
+        }
         Gson gson = new Gson();
         RelativeVo vo = gson.fromJson(res,RelativeVo.class);
         EchatsOptions options = new EchatsOptions();
