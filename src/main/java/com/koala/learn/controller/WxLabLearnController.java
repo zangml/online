@@ -10,6 +10,7 @@ import com.koala.learn.entity.*;
 import com.koala.learn.service.LabLearnService;
 import com.koala.learn.service.LabService;
 import com.koala.learn.service.UserService;
+import com.koala.learn.service.WxComponentService;
 import com.koala.learn.utils.RedisKeyUtil;
 import com.koala.learn.utils.WekaUtils;
 import com.koala.learn.utils.divider.IDivider;
@@ -31,6 +32,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
@@ -77,6 +79,10 @@ public class WxLabLearnController {
 
     @Autowired
     GroupInstanceMapper groupInstanceMapper;
+
+    @Autowired
+    WxComponentService wxComponentService;
+
     private static Logger logger = LoggerFactory.getLogger(LabLearnController.class);
 
 
@@ -172,15 +178,12 @@ public class WxLabLearnController {
             options = ViewUtils.resloveRegAttribute(instances,param.get("attribute1").toString());
         }else if (type == ViewUtils.VIEW_REG_RELATIVE){
             options = ViewUtils.resloveRegRelative(lab.getFile());
-        }else if (type == ViewUtils.VIEW_PCA_3){
-            EchartOptions3D options3D =ViewUtils.reslovePCA3(instances);
-            String key = RedisKeyUtil.getAttributeKey(param.toString(),type,id);
-            Gson gson = new Gson();
-            String json = gson.toJson(options3D);
-            mJedisAdapter.set(key,json);
-            return ServerResponse.createBySuccess(options3D);
+        }else if (type == ViewUtils.VIEW_FFT){
+            File out=wxComponentService.handleFFT(param.get("attribute1").toString(),new File(lab.getFile()));
+            Instances instances1=new Instances(new FileReader(out.getAbsolutePath()));
+            options = WxViewUtils.resloveFFT(instances1,5);
         }else if (type == ViewUtils.VIEW_REG_PCA){
-            options = ViewUtils.resloveRegPCA(instances);
+            options = ViewUtils.resloveRegPCA(instances,10);
         }
         return ServerResponse.createBySuccess(options);
     }

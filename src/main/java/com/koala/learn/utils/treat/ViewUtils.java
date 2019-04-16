@@ -233,7 +233,7 @@ public class ViewUtils {
     }
 
     //pca降维 回归算法
-    public static EchatsOptions resloveRegPCA(Instances instances) throws Exception {
+    public static EchatsOptions resloveRegPCA(Instances instances,int step) throws Exception {
         instances.setClassIndex(instances.numAttributes() - 1);
         PrincipalComponents pca = new PrincipalComponents();
         pca.setInputFormat(instances);
@@ -255,6 +255,9 @@ public class ViewUtils {
 
         List<double[]> dataPca = new ArrayList<double[]>();
         for (int i = 0; i < res.size(); i++) {
+            if (i % step != 0) {
+                continue;
+            }
             double[] data = new double[2];
             Instance instance = res.get(i);
             data[0] = instance.value(attribute);
@@ -264,7 +267,7 @@ public class ViewUtils {
         EchatsOptions.SeriesBean normal = new EchatsOptions.SeriesBean();
         normal.setType("scatter");
         normal.setItemStyle(new EchatsOptions.SeriesBean.ItemStyleBean(new EchatsOptions.SeriesBean.ItemStyleBean.NormalBean("")));
-        normal.setSymbolSize(4);
+        normal.setSymbolSize(3);
         normal.setData(dataPca);
         seriesBeans.add(normal);
         options.setSeries(seriesBeans);

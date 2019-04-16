@@ -1,13 +1,9 @@
 package com.koala.learn.utils.treat;
-import com.google.gson.Gson;
-import com.koala.learn.Const;
 import com.koala.learn.entity.EchatsOptions;
 import java.util.*;
 import java.util.List;
 
 
-import com.koala.learn.utils.PythonUtils;
-import com.koala.learn.vo.RelativeVo;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -80,7 +76,7 @@ public class WxViewUtils {
 
     //微信调用fft频谱
 
-    public static EchatsOptions resloveFFT(Instances instances){
+    public static EchatsOptions resloveFFT(Instances instances,int step){
         EchatsOptions options=new EchatsOptions();
         options.setTitle(new EchatsOptions.TitleBean("fft频谱图",""));
         options.setXAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("频率/Hz","value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
@@ -96,6 +92,9 @@ public class WxViewUtils {
 
         List<double[]> dataFFT = new ArrayList<>();
         for (int i = 0; i < instances.size(); i++) {
+            if (i%step != 0){
+                continue;
+            }
             double[] data = new double[2];
             Instance instance = instances.get(i);
             data[0] = instance.value(attribute);

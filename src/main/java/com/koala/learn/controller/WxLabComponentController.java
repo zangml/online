@@ -141,7 +141,7 @@ public class WxLabComponentController {
 
         Instances instances=new Instances(new FileReader(out.getAbsolutePath()));
 
-        EchatsOptions options=WxViewUtils.resloveFFT(instances);
+        EchatsOptions options=WxViewUtils.resloveFFT(instances,1);
 
         return ServerResponse.createBySuccess(options);
     }
