@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import weka.core.Attribute;
+import weka.core.Instance;
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.supervised.instance.SMOTE;
@@ -121,6 +123,22 @@ public class WxLabComponentController {
 
     }
 
+    @RequestMapping("clear_isolation")
+    @ResponseBody
+    public ServerResponse<EchatsOptions> clearExceptionInIsolation(@RequestParam(value = "contamination",defaultValue = "0.02") Double contamination) throws Exception {
+
+        File input =new File(Const.DATA_FOR_ISOLATIONFOREST);
+
+        File out = wxComponentService.handleIsolation(contamination,input);
+
+        Instances instances=new Instances(new FileReader(out.getAbsolutePath()));
+
+        EchatsOptions options =WxViewUtils.reslovePCAForClearIsolation(instances,1);
+
+        return ServerResponse.createBySuccess(options);
+
+    }
+
     @RequestMapping("init_normalization")
     @ResponseBody
     public ServerResponse<EchatsOptions> initNormalization(){
@@ -201,8 +219,6 @@ public class WxLabComponentController {
                                           @PathVariable("classifierId") Integer classifierId) {
          return wxComponentService.getAlgorithm(param,classifierId,labType);
     }
-
-
 
 
 

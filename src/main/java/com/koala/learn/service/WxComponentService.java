@@ -78,6 +78,23 @@ public class WxComponentService {
         return out;
     }
 
+    public File clearIsolation(double contamination,File input) throws IOException {
+        input = WekaUtils.arff2csv(input);
+        File out=new File(Const.ROOT_FOR_DATA_WX,
+                input.getName().replace(".csv", "") +"con_clear" +contamination+ ".csv");
+        if(out.exists()){
+            out=WekaUtils.csv2arff(out);
+            return out;
+        }
+        String isoLationmdec = "python "+ Const.CLEAR_ISOLATIONFOREST_FOR_WX+ " contamination="+contamination
+                +" path="+input.getAbsolutePath()+" opath="+out;
+        System.out.println(isoLationmdec);
+        PythonUtils.execPy(isoLationmdec);
+        out=WekaUtils.csv2arff(out);
+        return out;
+    }
+
+
     public File handleNormalization(File input) throws IOException {
         input= WekaUtils.arff2csv(input);
         File out=new File(Const.ROOT_FOR_DATA_WX,

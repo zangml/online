@@ -174,6 +174,71 @@ public class WxViewUtils {
         return options;
     }
 
+
+    //展示时不显示异常点
+    public static EchatsOptions reslovePCAForClearIsolation(Instances instances,int step) throws Exception {
+        instances.setClassIndex(instances.numAttributes()-1);
+        PrincipalComponents pca = new PrincipalComponents();
+        pca.setInputFormat(instances);
+        pca.setOptions(new String[]{"-M","2"});
+        Instances res = Filter.useFilter(instances,pca);
+
+        EchatsOptions options = new EchatsOptions();
+        options.setTitle(new EchatsOptions.TitleBean("",""));
+        options.setXAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
+        options.setYAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
+
+        List<EchatsOptions.SeriesBean> seriesBeans = new ArrayList<EchatsOptions.SeriesBean>();
+
+        Set<String> labels = new HashSet<>();
+        for (int i=0;i<res.size();i++){
+            try {
+                labels.add(res.get(i).stringValue(res.numAttributes()-1));
+            }catch (Exception e){
+                labels.add(res.get(i).value(res.numAttributes()-1)+"");
+
+            }
+        }
+        System.out.println("所有标签都在这了："+labels.toString());
+
+        options.setLegend(new EchatsOptions.LegendBean(new ArrayList<>(labels)));
+        Map<String,List<List<Double>>> dataMap = new HashMap<>();
+        for (String label:labels){
+            EchatsOptions.SeriesBean normal = new EchatsOptions.SeriesBean();
+            normal.setName(label);
+            normal.setType("scatter");
+            normal.setItemStyle(new EchatsOptions.SeriesBean.ItemStyleBean(new EchatsOptions.SeriesBean.ItemStyleBean.NormalBean("")));
+            List<List<Double>> nData = new ArrayList<>();
+            dataMap.put(label,nData);
+            normal.setSymbolSize(4);
+            normal.setData(nData);
+            seriesBeans.add(normal);
+        }
+        options.setSeries(seriesBeans);
+
+        for (int i=0;i<res.size();i++){
+            if (i%step != 0){
+                continue;
+            }
+            Instance instance = res.get(i);
+            String classId = null;
+            try {
+                classId = instance.stringValue(instance.numAttributes()-1);
+            }catch (Exception e){
+                classId = instance.value(instance.numAttributes()-1)+"";
+            }
+            if(classId.equals("-1.0")){
+                continue;
+            }
+            for (String label:labels){
+                if (classId.equals(label)){
+                    dataMap.get(label).add(Arrays.asList(new Double[]{instance.value(0),instance.value(1)}));
+                    break;
+                }
+            }
+        }
+        return options;
+    }
     //pca降维 回归算法
     public static EchatsOptions resloveRegPCAWx(Instances instances,int step) throws Exception {
         instances.setClassIndex(instances.numAttributes() - 1);
