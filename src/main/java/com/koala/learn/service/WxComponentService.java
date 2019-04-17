@@ -16,6 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import weka.core.Attribute;
+import weka.core.Instance;
+import weka.core.Instances;
 
 import java.io.File;
 import java.io.IOException;
@@ -108,6 +111,23 @@ public class WxComponentService {
         return out;
     }
 
+    public File handleTimeFeature(File input,Integer windowLength) throws IOException {
+        input = WekaUtils.arff2csv(input);
+        File out = new File(Const.ROOT_FOR_DATA_WX,
+                input.getName().replace(".csv", "") +
+                        "windowLength_" + windowLength + ".csv");
+        if (out.exists()) {
+            out = WekaUtils.csv2arff(out);
+            return out;
+        }
+        String timeDesc = "python " + Const.TIME_FEATURE_FOR_WX + " len_piece=" + windowLength
+                + " path=" + input.getAbsolutePath() + " opath=" + out;
+        System.out.println(timeDesc);
+        PythonUtils.execPy(timeDesc);
+        out = WekaUtils.csv2arff(out);
+        return out;
+    }
+
     public ServerResponse<List<List<String>>> getAlgorithm(Map<String,String> param, Integer classifierId, Integer labType){
         Classifier classifier = mClassifierMapper.selectByPrimaryKey(classifierId);
         List<List<String>> res = new ArrayList<>();
@@ -188,6 +208,25 @@ public class WxComponentService {
         String resParam = PythonUtils.execPy(sb.toString());
         RegResult regResult = mGson.fromJson(resParam, RegResult.class);
         return regResult;
+    }
+
+    public String getRatio0To1(Instances instances){
+        double lable0=0;
+        double lable1=0;
+        Attribute attributeLable =instances.attribute("lable");
+        for(int i=0; i<instances.size();i++){
+            Instance instance = instances.get(i);
+            double lable=instance.value(attributeLable);
+            if(lable==0){
+                lable0++;
+            }else if(lable==1){
+                lable1++;
+            }
+        }
+        double ratio=lable0/lable1;
+        System.out.println(ratio);
+        String ratioString=(ratio+"").substring(0,4);
+        return "0与1的样本数量比为"+ratioString+":1";
     }
 
 }

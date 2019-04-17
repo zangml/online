@@ -8,6 +8,8 @@ import com.koala.learn.dao.LabMapper;
 import com.koala.learn.entity.*;
 import com.koala.learn.service.WxComponentService;
 import com.koala.learn.utils.treat.WxViewUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,8 @@ import weka.filters.supervised.instance.SMOTE;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,25 +44,30 @@ public class WxLabComponentController {
     @Autowired
     LabMapper mLabMapper;
 
+    private static final  Logger logger= LoggerFactory.getLogger(WxLabComponentController.class);
+
     @RequestMapping(value = "init_smote")
     @ResponseBody
-    public ServerResponse<EchatsOptions> getSmoteData(){
-        EchatsOptions options =new EchatsOptions();
+    public ServerResponse<Map<String,Object>> getSmoteData(){
+        Map<String,Object> map =new HashMap();
         try {
-            options= WxViewUtils.reslovePCA(new Instances(new FileReader(Const.DATA_FOR_SMOTE)),12);
+            Instances instances =new Instances(new FileReader(Const.DATA_FOR_SMOTE));
+            EchatsOptions options =WxViewUtils.reslovePCA(instances,12);
+            //String ratio =wxComponentService.getRatio0To1(instances);
+            map.put("ratio","0与1的样本数量比为8.56:1");
+            map.put("option",options);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return ServerResponse.createBySuccess(options);
+        return ServerResponse.createBySuccess(map);
     }
 
     @RequestMapping(value = "get_smote")
     @ResponseBody
-    public ServerResponse<EchatsOptions> handleSmote(@RequestParam(value = "k_neighbors",defaultValue = "5") Integer kNeighbors,
+    public ServerResponse<Map<String,Object>> handleSmote(@RequestParam(value = "k_neighbors",defaultValue = "5") Integer kNeighbors,
                                                      @RequestParam(value = "ratio",defaultValue = "500")Integer ratio){
 
-        EchatsOptions echatsOptions =new EchatsOptions();
+        Map<String,Object> map =new HashMap<>();
 
         try {
             Instances instances = new Instances(new FileReader(Const.DATA_FOR_SMOTE));
@@ -68,11 +77,15 @@ public class WxLabComponentController {
             smote.setInputFormat(instances);
             smote.setOptions(options);
             Instances instances1 = Filter.useFilter(instances, smote);
-            echatsOptions=WxViewUtils.reslovePCA(instances1,12);
+            EchatsOptions echatsOptions = WxViewUtils.reslovePCA(instances1,12);
+
+            map.put("ratio",wxComponentService.getRatio0To1(instances1));
+            map.put("option",echatsOptions);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ServerResponse.createBySuccess(echatsOptions);
+        return ServerResponse.createBySuccess(map);
     }
 
 
@@ -147,6 +160,39 @@ public class WxLabComponentController {
     }
 
 
+    @RequestMapping("init_time_feature")
+    @ResponseBody
+    public ServerResponse initTimeFeature() throws IOException {
+        Map<String,Object> map =new HashMap();
+        Instances instances =new Instances(new FileReader(new File(Const.DATA_FOR_TIMEFEATURE).getAbsolutePath()));
+        List<String> attributeList=new ArrayList<>();
+        for (int i=0;i<instances.numAttributes();i++){
+            attributeList.add(instances.attribute(i).name());
+        }
+        logger.info(attributeList.toString());
+        map.put("attributeList",attributeList);
+        map.put("dataSize",instances.size());
+        return ServerResponse.createBySuccess(map);
+    }
+
+    @RequestMapping("get_time_feature")
+    @ResponseBody
+    public ServerResponse handleTimeFeature(@RequestParam(value = "windowLength",defaultValue = "10")Integer windowLength) throws IOException {
+        Map<String,Object> map =new HashMap();
+        File input=new File(Const.DATA_FOR_TIMEFEATURE);
+        File out=wxComponentService.handleTimeFeature(input,windowLength);
+
+        Instances instances=new Instances(new FileReader(out.getAbsolutePath()));
+        List<String> attributeList=new ArrayList<>();
+        for (int i=0;i<instances.numAttributes();i++){
+            attributeList.add(instances.attribute(i).name());
+        }
+        logger.info(attributeList.toString());
+        map.put("attributeList",attributeList);
+        map.put("dataSize",instances.size());
+        return ServerResponse.createBySuccess(map);
+    }
+
 
     @RequestMapping("{labType}/{classifierId}/get_algorithm")
     @ResponseBody
@@ -155,6 +201,7 @@ public class WxLabComponentController {
                                           @PathVariable("classifierId") Integer classifierId) {
          return wxComponentService.getAlgorithm(param,classifierId,labType);
     }
+
 
 
 

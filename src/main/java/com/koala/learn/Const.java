@@ -62,4 +62,8 @@ public class Const {
 
     public static final String TIME_FEATURE ="/usr/local/sk/timeFeature.py"; //封装的时域特征提取算法
 
+    public static final String TIME_FEATURE_FOR_WX ="/usr/local/sk/timeFeatureForWxWithoutLable.py"; //封装的微信调用的时域特征提取算法
+
+    public static final String DATA_FOR_TIMEFEATURE ="/usr/local/data/wx/dataForTimeFeature.arff"; //封装的用于展示时域特征提取的数据
+
 }
