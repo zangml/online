@@ -140,8 +140,8 @@ public class WxComponentService {
             out = WekaUtils.csv2arff(out);
             return out;
         }
-        String timeDesc = "python " + Const.TIME_FEATURE_FOR_WX + " len_piece=" + windowLength + " avg" +avg + " std" +std
-                + " var" +var+ " skew" +skew+ " kur" +kur+ " ptp" + ptp
+        String timeDesc = "python " + Const.TIME_FEATURE_FOR_WX + " len_piece=" + windowLength + " avg=" +avg + " std=" +std
+                + " var=" +var+ " skew=" +skew+ " kur=" +kur+ " ptp=" + ptp
                 + " path=" + input.getAbsolutePath() + " opath=" + out;
         System.out.println(timeDesc);
         PythonUtils.execPy(timeDesc);

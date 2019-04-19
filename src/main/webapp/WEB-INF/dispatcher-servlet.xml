@@ -64,6 +64,7 @@
     <mvc:interceptors>
         <!--对所有的请求记性拦截-->
         <bean class="com.koala.learn.interceptor.PassportInterceptor"/>
+
         <mvc:interceptor>
             <mvc:mapping path="/labs/*"/>
             <mvc:mapping path="/labs" />

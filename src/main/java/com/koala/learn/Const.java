@@ -68,4 +68,10 @@ public class Const {
 
     public static final String DATA_FOR_TIMEFEATURE ="/usr/local/data/wx/dataForTimeFeature.arff"; //封装的用于展示时域特征提取的数据
 
+    public static final String DATA_FOR_TIMEFEATURE_DOWNLOAD ="/usr/local/data/wx/download/dataForTimeFeature.xls"; //
+
+    public static final String DATA_FOR_NORMALIZATION_DOWNLOAD ="/usr/local/data/wx/download/dataForNormalization.xls"; //
+
+    public static final String DATA_FOR_NORMALIZATION_HANDLED_DOWNLOAD ="/usr/local/data/wx/download/dataForNormalizationNormal(0,1).xls"; //
+
 }

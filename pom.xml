@@ -336,6 +336,14 @@
       <version>2.9.0</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>4.1.0</version>
+    </dependency>
+
+
     <!-- https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka/weka-stable -->
     <dependency>
       <groupId>nz.ac.waikato.cms.weka</groupId>
