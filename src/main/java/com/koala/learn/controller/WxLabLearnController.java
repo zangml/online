@@ -267,6 +267,7 @@ public class WxLabLearnController {
 
         for (String str : classifierList) {
             Classifier classifier = mGson.fromJson(str, Classifier.class);
+            legends.add(classifier.getName());
             classifierNameList.add(classifier.getName());
             if (lab.getLableType() == 1) {
                 Result result = mLabLearnService.findCache(labId, instanceId, classifier);
@@ -313,11 +314,11 @@ public class WxLabLearnController {
                     }
                 }
             }
-            List<LabResultVo> labResultVo = labService.getValueMapForWx(lab.getId(),instanceId,session);
-            if (labResultVo != null){
-                labResultVoList.addAll(labResultVo);
-            }
-            legends.add(classifier.getName());
+
+        }
+        List<LabResultVo> labResultVo = labService.getValueMapForWx(lab.getId(),instanceId,session);
+        if (labResultVo != null){
+            labResultVoList.addAll(labResultVo);
         }
         String value= mGson.toJson(labResultVoList);
         map.put("res",res);

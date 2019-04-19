@@ -84,7 +84,7 @@ public class LabService {
         groupInstance.setCreateTime(new Date());
         groupInstance.setGroupId(groupId);
         groupInstance.setState(0);
-        groupInstance.setUserId(mHolder.getUser().getId());;
+        groupInstance.setUserId(mHolder.getUser().getId());
         groupInstanceMapper.insert(groupInstance);
         return groupInstance.getId();
     }
