@@ -346,7 +346,7 @@ public class LabLearnService {
                 String resKey = RedisKeyUtil.getResInstanceKey(labId,instanceId,classifier);
                 mJedisAdapter.hset(resKey,"varianceScore",regResult.getVarianceScore()+"");
                 mJedisAdapter.hset(resKey,"absoluteError",regResult.getAbsoluteError()+"");
-                mJedisAdapter.hset(resKey,"squaredError",regResult.getSquaredError()+"");
+                mJedisAdapter.hset(resKey,"squaredError",Math.sqrt(regResult.getSquaredError())+"");
                 mJedisAdapter.hset(resKey,"medianSquaredError",regResult.getMedianSquaredError()+"");
                 mJedisAdapter.hset(resKey,"r2Score",regResult.getR2Score()+"");
                 mJedisAdapter.hset(resKey,"featureImportances",mGson.toJson(regResult.getFeatureImportances()));

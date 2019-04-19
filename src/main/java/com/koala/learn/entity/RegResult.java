@@ -21,6 +21,21 @@ public class RegResult {
         this.r2Score = r2Score;
         this.featureImportances = featureImportances;
     }
+    //varianceScore","absoluteError","squaredError","medianSquaredError","r2Score"
+    public String getType(String type){
+        if(type=="varianceScore"){
+            return varianceScore+"";
+        }else if(type=="absoluteError"){
+            return absoluteError+"";
+        }else if(type=="squaredError"){
+            return squaredError+"";
+        }else if(type=="medianSquaredError"){
+            return medianSquaredError+"";
+        }else if(type=="r2Score"){
+            return r2Score+"";
+        }
+        return null;
+    }
 
     public double getVarianceScore() {
         return varianceScore;

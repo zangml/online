@@ -28,6 +28,8 @@ import weka.classifiers.evaluation.Evaluation;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Created by koala on 2017/12/7.
  */
@@ -64,6 +66,8 @@ public class LabService {
 
     @Autowired
     GroupInstanceMapper groupInstanceMapper;
+    @Autowired
+    LabLearnService mLabLearnService;
 
     private static Logger logger = LoggerFactory.getLogger(LabService.class);
     public List<LabGroup> getGroupList(){
@@ -301,6 +305,55 @@ public class LabService {
             return resultVos;
         }
     }
+    public List<LabResultVo> getValueMapForWx(Integer labId, Integer instanceId, HttpSession session){
+        logger.info("-------LabResultVo----------------");
+        String classKey = RedisKeyUtil.getClassifierInstanceKey(labId,instanceId);
+        List<LabResultVo> vos = new ArrayList<>();
+        List<String> classifierList = mJedisAdapter.lrange(classKey,0,mJedisAdapter.llen(classKey));
+        logger.info(classifierList.size()+"-----------------------");
+        for (int i=0;i<classifierList.size();i++){
+            Classifier classifier = mGson.fromJson(classifierList.get(i),Classifier.class);
+            LabResultVo vo = new LabResultVo();
+            vo.setType("bar");
+            vo.setName(classifier.getName());
+            logger.info(classifier.getName()+"-----------------------");
+            String key = RedisKeyUtil.getResInstanceKey(labId,instanceId,classifier);
+            logger.info(key+"-----------------------");
+            List<Double> data = new ArrayList<>();
+            Lab lab = mLabMapper.selectByPrimaryKey(labId);
+            if(lab.getLableType()==1){
+                String[] types = new String[]{"Accuracy","Precision","Recall","F-Measure","ROC-Area"};
+                for (String type:types){
+                    String value = mJedisAdapter.hget(key,type);
+                    if(value==null){
+                       Result result = mLabLearnService.cal(labId, instanceId, session, classifier);
+                       value=result.getType(type);
+                    }
+                    logger.info("value---------------------"+value);
+                    data.add(Double.valueOf(value));
+                }
+            }else if(lab.getLableType()==0){
+                String[] types = new String[]{"varianceScore","absoluteError","squaredError","medianSquaredError","r2Score"};
+                for (String type:types){
+                    String value = mJedisAdapter.hget(key,type);
+                    if(value==null){
+                        RegResult regResult = mLabLearnService.cal2(labId, instanceId, session, classifier);
+                        value=regResult.getType(type);
+                        if(type.equals("squaredError")){
+                            value=Math.sqrt(Double.valueOf(value))+"";
+                        }
+                    }
+                    logger.info("value---------------------"+value);
+                    data.add(Double.valueOf(value));
+                }
+            }
+            vo.setData(data);
+            vos.add(vo);
+        }
+        return vos;
+    }
+
+
 
     public List<LabResultVo> getValueMap(Integer labId,Integer groupInstanceId){
         User user = mHolder.getUser();

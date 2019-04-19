@@ -73,6 +73,8 @@ public class LabLearnController {
     @Autowired
     LabDesignerService mLabDesignerService;
 
+    @Autowired
+    JedisAdapter mAdapter;
     private static Logger logger = LoggerFactory.getLogger(LabLearnController.class);
 
     @RequestMapping("/learn/create/{groupInstance}/{labId}")
@@ -220,8 +222,8 @@ public class LabLearnController {
                         res.add(cache);
 
                           if(!CollectionUtils.isEmpty(result.getFeatureImportances())) {
-                            eo = mLabDesignerService.getEchartsOptions(lab, result.getFeatureImportances(), classifier);
-                            echatsOptions.add(mGson.toJson(eo));
+                              eo = mLabDesignerService.getEchartsOptions(lab, result.getFeatureImportances(), classifier);
+                              echatsOptions.add(mGson.toJson(eo));
                         }
                     } else {
                         logger.info("start----cal");
@@ -247,7 +249,7 @@ public class LabLearnController {
                     if (regResult != null) {
                         List<String> cache = Arrays.asList(classifier.getName(),
                                 regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
-                               Math.sqrt(regResult.getSquaredError()) + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
+                               regResult.getSquaredError() + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
                         res.add(cache);
                         if(!CollectionUtils.isEmpty(regResult.getFeatureImportances())) {
                             eo = mLabDesignerService.getEchartsOptions(lab,regResult.getFeatureImportances(), classifier);

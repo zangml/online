@@ -128,16 +128,20 @@ public class WxComponentService {
         return out;
     }
 
-    public File handleTimeFeature(File input,Integer windowLength) throws IOException {
+    public File handleTimeFeature(File input,Integer windowLength,
+                                  Integer avg,Integer std, Integer var,
+                                  Integer skew,Integer kur,Integer ptp) throws IOException {
         input = WekaUtils.arff2csv(input);
         File out = new File(Const.ROOT_FOR_DATA_WX,
                 input.getName().replace(".csv", "") +
-                        "windowLength_" + windowLength + ".csv");
+                        "windowLength_" + windowLength +"avg_" +avg + "std_" +std
+                + "var_" +var+ "skew_" +skew+ "kur_" +kur+ "ptp_" + ptp+ ".csv");
         if (out.exists()) {
             out = WekaUtils.csv2arff(out);
             return out;
         }
-        String timeDesc = "python " + Const.TIME_FEATURE_FOR_WX + " len_piece=" + windowLength
+        String timeDesc = "python " + Const.TIME_FEATURE_FOR_WX + " len_piece=" + windowLength + " avg" +avg + " std" +std
+                + " var" +var+ " skew" +skew+ " kur" +kur+ " ptp" + ptp
                 + " path=" + input.getAbsolutePath() + " opath=" + out;
         System.out.println(timeDesc);
         PythonUtils.execPy(timeDesc);

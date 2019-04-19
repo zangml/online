@@ -195,10 +195,16 @@ public class WxLabComponentController {
 
     @RequestMapping("get_time_feature")
     @ResponseBody
-    public ServerResponse handleTimeFeature(@RequestParam(value = "windowLength",defaultValue = "10")Integer windowLength) throws IOException {
+    public ServerResponse handleTimeFeature(@RequestParam(value = "windowLength",defaultValue = "10")Integer windowLength,
+                                            @RequestParam(value = "avg",defaultValue = "0")Integer avg,
+                                            @RequestParam(value = "std",defaultValue = "0")Integer std,
+                                            @RequestParam(value = "var",defaultValue = "0")Integer var,
+                                            @RequestParam(value = "skew",defaultValue = "0")Integer skew,
+                                            @RequestParam(value = "kur",defaultValue = "0")Integer kur,
+                                            @RequestParam(value = "ptp",defaultValue = "0")Integer ptp) throws IOException {
         Map<String,Object> map =new HashMap();
         File input=new File(Const.DATA_FOR_TIMEFEATURE);
-        File out=wxComponentService.handleTimeFeature(input,windowLength);
+        File out=wxComponentService.handleTimeFeature(input,windowLength,avg,std,var,skew,kur,ptp);
 
         Instances instances=new Instances(new FileReader(out.getAbsolutePath()));
         List<String> attributeList=new ArrayList<>();

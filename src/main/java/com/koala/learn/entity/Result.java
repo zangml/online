@@ -25,6 +25,22 @@ public class Result {
         this.featureImportances = featureImportances;
     }
 
+    //"Accuracy","Precision","Recall","F-Measure","ROC-Area"
+    public String getType(String type){
+        if(type=="Accuracy"){
+            return accuracy+"";
+        }else if(type=="Precision"){
+            return precision+"";
+        }else if(type=="Recall"){
+            return recall+"";
+        }else if(type=="F-Measure"){
+            return fMeasure+"";
+        }else if(type=="ROC-Area"){
+            return rocArea+"";
+        }
+        return null;
+    }
+
     public double getAccuracy() {
         return accuracy;
     }

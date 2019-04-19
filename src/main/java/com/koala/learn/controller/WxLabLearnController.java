@@ -16,6 +16,7 @@ import com.koala.learn.utils.WekaUtils;
 import com.koala.learn.utils.divider.IDivider;
 import com.koala.learn.utils.treat.ViewUtils;
 import com.koala.learn.utils.treat.WxViewUtils;
+import com.koala.learn.vo.LabResultVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,9 @@ public class WxLabLearnController {
 
     @Autowired
     WxComponentService wxComponentService;
+
+    @Autowired
+    LabService labService;
 
     private static Logger logger = LoggerFactory.getLogger(LabLearnController.class);
 
@@ -244,6 +248,7 @@ public class WxLabLearnController {
     @RequestMapping("learn/getResult/{labId}/{instance}")
     @ResponseBody
     public ServerResponse getResult(@PathVariable("labId") Integer labId, @PathVariable("instance") Integer instanceId, HttpSession session) {
+        Map<String,Object> map =new HashMap<>();
         String classifierKey = RedisKeyUtil.getClassifierInstanceKey(labId, instanceId);
         if (mJedisAdapter.llen(classifierKey) == 0) {
             return ServerResponse.createByErrorMessage("未选择算法");
@@ -251,6 +256,8 @@ public class WxLabLearnController {
         Lab lab = mLabMapper.selectByPrimaryKey(labId);
         List<String> classifierList = mJedisAdapter.lrange(classifierKey, 0, mJedisAdapter.llen(classifierKey));
         List<List<String>> res = new ArrayList<>();
+        List<String> legends = new ArrayList<>();
+        List<LabResultVo> labResultVoList = new ArrayList<>();
         if (lab.getLableType() == 1) {
             res.add(Arrays.asList("算法", "召回率", "准确率", "精确率", "F-Measure", "ROC-Area"));
         } else {
@@ -306,8 +313,18 @@ public class WxLabLearnController {
                     }
                 }
             }
+            List<LabResultVo> labResultVo = labService.getValueMapForWx(lab.getId(),instanceId,session);
+            if (labResultVo != null){
+                labResultVoList.addAll(labResultVo);
+            }
+            legends.add(classifier.getName());
         }
-        return ServerResponse.createBySuccess(res);
+        String value= mGson.toJson(labResultVoList);
+        map.put("res",res);
+        map.put("legend",legends);
+        map.put("series",value);
+
+        return ServerResponse.createBySuccess(map);
     }
 
 
