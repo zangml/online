@@ -320,10 +320,10 @@ public class WxLabLearnController {
         if (labResultVo != null){
             labResultVoList.addAll(labResultVo);
         }
-        String value= mGson.toJson(labResultVoList);
+        //String value= mGson.toJson(labResultVoList);
         map.put("res",res);
         map.put("legend",legends);
-        map.put("series",value);
+        map.put("series",labResultVoList);
 
         return ServerResponse.createBySuccess(map);
     }
