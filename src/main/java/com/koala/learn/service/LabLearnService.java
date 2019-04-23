@@ -341,19 +341,22 @@ public class LabLearnService {
                 sb.append(" train=").append(csvTrain.getAbsolutePath()).append(" test=").append(csvTest.getAbsolutePath());
                 logger.info(sb.toString());
                 String resParam = PythonUtils.execPy(sb.toString());
+                System.out.println(resParam);
                 RegResult regResult = mGson.fromJson(resParam,RegResult.class);
+                double sqrt=Math.sqrt(regResult.getSquaredError());
+                regResult.setSquaredError(sqrt);
+                System.out.println("squareError:"+regResult.getSquaredError());
                 List<String> res = Arrays.asList(classifier.getName(),regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
-                        Math.sqrt(regResult.getSquaredError()) + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
+                        regResult.getSquaredError() + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
                 String resKey = RedisKeyUtil.getResInstanceKey(labId,instanceId,classifier);
                 mJedisAdapter.hset(resKey,"varianceScore",regResult.getVarianceScore()+"");
                 mJedisAdapter.hset(resKey,"absoluteError",regResult.getAbsoluteError()+"");
-                mJedisAdapter.hset(resKey,"squaredError",Math.sqrt(regResult.getSquaredError())+"");
+                mJedisAdapter.hset(resKey,"squaredError",regResult.getSquaredError()+"");
                 mJedisAdapter.hset(resKey,"medianSquaredError",regResult.getMedianSquaredError()+"");
                 mJedisAdapter.hset(resKey,"r2Score",regResult.getR2Score()+"");
                 mJedisAdapter.hset(resKey,"featureImportances",mGson.toJson(regResult.getFeatureImportances()));
                 String cacheKye = RedisKeyUtil.getCacheKey(labId,train.getAbsolutePath(),classifier.getName()+classifierStr.hashCode());
                 mJedisAdapter.set(cacheKye,mGson.toJson(regResult));
-                regResult.setSquaredError(Math.sqrt(regResult.getSquaredError()));
                 return regResult;
             }else {
                 System.out.println(classifier.getPath());
