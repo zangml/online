@@ -299,13 +299,12 @@ public class WxLabLearnController {
                             regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
                             regResult.getSquaredError() + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
                     res.add(cache);
-
-                } else {
+                }else {
                     logger.info("start----cal");
                     regResult = mLabLearnService.cal2(labId, instanceId, session, classifier);
                     System.out.println(regResult);
                     if (regResult == null) {
-                        return ServerResponse.createByErrorMessage("运算失败");
+                        return ServerResponse.createByErrorMessage("运算失败la");
                     } else {
                         List<String> resList = Arrays.asList(classifier.getName(),
                                 regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",

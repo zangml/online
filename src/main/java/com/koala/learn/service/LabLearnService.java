@@ -330,6 +330,7 @@ public class LabLearnService {
             String classifierStr = mGson.toJson(classifier);
             String[] options = resolveOptions(classifier);
             if (classifier.getPath().endsWith("py")){
+                System.out.println("classifier.getPath().endsWith(py)");
                 File csvTrain = WekaUtils.arff2csv(train);
                 File csvTest = WekaUtils.arff2csv(test);
                 StringBuilder sb = new StringBuilder("python ");
@@ -352,6 +353,46 @@ public class LabLearnService {
                 mJedisAdapter.hset(resKey,"featureImportances",mGson.toJson(regResult.getFeatureImportances()));
                 String cacheKye = RedisKeyUtil.getCacheKey(labId,train.getAbsolutePath(),classifier.getName()+classifierStr.hashCode());
                 mJedisAdapter.set(cacheKye,mGson.toJson(regResult));
+                return regResult;
+            }else {
+                System.out.println(classifier.getPath());
+//                ArffLoader loader = new ArffLoader();
+//                loader.setFile(train);
+//                Instances itrain = loader.getDataSet();
+//                itrain.setClassIndex(itrain.numAttributes()-1);
+//
+//                loader.setFile(test);
+//                Instances itest = loader.getDataSet();
+//                itest.setClassIndex(itrain.numAttributes()-1);
+//
+//                ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
+//                AbstractClassifier c = (AbstractClassifier) ac.getBean(classifier.getPath());
+//                c.buildClassifier(itrain);
+//                Evaluation evaluation = new Evaluation(itrain);
+//                evaluation.evaluateModel(c,itest);
+//                System.out.println("回归："+evaluation.toClassDetailsString());
+//                System.out.println(evaluation.toSummaryString());
+//                System.out.println(evaluation.toMatrixString());
+//                List<String> res = Arrays.asList(classifier.getName(),evaluation.recall(1)+"",
+//                        evaluation.pctCorrect()/100+"",
+//                        evaluation.precision(1)+"",
+//                        evaluation.fMeasure(1)+"",
+//                        evaluation.areaUnderROC(1)+"");
+//                String resKey = RedisKeyUtil.getResInstanceKey(labId,instanceId,classifier);
+//                mJedisAdapter.hset(resKey,"Accuracy",evaluation.pctCorrect()/100+"");
+//                mJedisAdapter.hset(resKey,"Precision",evaluation.precision(1)+"");
+//                mJedisAdapter.hset(resKey,"Recall",evaluation.recall(1)+"");
+//                mJedisAdapter.hset(resKey,"F-Measure",evaluation.fMeasure(1)+"");
+//                mJedisAdapter.hset(resKey,"ROC-Area",evaluation.areaUnderROC(1)+"");
+
+                RegResult regResult = new RegResult();
+//                result.setAccuracy(evaluation.pctCorrect()/100);
+//                result.setPrecision(evaluation.precision(1));
+//                result.setRecall(evaluation.recall(1));
+//                result.setfMeasure(evaluation.fMeasure(1));
+//                result.setRocArea(evaluation.areaUnderROC(1));
+//                String cacheKye = RedisKeyUtil.getCacheKey(labId,train.getAbsolutePath(),classifier.getName()+classifierStr.hashCode());
+//                mJedisAdapter.set(cacheKye,mGson.toJson(result));
                 return regResult;
             }
 

@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.Set;
 
 import com.koala.learn.utils.RedisKeyUtil;
+import com.koala.learn.utils.WekaUtils;
 import redis.clients.jedis.Jedis;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader;
@@ -20,6 +21,13 @@ import weka.core.converters.ArffSaver;
 public class RandomDivider implements IDivider {
     @Override
     public void divide(File src, Map<String, String> param) {
+        if(src.getAbsolutePath().endsWith("csv")){
+            try {
+                src= WekaUtils.csv2arff(src);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         String name = src.getName();
         float raido = Float.valueOf(param.get("radio"));
         File trainFile = new File(src.getParent(),"random"+raido+name.replace(".arff","train.arff"));
