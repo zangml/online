@@ -353,6 +353,7 @@ public class LabLearnService {
                 mJedisAdapter.hset(resKey,"featureImportances",mGson.toJson(regResult.getFeatureImportances()));
                 String cacheKye = RedisKeyUtil.getCacheKey(labId,train.getAbsolutePath(),classifier.getName()+classifierStr.hashCode());
                 mJedisAdapter.set(cacheKye,mGson.toJson(regResult));
+                regResult.setSquaredError(Math.sqrt(regResult.getSquaredError()));
                 return regResult;
             }else {
                 System.out.println(classifier.getPath());
