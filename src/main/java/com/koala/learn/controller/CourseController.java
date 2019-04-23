@@ -39,12 +39,24 @@ public class CourseController {
 //        return "course/classList";
 //    }
     @RequestMapping("/course/{couseType}")
-    public String mysqlCourseList(Model model,@PathVariable("couseType") int couseType) {
-        CourseType type = mCourseService.getCourseType(couseType);
-        List<Course> courseList = mCourseService.getCourseByType(couseType);
-        model.addAttribute("courseList", courseList);
-        model.addAttribute("courseType", type);
-        return "course/classList";
+    public String mysqlCourseList(@PathVariable("couseType") Integer couseType) {
+        if(couseType==1){
+            return "phmCourse/phmIntroduce";
+        }else if(couseType==2){
+            return "phmCourse/preHandleCourse";
+        }else if(couseType==3){
+            return "phmCourse/featureCourse";
+        }else if(couseType==4){
+            return "phmCourse/healthyAssemble";
+        }else if(couseType==5){
+            return "phmCourse/diagnosis";
+        }else if(couseType==6){
+            return "phmCourse/lifePre";
+        }else if(couseType==7){
+            return "redirect:/labs";
+        }else if(couseType==8){
+            return "design/createGroup";
+        }return "";
     }
 
 
