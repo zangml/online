@@ -308,7 +308,7 @@ public class WxLabLearnController {
                     } else {
                         List<String> resList = Arrays.asList(classifier.getName(),
                                 regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
-                                Math.sqrt(regResult.getSquaredError()) + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
+                               regResult.getSquaredError() + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
                         res.add(resList);
                     }
                 }

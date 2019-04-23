@@ -330,7 +330,6 @@ public class LabLearnService {
             String classifierStr = mGson.toJson(classifier);
             String[] options = resolveOptions(classifier);
             if (classifier.getPath().endsWith("py")){
-                System.out.println("classifier.getPath().endsWith(py)");
                 File csvTrain = WekaUtils.arff2csv(train);
                 File csvTest = WekaUtils.arff2csv(test);
                 StringBuilder sb = new StringBuilder("python ");

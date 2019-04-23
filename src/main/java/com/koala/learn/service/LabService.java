@@ -339,9 +339,6 @@ public class LabService {
                     if(value==null){
                         RegResult regResult = mLabLearnService.cal2(labId, instanceId, session, classifier);
                         value=regResult.getType(type);
-                        if(type.equals("squaredError")){
-                            value=Math.sqrt(Double.valueOf(value))+"";
-                        }
                     }
                     logger.info("value---------------------"+value);
                     data.add(Double.valueOf(value));
@@ -387,9 +384,6 @@ public class LabService {
                     String[] types = new String[]{"varianceScore","absoluteError","squaredError","medianSquaredError","r2Score"};
                     for (String type:types){
                         String value = mJedisAdapter.hget(key,type);
-                        if(type.equals("squaredError")){
-                            value=Math.sqrt(Double.valueOf(value))+"";
-                        }
                         logger.info("value-----------------------"+value);
                         data.add(Double.valueOf(value));
                     }
@@ -448,8 +442,7 @@ public class LabService {
         System.out.println(key);
         if(lab.getLableType()==0) {
             String value= mJedisAdapter.hget(key).get("squaredError");
-            double value1=Math.sqrt(Double.valueOf(value));
-            value=value1+"";
+            System.out.println(value);
             logger.info(value);
             return value.substring(0, value.length() > 5 ? 5 : value.length());
         }else{
