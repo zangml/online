@@ -30,7 +30,7 @@
                         <c:when test="${lab.id==353 || lab.id==354 || lab.id==365}">
                             <img width="100px" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555995495206&di=3886ed6124774bbd36108bdc83c975d4&imgtype=0&src=http%3A%2F%2Fa0.att.hudong.com%2F16%2F55%2F01300543932868148506559151432_s.jpg"></a>
                         </c:when>
-                        <c:when test="${lab.id==384}">
+                        <c:when test="${lab.id==426}">
                         <img width="100px" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555999567566&di=39385ec7a34976d31246ebc7a32bf132&imgtype=0&src=http%3A%2F%2Fimg56.jc35.com%2F9%2F20141031%2F635503584526372545138.jpg"></a>
                         </c:when>
                         <c:otherwise>
