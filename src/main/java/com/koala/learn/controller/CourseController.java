@@ -30,14 +30,23 @@ public class CourseController {
         return "course/courseList";
     }
 
+//    @RequestMapping("/course/{couseType}")
+//    public String mysqlCourseList(Model model,@PathVariable("couseType") int couseType){
+//        CourseType type = mCourseService.getCourseType(couseType);
+//        List<Course> courseList = mCourseService.getCourseByType(couseType);
+//        model.addAttribute("courseList",courseList);
+//        model.addAttribute("courseType",type);
+//        return "course/classList";
+//    }
     @RequestMapping("/course/{couseType}")
-    public String mysqlCourseList(Model model,@PathVariable("couseType") int couseType){
+    public String mysqlCourseList(Model model,@PathVariable("couseType") int couseType) {
         CourseType type = mCourseService.getCourseType(couseType);
         List<Course> courseList = mCourseService.getCourseByType(couseType);
-        model.addAttribute("courseList",courseList);
-        model.addAttribute("courseType",type);
+        model.addAttribute("courseList", courseList);
+        model.addAttribute("courseType", type);
         return "course/classList";
     }
+
 
     @RequestMapping("/course/{couseType}/{id}")
     public String mysqlCourse(Model model, @PathVariable("id") String id,@PathVariable("couseType") int couseType){

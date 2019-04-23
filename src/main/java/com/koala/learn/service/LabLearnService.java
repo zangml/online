@@ -342,7 +342,7 @@ public class LabLearnService {
                 String resParam = PythonUtils.execPy(sb.toString());
                 RegResult regResult = mGson.fromJson(resParam,RegResult.class);
                 List<String> res = Arrays.asList(classifier.getName(),regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
-                        regResult.getSquaredError() + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
+                        Math.sqrt(regResult.getSquaredError()) + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
                 String resKey = RedisKeyUtil.getResInstanceKey(labId,instanceId,classifier);
                 mJedisAdapter.hset(resKey,"varianceScore",regResult.getVarianceScore()+"");
                 mJedisAdapter.hset(resKey,"absoluteError",regResult.getAbsoluteError()+"");

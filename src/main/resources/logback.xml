@@ -15,7 +15,7 @@
             <onMismatch>DENY </onMismatch>
         </filter>
         <!--日志输出的文件名，路径项目根目录-->
-        <file>learn.log</file>
+        <file>/Users/zangmenglei/learn.log</file>
         <!--时间回滚，当天的记录记录在当天的已时间命名的文件中-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->

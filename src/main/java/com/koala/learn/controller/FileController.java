@@ -67,10 +67,11 @@ public class FileController {
 
     @RequestMapping("/wx/file/handled/time_feature_handled")
     @ResponseBody
-    ResponseEntity timeFeatureHandledDownLoad(HttpServletResponse response,@RequestParam(value = "windowLength",defaultValue = "10")Integer windowLength,
-                                              @RequestParam(value = "avg",defaultValue = "0")Integer avg,
-                                              @RequestParam(value = "std",defaultValue = "0")Integer std,
-                                              @RequestParam(value = "var",defaultValue = "0")Integer var,
+    ResponseEntity timeFeatureHandledDownLoad(HttpServletResponse response,
+                                              @RequestParam(value = "windowLength",defaultValue = "10")Integer windowLength,
+                                              @RequestParam(value = "avg",defaultValue = "0")Integer avg,//均值
+                                              @RequestParam(value = "std",defaultValue = "0")Integer std,//标准差
+                                              @RequestParam(value = "var",defaultValue = "0")Integer var,//方差
                                               @RequestParam(value = "skew",defaultValue = "0")Integer skew,
                                               @RequestParam(value = "kur",defaultValue = "0")Integer kur,
                                               @RequestParam(value = "ptp",defaultValue = "0")Integer ptp) throws IOException {
@@ -90,11 +91,11 @@ public class FileController {
     }
     private String getFilePathById(Integer fileId){
         if(fileId==1){
-            return Const.DATA_FOR_NORMALIZATION_DOWNLOAD;
+            return Const.DATA_FOR_NORMALIZATION_DOWNLOAD;// 数据归一化的原始文件
         }else if(fileId==2){
             return Const.DATA_FOR_NORMALIZATION_HANDLED_DOWNLOAD;
         }else if(fileId==3){
-            return Const.DATA_FOR_TIMEFEATURE_DOWNLOAD;
+            return Const.DATA_FOR_TIMEFEATURE_DOWNLOAD;//时域特征提取的原始文件
         }
         return null;
     }

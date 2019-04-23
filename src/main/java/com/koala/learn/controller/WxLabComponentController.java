@@ -1,6 +1,5 @@
 package com.koala.learn.controller;
 
-
 import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
 import com.koala.learn.dao.ClassifierMapper;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import weka.core.Attribute;
-import weka.core.Instance;
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.supervised.instance.SMOTE;
@@ -218,6 +215,8 @@ public class WxLabComponentController {
     }
 
 
+
+
     @RequestMapping("{labType}/{classifierId}/get_algorithm")
     @ResponseBody
     public ServerResponse<List<List<String>>> handleAlgorithm(@RequestParam Map<String,String> param,
@@ -225,6 +224,7 @@ public class WxLabComponentController {
                                           @PathVariable("classifierId") Integer classifierId) {
          return wxComponentService.getAlgorithm(param,classifierId,labType);
     }
+
 
 
 

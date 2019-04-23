@@ -34,20 +34,20 @@
                     实验
                 </a>
         </span>
+        <%--<span>--%>
+                <%--<a href="/oj">--%>
+                    <%--练习--%>
+                <%--</a>--%>
+        <%--</span>--%>
+
         <span>
-                <a href="/oj">
-                    练习
+                <a href="/design">
+                    设计实验
                 </a>
         </span>
         <span>
                 <a href="/bbs">
                     社区
-                </a>
-        </span>
-
-        <span>
-                <a href="/design">
-                    设计实验
                 </a>
         </span>
     </div>
