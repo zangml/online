@@ -174,6 +174,26 @@ public class WxLabComponentController {
         return ServerResponse.createBySuccess(options);
     }
 
+    @RequestMapping("get_wave_feature")
+    @ResponseBody
+    public ServerResponse handleWavest(@RequestParam(value = "waveLayer",defaultValue = "3") Integer waveLayer,
+                                       @RequestParam(value = "windowLength",defaultValue = "10") Integer windowLength) throws IOException {
+        Map<String,Object> map =new HashMap<>();
+        File input =new File(Const.DATA_FOR_WAVEST_WX);
+        File out = wxComponentService.handleWavest(input,waveLayer,windowLength);
+        Instances instances=new Instances(new FileReader(out.getAbsolutePath()));
+        List<String> attributeList=new ArrayList<>();
+        for (int i=0;i<instances.numAttributes()-1;i++){
+            attributeList.add(instances.attribute(i).name());
+        }
+        logger.info(attributeList.toString());
+        map.put("attributeList",attributeList);
+        map.put("dataSize",instances.size());
+        return ServerResponse.createBySuccess(map);
+
+
+    }
+
 
     @RequestMapping("init_time_feature")
     @ResponseBody
@@ -213,6 +233,7 @@ public class WxLabComponentController {
         map.put("dataSize",instances.size());
         return ServerResponse.createBySuccess(map);
     }
+
 
 
 

@@ -127,6 +127,24 @@ public class WxComponentService {
         return out;
     }
 
+    public File handleWavest(File input,Integer waveLayer,Integer windowLength) throws IOException {
+        input=WekaUtils.arff2csv(input);
+
+        File out =new File(Const.ROOT_FOR_DATA_WX,
+                input.getName().replace(".csv","")+
+                "waveLayer_"+waveLayer + "windowLength_"+windowLength+ ".csv");
+        if(out.exists()){
+            out=WekaUtils.csv2arff(out);
+            return out;
+        }
+        String waveDesc ="python " + Const.WAVE_FEATURE + " wave_layer=" + waveLayer +" len_piece="+windowLength
+                + " path=" + input.getAbsolutePath() + " opath=" + out;
+        System.out.println(waveDesc);
+        PythonUtils.execPy(waveDesc);
+        out=WekaUtils.csv2arff(out);
+        return out;
+    }
+
     public File handleTimeFeature(File input,Integer windowLength,
                                   Integer avg,Integer std, Integer var,
                                   Integer skew,Integer kur,Integer ptp) throws IOException {

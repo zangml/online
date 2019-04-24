@@ -13,11 +13,13 @@ import java.io.IOException;
 
 public class WavedecFeature implements IFeature {
 
-    private String attributeName;
+    private String waveLayer;
+    private String windowLength;
 
     @Override
     public void setOptions(String[] options) {
-        attributeName = options[1];
+        waveLayer = options[3];
+        windowLength=options[1];
     }
 
     @Override
@@ -34,7 +36,7 @@ public class WavedecFeature implements IFeature {
             {
                 out = new File(out.getAbsolutePath().replace("arff","csv"));
             }
-            String wavedec = "python "+ Const.WAVEDEC_FEATURE+ " attribute="+attributeName
+            String wavedec = "python "+ Const.WAVE_FEATURE+ " wave_layer="+waveLayer+ " len_piece="+windowLength
                     +" path="+file.getAbsolutePath()+" opath="+out;
             System.out.println(wavedec);
             PythonUtils.execPy(wavedec);
