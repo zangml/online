@@ -189,8 +189,8 @@ public class WxLabComponentController {
         logger.info(attributeList.toString());
         map.put("attributeList",attributeList);
         map.put("dataSize",instances.size());
+        map.put("fileName",out.getName().replace("arff","xls"));
         return ServerResponse.createBySuccess(map);
-
 
     }
 
@@ -231,6 +231,7 @@ public class WxLabComponentController {
         logger.info(attributeList.toString());
         map.put("attributeList",attributeList);
         map.put("dataSize",instances.size());
+        map.put("fileName",out.getName().replace("arff","xls"));
         return ServerResponse.createBySuccess(map);
     }
 

@@ -58,10 +58,15 @@ public class FileController {
         File file =new File(getFilePathById(fileId));
         HttpHeaders headers =new HttpHeaders();
         headers.setContentDispositionFormData("attachment",file.getName());
-        response.setContentType("application/octet-stream; charset=utf-8");
+        response.setHeader("Access-Control-Allow-Origin","*");
+        response.setHeader("Access-Control-Allow-Methods","GET");
+        response.setHeader("Access-Control-Allow-Headers","*");
         response.setHeader("Content-Disposition", "attachment;fileName="
                 + file.getName());
+        //response.setHeader("Content-type","application/octet-stream");
+        response.setContentType("application/octet-stream; charset=utf-8");
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        System.out.println("请求下载:"+fileId);
         return new ResponseEntity<>(FileUtils.readFileToByteArray(file),headers,HttpStatus.CREATED);
     }
 

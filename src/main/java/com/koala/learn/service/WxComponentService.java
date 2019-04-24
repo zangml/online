@@ -1,5 +1,6 @@
 package com.koala.learn.service;
 
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
@@ -9,6 +10,8 @@ import com.koala.learn.entity.Classifier;
 import com.koala.learn.entity.ClassifierParam;
 import com.koala.learn.entity.RegResult;
 import com.koala.learn.entity.Result;
+import com.koala.learn.utils.FTPUtil;
+import com.koala.learn.utils.FileTranslateUtil;
 import com.koala.learn.utils.PythonUtils;
 import com.koala.learn.utils.WekaUtils;
 import org.slf4j.Logger;
@@ -141,6 +144,7 @@ public class WxComponentService {
                 + " path=" + input.getAbsolutePath() + " opath=" + out;
         System.out.println(waveDesc);
         PythonUtils.execPy(waveDesc);
+        uploadXls(out);
         out=WekaUtils.csv2arff(out);
         return out;
     }
@@ -162,8 +166,14 @@ public class WxComponentService {
                 + " path=" + input.getAbsolutePath() + " opath=" + out;
         System.out.println(timeDesc);
         PythonUtils.execPy(timeDesc);
+        uploadXls(out);
         out = WekaUtils.csv2arff(out);
         return out;
+    }
+    public void uploadXls(File file) throws IOException {
+        File xls= FileTranslateUtil.csv2xls(file);
+        FTPUtil.uploadFile(Lists.newArrayList(xls));
+        System.out.println("上传xls完成");
     }
 
     public ServerResponse<List<List<String>>> getAlgorithm(Map<String,String> param, Integer classifierId, Integer labType){
