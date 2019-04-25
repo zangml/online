@@ -39,6 +39,8 @@ public class RedisKeyUtil {
 
     private static String BIZ_FEATURE_INSTANCE = "FEATURE_INSTANCE";
     private static String BIZ_FILE_INSTANCE = "FILE_INSTANCE";
+    private static String BIZ_FILE_FEATURE = "FILE_FEATURE";
+    private static String BIZ_FILE_PRE = "FILE_PRE";
 
     private static String BIZ_DIVIDER_INSTANCE = "DIVIDER_INSTANCE";
 
@@ -139,6 +141,14 @@ public class RedisKeyUtil {
 
     public static String getFileKey(Integer labId){
         return BIZ_FILE+SPLIT+labId;
+    }
+
+    public static String getFilePreKey(Integer labId){
+        return BIZ_FILE_PRE+SPLIT+labId+SPLIT;
+    }
+
+    public static String getFileFeatureKey(Integer labId,Integer featureId){
+        return BIZ_FILE_FEATURE+SPLIT+labId+SPLIT+featureId;
     }
 
     public static String getFileInstanceKey(Integer labId,Integer instance){

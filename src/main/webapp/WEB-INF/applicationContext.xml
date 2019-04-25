@@ -83,6 +83,7 @@
     <bean id="lof" class="com.koala.learn.utils.feature.LocalOutlierFactorFeature" />
     <bean id="normal" class="com.koala.learn.utils.feature.NormalizationFeature" />
     <bean id="time" class="com.koala.learn.utils.feature.TimeFeature" />
+    <bean id="fea_all" class="com.koala.learn.utils.feature.AllFeature" />
 
 
     <bean class="com.google.gson.Gson" />

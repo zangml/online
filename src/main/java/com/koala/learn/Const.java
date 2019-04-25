@@ -77,4 +77,6 @@ public class Const {
     public static final String DATA_FOR_WAVEST_WX ="/usr/local/data/wx/dataForWavest.arff"; //用于微信调用小波提取的原始文件
 
     public static final String WAVE_FEATURE="/usr/local/sk/waveFeature.py";
+
+    public static final String ALL_FEATURE="/usr/local/sk/feature_all.py";
 }

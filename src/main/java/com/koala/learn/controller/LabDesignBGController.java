@@ -179,7 +179,6 @@ public class LabDesignBGController {
         Lab lab = mLabMapper.selectByPrimaryKey(labId);
         Feature feature = mFeatureMapper.selectByPrimaryKey(featureId);
         String fileKey = RedisKeyUtil.getFileKey(labId);
-
         File out = mDesignBGService.addFeature(session,feature,param, lab);
         mDesignBGService.saveFeature(lab,feature,param);
 
@@ -196,12 +195,12 @@ public class LabDesignBGController {
 
         Lab lab = mLabMapper.selectByPrimaryKey(labId);
         Feature feature = mFeatureMapper.selectByPrimaryKey(featureId);
-        String fileKey = RedisKeyUtil.getFileKey(labId);
+        String filePreKey = RedisKeyUtil.getFilePreKey(labId);
 
-        File out = mDesignBGService.addFeature(session,feature,param, lab);
+        File out = mDesignBGService.addPre(session,feature,param, lab);
         mDesignBGService.savePre(lab,feature,param);
 
-        mJedisAdapter.lpush(fileKey,out.getAbsolutePath());
+        mJedisAdapter.lpush(filePreKey,out.getAbsolutePath());
         System.out.println(out);
         return ServerResponse.createBySuccess(out.getName());
     }

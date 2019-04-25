@@ -104,6 +104,45 @@ public class LabDesignBGService {
         Gson gson = new Gson();
         mJedisAdapter.lpush(preKey,gson.toJson(vo));
     }
+    public File addPre(HttpSession session, Feature feature, Map<String,String> param, Lab lab)  {
+        ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
+        IFeature filter = (IFeature) ac.getBean(feature.getLabel());
+        List<String> paramList = new ArrayList<>();
+        for (String key:param.keySet()){
+            if (StringUtils.isNotBlank(param.get(key))){
+                paramList.add(key);
+                paramList.add(param.get(key));
+            }
+        }
+        String[] options;
+        if (paramList.size()>0){
+            options = new String[paramList.size()];
+            for (int i=0;i<options.length;i++){
+                options[i] = paramList.get(i);
+            }
+            filter.setOptions(options);
+        }
+
+        File input = new File(lab.getFile().replace("csv","arff"));
+        System.out.println("数据预处理：input为原始文件");
+
+        ArffLoader loader = new ArffLoader();
+        try {
+            loader.setSource(input);
+            Instances instances = loader.getDataSet();
+            instances.setClassIndex(instances.numAttributes()-1);
+            System.out.println("feature:"+feature.getName());
+            File out = new File(input.getParent(), input.getName().replace(".arff", "") + "_afterPre" + ".csv");
+            filter.filter(instances, input, out);
+            out= WekaUtils.csv2arff(out);
+            return out;
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+    }
 
     public File addFeature(HttpSession session, Feature feature, Map<String,String> param, Lab lab)  {
         ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
@@ -124,13 +163,14 @@ public class LabDesignBGService {
                 name.append(paramList.get(i));
             }
             filter.setOptions(options);
-
         }
 
-        String fileKey = RedisKeyUtil.getFileKey(lab.getId());
+        String filePreKey = RedisKeyUtil.getFilePreKey(lab.getId());
         File input = null;
-        if (mJedisAdapter.llen(fileKey) >0){
-            input = new File(mJedisAdapter.lrange(fileKey,0,1).get(0));
+        if (mJedisAdapter.llen(filePreKey) >0){
+            System.out.println("特征提取："+feature.getName());
+            input = new File(mJedisAdapter.lrange(filePreKey,0,1).get(0));
+            System.out.println("input:"+input.getName());
         }else {
             input = new File(lab.getFile().replace("csv","arff"));
         }

@@ -1,7 +1,6 @@
 package com.koala.learn.controller;
 
 import com.google.gson.Gson;
-import com.koala.learn.Const;
 import com.koala.learn.component.JedisAdapter;
 import com.koala.learn.dao.DividerMapper;
 import com.koala.learn.dao.LabGroupMapper;
@@ -35,7 +34,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.evaluation.Evaluation;
 import weka.core.Instances;
@@ -51,7 +49,6 @@ public class LabDesignController {
     LabDesignerService mLabDesignerService;
     @Autowired
     LabMapper mLabMapper;
-
 
     @Autowired
     LabService mLabService;
@@ -133,7 +130,7 @@ public class LabDesignController {
     }
 
     @RequestMapping("/design/{labId}/lab_0")
-    public String goLab0(@PathVariable("labId") Integer labId, Model model, HttpSession session) throws IOException {
+    public String goLab0(@PathVariable("labId") Integer labId, Model model) throws IOException {
         List<FeatureVo> voList = mLabDesignerService.selectAllPre();
         model.addAttribute("vos", voList);
         model.addAttribute("labId", labId);
