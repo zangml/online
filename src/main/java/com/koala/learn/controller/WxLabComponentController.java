@@ -191,7 +191,6 @@ public class WxLabComponentController {
         map.put("dataSize",instances.size());
         map.put("fileName",out.getName().replace("arff","xls"));
         return ServerResponse.createBySuccess(map);
-
     }
 
 
