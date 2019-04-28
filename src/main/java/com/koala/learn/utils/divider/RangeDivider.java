@@ -12,6 +12,7 @@ import java.util.Set;
 
 import com.koala.learn.component.JedisAdapter;
 import com.koala.learn.utils.RedisKeyUtil;
+import com.koala.learn.utils.WekaUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;
 import weka.core.Instances;
@@ -24,6 +25,13 @@ import weka.core.converters.ArffSaver;
 public class RangeDivider implements IDivider {
     @Override
     public void divide(File src, Map<String, String> param) {
+        if(src.getAbsolutePath().endsWith("csv")){
+            try {
+                src= WekaUtils.csv2arff(src);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         float raido = Float.valueOf(param.get("radio"));
         String name = src.getName();
         File trainFile = new File(src.getParent(),"range"+raido+name.replace(".arff","train.arff"));
