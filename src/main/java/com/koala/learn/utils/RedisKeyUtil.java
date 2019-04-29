@@ -52,8 +52,14 @@ public class RedisKeyUtil {
 
     private static String BIZ_CACHE_KEY = "CACHE";
 
+    private static String BIZ_PCA_KEY = "PCA";
+
     private static Gson gson = new Gson();
 
+    public static String getPCAKey(int dimension){
+        return BIZ_PCA_KEY+SPLIT+ String.valueOf(dimension);
+
+    }
     public static String getLikeKey(int entityType, int entityId) {
         return BIZ_LIKE + SPLIT + String.valueOf(entityType) + SPLIT + String.valueOf(entityId);
     }

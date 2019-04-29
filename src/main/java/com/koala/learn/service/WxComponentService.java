@@ -4,16 +4,14 @@ import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
+import com.koala.learn.component.JedisAdapter;
 import com.koala.learn.dao.ClassifierMapper;
 import com.koala.learn.dao.ClassifierParamMapper;
 import com.koala.learn.entity.Classifier;
 import com.koala.learn.entity.ClassifierParam;
 import com.koala.learn.entity.RegResult;
 import com.koala.learn.entity.Result;
-import com.koala.learn.utils.FTPUtil;
-import com.koala.learn.utils.FileTranslateUtil;
-import com.koala.learn.utils.PythonUtils;
-import com.koala.learn.utils.WekaUtils;
+import com.koala.learn.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +41,9 @@ public class WxComponentService {
 
     @Autowired
     LabLearnService mLabLearnService;
+
+    @Autowired
+    JedisAdapter mJedisAdapter;
 
     public static final Logger logger = LoggerFactory.getLogger(WxComponentService.class);
 
@@ -169,6 +170,29 @@ public class WxComponentService {
         uploadXls(out);
         out = WekaUtils.csv2arff(out);
         return out;
+    }
+    public String handlePCA(File input,Integer dimension) throws IOException {
+        if(input.getAbsolutePath().endsWith("arff")){
+            input=WekaUtils.arff2csv(input);
+        }
+
+        File out =new File(Const.ROOT_FOR_DATA_WX,
+                input.getName().replace(".csv","")+
+                        "dimension_"+dimension+ ".csv");
+
+        String pcaKey = RedisKeyUtil.getPCAKey(dimension);
+        if(out.exists()){
+            String cacheValue = mJedisAdapter.hget(pcaKey,"explained_variance_ratio_");
+            System.out.println("从缓存中获取："+cacheValue);
+            return cacheValue;
+        }
+        String waveDesc ="python " + Const.PCA_WX + " n_components=" + dimension
+                + " path=" + input.getAbsolutePath() + " opath=" + out;
+        System.out.println(waveDesc);
+        String res= PythonUtils.execPy(waveDesc);
+        mJedisAdapter.hset(pcaKey,"explained_variance_ratio_",res);
+        uploadXls(out);
+        return res;
     }
     public void uploadXls(File file) throws IOException {
         File xls= FileTranslateUtil.csv2xls(file);

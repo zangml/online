@@ -235,6 +235,20 @@ public class WxLabComponentController {
     }
 
 
+    @RequestMapping("get_pca")
+    @ResponseBody
+    public ServerResponse handlePCA(@RequestParam(value = "dimension") Integer dimension) throws IOException {
+        Map<String,Object> resultMap = new HashMap<>();
+        File input =new File(Const.DATA_FOR_PCA_WX);
+        String res =wxComponentService.handlePCA(input,dimension);
+
+        String fileName=input.getName().replace(".csv","")+
+                "dimension_"+dimension+ ".csv";
+
+        resultMap.put("fileName",fileName);
+        resultMap.put("各主成分方差占比",res);
+        return ServerResponse.createBySuccess(resultMap);
+    }
 
 
 
