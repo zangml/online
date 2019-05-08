@@ -246,11 +246,19 @@ public class WxLabComponentController {
         File input =new File(Const.DATA_FOR_PCA_WX);
         String res =wxComponentService.handlePCA(input,dimension);
         res=res.substring(1,res.length()-1);
+        System.out.println(res);
         String [] strs=res.split(" ");
-        double[] ratio= new double[strs.length];
-        for(int i=0;i<strs.length;i++){
-            ratio[i]= Double.parseDouble(strs[i]);
+        double[] ratio= new double[dimension];
+        for(int i=0,j=0;j<strs.length;i++,j++){
+            if(strs[j].isEmpty()|| strs[j].equals(" ")){
+                i--;
+                continue;
+            }
+            ratio[i]= Double.parseDouble(strs[j]);
         }
+//        for(double dou:ratio){
+//            System.out.println(dou);
+//        }
         String fileName=input.getName().replace(".csv","")+
                 "dimension_"+dimension+ ".xls";
 
