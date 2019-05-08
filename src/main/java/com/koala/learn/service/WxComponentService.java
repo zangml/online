@@ -167,7 +167,7 @@ public class WxComponentService {
                 + " path=" + input.getAbsolutePath() + " opath=" + out;
         System.out.println(timeDesc);
         PythonUtils.execPy(timeDesc);
-        uploadXls(out);
+        uploadXls(FileTranslateUtil.csv2xls(out));
         out = WekaUtils.csv2arff(out);
         return out;
     }
