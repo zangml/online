@@ -1,5 +1,6 @@
 package com.koala.learn.controller;
 
+import com.google.gson.Gson;
 import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
 import com.koala.learn.dao.ClassifierMapper;
@@ -42,6 +43,9 @@ public class WxLabComponentController {
 
     @Autowired
     LabMapper mLabMapper;
+
+    @Autowired
+    Gson mGson;
 
     private static final  Logger logger= LoggerFactory.getLogger(WxLabComponentController.class);
 
@@ -241,12 +245,17 @@ public class WxLabComponentController {
         Map<String,Object> resultMap = new HashMap<>();
         File input =new File(Const.DATA_FOR_PCA_WX);
         String res =wxComponentService.handlePCA(input,dimension);
-
+        res=res.substring(1,res.length()-1);
+        String [] strs=res.split(" ");
+        double[] ratio= new double[strs.length];
+        for(int i=0;i<strs.length;i++){
+            ratio[i]= Double.parseDouble(strs[i]);
+        }
         String fileName=input.getName().replace(".csv","")+
                 "dimension_"+dimension+ ".xls";
 
         resultMap.put("fileName",fileName);
-        resultMap.put("ratio",res);
+        resultMap.put("ratio",ratio);
         return ServerResponse.createBySuccess(resultMap);
     }
 

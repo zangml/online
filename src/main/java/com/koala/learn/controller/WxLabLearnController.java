@@ -319,7 +319,7 @@ public class WxLabLearnController {
         if (labResultVo != null){
             labResultVoList.addAll(labResultVo);
         }
-        //String value= mGson.toJson(labResultVoList);  不用转换成json，respondBody会自动转化，否则会变成字符串
+        //String value= mGson.toJson(labResultVoList); 不用转换成json，respondBody会自动转化，否则会变成字符串
         map.put("res",res);
         map.put("legend",legends);
         map.put("series",labResultVoList);
