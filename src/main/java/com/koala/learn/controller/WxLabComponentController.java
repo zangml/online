@@ -243,7 +243,7 @@ public class WxLabComponentController {
         String res =wxComponentService.handlePCA(input,dimension);
 
         String fileName=input.getName().replace(".csv","")+
-                "dimension_"+dimension+ ".csv";
+                "dimension_"+dimension+ ".xls";
 
         resultMap.put("fileName",fileName);
         resultMap.put("ratio",res);

@@ -167,7 +167,7 @@ public class WxComponentService {
                 + " path=" + input.getAbsolutePath() + " opath=" + out;
         System.out.println(timeDesc);
         PythonUtils.execPy(timeDesc);
-        uploadXls(FileTranslateUtil.csv2xls(out));
+        uploadXls(out);
         out = WekaUtils.csv2arff(out);
         return out;
     }
@@ -191,12 +191,14 @@ public class WxComponentService {
         System.out.println(waveDesc);
         String res= PythonUtils.execPy(waveDesc);
         mJedisAdapter.hset(pcaKey,"explained_variance_ratio_",res);
-        uploadXls(FileTranslateUtil.csv2xls(out));
+        uploadXls(out);
         return res;
     }
     public void uploadXls(File file) throws IOException {
-        File xls= FileTranslateUtil.csv2xls(file);
-        FTPUtil.uploadFile(Lists.newArrayList(xls));
+        if(file.getName().endsWith("csv")){
+            file=FileTranslateUtil.csv2xls(file);
+        }
+        FTPUtil.uploadFile(Lists.newArrayList(file));
         System.out.println("上传xls完成");
     }
 
