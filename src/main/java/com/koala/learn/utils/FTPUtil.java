@@ -63,7 +63,6 @@ public class FTPUtil {
     }
 
 
-
     private boolean connectServer(String ip,int port,String user,String pwd){
 
         boolean isSuccess = false;
@@ -76,8 +75,6 @@ public class FTPUtil {
         }
         return isSuccess;
     }
-
-
 
 
     private String ip;

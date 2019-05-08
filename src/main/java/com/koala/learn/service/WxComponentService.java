@@ -191,7 +191,7 @@ public class WxComponentService {
         System.out.println(waveDesc);
         String res= PythonUtils.execPy(waveDesc);
         mJedisAdapter.hset(pcaKey,"explained_variance_ratio_",res);
-        uploadXls(out);
+        uploadXls(FileTranslateUtil.csv2xls(out));
         return res;
     }
     public void uploadXls(File file) throws IOException {
