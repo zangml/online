@@ -246,7 +246,7 @@ public class WxLabComponentController {
                 "dimension_"+dimension+ ".csv";
 
         resultMap.put("fileName",fileName);
-        resultMap.put("各主成分方差占比",res);
+        resultMap.put("ratio",res);
         return ServerResponse.createBySuccess(resultMap);
     }
 
