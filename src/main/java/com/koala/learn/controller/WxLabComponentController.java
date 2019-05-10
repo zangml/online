@@ -144,6 +144,7 @@ public class WxLabComponentController {
     @ResponseBody
     public ServerResponse<EchatsOptions> initNormalization(){
         EchatsOptions options =new EchatsOptions();
+        options.setTitle(new EchatsOptions.TitleBean("归一化前数据分布","以每个特征的样本均值表示"));
         try {
             options= WxViewUtils.resloveNormalization(new Instances(new FileReader(Const.DATA_FOR_NORMALIZATION)));
         } catch (Exception e) {
@@ -159,6 +160,7 @@ public class WxLabComponentController {
         File out=wxComponentService.handleNormalization(input);
         Instances instances=new Instances(new FileReader(out.getAbsolutePath()));
         EchatsOptions options =WxViewUtils.resloveNormalization(instances);
+        options.setTitle(new EchatsOptions.TitleBean("归一化后数据分布","以每个特征的样本均值表示"));
         return ServerResponse.createBySuccess(options);
     }
 
