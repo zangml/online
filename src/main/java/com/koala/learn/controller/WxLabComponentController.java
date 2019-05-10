@@ -143,14 +143,14 @@ public class WxLabComponentController {
     @RequestMapping("init_normalization")
     @ResponseBody
     public ServerResponse<EchatsOptions> initNormalization(){
-        EchatsOptions options =new EchatsOptions();
-        options.setTitle(new EchatsOptions.TitleBean("归一化前数据分布","以每个特征的样本均值表示"));
         try {
-            options= WxViewUtils.resloveNormalization(new Instances(new FileReader(Const.DATA_FOR_NORMALIZATION)));
+            EchatsOptions options= WxViewUtils.resloveNormalization(new Instances(new FileReader(Const.DATA_FOR_NORMALIZATION)));
+            options.setTitle(new EchatsOptions.TitleBean("归一化前数据分布","以每个特征的样本均值表示"));
+            return ServerResponse.createBySuccess(options);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ServerResponse.createBySuccess(options);
+        return ServerResponse.createByError();
     }
 
     @RequestMapping("get_normalization")

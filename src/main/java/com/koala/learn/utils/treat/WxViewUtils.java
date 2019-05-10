@@ -282,7 +282,6 @@ public class WxViewUtils {
     }
     public static EchatsOptions resloveNormalization(Instances instances) throws Exception {
         EchatsOptions options = new EchatsOptions();
-        options.setTitle(new EchatsOptions.TitleBean("数据分布","以每个特征的样本均值表示"));
         options.setTooltip(new EchatsOptions.TooltipBean());
         EchatsOptions.XAxisBean xAxisBean = new EchatsOptions.XAxisBean("category",true,null);
         List<String> attributeList = new ArrayList<>();
