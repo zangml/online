@@ -29,6 +29,7 @@ public class LogInterceptor implements HandlerInterceptor {
     private NamedThreadLocal<Long> startTimeThreadLocal=new NamedThreadLocal<Long>("StartTime-EndTime");
 
 
+
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         Long start = System.currentTimeMillis();

@@ -237,10 +237,10 @@ public class WxLabLearnController {
             ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext());
             IDivider divider = (IDivider) ac.getBean(param.get("type"));
             divider.divide(input,param);
-            return ServerResponse.createBySuccessMessage("训练集和测试集划分完成");
+            return ServerResponse.createBySuccessMessage("处理完成");
         }catch (Exception e){
             System.out.println(e.getMessage());
-            return ServerResponse.createByErrorMessage(e.getMessage());
+            return ServerResponse.createByErrorMessage("处理失败");
         }
     }
 

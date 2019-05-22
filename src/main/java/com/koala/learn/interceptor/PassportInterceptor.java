@@ -32,6 +32,7 @@ public class PassportInterceptor implements HandlerInterceptor {
     @Autowired
     private HostHolder hostHolder;
 
+    //在controller 调用之前 调用
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         String ticket = null;
@@ -58,6 +59,9 @@ public class PassportInterceptor implements HandlerInterceptor {
         return true;
     }
 
+    //在preHandle 返回ture 时才会被调用
+    //在controller 调用之后
+    //视图渲染之前调用 可以对modleAndView对象进行处理
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
         if (modelAndView != null && hostHolder.getUser() != null) {
@@ -65,6 +69,9 @@ public class PassportInterceptor implements HandlerInterceptor {
         }
     }
 
+    //在preHandle 返回ture 时才会被调用
+    //在视图渲染之后才会调用
+    //主要是进行一些资源的清理工作
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
         hostHolder.clear();

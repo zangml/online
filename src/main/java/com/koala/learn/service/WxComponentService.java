@@ -196,6 +196,7 @@ public class WxComponentService {
     }
     public void uploadXls(File file) throws IOException {
         if(file.getName().endsWith("csv")){
+            System.out.println("将csv转为xls");
             file=FileTranslateUtil.csv2xls(file);
         }
         FTPUtil.uploadFile(Lists.newArrayList(file));
