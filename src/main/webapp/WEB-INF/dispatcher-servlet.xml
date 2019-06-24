@@ -73,7 +73,7 @@
             <mvc:mapping path="/design/*" />
             <mvc:mapping path="/design" />
             <mvc:mapping path="/bbs" />
-            <mvc:exclude-mapping path="/wx/*"/>
+            <mvc:exclude-mapping path="/wx/**"/>
 
             <bean class="com.koala.learn.interceptor.LoginRequiredInterceptor" />
         </mvc:interceptor>
@@ -83,7 +83,7 @@
             <mvc:mapping path="/design/**" />
             <mvc:mapping path="/bbs/**" />
             <mvc:mapping path="/course/**" />
-            <mvc:exclude-mapping path="/wx/*"/>
+            <mvc:exclude-mapping path="/wx/**"/>
             <bean class="com.koala.learn.interceptor.LogInterceptor" />
         </mvc:interceptor>
         <!--<bean class="com.koala.learn.interceptor.LoginRequiredInterceptor" />-->

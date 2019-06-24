@@ -18,6 +18,7 @@ public class RedisKeyUtil {
     private static String BIZ_TIMELINE = "TIMELINE";
 
 
+    private static String WX_LAB_RECORD="WX_LAB_RECORD";
     private static String BIZ_ATTRIBUTE = "ATTRIBUTE";
 
     private static String BIZ_ATTRIBUTEVIEW = "ATTRIBUTEVIEW";
@@ -55,6 +56,10 @@ public class RedisKeyUtil {
     private static String BIZ_PCA_KEY = "PCA";
 
     private static Gson gson = new Gson();
+
+    public static String getWxLabRecord(String openId){
+        return WX_LAB_RECORD+SPLIT+openId;
+    }
 
     public static String getPCAKey(int dimension){
         return BIZ_PCA_KEY+SPLIT+ String.valueOf(dimension);

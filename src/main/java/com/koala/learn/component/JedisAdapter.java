@@ -75,6 +75,19 @@ public class JedisAdapter implements InitializingBean {
             }
         }
     }
+    public void set(String key,String value,int time){
+        Jedis jedis = null;
+        try {
+            jedis = getJedis();
+            jedis.set(key,value,"nx","seconds",time);
+        } catch (Exception e) {
+            logger.error("发生异常" + e.getMessage());
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+    }
     public String get(String key){
         Jedis jedis = null;
         try {

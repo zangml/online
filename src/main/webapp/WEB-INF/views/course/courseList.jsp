@@ -37,7 +37,7 @@
                     </a>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-warning btn-arrow-right center"> Next &nbsp;&nbsp;</button>
+                    <button type="button" class="btn btn-warning btn-arrow-right center">${course.id}.Next &nbsp;&nbsp;</button>
                 </div>
             </c:forEach>
             <%--https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3758739492,854130434&fm=200&gp=0.jpg--%>

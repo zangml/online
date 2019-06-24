@@ -11,12 +11,15 @@ import com.koala.learn.service.LabLearnService;
 import com.koala.learn.service.LabService;
 import com.koala.learn.service.UserService;
 import com.koala.learn.service.WxComponentService;
+import com.koala.learn.utils.DateTimeUtil;
 import com.koala.learn.utils.RedisKeyUtil;
 import com.koala.learn.utils.WekaUtils;
 import com.koala.learn.utils.divider.IDivider;
 import com.koala.learn.utils.treat.ViewUtils;
 import com.koala.learn.utils.treat.WxViewUtils;
+import com.koala.learn.vo.FeatureVo;
 import com.koala.learn.vo.LabResultVo;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +89,9 @@ public class WxLabLearnController {
 
     @Autowired
     LabService labService;
+
+    @Autowired
+    LabGroupMapper groupMapper;
 
     private static Logger logger = LoggerFactory.getLogger(LabLearnController.class);
 
@@ -247,17 +253,32 @@ public class WxLabLearnController {
     //获取实验结果
     @RequestMapping("learn/getResult/{labId}/{instance}")
     @ResponseBody
-    public ServerResponse getResult(@PathVariable("labId") Integer labId, @PathVariable("instance") Integer instanceId, HttpSession session) {
+    public ServerResponse getResult(@PathVariable("labId") Integer labId,
+                                    @PathVariable("instance") Integer instanceId,
+                                    String openId,
+                                    HttpSession session) {
         Map<String,Object> map =new HashMap<>();
         String classifierKey = RedisKeyUtil.getClassifierInstanceKey(labId, instanceId);
         if (mJedisAdapter.llen(classifierKey) == 0) {
             return ServerResponse.createByErrorMessage("未选择算法");
         }
+
         Lab lab = mLabMapper.selectByPrimaryKey(labId);
         List<String> classifierList = mJedisAdapter.lrange(classifierKey, 0, mJedisAdapter.llen(classifierKey));
         List<List<String>> res = new ArrayList<>();
         List<String> legends = new ArrayList<>();
         List<LabResultVo> labResultVoList = new ArrayList<>();
+
+        LabGroup group = groupMapper.selectByPrimaryKey(lab.getGroupId());
+        WxLabRecord wxLabRecord=new WxLabRecord();
+        wxLabRecord.setLabTitle(group.getName());
+        wxLabRecord.setLabId(labId);
+        wxLabRecord.setOpenId(openId);
+        wxLabRecord.setTitle(lab.getTitle());
+        wxLabRecord.setInstanceId(instanceId);
+        wxLabRecord.setPreHandle(getPreHandle(labId,instanceId));
+        wxLabRecord.setFeature(getFeature(labId,instanceId));
+        wxLabRecord.setDivider(getDivier(labId,instanceId));
         if (lab.getLableType() == 1) {
             res.add(Arrays.asList("算法", "召回率", "准确率", "精确率", "F-Measure", "ROC-Area"));
         } else {
@@ -265,8 +286,10 @@ public class WxLabLearnController {
         }
         List<String> classifierNameList = new ArrayList<>();
 
+        StringBuilder algorithm=new StringBuilder();
         for (String str : classifierList) {
             Classifier classifier = mGson.fromJson(str, Classifier.class);
+            algorithm.append(getClassifier(classifier));
             legends.add(classifier.getName());
             classifierNameList.add(classifier.getName());
             if (lab.getLableType() == 1) {
@@ -277,6 +300,7 @@ public class WxLabLearnController {
                             result.getRecall() + "", result.getAccuracy() + "",
                             result.getPrecision() + "", result.getfMeasure() + "", result.getRocArea() + "");
                     res.add(cache);
+                    wxLabRecord.setResult("准确率："+((result.getAccuracy()+"").substring(0,5)));
 
                 } else {
                     logger.info("start----cal");
@@ -289,6 +313,7 @@ public class WxLabLearnController {
                                 result.getRecall() + "", result.getAccuracy() + "",
                                 result.getPrecision() + "", result.getfMeasure() + "", result.getRocArea() + "");
                         res.add(resList);
+                        wxLabRecord.setResult("准确率："+((result.getAccuracy()+"").substring(0,5)));
                     }
                 }
             } else if (lab.getLableType() == 0) {
@@ -299,6 +324,8 @@ public class WxLabLearnController {
                             regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
                             regResult.getSquaredError() + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
                     res.add(cache);
+                    System.out.println(regResult.getSquaredError() + "");
+                    wxLabRecord.setResult("均方误差："+((regResult.getSquaredError() + "").substring(0,5)));
                 }else {
                     logger.info("start----cal");
                     regResult = mLabLearnService.cal2(labId, instanceId, session, classifier);
@@ -310,15 +337,24 @@ public class WxLabLearnController {
                                 regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
                                regResult.getSquaredError() + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
                         res.add(resList);
+                        wxLabRecord.setResult("均方误差："+((regResult.getSquaredError() + "").substring(0,5)));
                     }
                 }
             }
 
         }
+        wxLabRecord.setAlgorithm(algorithm.toString());
+        wxLabRecord.setTime(DateTimeUtil.dateToStr(new Date()));
+        String wxLabRecordKey=RedisKeyUtil.getWxLabRecord(openId);
+
         List<LabResultVo> labResultVo = labService.getValueMapForWx(lab.getId(),instanceId,session);
         if (labResultVo != null){
             labResultVoList.addAll(labResultVo);
         }
+
+        Gson gson = new Gson();
+        String json = gson.toJson(wxLabRecord);
+        mJedisAdapter.lpush(wxLabRecordKey,json);
         //String value= mGson.toJson(labResultVoList); 不用转换成json，respondBody会自动转化，否则会变成字符串
         map.put("res",res);
         map.put("legend",legends);
@@ -326,7 +362,58 @@ public class WxLabLearnController {
 
         return ServerResponse.createBySuccess(map);
     }
+    private String getPreHandle(Integer labId,Integer instanceId){
+        String key = RedisKeyUtil.getFeatureInstanceKey(labId,instanceId);
+        List<String> features = mJedisAdapter.lrange(key,0,mJedisAdapter.llen(key));
+        String preHandle=features.get(features.size()-1);
+        StringBuilder sb = new StringBuilder();
 
+        FeatureVo vo = mGson.fromJson(preHandle,FeatureVo.class);
+        List<FeatureParam> paramList=vo.getParamList();
+        sb.append("算法：").append(vo.getFeature().getName()).append(" 参数：");
+        for (FeatureParam param:paramList){
+            sb.append(" ").append(param.getName()).append("=").append(param.getDefaultValue());
+        }
+
+        return sb.toString();
+    }
+    private String getFeature(Integer labId,Integer instanceId){
+        String key = RedisKeyUtil.getFeatureInstanceKey(labId,instanceId);
+        List<String> features = mJedisAdapter.lrange(key,0,mJedisAdapter.llen(key));
+        String feature=features.get(0);
+        StringBuilder sb = new StringBuilder();
+
+        FeatureVo vo = mGson.fromJson(feature,FeatureVo.class);
+        List<FeatureParam> paramList=vo.getParamList();
+        sb.append("算法：").append(vo.getFeature().getName()).append(" 参数：");
+        for (FeatureParam param:paramList){
+            sb.append(" ").append(param.getName()).append("=").append(param.getDefaultValue());
+        }
+
+        return sb.toString();
+    }
+    private String getDivier(Integer labId,Integer instanceId){
+        String key = RedisKeyUtil.getDividerInstanceKey(labId,instanceId);
+        String value = mJedisAdapter.get(key);
+        if (StringUtils.isBlank(value)){
+            return "";
+        }
+        Divider divider = mGson.fromJson(value,Divider.class);
+        StringBuilder sb = new StringBuilder();
+        sb.append(divider.getName()).append("(range=").append(divider.getRadio()).append(")");
+        return sb.toString();
+    }
+
+    private String getClassifier(Classifier classifier){
+        StringBuilder sb = new StringBuilder();
+        sb.append("算法：").append(classifier.getName()).append(" 参数：");
+        for (ClassifierParam param:classifier.getParams()){
+            if (StringUtils.isNotBlank(param.getDefaultValue())){
+                sb.append(param.getParamDes()).append("=").append(param.getDefaultValue()).append(" ");
+            }
+        }
+        return sb.toString();
+    }
 
 
 }
