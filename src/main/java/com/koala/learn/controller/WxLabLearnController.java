@@ -255,7 +255,7 @@ public class WxLabLearnController {
     @ResponseBody
     public ServerResponse getResult(@PathVariable("labId") Integer labId,
                                     @PathVariable("instance") Integer instanceId,
-                                    String openId,
+                                    @RequestParam(value = "openId",defaultValue = "zangml") String openId,
                                     HttpSession session) {
         Map<String,Object> map =new HashMap<>();
         String classifierKey = RedisKeyUtil.getClassifierInstanceKey(labId, instanceId);

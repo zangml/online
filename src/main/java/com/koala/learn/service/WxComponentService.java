@@ -204,15 +204,41 @@ public class WxComponentService {
     }
 
     public ServerResponse<List<List<String>>> getAlgorithm(Map<String,String> param, Integer classifierId, Integer labType){
-        Classifier classifier = mClassifierMapper.selectByPrimaryKey(classifierId);
         List<List<String>> res = new ArrayList<>();
+        Classifier classifier = mClassifierMapper.selectByPrimaryKey(classifierId);
+        String wxComponentAlgorithmCacheKey = RedisKeyUtil.getWxComponentAlgorithmCache(param, classifierId);
+        String cache=mJedisAdapter.get(wxComponentAlgorithmCacheKey);
+        if(cache!=null){
+            if(labType==1){
+                Result result = mGson.fromJson(cache,Result.class);
+                System.out.println("此结果是从缓存中获取的");
+                res.add(Arrays.asList("算法", "召回率", "准确率", "精确率", "F-Measure", "ROC-Area"));
+                List<String> resList = Arrays.asList(classifier.getName(),
+                        result.getRecall() + "", result.getAccuracy() + "",
+                        result.getPrecision() + "", result.getfMeasure() + "", result.getRocArea() + "");
+                res.add(resList);
+            }else {
+                System.out.println("此结果是从缓存中获取的");
+                res.add(Arrays.asList("算法", "可释方差值", "平均绝对误差", "均方根误差", "中值绝对误差", "R方值"));
+                RegResult regResult =mGson.fromJson(cache,RegResult.class);
+                List<String> resList = Arrays.asList(classifier.getName(),
+                        regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
+                        Math.sqrt(regResult.getSquaredError()) + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
+                res.add(resList);
+            }
+            return ServerResponse.createBySuccess(res);
+        }
         if (labType == 1) {
             res.add(Arrays.asList("算法", "召回率", "准确率", "精确率", "F-Measure", "ROC-Area"));
             Result result =getResult(param,classifierId,classifier);
 
+
             if (result == null) {
                 return ServerResponse.createByErrorMessage("运算失败");
             }
+            Gson gson = new Gson();
+            String json = gson.toJson(result);
+            mJedisAdapter.set(wxComponentAlgorithmCacheKey,json);
 
             List<String> resList = Arrays.asList(classifier.getName(),
                     result.getRecall() + "", result.getAccuracy() + "",
@@ -220,13 +246,16 @@ public class WxComponentService {
             res.add(resList);
 
         } else {
-
             res.add(Arrays.asList("算法", "可释方差值", "平均绝对误差", "均方根误差", "中值绝对误差", "R方值"));
             RegResult regResult =getRegResult(param,classifierId,classifier);
+
 
             if (regResult == null) {
                 return ServerResponse.createByErrorMessage("运算失败");
             }
+            Gson gson = new Gson();
+            String json = gson.toJson(regResult);
+            mJedisAdapter.set(wxComponentAlgorithmCacheKey,json);
             List<String> resList = Arrays.asList(classifier.getName(),
                     regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
                     Math.sqrt(regResult.getSquaredError()) + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");

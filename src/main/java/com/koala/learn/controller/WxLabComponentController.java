@@ -279,4 +279,5 @@ public class WxLabComponentController {
          return wxComponentService.getAlgorithm(param,classifierId,labType);
     }
 
+
 }

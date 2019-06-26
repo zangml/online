@@ -3,6 +3,8 @@ package com.koala.learn.utils;
 import com.google.gson.Gson;
 import com.koala.learn.entity.Classifier;
 
+import java.util.Map;
+
 /**
  * Created by nowcoder on 2016/7/30.
  */
@@ -18,6 +20,8 @@ public class RedisKeyUtil {
     private static String BIZ_TIMELINE = "TIMELINE";
 
 
+
+    private static String WX_COMPONENT_ALGORITHM_CACHE ="WX_COMPONENT_ALGORITHM_CACHE";
     private static String WX_LAB_RECORD="WX_LAB_RECORD";
     private static String BIZ_ATTRIBUTE = "ATTRIBUTE";
 
@@ -56,6 +60,15 @@ public class RedisKeyUtil {
     private static String BIZ_PCA_KEY = "PCA";
 
     private static Gson gson = new Gson();
+
+    public static String getWxComponentAlgorithmCache(Map<String,String> param, Integer classifierId){
+        StringBuilder res=new StringBuilder();
+        res.append(WX_COMPONENT_ALGORITHM_CACHE).append(SPLIT).append(classifierId).append(SPLIT);
+        for(String key:param.keySet()){
+            res.append(key).append(param.get(key));
+        }
+        return res.toString();
+    }
 
     public static String getWxLabRecord(String openId){
         return WX_LAB_RECORD+SPLIT+openId;
