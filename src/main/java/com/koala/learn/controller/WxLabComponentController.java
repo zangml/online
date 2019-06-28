@@ -112,7 +112,7 @@ public class WxLabComponentController {
             if(cache!=null){
                 echatsOptions=gson.fromJson(cache,EchatsOptions.class);
             }else{
-                echatsOptions = WxViewUtils.reslovePCA(instances1,12);
+                echatsOptions = WxViewUtils.reslovePCA(instances1,24);
                 String cacheOptions=gson.toJson(echatsOptions);
                 mJedisAdapter.set(key,cacheOptions);
             }
