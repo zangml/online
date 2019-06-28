@@ -19,7 +19,9 @@ public class RedisKeyUtil {
     private static String BIZ_FOLLOWEE = "FOLLOWEE";
     private static String BIZ_TIMELINE = "TIMELINE";
 
-
+    private static String INIT_SMOTE="INIT_SMOTE";
+    private static String GET_SMOTE="GET_SMOTE";
+    private static String GET_ISOLATION="GET_ISOLATION";
 
     private static String WX_COMPONENT_ALGORITHM_CACHE ="WX_COMPONENT_ALGORITHM_CACHE";
     private static String WX_LAB_RECORD="WX_LAB_RECORD";
@@ -61,6 +63,15 @@ public class RedisKeyUtil {
 
     private static Gson gson = new Gson();
 
+    public static String getIsolationKey(Double contamination){
+        return GET_ISOLATION+SPLIT+contamination;
+    }
+    public static String getInitSmote(){
+        return INIT_SMOTE;
+    }
+    public static String getSmoteKey(Integer kNeighbors,Integer ratio){
+        return GET_SMOTE+SPLIT+kNeighbors+SPLIT+ratio;
+    }
     public static String getWxComponentAlgorithmCache(Map<String,String> param, Integer classifierId){
         StringBuilder res=new StringBuilder();
         res.append(WX_COMPONENT_ALGORITHM_CACHE).append(SPLIT).append(classifierId).append(SPLIT);

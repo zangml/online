@@ -3,10 +3,12 @@ package com.koala.learn.controller;
 import com.google.gson.Gson;
 import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
+import com.koala.learn.component.JedisAdapter;
 import com.koala.learn.dao.ClassifierMapper;
 import com.koala.learn.dao.LabMapper;
 import com.koala.learn.entity.*;
 import com.koala.learn.service.WxComponentService;
+import com.koala.learn.utils.RedisKeyUtil;
 import com.koala.learn.utils.treat.WxViewUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,15 +49,30 @@ public class WxLabComponentController {
     @Autowired
     Gson mGson;
 
+    @Autowired
+    JedisAdapter mJedisAdapter;
+
     private static final  Logger logger= LoggerFactory.getLogger(WxLabComponentController.class);
 
     @RequestMapping(value = "init_smote")
     @ResponseBody
     public ServerResponse<Map<String,Object>> getSmoteData(){
         Map<String,Object> map =new HashMap();
+        String key = RedisKeyUtil.getInitSmote();
+        String cache=mJedisAdapter.get(key);
+        if(cache!=null){
+            Gson gson=new Gson();
+            EchatsOptions options=gson.fromJson(cache,EchatsOptions.class);
+            map.put("ratio","0与1的样本数量比为8.56:1");
+            map.put("option",options);
+            return ServerResponse.createBySuccess(map);
+        }
         try {
             Instances instances =new Instances(new FileReader(Const.DATA_FOR_SMOTE));
             EchatsOptions options =WxViewUtils.reslovePCA(instances,12);
+            Gson gson=new Gson();
+            String optionsCache=gson.toJson(options);
+            mJedisAdapter.set(key,optionsCache);
             //String ratio =wxComponentService.getRatio0To1(instances);
             map.put("ratio","0与1的样本数量比为8.56:1");
             map.put("option",options);
@@ -70,7 +87,13 @@ public class WxLabComponentController {
     public ServerResponse<Map<String,Object>> handleSmote(@RequestParam(value = "k_neighbors",defaultValue = "5") Integer kNeighbors,
                                                      @RequestParam(value = "ratio",defaultValue = "500")Integer ratio){
 
-        Map<String,Object> map =new HashMap<>();
+        if(ratio==0){
+            return ServerResponse.createByError();
+        }
+        Map<String,Object> map =new HashMap();
+
+        String key=RedisKeyUtil.getSmoteKey(kNeighbors,ratio);
+        String cache=mJedisAdapter.get(key);
 
         try {
             Instances instances = new Instances(new FileReader(Const.DATA_FOR_SMOTE));
@@ -80,9 +103,18 @@ public class WxLabComponentController {
             smote.setInputFormat(instances);
             smote.setOptions(options);
             Instances instances1 = Filter.useFilter(instances, smote);
-            EchatsOptions echatsOptions = WxViewUtils.reslovePCA(instances1,12);
+            EchatsOptions echatsOptions;
+            Gson gson=new Gson();
+            if(cache!=null){
+                echatsOptions=gson.fromJson(cache,EchatsOptions.class);
+            }else{
+                echatsOptions = WxViewUtils.reslovePCA(instances1,12);
+                String cacheOptions=gson.toJson(echatsOptions);
+                mJedisAdapter.set(key,cacheOptions);
+            }
 
             map.put("ratio",wxComponentService.getRatio0To1(instances1));
+//            map.put("ratio","0与1的样本数量比为"+8.56/(ratio/100)+":1");
             map.put("option",echatsOptions);
 
         } catch (Exception e) {
@@ -112,6 +144,16 @@ public class WxLabComponentController {
     @ResponseBody
     public ServerResponse<EchatsOptions> handleIsoLationForest(@RequestParam(value = "contamination",defaultValue = "0.02") Double contamination) throws Exception {
 
+        String key=RedisKeyUtil.getIsolationKey(contamination);
+
+        String cache=mJedisAdapter.get(key);
+        Gson gson=new Gson();
+
+        if(cache!=null){
+            EchatsOptions options=gson.fromJson(cache,EchatsOptions.class);
+            return ServerResponse.createBySuccess(options);
+        }
+
         File input =new File(Const.DATA_FOR_ISOLATIONFOREST);
 
         File out=wxComponentService.handleIsolation(contamination,input);
@@ -119,6 +161,10 @@ public class WxLabComponentController {
         Instances instances=new Instances(new FileReader(out.getAbsolutePath()));
 
         EchatsOptions options =WxViewUtils.reslovePCA(instances,1);
+
+        String cacheOptions=gson.toJson(options);
+
+        mJedisAdapter.set(key,cacheOptions);
 
         return ServerResponse.createBySuccess(options);
 

@@ -369,6 +369,7 @@ public class WxLabLearnController {
         StringBuilder sb = new StringBuilder();
 
         FeatureVo vo = mGson.fromJson(preHandle,FeatureVo.class);
+        System.out.println(vo.getFeature().getName());
         List<FeatureParam> paramList=vo.getParamList();
         sb.append("算法：").append(vo.getFeature().getName()).append(" 参数：");
         for (FeatureParam param:paramList){
@@ -384,6 +385,7 @@ public class WxLabLearnController {
         StringBuilder sb = new StringBuilder();
 
         FeatureVo vo = mGson.fromJson(feature,FeatureVo.class);
+        System.out.println(vo.getName());
         List<FeatureParam> paramList=vo.getParamList();
         sb.append("算法：").append(vo.getFeature().getName()).append(" 参数：");
         for (FeatureParam param:paramList){
