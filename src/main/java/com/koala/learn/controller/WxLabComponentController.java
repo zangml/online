@@ -99,26 +99,21 @@ public class WxLabComponentController {
         EchatsOptions echatsOptions;
         String ratioResult;
         Gson gson=new Gson();
-
         try {
-            Instances instances = new Instances(new FileReader(Const.DATA_FOR_SMOTE));
-            instances.setClassIndex(instances.numAttributes() - 1);
-            SMOTE smote =new SMOTE();
-            String[] options = {"-S", String.valueOf(1), "-P", String.valueOf(ratio), "-K", String.valueOf(kNeighbors)};
-            smote.setInputFormat(instances);
-            smote.setOptions(options);
-            Instances instances1 = Filter.useFilter(instances, smote);
-
             if(cache!=null){
                 echatsOptions=gson.fromJson(cache,EchatsOptions.class);
+                ratioResult=ratioCache;
             }else{
-                echatsOptions = WxViewUtils.reslovePCA(instances1,24);
+                Instances instances = new Instances(new FileReader(Const.DATA_FOR_SMOTE));
+                instances.setClassIndex(instances.numAttributes() - 1);
+                SMOTE smote =new SMOTE();
+                String[] options = {"-S", String.valueOf(1), "-P", String.valueOf(ratio), "-K", String.valueOf(kNeighbors)};
+                smote.setInputFormat(instances);
+                smote.setOptions(options);
+                Instances instances1 = Filter.useFilter(instances, smote);
+                echatsOptions = WxViewUtils.reslovePCA(instances1,12);
                 String cacheOptions=gson.toJson(echatsOptions);
                 mJedisAdapter.set(key,cacheOptions);
-            }
-            if(ratioCache!=null){
-                ratioResult=ratioCache;
-            }else {
                 ratioResult= wxComponentService.getRatio0To1(instances1);
                 mJedisAdapter.set(ratioKey,ratioResult);
             }
