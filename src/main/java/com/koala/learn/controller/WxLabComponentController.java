@@ -93,7 +93,12 @@ public class WxLabComponentController {
         Map<String,Object> map =new HashMap();
 
         String key=RedisKeyUtil.getSmoteKey(kNeighbors,ratio);
+        String ratioKey="GET_SMOTE_RATIO:"+ratio;
         String cache=mJedisAdapter.get(key);
+        String ratioCache=mJedisAdapter.get(ratioKey);
+        EchatsOptions echatsOptions;
+        String ratioResult;
+        Gson gson=new Gson();
 
         try {
             Instances instances = new Instances(new FileReader(Const.DATA_FOR_SMOTE));
@@ -103,8 +108,7 @@ public class WxLabComponentController {
             smote.setInputFormat(instances);
             smote.setOptions(options);
             Instances instances1 = Filter.useFilter(instances, smote);
-            EchatsOptions echatsOptions;
-            Gson gson=new Gson();
+
             if(cache!=null){
                 echatsOptions=gson.fromJson(cache,EchatsOptions.class);
             }else{
@@ -112,8 +116,13 @@ public class WxLabComponentController {
                 String cacheOptions=gson.toJson(echatsOptions);
                 mJedisAdapter.set(key,cacheOptions);
             }
-
-            map.put("ratio",wxComponentService.getRatio0To1(instances1));
+            if(ratioCache!=null){
+                ratioResult=ratioCache;
+            }else {
+                ratioResult= wxComponentService.getRatio0To1(instances1);
+                mJedisAdapter.set(ratioKey,ratioResult);
+            }
+            map.put("ratio",ratioResult);
 //            map.put("ratio","0与1的样本数量比为"+8.56/(ratio/100)+":1");
             map.put("option",echatsOptions);
 
