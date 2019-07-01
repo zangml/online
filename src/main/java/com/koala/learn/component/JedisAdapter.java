@@ -179,6 +179,21 @@ public class JedisAdapter implements InitializingBean {
         }
         return 0;
     }
+    public long lrem(String key, int count,String value) {
+        Jedis jedis = null;
+        try {
+            jedis = getJedis();
+            return jedis.lrem(key,count,value);
+        } catch (Exception e) {
+            logger.error("发生异常" + e.getMessage());
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return 0;
+    }
+
 
 
     public long llen(String key){

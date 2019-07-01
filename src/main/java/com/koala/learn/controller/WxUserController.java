@@ -42,4 +42,13 @@ public class WxUserController {
         return wxUserService.getLabRecord(openId);
     }
 
+    @RequestMapping("wx/user/removeRecord")
+    @ResponseBody
+    public ServerResponse removeLabRecordByInstanceId(String openId,Integer instanceId){
+        if(openId==null){
+            return ServerResponse.createByErrorMessage("未获取到用户的openid");
+        }
+        return wxUserService.removeRecordByInstanceId(openId,instanceId);
+    }
+
 }

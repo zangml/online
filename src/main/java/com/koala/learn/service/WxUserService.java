@@ -50,6 +50,7 @@ public class WxUserService {
         for(String str: labRecords){
             WxLabRecord wxLabRecord = mGson.fromJson(str, WxLabRecord.class);
             WxLabRecordVo vo =new WxLabRecordVo();
+            vo.setInstanceId(wxLabRecord.getInstanceId());
             vo.setLabTitle(wxLabRecord.getLabTitle());
             vo.setTitle(wxLabRecord.getTitle());
             vo.setPreHandle(wxLabRecord.getPreHandle());
@@ -63,4 +64,25 @@ public class WxUserService {
         return ServerResponse.createBySuccess(labRecordVoList);
     }
 
+    public ServerResponse removeRecordByInstanceId(String openId, Integer instanceId){
+        String labRecordKey= RedisKeyUtil.getWxLabRecord(openId);
+        List<String> labRecords=jedisAdapter.lrange(labRecordKey,0,jedisAdapter.llen(labRecordKey));
+        int removeIndex=-1;
+        for(String str: labRecords){
+            removeIndex++;
+            WxLabRecord wxLabRecord = mGson.fromJson(str, WxLabRecord.class);
+            if(wxLabRecord.getInstanceId()==instanceId){
+                break;
+            }
+        }
+        if(removeIndex==-1){
+            return ServerResponse.createByErrorMessage("没有找到对应记录，删除失败");
+        }
+        String removeValue=labRecords.get(removeIndex);
+        long lrem = jedisAdapter.lrem(labRecordKey, 1, removeValue);
+        if(lrem!=0){
+            return ServerResponse.createBySuccessMessage("删除成功");
+        }
+        return ServerResponse.createByErrorMessage("删除失败");
+    }
 }

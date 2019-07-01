@@ -4,6 +4,7 @@ import java.util.List;
 
 public class WxLabRecordVo {
 
+    private Integer instanceId;
     private String labTitle;
     private String title;
     private String preHandle;
@@ -12,13 +13,15 @@ public class WxLabRecordVo {
     private String divider;
     private String result;
     private String time;
+
 //    private List<String> legends;
 //    private List<LabResultVo> series;
     public WxLabRecordVo(){}
 
-    public WxLabRecordVo(String labTitle, String title, String preHandle,
+    public WxLabRecordVo(Integer instanceId,String labTitle, String title, String preHandle,
                          String feature, String algorithm, String divider, String result,
                          String time) {
+        this.instanceId=instanceId;
         this.labTitle = labTitle;
         this.title = title;
         this.preHandle = preHandle;
@@ -30,7 +33,13 @@ public class WxLabRecordVo {
 
     }
 
+    public Integer getInstanceId() {
+        return instanceId;
+    }
 
+    public void setInstanceId(Integer instanceId) {
+        this.instanceId = instanceId;
+    }
 
     public String getLabTitle() {
         return labTitle;
