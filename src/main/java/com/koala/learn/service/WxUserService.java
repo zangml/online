@@ -65,17 +65,23 @@ public class WxUserService {
     }
 
     public ServerResponse removeRecordByInstanceId(String openId, Integer instanceId){
+//        System.out.println("openId: "+openId);
+//        System.out.println("instanceId:"+instanceId);
         String labRecordKey= RedisKeyUtil.getWxLabRecord(openId);
         List<String> labRecords=jedisAdapter.lrange(labRecordKey,0,jedisAdapter.llen(labRecordKey));
+//        System.out.println("共有记录："+labRecords.size());
         int removeIndex=-1;
+        boolean isFind=false;
         for(String str: labRecords){
             removeIndex++;
             WxLabRecord wxLabRecord = mGson.fromJson(str, WxLabRecord.class);
-            if(wxLabRecord.getInstanceId()==instanceId){
+//            System.out.println("第"+removeIndex+"条记录的instanceId为"+wxLabRecord.getInstanceId());
+            if(wxLabRecord.getInstanceId().equals(instanceId)){
+                isFind=true;
                 break;
             }
         }
-        if(removeIndex==-1){
+        if(!isFind || removeIndex==-1 ){
             return ServerResponse.createByErrorMessage("没有找到对应记录，删除失败");
         }
         String removeValue=labRecords.get(removeIndex);
