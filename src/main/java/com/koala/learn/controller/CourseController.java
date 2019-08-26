@@ -42,17 +42,17 @@ public class CourseController {
     @RequestMapping("/course/{couseType}")
     public String mysqlCourseList(@PathVariable("couseType") Integer couseType) {
         if(couseType==1){
-            return "views/phmCourse/phmIntroduce";
+            return "redirect:/u/13212127650/blogs/3";
         }else if(couseType==2){
-            return "views/phmCourse/preHandleCourse";
+            return "redirect:/u/13212127650/blogs/1";
         }else if(couseType==3){
-            return "views/phmCourse/featureCourse";
+            return "redirect:/u/13212127650/blogs/2";
         }else if(couseType==4){
-            return "views/phmCourse/healthyAssemble";
+            return "redirect:/u/13212127650/blogs/4";
         }else if(couseType==5){
-            return "views/phmCourse/diagnosis";
+            return "redirect:/u/13212127650/blogs/5";
         }else if(couseType==6){
-            return "views/phmCourse/lifePre";
+            return "redirect:/u/13212127650/blogs/6";
         }else if(couseType==7){
             return "redirect:/labs";
         }else if(couseType==8){
