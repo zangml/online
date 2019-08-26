@@ -97,7 +97,7 @@
                     <a href="/logout" class="btn btn-danger pull-right">退出登录</a>
                 </div>
                 <div class="information" style="font-size: 15px;">
-                    我的昵称：${user.name}
+                    我的昵称：${user.username}
                 </div>
 
                 <div class="information" style="font-size: 15px;">

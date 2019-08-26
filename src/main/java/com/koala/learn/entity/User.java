@@ -3,7 +3,7 @@ package com.koala.learn.entity;
 public class User {
     private Integer id;
 
-    private String name;
+    private String username;
 
     private String password;
 
@@ -27,9 +27,14 @@ public class User {
 
     private String relname;
 
-    public User(Integer id, String name, String password, String salt, String school, Integer classId, Integer sex, Integer studentId, String email, Integer state, String headUrl, String grade, String relname) {
+    private String avatar;//头像地址
+
+    private Integer role;//约定0为普通用户，1为管理员
+
+    public User(){}
+    public User(Integer id, String username, String password, String salt, String school, Integer classId, Integer sex, Integer studentId, String email, Integer state, String headUrl, String grade, String relname, String avatar, Integer role) {
         this.id = id;
-        this.name = name;
+        this.username = username;
         this.password = password;
         this.salt = salt;
         this.school = school;
@@ -41,10 +46,8 @@ public class User {
         this.headUrl = headUrl;
         this.grade = grade;
         this.relname = relname;
-    }
-
-    public User() {
-        super();
+        this.avatar = avatar;
+        this.role = role;
     }
 
     public Integer getId() {
@@ -55,12 +58,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -68,7 +71,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+        this.password = password;
     }
 
     public String getSalt() {
@@ -76,7 +79,7 @@ public class User {
     }
 
     public void setSalt(String salt) {
-        this.salt = salt == null ? null : salt.trim();
+        this.salt = salt;
     }
 
     public String getSchool() {
@@ -84,7 +87,7 @@ public class User {
     }
 
     public void setSchool(String school) {
-        this.school = school == null ? null : school.trim();
+        this.school = school;
     }
 
     public Integer getClassId() {
@@ -116,7 +119,7 @@ public class User {
     }
 
     public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
+        this.email = email;
     }
 
     public Integer getState() {
@@ -132,7 +135,7 @@ public class User {
     }
 
     public void setHeadUrl(String headUrl) {
-        this.headUrl = headUrl == null ? null : headUrl.trim();
+        this.headUrl = headUrl;
     }
 
     public String getGrade() {
@@ -140,7 +143,7 @@ public class User {
     }
 
     public void setGrade(String grade) {
-        this.grade = grade == null ? null : grade.trim();
+        this.grade = grade;
     }
 
     public String getRelname() {
@@ -148,6 +151,22 @@ public class User {
     }
 
     public void setRelname(String relname) {
-        this.relname = relname == null ? null : relname.trim();
+        this.relname = relname;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
     }
 }

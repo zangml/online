@@ -41,7 +41,7 @@ public class BBSController {
     public String bbs(Model model){
         Map<BBSModule,List<BBSModule>> map = mBBSService.getModules();
         model.addAttribute("moduleMap",map);
-        return "bbs/bbs";
+        return "views/bbs/bbs";
     }
 
     @RequestMapping("/bbs/{moduleId}")
@@ -55,6 +55,6 @@ public class BBSController {
             model.addAttribute("start",page-2);
         }
         model.addAttribute("vos",questionList);
-        return "bbs/questionList";
+        return "views/bbs/questionList";
     }
 }

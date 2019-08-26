@@ -103,7 +103,7 @@ public class LabLearnController {
         System.out.println(vos);
         model.addAttribute("labId", labId);
         model.addAttribute("des", mJedisAdapter.get(RedisKeyUtil.getPreDesKey(labId)));
-        return "learn/lab_0";
+        return "views/learn/lab_0";
     }
     @RequestMapping("/learn/lab1/{labId}/{instance}")
     public String goLab1(@PathVariable("labId") Integer labId, @PathVariable("instance") Integer instanceId, Model model, HttpSession session) {
@@ -111,9 +111,9 @@ public class LabLearnController {
         Lab lab = mLabMapper.selectByPrimaryKey(labId);
         addAttributeToModel(lab, model);
         if(lab.getLableType()==1) {
-            return "learn/lab_1";
+            return "views/learn/lab_1";
         }else{
-            return "learn/lab_1_reg";
+            return "views/learn/lab_1_reg";
         }
     }
 
@@ -131,7 +131,7 @@ public class LabLearnController {
         System.out.println(vos);
         model.addAttribute("labId", labId);
         model.addAttribute("des", mJedisAdapter.get(RedisKeyUtil.getFeatureDesKey(labId)));
-        return "learn/lab_2";
+        return "views/learn/lab_2";
     }
 
 
@@ -162,7 +162,7 @@ public class LabLearnController {
         }
 
         model.addAttribute("selectedClassifiers", mLabLearnService.getSelectedClassifier(labId, instanceId));
-        return "learn/lab_3";
+        return "views/learn/lab_3";
     }
 
 
@@ -177,7 +177,7 @@ public class LabLearnController {
         model.addAttribute("divider", divider);
         model.addAttribute("instance", instanceId);
         model.addAttribute("lab", lab);
-        return "learn/lab_4";
+        return "views/learn/lab_4";
     }
 
 
@@ -187,7 +187,7 @@ public class LabLearnController {
         logger.info("start------lab5");
         if (mJedisAdapter.llen(classifierKey) == 0) {
             model.addAttribute("error", "未选择算法");
-            return "common/error";
+            return "views/common/error";
         } else {
             Lab lab = mLabMapper.selectByPrimaryKey(labId);
             List<String> classifierList = mJedisAdapter.lrange(classifierKey, 0, mJedisAdapter.llen(classifierKey));
@@ -231,7 +231,7 @@ public class LabLearnController {
                         System.out.println(result);
                         if (result == null) {
                             model.addAttribute("error", "运算失败");
-                            return "common/error";
+                            return "views/common/error";
                         } else {
                             List<String> resList = Arrays.asList(classifier.getName(),
                                     result.getRecall() + "", result.getAccuracy() + "",
@@ -261,7 +261,7 @@ public class LabLearnController {
                         System.out.println(regResult);
                         if (regResult == null) {
                             model.addAttribute("error", "运算失败");
-                            return "common/error";
+                            return "views/common/error";
                         } else {
                             List<String> resList = Arrays.asList(classifier.getName(),
                                     regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
@@ -289,10 +289,10 @@ public class LabLearnController {
                 model.addAttribute("options",echatsOptions);
                 model.addAttribute("classNames", classifierNameList);
                 model.addAttribute("lab", mLabMapper.selectByPrimaryKey(labId));
-                return "learn/lab_5";
+                return "views/learn/lab_5";
             } else {
                 model.addAttribute("error", "训练失败");
-                return "common/error";
+                return "views/common/error";
             }
 
         }

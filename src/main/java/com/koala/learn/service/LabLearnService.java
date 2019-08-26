@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -84,7 +85,7 @@ public class LabLearnService {
         return attributeList;
     }
 
-    public void addFeature(HttpSession session, Lab lab, Feature feature, Map<String,String> map, LabInstance instance) throws IOException {
+    public void addFeature(HttpSession session, Lab lab, Feature feature, Map<String,String> map, LabInstance instance) throws IOException, BeansException {
         String featureKey = RedisKeyUtil.getFeatureInstanceKey(lab.getId(),instance.getId());
         System.out.println(featureKey);
         File parent = new File(new File(lab.getFile()).getParent()+"/");

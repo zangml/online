@@ -76,7 +76,7 @@ public class LabDesignController {
     @RequestMapping("/design")
     public String design(Model model) {
         model.addAttribute("files", mLabDesignerService.getBuildinFileList());
-        return "design/createGroup";
+        return "views/design/createGroup";
     }
 
     @RequestMapping("/design/group")
@@ -92,15 +92,15 @@ public class LabDesignController {
             LabGroup lab = mLabDesignerService.createLabGroup(title, des, aim, type);
             mLabDesignerService.addFile(lab, fileId, type);
             session.setAttribute("labGroup", lab);
-            return "redirect:page?labGroup=" + lab.getId();
+            return "redirect:/page?labGroup=" + lab.getId();
         } else if (file.getSize() > 104857600l) {
             model.addAttribute("error", "文件大小不能超过100M");
-            return "common/error";
+            return "views/common/error";
         } else {
             LabGroup lab = mLabDesignerService.createLabGroup(title, des, aim, type);
             mLabDesignerService.addFile(lab, file, type);
             session.setAttribute("labGroup", lab);
-            return "redirect:page?labGroup=" + lab.getId();
+            return "redirect:/page?labGroup=" + lab.getId();
         }
 
     }
@@ -112,7 +112,7 @@ public class LabDesignController {
         model.addAttribute("labGroup", group);
         List<Lab> labs = mLabDesignerService.selectLabsByGroup(group.getId());
         model.addAttribute("labs", labs);
-        return "design/labpage";
+        return "views/design/labpage";
     }
 
 
@@ -125,7 +125,7 @@ public class LabDesignController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "common/error";
+        return "views/common/error";
 
     }
 
@@ -134,7 +134,7 @@ public class LabDesignController {
         List<FeatureVo> voList = mLabDesignerService.selectAllPre();
         model.addAttribute("vos", voList);
         model.addAttribute("labId", labId);
-        return "design/lab_0";
+        return "views/design/lab_0";
     }
 
     @RequestMapping("/design/{labId}/lab_1")
@@ -152,9 +152,9 @@ public class LabDesignController {
         System.out.println(attributeList.toString());
         System.out.println(attributeList.size());
         if(lab.getLableType()==1){
-            return "design/lab_1";}
+            return "views/design/lab_1";}
         else {
-            return  "design/lab_1_reg";
+            return  "views/design/lab_1_reg";
         }
     }
 
@@ -164,7 +164,7 @@ public class LabDesignController {
         List<FeatureVo> voList = mLabDesignerService.selectAllFeature();
         model.addAttribute("vos", voList);
         model.addAttribute("labId", labId);
-        return "design/lab_2";
+        return "views/design/lab_2";
     }
 
     @RequestMapping("/design/{labId}/lab_3")
@@ -192,7 +192,7 @@ public class LabDesignController {
 
         model.addAttribute("lab", lab);
         model.addAttribute("selectedClassifiers", mLabService.getSelectedClassifier(labId));
-        return "design/lab_3";
+        return "views/design/lab_3";
     }
 
     @RequestMapping("/design/{labId}/lab_4")
@@ -205,7 +205,7 @@ public class LabDesignController {
         List<Divider> dividers = mDividerMapper.selectAll();
         model.addAttribute("dividers", dividers);
         model.addAttribute("lab", lab);
-        return "design/lab_4";
+        return "views/design/lab_4";
     }
 
     @RequestMapping("/design/{labId}/lab_5")
@@ -308,11 +308,11 @@ public class LabDesignController {
         model.addAttribute("classNames", classifierNameList);
         lab.setPublish(1);
         mLabMapper.updateByPrimaryKeySelective(lab);
-        return "design/lab_5";
+        return "views/design/lab_5";
     }
 
     @RequestMapping("/design/upload/classifier")
     public String uploadClassifier() {
-        return "design/updateClassifier";
+        return "views/design/updateClassifier";
     }
 }

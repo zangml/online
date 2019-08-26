@@ -27,7 +27,7 @@ public class OJController {
     @RequestMapping("/oj")
     public String ojHome(Model model){
         model.addAttribute("typeList",ojService.selectAllOj());
-        return "oj/ojList";
+        return "views/oj/ojList";
     }
 
     @RequestMapping("/oj/{ojId}")
@@ -37,7 +37,7 @@ public class OJController {
         }else {
             List<OJGroupVo> groupVos = ojService.getVo(id);
             model.addAttribute("groupVos",groupVos);
-            return "oj/ojPage";
+            return "views/oj/ojPage";
         }
 
     }
@@ -50,13 +50,13 @@ public class OJController {
         model.addAttribute("test",courseTest);
         model.addAttribute("headers",headers);
         model.addAttribute("bodies",ojService.resolveTableBody(maps,headers));
-        return "oj/sql";
+        return "views/oj/sql";
     }
 
     @RequestMapping("/oj/http/")
     public String httpOJ(){
 
-        return "oj/http";
+        return "views/oj/http";
     }
 
     @RequestMapping("/oj/{typeId}/{testId}")
@@ -75,6 +75,6 @@ public class OJController {
         model.addAttribute("content",htmlTest.getContent());
         model.addAttribute("testType",type);
         model.addAttribute("testId",testId);
-        return "oj/html";
+        return "views/oj/html";
     }
 }

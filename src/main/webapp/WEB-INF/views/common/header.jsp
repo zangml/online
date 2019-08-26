@@ -30,6 +30,11 @@
                 </a>
         </span>
         <span>
+                <a href="/blogs">
+                    博客
+                </a>
+        </span>
+        <span>
                 <a href="/labs">
                     实验
                 </a>

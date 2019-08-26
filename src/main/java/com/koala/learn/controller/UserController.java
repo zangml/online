@@ -42,7 +42,7 @@ public class UserController {
     @RequestMapping("goLog")
     public String goLog(Model model, @RequestParam(value = "next", required = false) String next) {
         model.addAttribute("next", next);
-        return "user/login";
+        return "views/user/login";
     }
 
 
@@ -69,19 +69,19 @@ public class UserController {
                 return "redirect:/";
             } else {
                 model.addAttribute("msg", map.get("msg"));
-                return "user/login";
+                return "views/user/login";
             }
 
         } catch (Exception e) {
             logger.error("登陆异常" + e.getMessage());
-            return "user/login";
+            return "views/user/login";
         }
     }
 
     @RequestMapping("goReg")
     public String goReg(Model model, @RequestParam(value = "next", required = false) String next) {
         model.addAttribute("next", next);
-        return "user/reg";
+        return "views/user/reg";
     }
 
     @RequestMapping("reg")
@@ -100,7 +100,7 @@ public class UserController {
             return "redirect:/";
         } else {
             model.addAttribute("msg", map.get("msg"));
-            return "user/reg";
+            return "views/user/reg";
         }
     }
 
@@ -109,14 +109,14 @@ public class UserController {
     public String user(Model model){
         List<LabFinishVo> vos = mUserService.getDesignLabVo(mHolder.getUser().getId());
         model.addAttribute("vos",vos);
-        return "user/design";
+        return "views/user/design";
     }
 
     @RequestMapping("user/labs")
     public String myLabs(Model model){
         List<LabFinishVo> vos = mUserService.getGroupInstanceList(mHolder.getUser().getId());
         model.addAttribute("vos",vos);
-        return "user/labs";
+        return "views/user/labs";
     }
     @RequestMapping("user/delete/lab")
     @ResponseBody
@@ -127,7 +127,7 @@ public class UserController {
     @RequestMapping("user/editdata")
     public String editData(Model model){
         model.addAttribute("user",mHolder.getUser());
-        return "user/editdata";
+        return "views/user/editdata";
     }
 
     @RequestMapping("user/save")
@@ -137,13 +137,13 @@ public class UserController {
         User newUser = mUserService.getUser(user.getId()+"");
         mHolder.setUser(newUser);
         model.addAttribute("user",newUser);
-        return "user/mydata";
+        return "views/user/mydata";
     }
 
     @RequestMapping("user/mydata")
     public String mydata(Model model){
         model.addAttribute("user",mHolder.getUser());
-        return "user/mydata";
+        return "views/user/mydata";
     }
 
     @RequestMapping(path = {"/logout"}, method = {RequestMethod.GET, RequestMethod.POST})

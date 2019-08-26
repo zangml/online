@@ -10,6 +10,8 @@ public class Const {
 
     public static final String WINDOW = "currentWindow";
 
+    public static final String DEFAULT_AVATAR="/static/images/avatar-default.jpg";
+
     public static final String UPDATE_CLASS_ROOT = "/usr/local/sk/"; //上传算法所在目录
 
     public static final String UPDATE_CLASS_TEST_ROOT = "/Users/zangmenglei/"; //上传算法测试文件所在目录

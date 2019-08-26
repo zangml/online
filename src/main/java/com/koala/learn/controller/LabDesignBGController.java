@@ -255,12 +255,12 @@ public class LabDesignBGController {
                 return "redirect:/design";
             }else {
                 model.addAttribute("error",response.getMsg());
-                return "common/error";
+                return "views/common/error";
             }
         } catch (IOException e) {
             e.printStackTrace();
             model.addAttribute("error",e.getMessage());
-            return "common/error";
+            return "views/common/error";
         }
 
     }

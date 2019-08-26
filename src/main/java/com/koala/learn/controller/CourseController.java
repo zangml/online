@@ -27,8 +27,9 @@ public class CourseController {
     public String courseList(Model model){
         List<CourseType> typeList = mCourseService.getCourseTypeList();
         model.addAttribute("typeList",typeList);
-        return "course/courseList";
+        return "views/course/courseList";
     }
+
 
 //    @RequestMapping("/course/{couseType}")
 //    public String mysqlCourseList(Model model,@PathVariable("couseType") int couseType){
@@ -41,21 +42,21 @@ public class CourseController {
     @RequestMapping("/course/{couseType}")
     public String mysqlCourseList(@PathVariable("couseType") Integer couseType) {
         if(couseType==1){
-            return "phmCourse/phmIntroduce";
+            return "views/phmCourse/phmIntroduce";
         }else if(couseType==2){
-            return "phmCourse/preHandleCourse";
+            return "views/phmCourse/preHandleCourse";
         }else if(couseType==3){
-            return "phmCourse/featureCourse";
+            return "views/phmCourse/featureCourse";
         }else if(couseType==4){
-            return "phmCourse/healthyAssemble";
+            return "views/phmCourse/healthyAssemble";
         }else if(couseType==5){
-            return "phmCourse/diagnosis";
+            return "views/phmCourse/diagnosis";
         }else if(couseType==6){
-            return "phmCourse/lifePre";
+            return "views/phmCourse/lifePre";
         }else if(couseType==7){
             return "redirect:/labs";
         }else if(couseType==8){
-            return "design/createGroup";
+            return "views/design/createGroup";
         }return "";
     }
 
@@ -65,14 +66,14 @@ public class CourseController {
         List<Course> courseList = mCourseService.getCourseByType(couseType);
         Course current = mCourseService.getCourseById(new Integer(id));
         model.addAttribute("currentCourse",current);
-        return "course/course";
+        return "views/course/course";
     }
 
 
     @RequestMapping("/course/{couseType}/test/{id}")
     public String mysqlTest(Model model, @PathVariable("id") String id,@PathVariable("couseType") int couseType){
 
-        return "course/courseTest";
+        return "views/course/courseTest";
     }
 
 

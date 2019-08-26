@@ -25,14 +25,14 @@ public class LabListController {
     @RequestMapping("/labs")
     public String getExperimentList(Model model){
         model.addAttribute("labList", mLabService.getGroupList());
-        return "lab/lablist";
+        return "views/lab/lablist";
     }
 
     @RequestMapping("/labs/{id}/detail")
     public String getExperimentDetail(@PathVariable("id") int id, Model model){
         model.addAttribute("labGroup", mLabService.getGroupById(id));
         model.addAttribute("labs",mLabService.getLabListByGroup(id));
-        return "lab/labpage";
+        return "views/lab/labpage";
     }
 
     @RequestMapping("/labs/group/{groupId}")
@@ -46,7 +46,7 @@ public class LabListController {
                                   @PathVariable("instanceId") Integer instanceId,
                                   Model model){
         mLabService.getGroupInstanceInfo(model,groupId,instanceId);
-        return "lab/instances";
+        return "views/lab/instances";
     }
 
 }

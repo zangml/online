@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.koala.learn.dao.BlogMapper" >
+    <resultMap id="BaseResultMap" type="com.koala.learn.entity.Blog" >
+        <constructor >
+            <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+            <arg column="title"  jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="summary" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+            <arg column="html_content" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+            <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+            <arg column="read_size" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="comment_size" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="vote_size" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="catalog_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="tags" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="publish" jdbcType="TINYINT" javaType="java.lang.Integer" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List" >
+    id, title, summary,content,html_content,user_id,create_time,read_size,
+    comment_size,vote_size,catalog_id,tags,publish
+    </sql>
+
+    <insert id="save" parameterType="com.koala.learn.entity.Blog" useGeneratedKeys="true" keyProperty="id">
+        insert into blog(id,title, summary,content,html_content,user_id,create_time,read_size,
+        comment_size,vote_size,catalog_id,tags,publish)
+        values (#{id},#{title},#{summary},#{content},#{htmlContent},#{userId},now(),#{readSize}
+        ,#{commentSize},#{voteSize},#{catalogId},#{tags},#{publish})
+    </insert>
+    <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from blog
+    where id = #{id}
+    </delete>
+    <select id="getOne" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from blog
+        where id = #{id}
+    </select>
+
+    <update id="updateSelective" parameterType="com.koala.learn.entity.Blog" >
+        update blog
+        <set >
+            <if test="title != null" >
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null" >
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null" >
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="htmlContent != null" >
+                html_content = #{htmlContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="userId != null" >
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="readSize != null" >
+                read_size = #{readSize,jdbcType=INTEGER},
+            </if>
+            <if test="commentSize != null" >
+                comment_size = #{commentSize,jdbcType=INTEGER},
+            </if>
+            <if test="voteSize != null" >
+                vote_size = #{voteSize,jdbcType=INTEGER},
+            </if>
+            <if test="catalogId != null" >
+                catalog_id = #{catalogId,jdbcType=INTEGER},
+            </if>
+            <if test="tags != null" >
+                tags = #{tags,jdbcType=VARCHAR},
+            </if>
+            <if test="publish != null" >
+                publish = #{publish,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="findByCatalog" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from blog
+        where catalog_id = #{catalogId}
+    </select>
+    <select id="findByUserAndTitleLikeOrderByReadsize" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from blog
+        where user_id=#{userId}
+        and title like #{title}
+        order by read_size desc
+    </select>
+    <select id="findByTitleLikeAndUserOrTagsLikeAndUserOrderByCreateTimeDesc" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from blog
+        where user_id=#{userId}
+        and (title like #{title} or tags like #{tags})
+        order by create_time desc
+    </select>
+    <select id="findByUserId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from blog
+        where user_id=#{userId}
+    </select>
+</mapper>

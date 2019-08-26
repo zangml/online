@@ -1,5 +1,6 @@
 package com.koala.learn.service;
 
+import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
 import com.koala.learn.component.HostHolder;
 import com.koala.learn.dao.*;
@@ -16,13 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by koala on 2017/11/13.
@@ -49,6 +44,9 @@ public class UserService {
     @Autowired
     GroupInstanceMapper groupInstanceMapper;
 
+    @Autowired
+    UserMapper userMapper;
+
 
     public Map<String, Object> login(String username, String password) {
         Map<String, Object> map = new HashedMap();
@@ -62,7 +60,7 @@ public class UserService {
             return map;
         }
 
-        User user = mUserMapper.selectByName(username);
+        User user = mUserMapper.selectByUsername(username);
         if (user == null){
             map.put("msg", "用户名不存在");
             return map;
@@ -82,7 +80,7 @@ public class UserService {
 
     public Map<String, Object> reg(User user) {
         Map<String, Object> map = new HashMap<String, Object>();
-        if (StringUtils.isBlank(user.getName())) {
+        if (StringUtils.isBlank(user.getUsername())) {
             map.put("msg", "用户名不能为空");
             return map;
         }
@@ -97,7 +95,7 @@ public class UserService {
             return map;
         }
 
-        User pre = mUserMapper.selectByName(user.getName());
+        User pre = mUserMapper.selectByUsername(user.getUsername());
 
         if (pre != null) {
             map.put("msg", "用户名已经被注册");
@@ -108,6 +106,8 @@ public class UserService {
         user.setSalt(UUID.randomUUID().toString().substring(0, 5));
         String head = String.format("http://images.nowcoder.com/head/%dt.png", new Random().nextInt(1000));
         user.setHeadUrl(head);
+        user.setAvatar(Const.DEFAULT_AVATAR);
+        user.setRole(0);
         user.setPassword(WendaUtil.MD5(user.getPassword()+user.getSalt()));
         mUserMapper.insert(user);
 
@@ -199,4 +199,14 @@ public class UserService {
         }
         return ServerResponse.createByErrorMessage("删除失败");
     }
+
+    public List<User> listUsersByUsernames(Collection<String> usernames) {
+        List<User> res=new ArrayList<>();
+        for(String username: usernames) {
+            User user=userMapper.selectByUsername(username);
+            res.add(user);
+        }
+        return res;
+    }
+
 }

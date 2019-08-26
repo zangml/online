@@ -105,7 +105,7 @@
                     </div>
                     <input type="hidden" name="id" value="${user.id}"/>
                     <div class="information" style="font-size: 15px;">
-                        我的昵称：<input type="text" name="name" value="${user.name}" style="height: 30px;width: 50%;border-radius: 5px;" />
+                        我的昵称：<input type="text" name="name" value="${user.username}" style="height: 30px;width: 50%;border-radius: 5px;" />
                     </div>
 
                     <div class="information" style="font-size: 15px;">

@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(User record);
+    int insert(User user);
 
     int insertSelective(User record);
 
@@ -17,6 +17,7 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    User selectByName(@Param("name") String name);
+    User selectByUsername(@Param("username") String username);
+
 
 }

@@ -49,7 +49,7 @@ public class QuestionController {
     @RequestMapping("/question/add/page")
     public String questionAddPage(Model model){
         model.addAttribute("modules",mQuestionService.getModuleList());
-        return "bbs/questionAdd";
+        return "views/bbs/questionAdd";
     }
 
     @RequestMapping("/question/{qid}")
@@ -72,7 +72,7 @@ public class QuestionController {
             voList.add(vo);
         }
         model.addAttribute("vos",voList);
-        return "bbs/questionDetail";
+        return "views/bbs/questionDetail";
     }
 
     @RequestMapping(value = "/question/add", method = {RequestMethod.POST})
