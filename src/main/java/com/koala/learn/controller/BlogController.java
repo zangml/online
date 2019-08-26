@@ -64,9 +64,9 @@ public class BlogController {
 		}  
  
 		list = page.getContent();	// 当前所在页面数据列表
-		for(EsBlog esBlog:list){
-			System.out.println(esBlog.getUsername()+" 的博客 id是" + " "+esBlog.getBlogId());
-		}
+//		for(EsBlog esBlog:list){
+//			System.out.println(esBlog.getUsername()+" 的博客 id是" + " "+esBlog.getBlogId());
+//		}
 //
 //		for(EsBlog esBlog:list){
 //			User user=userMapper.selectByUsername(esBlog.getUsername());
