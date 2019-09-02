@@ -26,12 +26,25 @@
     <div class="homepageCategoryProducts">
         <div class="eachHomepageCategoryProducts">
             <div class="left-mark"></div>
+            <span class="categoryTitle">课程</span>
+            <div style="clear:both"></div>
+            <c:forEach items="${labCourseList}" var="labCourse">
+                <div class="productItem">
+                    <a href="/course/lab/${labCourse.blogId}"><img width="100px" src="${labCourse.cover}"></a>
+                    <a href="/course/lab/${labCourse.blogId}" class="productItemDescLink">
+              <span class="productItemDesc" >${labCourse.name}</span></a>
+                </div>
+            </c:forEach>
+            <div style="clear:both"></div>
+        </div>
+        <div class="eachHomepageCategoryProducts">
+            <div class="left-mark"></div>
             <span class="categoryTitle">教程</span>
             <div style="clear:both"></div>
             <c:forEach items="${typeList}" var="course">
                 <div class="productItem">
                     <a href="/course/${course.id}"><img width="100px" src="${course.cover}"></a>
-                    <a href="http://oursparkspace.cn/?p=248" class="productItemDescLink">
+                    <a href="/course/${course.id}" class="productItemDescLink">
               <span class="productItemDesc" >${course.name}
               </span>
                     </a>
@@ -40,12 +53,12 @@
                     <button type="button" class="btn btn-warning btn-arrow-right center">${course.id}.Next &nbsp;&nbsp;</button>
                 </div>
             </c:forEach>
-            <%--https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3758739492,854130434&fm=200&gp=0.jpg--%>
-            <div class="productItem">
-                <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3758739492,854130434&fm=200&gp=0.jpg">
-                <br>
-                <span class="productItemDescLink" style="margin-left: 30px;color: #0b1014;margin-top: 20px;">搭建自己的故障检测应用</span>
-            </div>
+            <%--&lt;%&ndash;https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3758739492,854130434&fm=200&gp=0.jpg&ndash;%&gt;--%>
+            <%--<div class="productItem">--%>
+                <%--<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3758739492,854130434&fm=200&gp=0.jpg">--%>
+                <%--<br>--%>
+                <%--<span class="productItemDescLink" style="margin-left: 30px;color: #0b1014;margin-top: 20px;">搭建自己的故障检测应用</span>--%>
+            <%--</div>--%>
             <div style="clear:both"></div>
         </div>
     </div>

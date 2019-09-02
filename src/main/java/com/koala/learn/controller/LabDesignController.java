@@ -92,7 +92,7 @@ public class LabDesignController {
             LabGroup lab = mLabDesignerService.createLabGroup(title, des, aim, type);
             mLabDesignerService.addFile(lab, fileId, type);
             session.setAttribute("labGroup", lab);
-            return "redirect:/page?labGroup=" + lab.getId();
+            return "redirect:/design/page?labGroup=" + lab.getId();
         } else if (file.getSize() > 104857600l) {
             model.addAttribute("error", "文件大小不能超过100M");
             return "views/common/error";
@@ -100,7 +100,7 @@ public class LabDesignController {
             LabGroup lab = mLabDesignerService.createLabGroup(title, des, aim, type);
             mLabDesignerService.addFile(lab, file, type);
             session.setAttribute("labGroup", lab);
-            return "redirect:/page?labGroup=" + lab.getId();
+            return "redirect:/design/page?labGroup=" + lab.getId();
         }
 
     }

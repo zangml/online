@@ -3,8 +3,10 @@ package com.koala.learn.controller;
 import com.koala.learn.commen.LogAnnotation;
 import com.koala.learn.entity.Course;
 import com.koala.learn.entity.CourseType;
+import com.koala.learn.entity.LabCourse;
 import com.koala.learn.service.CourseService;
 
+import com.koala.learn.service.LabCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +25,14 @@ public class CourseController {
     CourseService mCourseService;
 
 
+    @Autowired
+    LabCourseService labCourseService;
     @RequestMapping(path = {"/","/index"})
     public String courseList(Model model){
         List<CourseType> typeList = mCourseService.getCourseTypeList();
+        List<LabCourse> labCourseList=labCourseService.getAllLabCourse();
         model.addAttribute("typeList",typeList);
+        model.addAttribute("labCourseList",labCourseList);
         return "views/course/courseList";
     }
 
@@ -60,6 +66,10 @@ public class CourseController {
         }return "";
     }
 
+    @RequestMapping("/course/lab/{blogId}")
+    public String labCourse(@PathVariable("blogId") Integer blogId){
+        return "redirect:/u/13212127650/blogs/"+blogId;
+    }
 
     @RequestMapping("/course/{couseType}/{id}")
     public String mysqlCourse(Model model, @PathVariable("id") String id,@PathVariable("couseType") int couseType){

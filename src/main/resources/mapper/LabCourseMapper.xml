@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koala.learn.dao.LabCourseMapper">
+  <resultMap id="BaseResultMap" type="com.koala.learn.entity.LabCourse">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="blog_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="cover" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, blog_id, cover
+  </sql>
+  <select id="selectAllLabCourse" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from lab_course
+  </select>
+</mapper>
