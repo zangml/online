@@ -29,11 +29,11 @@
                     教程
                 </a>
         </span>
-        <span>
-                <a href="/blogs">
-                    博客
-                </a>
-        </span>
+        <%--<span>--%>
+                <%--<a href="/blogs">--%>
+                    <%--博客--%>
+                <%--</a>--%>
+        <%--</span>--%>
         <span>
                 <a href="/labs">
                     实验
@@ -50,11 +50,11 @@
                     设计实验
                 </a>
         </span>
-        <span>
-                <a href="/bbs">
-                    社区
-                </a>
-        </span>
+        <%--<span>--%>
+                <%--<a href="/bbs">--%>
+                    <%--社区--%>
+                <%--</a>--%>
+        <%--</span>--%>
     </div>
     <div class="pull-right">
         <c:choose>

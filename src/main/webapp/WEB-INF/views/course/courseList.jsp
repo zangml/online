@@ -26,7 +26,7 @@
     <div class="homepageCategoryProducts">
         <div class="eachHomepageCategoryProducts">
             <div class="left-mark"></div>
-            <span class="categoryTitle">课程</span>
+            <span class="categoryTitle">案例</span>
             <div style="clear:both"></div>
             <c:forEach items="${labCourseList}" var="labCourse">
                 <div class="productItem">
@@ -39,7 +39,7 @@
         </div>
         <div class="eachHomepageCategoryProducts">
             <div class="left-mark"></div>
-            <span class="categoryTitle">教程</span>
+            <span class="categoryTitle">知识点</span>
             <div style="clear:both"></div>
             <c:forEach items="${typeList}" var="course">
                 <div class="productItem">
@@ -49,9 +49,9 @@
               </span>
                     </a>
                 </div>
-                <div>
-                    <button type="button" class="btn btn-warning btn-arrow-right center">${course.id}.Next &nbsp;&nbsp;</button>
-                </div>
+                <%--<div>--%>
+                    <%--<button type="button" class="btn btn-warning btn-arrow-right center">${course.id}.Next &nbsp;&nbsp;</button>--%>
+                <%--</div>--%>
             </c:forEach>
             <%--&lt;%&ndash;https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3758739492,854130434&fm=200&gp=0.jpg&ndash;%&gt;--%>
             <%--<div class="productItem">--%>
