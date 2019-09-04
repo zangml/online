@@ -110,19 +110,4 @@
         </property>
     </bean>
 
-    <!-- 扫描Dao包，自动创建实例 -->
-    <elasticsearch:repositories base-package="com.koala.learn.repository"/>
-
-
-    <!-- 配置elasticSearch的连接 -->
-    <!-- 配置elasticSearch的连接 -->
-    <elasticsearch:transport-client id="client" cluster-nodes="localhost:9300" cluster-name="zangml-elasticsearch"/>
-
-
-    <!-- ElasticSearch模版对象 -->
-    <bean id="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
-        <constructor-arg name="client" ref="client"></constructor-arg>
-    </bean>
-
-
 </beans>

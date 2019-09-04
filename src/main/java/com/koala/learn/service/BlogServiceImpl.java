@@ -27,8 +27,6 @@ public class BlogServiceImpl implements BlogService {
 
 	@Autowired
 	private BlogMapper blogMapper;
-	@Autowired
-	private EsBlogService esBlogService;
 
 	@Autowired
 	private HostHolder holder;
@@ -50,24 +48,13 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public Blog saveBlog(Blog blog) {
 		boolean isNew = (blog.getId() == null);
-		EsBlog esBlog = null;
 		User blogUser=userMapper.selectByPrimaryKey(blog.getUserId());
 		if(isNew){
 			blogMapper.save(blog);
 			blog.setCreateTime(new Date());
-			esBlog = new EsBlog(blog);
-			esBlog.setUsername(blogUser.getUsername());
-			esBlog.setAvatar(blogUser.getAvatar());
 		}else{
 			blogMapper.updateSelective(blog);
-			esBlog = esBlogService.getEsBlogByBlogId(blog.getId());
-			System.out.println("----------在更新Blog******_______");
-			System.out.println("----------准备要更新的esBlog是******_______"+esBlog);
-			esBlog.update(blog);
-			esBlog.setUsername(blogUser.getUsername());
-			esBlog.setAvatar(blogUser.getAvatar());
 		}
-		esBlogService.updateEsBlog(esBlog);
 		return blog;
 	}
 
@@ -76,8 +63,6 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public void removeBlog(Long id) {
 		blogMapper.deleteById(id);
-		EsBlog esblog = esBlogService.getEsBlogByBlogId(id);
-		esBlogService.removeEsBlog(esblog.getId());
 	}
 
 

@@ -47,10 +47,7 @@ public class UserspaceController {
 
 	@Autowired
 	private BlogMapper blogMapper;
-	
-	@Autowired
-	private EsBlogService esBlogService;
-	
+
 	@Autowired
 	private BlogService blogService;
 
@@ -164,34 +161,34 @@ public class UserspaceController {
 	 * @param
 	 * @return
 	 */
-	@PostMapping("/{username}/avatar")
-//	@PreAuthorize("authentication.name.equals(#username)")
-	public ResponseEntity<Response> saveAvatar(@PathVariable("username") String username, @RequestBody User user) {
-		if(!holder.getUser().getUsername().equals(username)){
-			return ResponseEntity.ok().body(new Response(false, "无权限"));
-		}
-		String avatarUrl = user.getAvatar();
-
-		User originalUser = userMapper.selectByPrimaryKey(user.getId());
-		originalUser.setAvatar(avatarUrl);
-		userMapper.updateByPrimaryKeySelective(originalUser);
-		try{
-			List<Blog> blogList= blogMapper.findByUserId(originalUser.getId());
-			for(Blog blog:blogList){
-				System.out.println("将头像更改到esBlog中，blogId"+blog.getId());
-				EsBlog esBlog = esBlogService.getEsBlogByBlogId(blog.getId());
-				System.out.println("将头像更改到esBlog中，获取到的esBlog为"+esBlog);
-				esBlog.update(blog);
-				esBlog.setUsername(originalUser.getUsername());
-				esBlog.setAvatar(avatarUrl);
-				esBlogService.updateEsBlog(esBlog);
-			}
-		}catch (Exception e){
-			e.printStackTrace();
-		}
-		return ResponseEntity.ok().body(new Response(true, "处理成功", avatarUrl));
-	}
-	
+//	@PostMapping("/{username}/avatar")
+////	@PreAuthorize("authentication.name.equals(#username)")
+//	public ResponseEntity<Response> saveAvatar(@PathVariable("username") String username, @RequestBody User user) {
+//		if(!holder.getUser().getUsername().equals(username)){
+//			return ResponseEntity.ok().body(new Response(false, "无权限"));
+//		}
+//		String avatarUrl = user.getAvatar();
+//
+//		User originalUser = userMapper.selectByPrimaryKey(user.getId());
+//		originalUser.setAvatar(avatarUrl);
+//		userMapper.updateByPrimaryKeySelective(originalUser);
+//		try{
+//			List<Blog> blogList= blogMapper.findByUserId(originalUser.getId());
+//			for(Blog blog:blogList){
+//				System.out.println("将头像更改到esBlog中，blogId"+blog.getId());
+//				EsBlog esBlog = esBlogService.getEsBlogByBlogId(blog.getId());
+//				System.out.println("将头像更改到esBlog中，获取到的esBlog为"+esBlog);
+//				esBlog.update(blog);
+//				esBlog.setUsername(originalUser.getUsername());
+//				esBlog.setAvatar(avatarUrl);
+//				esBlogService.updateEsBlog(esBlog);
+//			}
+//		}catch (Exception e){
+//			e.printStackTrace();
+//		}
+//		return ResponseEntity.ok().body(new Response(true, "处理成功", avatarUrl));
+//	}
+//
 	
 	@GetMapping("/{username}/blogs")
 	public String listBlogsByOrder(@PathVariable("username") String username,
@@ -269,7 +266,7 @@ public class UserspaceController {
 //				isBlogOwner = true;
 //			}
 //		}
-		if(holder.getUser().getUsername().equals(username)){
+		if(holder.getUser()!=null && holder.getUser().getUsername().equals(username)){
 			principal=holder.getUser();
 			isBlogOwner=true;
 		}
