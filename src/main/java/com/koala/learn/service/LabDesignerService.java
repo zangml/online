@@ -223,10 +223,10 @@ public class LabDesignerService {
         options.setTitle(new EchatsOptions.TitleBean("相关性分析","表征特征的重要程度"));
         options.setTooltip(new EchatsOptions.TooltipBean());
         EchatsOptions.XAxisBean xAxisBean = new EchatsOptions.XAxisBean("value",true,null);
-        options.setXAxis(Arrays.asList(xAxisBean));
+        options.setxAxis(Arrays.asList(xAxisBean));
         EchatsOptions.YAxisBean yAxisBean = new EchatsOptions.YAxisBean("category",true,null);
         yAxisBean.setData(atrributes);
-        options.setYAxis(Arrays.asList(yAxisBean));
+        options.setyAxis(Arrays.asList(yAxisBean));
         options.setLegend(new EchatsOptions.LegendBean(Arrays.asList("快速特征选择")));
         EchatsOptions.SeriesBean seriesBean = new EchatsOptions.SeriesBean();
 

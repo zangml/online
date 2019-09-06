@@ -38,19 +38,19 @@ public class EchatsOptions {
         this.legend = legend;
     }
 
-    public List<XAxisBean> getXAxis() {
+    public List<XAxisBean> getxAxis() {
         return xAxis;
     }
 
-    public void setXAxis(List<XAxisBean> xAxis) {
+    public void setxAxis(List<XAxisBean> xAxis) {
         this.xAxis = xAxis;
     }
 
-    public List<YAxisBean> getYAxis() {
+    public List<YAxisBean> getyAxis() {
         return yAxis;
     }
 
-    public void setYAxis(List<YAxisBean> yAxis) {
+    public void setyAxis(List<YAxisBean> yAxis) {
         this.yAxis = yAxis;
     }
 

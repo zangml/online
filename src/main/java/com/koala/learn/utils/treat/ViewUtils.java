@@ -80,8 +80,8 @@ public class ViewUtils {
         options.setLegend(new EchatsOptions.LegendBean(new ArrayList<String>(labels)));
         EchatsOptions.XAxisBean xAxisBean = new EchatsOptions.XAxisBean("category",true,new EchatsOptions.XAxisBean.AxisLabelBean());
         xAxisBean.setData(xData);
-        options.setXAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{xAxisBean}));
-        options.setYAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
+        options.setxAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{xAxisBean}));
+        options.setyAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
         List<EchatsOptions.SeriesBean> seriesBeans = new ArrayList<EchatsOptions.SeriesBean>();
 
         Map<String,int[]> map = new HashMap<>();
@@ -142,8 +142,8 @@ public class ViewUtils {
 
         EchatsOptions options = new EchatsOptions();
         options.setTitle(new EchatsOptions.TitleBean("", ""));
-        options.setXAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value", true, new EchatsOptions.XAxisBean.AxisLabelBean())}));
-        options.setYAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value", true, new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
+        options.setxAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value", true, new EchatsOptions.XAxisBean.AxisLabelBean())}));
+        options.setyAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value", true, new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
 
         List<EchatsOptions.SeriesBean> seriesBeans = new ArrayList<EchatsOptions.SeriesBean>();
 
@@ -242,8 +242,8 @@ public class ViewUtils {
 
         EchatsOptions options = new EchatsOptions();
         options.setTitle(new EchatsOptions.TitleBean("",""));
-        options.setXAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
-        options.setYAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
+        options.setxAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
+        options.setyAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
 
 
         List<EchatsOptions.SeriesBean> seriesBeans = new ArrayList<EchatsOptions.SeriesBean>();
@@ -284,8 +284,8 @@ public class ViewUtils {
 
         EchatsOptions options = new EchatsOptions();
         options.setTitle(new EchatsOptions.TitleBean("",""));
-        options.setXAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
-        options.setYAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
+        options.setxAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
+        options.setyAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
 
         List<EchatsOptions.SeriesBean> seriesBeans = new ArrayList<EchatsOptions.SeriesBean>();
 
@@ -347,10 +347,10 @@ public class ViewUtils {
         options.setTitle(new EchatsOptions.TitleBean("相关性分析","表征特征的重要程度"));
         options.setTooltip(new EchatsOptions.TooltipBean());
         EchatsOptions.XAxisBean xAxisBean = new EchatsOptions.XAxisBean("value",true,null);
-        options.setXAxis(Arrays.asList(xAxisBean));
+        options.setxAxis(Arrays.asList(xAxisBean));
         EchatsOptions.YAxisBean yAxisBean = new EchatsOptions.YAxisBean("category",true,null);
         yAxisBean.setData(vo.getAttributeName());
-        options.setYAxis(Arrays.asList(yAxisBean));
+        options.setyAxis(Arrays.asList(yAxisBean));
         options.setLegend(new EchatsOptions.LegendBean(Arrays.asList("快速特征选择")));
         EchatsOptions.SeriesBean seriesBean = new EchatsOptions.SeriesBean();
         seriesBean.setType("bar");
@@ -373,10 +373,10 @@ public class ViewUtils {
         options.setTitle(new EchatsOptions.TitleBean("相关性分析","表征特征的重要程度"));
         options.setTooltip(new EchatsOptions.TooltipBean());
         EchatsOptions.XAxisBean xAxisBean = new EchatsOptions.XAxisBean("value",true,null);
-        options.setXAxis(Arrays.asList(xAxisBean));
+        options.setxAxis(Arrays.asList(xAxisBean));
         EchatsOptions.YAxisBean yAxisBean = new EchatsOptions.YAxisBean("category",true,null);
         yAxisBean.setData(vo.getAttributeName());
-        options.setYAxis(Arrays.asList(yAxisBean));
+        options.setyAxis(Arrays.asList(yAxisBean));
         options.setLegend(new EchatsOptions.LegendBean(Arrays.asList("快速特征选择")));
         EchatsOptions.SeriesBean seriesBean = new EchatsOptions.SeriesBean();
         seriesBean.setType("bar");
@@ -391,8 +391,8 @@ public class ViewUtils {
         EchatsOptions options = new EchatsOptions();
         options.setTitle(new EchatsOptions.TitleBean("属性与结果分布关系",""));
         options.setTooltip(new EchatsOptions.TooltipBean());
-        options.setXAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
-        options.setYAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
+        options.setxAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
+        options.setyAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
         options.setLegend(new EchatsOptions.LegendBean(Arrays.asList(attributeName)));
         EchatsOptions.SeriesBean seriesBean = new EchatsOptions.SeriesBean();
         seriesBean.setType("scatter");

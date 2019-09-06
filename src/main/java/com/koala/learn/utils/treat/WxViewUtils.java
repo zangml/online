@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.List;
 
 
+import com.koala.learn.entity.WxEchartsForFFT;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -18,8 +19,8 @@ public class WxViewUtils {
 
         EchatsOptions options = new EchatsOptions();
         options.setTitle(new EchatsOptions.TitleBean("",""));
-        options.setXAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
-        options.setYAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
+        options.setxAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
+        options.setyAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
 
         List<EchatsOptions.SeriesBean> seriesBeans = new ArrayList<EchatsOptions.SeriesBean>();
 
@@ -79,13 +80,13 @@ public class WxViewUtils {
     public static EchatsOptions resloveFFT(Instances instances,int step){
         EchatsOptions options=new EchatsOptions();
         options.setTitle(new EchatsOptions.TitleBean("fft频谱图",""));
-        options.setXAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("频率/Hz","value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
-        options.setYAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("幅值","value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
+        options.setxAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("频率/Hz","value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
+        options.setyAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("幅值","value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
 
 
         List<EchatsOptions.SeriesBean> seriesBeans = new ArrayList<EchatsOptions.SeriesBean>();
-        Set<String> labels = new HashSet<>();
-        options.setLegend(new EchatsOptions.LegendBean(new ArrayList<String>(labels)));
+//        Set<String> labels = new HashSet<>();
+//        options.setLegend(new EchatsOptions.LegendBean(new ArrayList<String>(labels)));
 
         Attribute attribute = instances.attribute(0);
         Attribute attribute1 = instances.attribute(1);
@@ -113,6 +114,43 @@ public class WxViewUtils {
 
     }
 
+//    public static WxEchartsForFFT resloveFFTNew(Instances instances, int step){
+//        WxEchartsForFFT options=new WxEchartsForFFT();
+//        options.setLegend(null);
+//        options.setTitle(new WxEchartsForFFT.TitleBean("fft频谱图","center"));
+//        options.setTooltip(null);
+//        options.setxAxis(Arrays.asList(new WxEchartsForFFT.XAxisBean[]{new WxEchartsForFFT.XAxisBean("频率/Hz","value",true,new WxEchartsForFFT.XAxisBean.AxisLabelBean())}));
+//        options.setyAxis(Arrays.asList(new WxEchartsForFFT.YAxisBean[]{new WxEchartsForFFT.YAxisBean("幅值","value",true,null)}));
+//        WxEchartsForFFT.SeriesBean series=new WxEchartsForFFT.SeriesBean();
+//        series.setName("fft频谱");
+//        series.setSmooth(true);
+//        series.setType("line");
+//
+//        Attribute attribute = instances.attribute(0);
+//        Attribute attribute1 = instances.attribute(1);
+//
+//        List<double[]> dataFFT = new ArrayList<>();
+//        for (int i = 0; i < instances.size(); i++) {
+//            if (i%step != 0){
+//                continue;
+//            }
+//            double[] data = new double[2];
+//            Instance instance = instances.get(i);
+//            data[0] = instance.value(attribute);
+//            data[1] = (instance.value(attribute1))*2;
+//            if(data[0]>1000) {
+//                dataFFT.add(data);
+//            }
+//        }
+//        series.setData(dataFFT);
+//
+//        List<WxEchartsForFFT.SeriesBean> seriesBeanList=new ArrayList<>();
+//        seriesBeanList.add(series);
+//        options.setSeries(seriesBeanList);
+//        return options;
+//
+//    }
+
 
     public static EchatsOptions reslovePCA(Instances instances,int step) throws Exception {
         instances.setClassIndex(instances.numAttributes()-1);
@@ -123,8 +161,8 @@ public class WxViewUtils {
 
         EchatsOptions options = new EchatsOptions();
         options.setTitle(new EchatsOptions.TitleBean("",""));
-        options.setXAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
-        options.setYAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
+        options.setxAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
+        options.setyAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
 
         List<EchatsOptions.SeriesBean> seriesBeans = new ArrayList<EchatsOptions.SeriesBean>();
 
@@ -185,8 +223,8 @@ public class WxViewUtils {
 
         EchatsOptions options = new EchatsOptions();
         options.setTitle(new EchatsOptions.TitleBean("",""));
-        options.setXAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
-        options.setYAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
+        options.setxAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
+        options.setyAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
 
         List<EchatsOptions.SeriesBean> seriesBeans = new ArrayList<EchatsOptions.SeriesBean>();
 
@@ -249,8 +287,8 @@ public class WxViewUtils {
 
         EchatsOptions options = new EchatsOptions();
         options.setTitle(new EchatsOptions.TitleBean("",""));
-        options.setXAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
-        options.setYAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
+        options.setxAxis(Arrays.asList(new EchatsOptions.XAxisBean[]{new EchatsOptions.XAxisBean("value",true,new EchatsOptions.XAxisBean.AxisLabelBean())}));
+        options.setyAxis(Arrays.asList(new EchatsOptions.YAxisBean[]{new EchatsOptions.YAxisBean("value",true,new EchatsOptions.YAxisBean.AxisLabelBeanX())}));
 
 
         List<EchatsOptions.SeriesBean> seriesBeans = new ArrayList<EchatsOptions.SeriesBean>();
@@ -289,9 +327,9 @@ public class WxViewUtils {
             attributeList.add(instances.attribute(i).name());
         }
         xAxisBean.setData(attributeList);
-        options.setXAxis(Arrays.asList(xAxisBean));
+        options.setxAxis(Arrays.asList(xAxisBean));
         EchatsOptions.YAxisBean yAxisBean = new EchatsOptions.YAxisBean("value",true,null);
-        options.setYAxis(Arrays.asList(yAxisBean));
+        options.setyAxis(Arrays.asList(yAxisBean));
         options.setLegend(new EchatsOptions.LegendBean(Arrays.asList("")));
         EchatsOptions.SeriesBean seriesBean = new EchatsOptions.SeriesBean();
         seriesBean.setType("bar");
