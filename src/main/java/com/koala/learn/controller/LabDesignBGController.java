@@ -130,8 +130,7 @@ public class LabDesignBGController {
             Instances instances1=new Instances(new FileReader(out.getAbsolutePath()));
             options = WxViewUtils.resloveFFT(instances1,2);
         }else if (type == ViewUtils.VIEW_PCA_3){
-            EchartOptions3D options3D = new EchartOptions3D();
-            options3D = ViewUtils.reslovePCA3(instances);
+            EchartOptions3D options3D  = ViewUtils.reslovePCA3(instances);
             String key = RedisKeyUtil.getAttributeKey(param.toString(),type,id);
             Gson gson = new Gson();
             String json = gson.toJson(options3D);

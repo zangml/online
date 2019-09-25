@@ -9,11 +9,22 @@ public class CourseType {
 
     private Integer hasOj;
 
-    public CourseType(Integer id, String name, String cover, Integer hasOj) {
+    private Long blogId;
+
+    public CourseType(Integer id, String name, String cover, Integer hasOj,Long blogId) {
         this.id = id;
         this.name = name;
         this.cover = cover;
         this.hasOj = hasOj;
+        this.blogId=blogId;
+    }
+
+    public Long getBlogId() {
+        return blogId;
+    }
+
+    public void setBlogId(Long blogId) {
+        this.blogId = blogId;
     }
 
     public CourseType() {

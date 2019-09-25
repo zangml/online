@@ -1,12 +1,12 @@
 package com.koala.learn.controller;
 
 import com.koala.learn.commen.LogAnnotation;
-import com.koala.learn.entity.Course;
-import com.koala.learn.entity.CourseType;
-import com.koala.learn.entity.LabCourse;
+import com.koala.learn.entity.*;
+import com.koala.learn.service.BlogService;
 import com.koala.learn.service.CourseService;
 
 import com.koala.learn.service.LabCourseService;
+import com.koala.learn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,12 +27,21 @@ public class CourseController {
 
     @Autowired
     LabCourseService labCourseService;
+
+    @Autowired
+    BlogService blogService;
+
+    @Autowired
+    UserService userService;
+
     @RequestMapping(path = {"/","/index"})
     public String courseList(Model model){
         List<CourseType> typeList = mCourseService.getCourseTypeList();
         List<LabCourse> labCourseList=labCourseService.getAllLabCourse();
+//        List<Algorithm> algorithmList=labCourseService.getAllAlgorithm();
         model.addAttribute("typeList",typeList);
         model.addAttribute("labCourseList",labCourseList);
+//        model.addAttribute("algorithmList",algorithmList);
         return "views/course/courseList";
     }
 
@@ -67,8 +76,11 @@ public class CourseController {
     }
 
     @RequestMapping("/course/lab/{blogId}")
-    public String labCourse(@PathVariable("blogId") Integer blogId){
-        return "redirect:/u/13212127650/blogs/"+blogId;
+    public String labCourse(@PathVariable("blogId") Long blogId){
+
+        Blog blog=blogService.getBlogById(blogId);
+        User user=userService.getUserById(blog.getUserId());
+        return "redirect:/u/"+user.getUsername() + "/blogs/"+blogId;
     }
 
     @RequestMapping("/course/{couseType}/{id}")

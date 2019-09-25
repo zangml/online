@@ -8,9 +8,12 @@ public class Const {
 //    public static String ROOT = "/data/learn/";
     public static final String ROOT = "/Users/zangmenglei/PHM/";//根目录
 
+    public static final String DOWNLOAD_FILE_PREFIX="http://file.phmlearn.com/";
+    public static final String UPLOAD_FILE_ROOT="/ftpfile/fileForPHM/";
+
     public static final String WINDOW = "currentWindow";
 
-    public static final String DEFAULT_AVATAR="/static/images/avatar-default.jpg";
+    public static final String DEFAULT_AVATAR="http://image.phmlearn.com/02a885be-28de-414c-9f61-47845fc1c35e.jpeg";
 
     public static final String UPDATE_CLASS_ROOT = "/usr/local/sk/"; //上传算法所在目录
 

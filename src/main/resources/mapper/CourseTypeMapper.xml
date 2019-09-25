@@ -7,10 +7,11 @@
       <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="cover" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="has_oj" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="blog_id" javaType="java.lang.Long" jdbcType="BIGINT"/>
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, cover, has_oj
+    id, name, cover, has_oj,blog_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,9 +25,9 @@
   </delete>
   <insert id="insert" parameterType="com.koala.learn.entity.CourseType">
     insert into course_type (id, name, cover, 
-      has_oj)
+      has_oj,blog_id)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, 
-      #{hasOj,jdbcType=INTEGER})
+      #{hasOj,jdbcType=INTEGER},#{blogId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.koala.learn.entity.CourseType">
     insert into course_type
@@ -43,6 +44,9 @@
       <if test="hasOj != null">
         has_oj,
       </if>
+      <if test="blogId != null">
+        blog_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -56,6 +60,9 @@
       </if>
       <if test="hasOj != null">
         #{hasOj,jdbcType=INTEGER},
+      </if>
+      <if test="blogId != null">
+        #{blog_id,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -71,6 +78,9 @@
       <if test="hasOj != null">
         has_oj = #{hasOj,jdbcType=INTEGER},
       </if>
+      <if test="blogId != null">
+        blog_id = #{blogId,jdbcType=BIGINT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -78,7 +88,8 @@
     update course_type
     set name = #{name,jdbcType=VARCHAR},
       cover = #{cover,jdbcType=VARCHAR},
-      has_oj = #{hasOj,jdbcType=INTEGER}
+      has_oj = #{hasOj,jdbcType=INTEGER},
+      blog_id = #{blogId,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

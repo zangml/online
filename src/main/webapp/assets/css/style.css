@@ -83,10 +83,10 @@ body {
   -moz-animation: spin-right 0.5s linear infinite normal;
   -ms-animation: spin-right 0.5s linear infinite normal;
   animation: spin-right 0.5s linear infinite normal;
-  -webkit-animation-delay: 0;
-  -moz-animation-delay: 0;
-  -o-animation-delay: 0;
-  animation-delay: 0;
+  -webkit-animation-delay: 0ms;
+  -moz-animation-delay: 0ms;
+  -o-animation-delay: 0ms;
+  animation-delay: 0ms;
   margin: 0 auto;
 }
 #ajaxloader2 .inner {
@@ -108,10 +108,10 @@ body {
   -moz-animation: spin-left 0.5s linear infinite normal;
   -ms-animation: spin-left 0.5s linear infinite normal;
   animation: spin-left 0.5s linear infinite normal;
-  -webkit-animation-delay: 0;
-  -moz-animation-delay: 0;
-  -o-animation-delay: 0;
-  animation-delay: 0;
+  -webkit-animation-delay: 0ms;
+  -moz-animation-delay: 0ms;
+  -o-animation-delay: 0ms;
+  animation-delay: 0ms;
 }
 #ajaxloader3 {
   margin: 0 auto;

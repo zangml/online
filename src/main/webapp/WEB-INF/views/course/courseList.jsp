@@ -35,16 +35,21 @@
               <span class="productItemDesc" >${labCourse.name}</span></a>
                 </div>
             </c:forEach>
+            <div class="productItem">
+                <a href="/u/blogs/model/8"><img src="http://image.phmlearn.com/38c10671-9027-4128-93d0-a45611cdea8d.jpeg"></a>
+                <br>
+                <span class="productItemDesc" >创建文章</span>
+            </div>
             <div style="clear:both"></div>
         </div>
         <div class="eachHomepageCategoryProducts">
             <div class="left-mark"></div>
-            <span class="categoryTitle">知识点</span>
+            <span class="categoryTitle">关键技术</span>
             <div style="clear:both"></div>
             <c:forEach items="${typeList}" var="course">
                 <div class="productItem">
-                    <a href="/course/${course.id}"><img width="100px" src="${course.cover}"></a>
-                    <a href="/course/${course.id}" class="productItemDescLink">
+                    <a href="/course/${course.blogId}"><img width="100px" src="${course.cover}"></a>
+                    <a href="/course/${course.blogId}" class="productItemDescLink">
               <span class="productItemDesc" >${course.name}
               </span>
                     </a>
@@ -54,11 +59,11 @@
                 <%--</div>--%>
             </c:forEach>
             <%--&lt;%&ndash;https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3758739492,854130434&fm=200&gp=0.jpg&ndash;%&gt;--%>
-            <%--<div class="productItem">--%>
-                <%--<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3758739492,854130434&fm=200&gp=0.jpg">--%>
-                <%--<br>--%>
-                <%--<span class="productItemDescLink" style="margin-left: 30px;color: #0b1014;margin-top: 20px;">搭建自己的故障检测应用</span>--%>
-            <%--</div>--%>
+            <div class="productItem">
+                <a href="/u/blogs/model/9"><img src="http://image.phmlearn.com/38c10671-9027-4128-93d0-a45611cdea8d.jpeg"></a>
+                <br>
+                <span class="productItemDesc">创建文章</span>
+            </div>
             <div style="clear:both"></div>
         </div>
     </div>

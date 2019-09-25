@@ -18,7 +18,7 @@
     <link href="<%=basePath%>assets/styles/header.css" rel="stylesheet">
 </head>
 <body>
-<div class="headbar">
+<div class="headbar" style="width: 100%">
     <div class="head ">
         <span style="margin-left:10px">PHM</span>
     </div>
@@ -29,32 +29,22 @@
                     教程
                 </a>
         </span>
-        <%--<span>--%>
-                <%--<a href="/blogs">--%>
-                    <%--博客--%>
-                <%--</a>--%>
-        <%--</span>--%>
         <span>
                 <a href="/labs">
                     实验
                 </a>
         </span>
-        <%--<span>--%>
-                <%--<a href="/oj">--%>
-                    <%--练习--%>
-                <%--</a>--%>
-        <%--</span>--%>
 
         <span>
                 <a href="/design">
                     设计实验
                 </a>
         </span>
-        <%--<span>--%>
-                <%--<a href="/bbs">--%>
-                    <%--社区--%>
-                <%--</a>--%>
-        <%--</span>--%>
+        <span>
+                <a href="/data/dataset">
+                    数据集
+                </a>
+        </span>
     </div>
     <div class="pull-right">
         <c:choose>

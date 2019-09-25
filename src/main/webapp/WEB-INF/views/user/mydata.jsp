@@ -29,21 +29,29 @@
                         <strong><h5>12-25</h5></strong>
                     </div>
                     <div style="width: 100px;height:60px; font-size: 15px;text-align: center;float: left;padding-top: 10px;">
-                        <a href="no">已打卡0天</a><br>
+                        <a href="#">已打卡0天</a><br>
                         <p>排名0</p>
                     </div>
                     <div style="float: left;">
-                        <a href="no" class="button">今日打卡</a>
+                        <a href="#" class="button">今日打卡</a>
                     </div>
                 </div>
+
+
                 <div class="aside2">
                     <div style="height: 180px;padding: 10px 40px;"> <!-- 图片上传-->
                         <div style="height: 110px;display: flex;align-items: center;">
                             <div style="margin: 0 auto;">
+
                                 <a href="javascript:;" class="a-upload">
-                                    <input type="file" name="" id=""></a>
+                                    <input type="file" name="file" id="avatarformid"></a>
+
                             </div>
                         </div>
+
+
+
+
                         <div style="display: flex;align-items: center; margin-top: 10px">
                             <a href="/user/editdata" class="button" style="margin: 0 auto;">编辑资料</a>
                         </div>

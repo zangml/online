@@ -78,7 +78,6 @@ public class CatalogController {
 	 * @return
 	 */
 	@PostMapping
-	//@PreAuthorize("authentication.name.equals(#catalogVO.username)")// 指定用户才能操作方法
 	public ResponseEntity<Response> create(@RequestBody CatalogVO catalogVO) {
 		if(!mHolder.getUser().getUsername().equals(catalogVO.getUsername())){
 			return ResponseEntity.ok().body(new Response(false, "用户无权限"));
@@ -108,7 +107,6 @@ public class CatalogController {
 	 * @return
 	 */
 	@DeleteMapping("/{id}")
-	//@PreAuthorize("authentication.name.equals(#username)")  // 指定用户才能操作方法
 	public ResponseEntity<Response> delete(String username, @PathVariable("id") Integer id) {
 		if(!mHolder.getUser().getUsername().equals(username)){
 			return ResponseEntity.ok().body(new Response(false, "用户无权限"));

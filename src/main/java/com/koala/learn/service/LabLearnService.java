@@ -75,7 +75,7 @@ public class LabLearnService {
     }
 
 
-    private List<String> resolveAttribute(File file,Integer id) throws IOException {
+    public List<String> resolveAttribute(File file,Integer id) throws IOException {
         List<String> attributeList = new ArrayList<>();
         Instances instances = WekaUtils.readFromFile(file.getAbsolutePath());
         for (int i=0;i<instances.numAttributes()-1;i++){

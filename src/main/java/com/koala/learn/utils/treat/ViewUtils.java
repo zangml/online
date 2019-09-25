@@ -207,7 +207,7 @@ public class ViewUtils {
         Instances res = Filter.useFilter(instances,pca);
 
 
-        List<double[]> data =new ArrayList<double[]>();
+        List<double[]> data =new ArrayList<>();
         Attribute attribute = res.attribute(0);
         Attribute attribute1 = res.attribute(1);
         Attribute attribute2 = res.attribute(2);

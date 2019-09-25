@@ -48,7 +48,6 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	public Blog saveBlog(Blog blog) {
 		boolean isNew = (blog.getId() == null);
-		User blogUser=userMapper.selectByPrimaryKey(blog.getUserId());
 		if(isNew){
 			blogMapper.save(blog);
 			blog.setCreateTime(new Date());

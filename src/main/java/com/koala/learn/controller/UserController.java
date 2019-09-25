@@ -87,21 +87,24 @@ public class UserController {
     @RequestMapping("reg")
     public String reg(Model model, User user, String next, boolean rememberme, HttpServletResponse response) {
         Map<String, Object> map = mUserService.reg(user);
-        if (map.containsKey("ticket")) {
-            Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
-            cookie.setPath("/");
-            if (rememberme) {
-                cookie.setMaxAge(3600 * 24 * 5);
-            }
-            response.addCookie(cookie);
-            if (StringUtils.isNotBlank(next)) {
-                return "redirect:" + next;
-            }
-            return "redirect:/";
-        } else {
-            model.addAttribute("msg", map.get("msg"));
-            return "views/user/reg";
-        }
+//        if (map.containsKey("ticket")) {
+//            Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
+//            cookie.setPath("/");
+//            if (rememberme) {
+//                cookie.setMaxAge(3600 * 24 * 5);
+//            }
+//            response.addCookie(cookie);
+//            if (StringUtils.isNotBlank(next)) {
+//                return "redirect:" + next;
+//            }
+//            return "redirect:/";
+//        } else {
+//            model.addAttribute("msg", map.get("msg"));
+//            return "views/user/reg";
+//        }
+        model.addAttribute("msg", map.get("msg"));
+        return "views/user/reg";
+
     }
 
 

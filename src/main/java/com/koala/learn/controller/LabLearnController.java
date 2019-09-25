@@ -106,7 +106,7 @@ public class LabLearnController {
         return "views/learn/lab_0";
     }
     @RequestMapping("/learn/lab1/{labId}/{instance}")
-    public String goLab1(@PathVariable("labId") Integer labId, @PathVariable("instance") Integer instanceId, Model model, HttpSession session) {
+    public String goLab1(@PathVariable("labId") Integer labId, @PathVariable("instance") Integer instanceId, Model model) {
         model.addAttribute("instance", instanceId);
         Lab lab = mLabMapper.selectByPrimaryKey(labId);
         addAttributeToModel(lab, model);

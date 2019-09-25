@@ -50,7 +50,7 @@
     select
         <include refid="Base_Column_List" />
     from catalog
-    where user_id = #{id,jdbcType=INTEGER}
+    where user_id = 23
     </select>
 
 </mapper>

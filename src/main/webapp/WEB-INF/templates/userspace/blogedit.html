@@ -73,13 +73,13 @@
                             <div  class="col-lg-12">
                                 分类：					<select id="catalogSelect" class="form-control form-control-chosen" data-placeholder="请选择" >
 								  <option th:value="*{id}" th:text="*{name}" th:each="catalog : ${blogModel.catalogs}"
-                                          th:object="${catalog}" th:selected="${catalog.id  eq blogModel.blog.catalogId }">Java</option>
+                                          th:object="${catalog}" th:selected="${catalog.id  eq blogModel.blog.catalogId }">phm</option>
 								</select>
                             </div>
                         </div>
                         <div class="row mt-1">
                             <div  class="col-lg-12">
-								<button class="btn btn-primary float-right" id="submitBlog"  th:attr="userName=${user.username}">发布</button>
+								<button class="btn btn-primary float-right" id="submitBlog"  th:attr="userName=${blogModel.username}">发布</button>
                             </div>
                         </div>
                         

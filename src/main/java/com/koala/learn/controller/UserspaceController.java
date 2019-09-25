@@ -255,33 +255,20 @@ public class UserspaceController {
 		Blog blog = blogService.getBlogById(id);
 		User blogUser=userMapper.selectByUsername(username);
 		// 每次读取，简单的可以认为阅读量增加1次
-		blogService.readingIncrease(id);
+		if(holder.getUser()!=null) {
+			blogService.readingIncrease(id);
+		}
 
 		// 判断操作用户是否是博客的所有者
 		boolean isBlogOwner = false;
-//		if (SecurityContextHolder.getContext().getAuthentication() !=null && SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
-//				 &&  !SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString().equals("anonymousUser")) {
-//			principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//			if (principal !=null && username.equals(principal.getUsername())) {
-//				isBlogOwner = true;
-//			}
-//		}
-		if(holder.getUser()!=null && holder.getUser().getUsername().equals(username)){
+		if(holder.getUser()!=null && holder.getUser().getRole()==1){
 			principal=holder.getUser();
 			isBlogOwner=true;
 		}
 		
 		// 判断操作用户的点赞情况
-		//List<Vote> votes = blog.getVotes();
 		Vote currentVote = null; // 当前用户的点赞情况
-		
-//		if (principal !=null) {
-//			for (Vote vote : votes) {
-//				userMapper.selectByPrimaryKey(vote.getUserId()).getUsername().equals(principal.getUsername());
-//				currentVote = vote;
-//				break;
-//			}
-//		}
+
 		if(principal!=null){
 			currentVote=voteMapper.getVoteByBlogIdAndUserId(blog.getId(),principal.getId());
 		}
@@ -303,7 +290,6 @@ public class UserspaceController {
 	 * @return
 	 */
 	@DeleteMapping("/{username}/blogs/{id}")
-//	@PreAuthorize("authentication.name.equals(#username)")
 	public ResponseEntity<Response> deleteBlog(@PathVariable("username") String username, @PathVariable("id") Long id) {
 		if(!holder.getUser().getUsername().equals(username)){
 			return ResponseEntity.ok().body(new Response(false,"无权限操作"));
@@ -347,9 +333,31 @@ public class UserspaceController {
 
 		model.addAttribute("blog", blogService.getBlogById(id));
 		model.addAttribute("catalogs", catalogs);
+		model.addAttribute("username",username);
 		return new ModelAndView("templates/userspace/blogedit", "blogModel", model);
 	}
-	
+
+	/**
+	 * 获取模板博客的界面
+	 * id 代表类型 8 代表案例模板 9代表关键技术模板 10代表算法介绍模板
+	 *
+	 */
+	@GetMapping("/blogs/model/{id}")
+
+	public ModelAndView modelBlog(@PathVariable("id")Long blogId,Model model){
+		User user =holder.getUser();
+		if(user==null){
+			return new ModelAndView("views/user/login");
+		}
+
+		List<Catalog> catalogs = catalogService.listCatalogs(user);
+		model.addAttribute("blog", blogService.getBlogById(blogId));
+		model.addAttribute("catalogs", catalogs);
+		model.addAttribute("username",user.getUsername());
+		return new ModelAndView("templates/userspace/blogedit", "blogModel", model);
+	}
+
+
 	/**
 	 * 保存博客
 	 * @param username
@@ -357,9 +365,8 @@ public class UserspaceController {
 	 * @return
 	 */
 	@PostMapping("/{username}/blogs/edit")
-//	@PreAuthorize("authentication.name.equals(#username)")
 	public ResponseEntity<Response> saveBlog(@PathVariable("username") String username, @RequestBody Blog blog) {
-		if(!holder.getUser().getUsername().equals(username)){
+		if(holder.getUser().getRole()==0){
 			return ResponseEntity.ok().body(new Response(false,"无权限操作"));
 		}
 		// 对 Catalog 进行空处理
@@ -367,10 +374,8 @@ public class UserspaceController {
 			return ResponseEntity.ok().body(new Response(false,"未选择分类，先要创建分类再来发布哦~"));
 		}
 		try {
-
 			// 判断是修改还是新增
-			
-			if (blog.getId()!=null) {
+			if (blog.getId()!=null && blog.getId()!=8 && blog.getId()!=9) {//修改
 				Blog orignalBlog = blogService.getBlogById(blog.getId());
 				orignalBlog.setTitle(blog.getTitle());
 				orignalBlog.setContent(blog.getContent());
@@ -379,7 +384,8 @@ public class UserspaceController {
 				orignalBlog.setTags(blog.getTags());
 				blogService.saveBlog(orignalBlog);
 	        } else {
-				User user = userMapper.selectByUsername(username);
+				blog.setId(null);
+				User user = holder.getUser();
 	    		blog.setUserId(user.getId());
 	    		blog.setPublish(1);
 				blogService.saveBlog(blog);
@@ -393,6 +399,7 @@ public class UserspaceController {
 		}
 
 		String redirectUrl = "/u/" + username + "/blogs/" + blog.getId();
+		System.out.println("重新定向到："+redirectUrl);
 		return ResponseEntity.ok().body(new Response(true, "处理成功", redirectUrl));
 	}
 	private List<BlogVo> blogListToBlogVoList(List<Blog> list){

@@ -73,8 +73,9 @@ $(function() {
 				 }
 				 
 		     },
-		     error : function() {
+		     error : function(jqXHR) {
 		    	 toastr.error("error!");
+                 // alert(jqXHR.responseText);
 		     }
 		})
  	})

@@ -19,7 +19,7 @@ public class User {
 
     private String email;
 
-    private Integer state;
+    private Integer state;// 0代表未激活不能登录， 1代表已激活可以登录
 
     private String headUrl;
 

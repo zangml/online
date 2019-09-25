@@ -47,6 +47,9 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
+    public User getUserById(Integer id){
+        return userMapper.selectByPrimaryKey(id);
+    }
 
     public Map<String, Object> login(String username, String password) {
         Map<String, Object> map = new HashedMap();
@@ -66,6 +69,10 @@ public class UserService {
             return map;
         }
 
+        if(user.getState()!=1){
+            map.put("msg","该用户未激活，不能登录");
+            return map;
+        }
         if (!WendaUtil.MD5(password+user.getSalt()).equals(user.getPassword())){
             map.put("msg", "密码不正确");
             return map;
@@ -105,16 +112,20 @@ public class UserService {
 
         user.setSalt(UUID.randomUUID().toString().substring(0, 5));
         String head = String.format("http://images.nowcoder.com/head/%dt.png", new Random().nextInt(1000));
+        user.setState(0);
         user.setHeadUrl(head);
         user.setAvatar(Const.DEFAULT_AVATAR);
         user.setRole(0);
         user.setPassword(WendaUtil.MD5(user.getPassword()+user.getSalt()));
-        mUserMapper.insert(user);
+        int count = mUserMapper.insert(user);
 
         System.out.println("userId"+user.getId());
-        // 登陆
-        String ticket = addLoginTicket(user.getId());
-        map.put("ticket", ticket);
+//        // 登陆
+//        String ticket = addLoginTicket(user.getId());
+//        map.put("ticket", ticket);
+        if(count>0){
+            map.put("msg","注册成功，需要审核完成后才可登录哦~");
+        }
         return map;
     }
 
