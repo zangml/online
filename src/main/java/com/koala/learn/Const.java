@@ -44,6 +44,7 @@ public class Const {
     public static final String ROOT_FOR_DATA_WX="/usr/local/data/wx/result/";//微信调用组件算法产生的输出文件
 
     public static final String DATA_FOR_ISOLATIONFOREST="/usr/local/data/wx/dataForIsoLationForest.arff";//微信调用Isolation组件时用于展示的数据集
+    public static final String DATA_FOR_INIT_ISOLATIONFOREST="/usr/local/data/wx/dataForIsoLationForest_init.arff";//微信调用Isolation组件时用于展示的数据集
 
     public static final String ISOLATIONFOREST_FOR_WX="/usr/local/sk/IsoLationForestForWx.py";//封装的微信调用Isolation算法
 
@@ -88,6 +89,15 @@ public class Const {
     public static final String DATA_FOR_PCA_WX="/usr/local/data/wx/dataForPCA.csv";//微信调用pca组件时用于展示的数据集
 
     public static final String PCA_WX="/usr/local/sk/pca_wx.py";//微信调用pca组件
+
+    public static final Integer SMOTE_ID=3;
+    public static final Integer ONECLASSSVM_ID=7;
+    public static final Integer ISOLATION_FOREST_ID=8;
+    public static final Integer NORMALIZATION_ID=10;
+    public static final Integer FFT_ID=4;
+    public static final Integer TIME_FEATURE_ID=6;
+    public static final Integer WAV_FEATURE_ID=5;
+
 
 
 }

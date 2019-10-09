@@ -45,6 +45,11 @@
                     数据集
                 </a>
         </span>
+        <span>
+                <a href="/algo/get_list">
+                    算法库
+                </a>
+        </span>
     </div>
     <div class="pull-right">
         <c:choose>

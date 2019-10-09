@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface AlgorithmMapper {
     List<Algorithm> selectAllAlgorithm();
+
+    Algorithm getById(Integer id);
 }

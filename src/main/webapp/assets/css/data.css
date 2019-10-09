@@ -74,7 +74,7 @@
 .data_temp{
   margin: 10px auto;
   background: #fafafa;
-  height: 1100px;
+  height: 1200px;
   width: 1000px;
 }
 .data_temp .data_title{
@@ -90,7 +90,7 @@
   text-indent: 2em;
 }
 .data_desp_container{
-  height: 1050px;
+  height: 1250px;
   width: 1000px;
 }
 .data_desp_container .data_desp_title{
@@ -101,8 +101,17 @@
   box-sizing: border-box;
   padding-left: 10px;
 }
-.data_desp_container .data_desp{
-  height: 100px;
+.data_desp{
+  height: 200px;
+  width: 100%;
+  font-size: 16px;
+  background: white;
+  border: 1px solid #cccccc;
+  box-sizing: border-box;
+  padding-left: 10px;
+}
+.data_background{
+  height: 50px;
   width: 100%;
   font-size: 16px;
   background: white;

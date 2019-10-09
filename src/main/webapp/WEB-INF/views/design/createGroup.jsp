@@ -66,15 +66,15 @@
                             <div class="col-sm-10 col-sm-offset-2">
                                 <p class="help-block">实验文件只支持csv格式，默认最后一列为类属性。csv文件的第一行必须为属性名称。</p>
                             </div>
-                            <%--<div class="col-sm-10 col-sm-offset-2">--%>
-                                <%--平台数据：--%>
-                                <%--<c:forEach items="${files}" var="file">--%>
-                                    <%--<label>--%>
-                                        <%--<input  title="数据描述" data-trigger="focus" data-container="body" data-toggle="popover" data-placement="bottom"--%>
-                                                <%--data-content="${file.des}" type="radio" name="fileOption" value="${file.id}" checked>${file.name} <a href="/file/${file.id}">下载</a>--%>
-                                    <%--</label>--%>
-                                <%--</c:forEach>--%>
-                            <%--</div>--%>
+                            <div class="col-sm-10 col-sm-offset-2">
+                                平台数据：
+                                <c:forEach items="${files}" var="file">
+                                    <label>
+                                        <input  title="数据描述" data-trigger="focus" data-container="body" data-toggle="popover" data-placement="bottom"
+                                                data-content="${file.des}" type="radio" name="fileOption" value="${file.id}" checked>${file.name} <a href="/file/${file.id}">下载</a>
+                                    </label>
+                                </c:forEach>
+                            </div>
                             <%--<div class="col-sm-10 col-sm-offset-2">--%>
                                 <%--<button class="btn btn-primary">平台数据</button>--%>
                             <%--</div>--%>

@@ -249,6 +249,7 @@ public class WxComponentService {
             res.add(Arrays.asList("算法", "可释方差值", "平均绝对误差", "均方根误差", "中值绝对误差", "R方值"));
             RegResult regResult =getRegResult(param,classifierId,classifier);
 
+            System.out.println("运算结果：----"+ regResult);
 
             if (regResult == null) {
                 return ServerResponse.createByErrorMessage("运算失败");
@@ -258,7 +259,7 @@ public class WxComponentService {
             mJedisAdapter.set(wxComponentAlgorithmCacheKey,json);
             List<String> resList = Arrays.asList(classifier.getName(),
                     regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
-                    Math.sqrt(regResult.getSquaredError()) + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
+                    regResult.getSquaredError() + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
             res.add(resList);
         }
 
@@ -289,6 +290,26 @@ public class WxComponentService {
         logger.info(sb.toString());
         String resParam = PythonUtils.execPy(sb.toString());
         Result result = mGson.fromJson(resParam, Result.class);
+        String accu= result.getAccuracy()+"";
+        if(accu.length()>=6){
+            result.setAccuracy(Double.parseDouble((result.getAccuracy()+"").substring(0,6)));
+        }
+        String fmea= result.getfMeasure()+"";
+        if(fmea.length()>=6){
+            result.setfMeasure(Double.parseDouble((result.getfMeasure()+"").substring(0,6)));
+        }
+        String prec= result.getPrecision()+"";
+        if(prec.length()>=6){
+            result.setPrecision(Double.parseDouble((result.getPrecision()+"").substring(0,6)));
+        }
+        String recall= result.getRecall()+"";
+        if(recall.length()>=6){
+            result.setRecall(Double.parseDouble((result.getRecall()+"").substring(0,6)));
+        }
+        String roc= result.getRocArea()+"";
+        if(roc.length()>=6){
+            result.setRocArea(Double.parseDouble((result.getRocArea()+"").substring(0,6)));
+        }
         return result;
     }
     public RegResult getRegResult(Map<String,String> param,Integer classifierId,Classifier classifier){
@@ -311,6 +332,28 @@ public class WxComponentService {
         logger.info(sb.toString());
         String resParam = PythonUtils.execPy(sb.toString());
         RegResult regResult = mGson.fromJson(resParam, RegResult.class);
+        String squa= Math.sqrt(regResult.getSquaredError())+"";
+        if(squa.length()>=6){
+            regResult.setSquaredError(Double.parseDouble((regResult.getSquaredError()+"").substring(0,6)));
+        }else {
+            regResult.setSquaredError(Double.parseDouble(squa));
+        }
+        String abs= regResult.getAbsoluteError()+"";
+        if(abs.length()>=6){
+            regResult.setAbsoluteError(Double.parseDouble((regResult.getAbsoluteError()+"").substring(0,6)));
+        }
+        String med= regResult.getMedianSquaredError()+"";
+        if(med.length()>=6){
+            regResult.setMedianSquaredError(Double.parseDouble((regResult.getMedianSquaredError()+"").substring(0,6)));
+        }
+        String recall= regResult.getR2Score()+"";
+        if(recall.length()>=6){
+            regResult.setR2Score(Double.parseDouble((regResult.getR2Score()+"").substring(0,6)));
+        }
+        String var= regResult.getVarianceScore()+"";
+        if(var.length()>=6){
+            regResult.setVarianceScore(Double.parseDouble((regResult.getVarianceScore()+"").substring(0,6)));
+        }
         return regResult;
     }
 

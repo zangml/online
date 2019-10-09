@@ -87,8 +87,6 @@ public class DatasetController {
 
         List<String> attributeList = datasetService.resolveAttribute(file);
 
-
-        System.out.println("共有这么多属性：" +attributeList.size());
         model.addAttribute("attributes",attributeList);
         model.addAttribute("dataset",dataset);
 

@@ -6,9 +6,28 @@ public class Algorithm {
 
     private String name;
 
-    private String cover;
+    private String algoDesc;
 
-    private Long blogId;
+    private String useFor;
+
+    private String dataDesc;
+
+    private Integer type; //0代表特征提取或者预处理的算法 1 代表机器学习算法
+
+    private Integer typeId;
+
+    public Algorithm() {
+    }
+
+    public Algorithm(Integer id, String name, String algoDesc, String useFor, String dataDesc, Integer type, Integer typeId) {
+        this.id = id;
+        this.name = name;
+        this.algoDesc = algoDesc;
+        this.useFor = useFor;
+        this.dataDesc = dataDesc;
+        this.type = type;
+        this.typeId = typeId;
+    }
 
     public Integer getId() {
         return id;
@@ -26,19 +45,43 @@ public class Algorithm {
         this.name = name;
     }
 
-    public String getCover() {
-        return cover;
+    public String getAlgoDesc() {
+        return algoDesc;
     }
 
-    public void setCover(String cover) {
-        this.cover = cover;
+    public void setAlgoDesc(String algoDesc) {
+        this.algoDesc = algoDesc;
     }
 
-    public Long getBlogId() {
-        return blogId;
+    public String getDataDesc() {
+        return dataDesc;
     }
 
-    public void setBlogId(Long blogId) {
-        this.blogId = blogId;
+    public void setDataDesc(String dataDesc) {
+        this.dataDesc = dataDesc;
+    }
+
+    public String getUseFor() {
+        return useFor;
+    }
+
+    public void setUseFor(String useFor) {
+        this.useFor = useFor;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
     }
 }

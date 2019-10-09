@@ -22,6 +22,7 @@ public class RedisKeyUtil {
     private static String INIT_SMOTE="INIT_SMOTE";
     private static String GET_SMOTE="GET_SMOTE";
     private static String GET_ISOLATION="GET_ISOLATION";
+    private static String GET_NORMALIZATION="GET_NORMALIZATION";
 
     private static String WX_COMPONENT_ALGORITHM_CACHE ="WX_COMPONENT_ALGORITHM_CACHE";
     private static String WX_LAB_RECORD="WX_LAB_RECORD";
@@ -42,6 +43,7 @@ public class RedisKeyUtil {
     private static String BIZ_DIVIDER = "DIVIDER";
     private static String BIZ_DIVIDER_DES = "DIVIDER_DES";
     private static String BIZ_FILE = "FILE";
+    private static String GET_FFT="GET_FFT";
 
 
     private static String BIZ_FEATURE_INSTANCE = "FEATURE_INSTANCE";
@@ -63,6 +65,18 @@ public class RedisKeyUtil {
 
     private static Gson gson = new Gson();
 
+    public static String getIsolationKey(){
+        return GET_ISOLATION+SPLIT+"init";
+    }
+    public static String getNormalizationKey(){
+        return GET_NORMALIZATION+SPLIT+"init";
+    }
+    public static String getNormalizationKey(String str){
+        return GET_NORMALIZATION+SPLIT+str;
+    }
+    public static String getfftKey(String attr){
+        return GET_FFT+SPLIT+attr;
+    }
     public static String getIsolationKey(Double contamination){
         return GET_ISOLATION+SPLIT+contamination;
     }

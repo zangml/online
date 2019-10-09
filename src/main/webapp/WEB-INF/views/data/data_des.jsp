@@ -39,7 +39,7 @@
                 <div class="data_desp_title">
                     1. 背景介绍
                 </div>
-                <div class="data_desp">
+                <div class="data_background">
                     ${dataset.problem}
                 </div>
                 <div class="data_desp_title">
@@ -49,11 +49,11 @@
                     ${dataset.dataDesc}
                 </div>
 
-                <div class="divcss5" style="position: relative;">
+                <div class="divcss5" style="position:relative;">
                     <div class="divcss5_data" style="position: relative;"  >
                         <div class="container">
 
-                            <div id="selectedAttr" class="row" style="margin-top: 20px;">
+                            <div id="selectedAttr" class="row" style="margin-top: 10px;">
                                 <button id="attr" onclick="easyAttribute(this)" class="btn btn-success" style="display: none;margin-left: 20px"></button>
                             </div>
                             <div class="row" style="margin-top: 20px;">
@@ -94,7 +94,7 @@
 
                                 <button id="submit" data-toggle="modal" data-target="#ajaxloader2" data-backdrop="static" onclick="submit()" class="btn btn-primary">查看</button>
                             </div>
-                            <div id="echart" style="width:1000px;height: 500px;margin-top: 20px"></div>
+                            <div id="echart" style="width:1000px;height: 400px;margin-top: 20px"></div>
                         </div>
                     </div>
                 <div class="data_desp_title">

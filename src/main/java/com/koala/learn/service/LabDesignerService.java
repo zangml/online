@@ -180,6 +180,15 @@ public class LabDesignerService {
         return voList;
     }
 
+    public FeatureVo selectFeatureVoById(Integer id){
+
+        Feature feature=mFeatureMapper.selectByPrimaryKey(id);
+        FeatureVo vo = new FeatureVo();
+        vo.setFeature(feature);
+        List<FeatureParam> paramList = mFeatureParamMapper.selectAllByFeatureId(feature.getId());
+        vo.setParamList(paramList);
+        return vo;
+    }
     public List<FeatureVo> selectAllPre(){
         List<Feature> pres = mFeatureMapper.selectPre();
         List<FeatureVo> voList = new ArrayList<>();

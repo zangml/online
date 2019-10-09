@@ -158,6 +158,9 @@ public class LabService {
         return mLabMapper.selectByPrimaryKey(id);
     }
 
+    public Classifier getClassifierById(Integer id){
+        return mClassifierMapper.selectByPrimaryKey(id);
+    }
     public List<Classifier> getClassifier(int id){
         return mClassifierMapper.selectByLabId(id);
     }
