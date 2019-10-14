@@ -144,7 +144,7 @@ public class LabLearnController {
         model.addAttribute("instance", instanceId);
         model.addAttribute("des", mJedisAdapter.get(RedisKeyUtil.getClassifierDesKey(labId)));
         if(lab.getLableType()==1) {
-            List<Classifier> classifierList = mLabService.getClassifier(-1);
+            List<Classifier> classifierList = mLabService.getClassifier(1);
             for (Classifier classifier : classifierList) {
                 List<ClassifierParam> paramList = mLabService.getParamByClassifierId(classifier.getId());
                 classifier.setParams(paramList);
@@ -152,7 +152,7 @@ public class LabLearnController {
             System.out.println(lab.getLableType());
             model.addAttribute("classifierList", classifierList);
         }else if(lab.getLableType()==0) {
-            List<Classifier> classifierList = mLabService.getClassifier(1);
+            List<Classifier> classifierList = mLabService.getClassifier(0);
             for (Classifier classifier : classifierList) {
                 List<ClassifierParam> paramList = mLabService.getParamByClassifierId(classifier.getId());
                 classifier.setParams(paramList);

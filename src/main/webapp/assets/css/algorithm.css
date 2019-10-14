@@ -1,3 +1,11 @@
+.algo_detail_title{
+    height: 100px;
+    line-height: 100px;
+    width: 1000px;
+    text-align: center;
+    border-bottom: 2px darkblue dashed;
+}
+
 .algo_container{
   height: 400px;
   width: 1000px;
@@ -136,15 +144,11 @@
   border-radius: 3px;
 
 }
+
 .algo_desc_container .algo_right_container .algo_figure_container{
   width: 400px;
   height: 380px;
   margin-bottom: 10px;
 }
-.algp_title{
-  height: 100px;
-  line-height: 100px;
-  width: 1000px;
-  text-align: start;
-  border-bottom: 2px darkblue dashed;
-}
+
+

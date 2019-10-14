@@ -2,7 +2,6 @@ package com.koala.learn.service;
 
 import com.google.gson.Gson;
 import com.koala.learn.Const;
-import com.koala.learn.commen.ServerResponse;
 import com.koala.learn.component.JedisAdapter;
 import com.koala.learn.dao.AlgorithmMapper;
 import com.koala.learn.entity.Algorithm;
@@ -16,7 +15,6 @@ import weka.filters.Filter;
 import weka.filters.supervised.instance.SMOTE;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
@@ -75,7 +73,7 @@ public class AlgorithmService {
         Integer ratio= Integer.parseInt((String) param.get("-P"));
         Integer kNeighbors=5;
         if(ratio<=0){
-            return null;
+            return initSmoteEchart();
         }
         String key=RedisKeyUtil.getSmoteKey(kNeighbors,ratio);
         String cache=mJedisAdapter.get(key);

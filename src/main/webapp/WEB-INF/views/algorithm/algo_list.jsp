@@ -29,7 +29,7 @@
         <div class="algo_container">
             <ul class="algo_lists">
                 <li >
-                    <h3>数据预处理</h3>
+                    <h3><a href="/u/13212127650/blogs/1">数据预处理</a></h3>
                     <ul class="algo_list">
                         <li><a href="/algo/get_algo_detail/1">样本均衡</a></li>
                         <li><a href="/algo/get_algo_detail/2">异常值检测</a></li>

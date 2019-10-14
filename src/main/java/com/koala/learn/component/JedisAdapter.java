@@ -286,7 +286,6 @@ public class JedisAdapter implements InitializingBean {
                     // ..
                 }
             }
-
             if (jedis != null) {
                 jedis.close();
             }

@@ -55,7 +55,6 @@ public class AlgorithmController {
         int type=algorithm.getType();
         if(type==0 || type==2){
             FeatureVo featureVo=labDesignerService.selectFeatureVoById(algorithm.getTypeId());
-            System.out.println("算法类型为0");
             System.out.println(featureVo);
             model.addAttribute("vo",featureVo);
         }else if(type==1){

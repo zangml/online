@@ -30,8 +30,8 @@
 <div class="categoryWithCarousel">
     <c:import url="/WEB-INF/views/common/header.jsp" />
     <div class="homepageCategoryProducts">
-        <div class="algo_title">
-            <h2>${algorithm.name}</h2>
+        <div style="height: 80px;line-height: 80px;width: 1000px;text-align: center;border-bottom: 2px darkblue dashed;">
+            <h2 style="color: #2c4a5e">${algorithm.name}</h2>
         </div>
         <div class="algo_desc_container">
             <div class="algo_left_container">
