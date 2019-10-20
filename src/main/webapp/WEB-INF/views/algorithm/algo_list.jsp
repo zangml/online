@@ -29,37 +29,36 @@
         <div class="algo_container">
             <ul class="algo_lists">
                 <li >
-                    <h3><a href="/u/13212127650/blogs/1">数据预处理</a></h3>
+                    <h3>数据预处理</h3>
                     <ul class="algo_list">
-                        <li><a href="/algo/get_algo_detail/1">样本均衡</a></li>
-                        <li><a href="/algo/get_algo_detail/2">异常值检测</a></li>
-                        <li><a href="/algo/get_algo_detail/3">数据归一化</a></li>
+                        <c:forEach items="${preList}" var="pre">
+                            <li><a href="/algo/get_algo_detail/${pre.id}">${pre.cata_desc}</a></li>
+                        </c:forEach>
                     </ul>
                 </li>
                 <li >
                     <h3>特征提取</h3>
                     <ul class="algo_list">
-                        <li><a href="/algo/get_algo_detail/5">时域</a></li>
-                        <li><a href="/algo/get_algo_detail/6">频域</a></li>
-                        <li><a href="/algo/get_algo_detail/7">时频域</a></li>
+                        <c:forEach items="${featureList}" var="feature">
+                            <li><a href="/algo/get_algo_detail/${feature.id}">${feature.cata_desc}</a></li>
+                        </c:forEach>
+
                     </ul>
                 </li>
                 <li>
                     <h3>故障诊断</h3>
                     <ul class="algo_list">
-                        <li><a href="/algo/get_algo_detail/4">梯度下降树</a></li>
-                        <li><a href="/algo/get_algo_detail/8">随机森林分类</a></li>
-                        <li><a href="/algo/get_algo_detail/9">Adaboost</a></li>
-                        <li><a href="/algo/get_algo_detail/10">支持向量机</a></li>
+                        <c:forEach items="${classfierList}" var="classifier">
+                            <li><a href="/algo/get_algo_detail/${classifier.id}">${classifier.cata_desc}</a></li>
+                        </c:forEach>
                     </ul>
                 </li>
                 <li>
                     <h3>寿命预测</h3>
                     <ul class="algo_list">
-                        <li><a href="/algo/get_algo_detail/11">LightGBM</a></li>
-                        <li><a href="/algo/get_algo_detail/12">随机森林回归</a></li>
-                        <li><a href="/algo/get_algo_detail/13">神经网络</a></li>
-                        <li><a href="/algo/get_algo_detail/14">线型回归</a></li>
+                        <c:forEach items="${regressionList}" var="regression">
+                            <li><a href="/algo/get_algo_detail/${regression.id}">${regression.cata_desc}</a></li>
+                        </c:forEach>
                     </ul>
                 </li>
             </ul>

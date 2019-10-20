@@ -82,19 +82,20 @@ public class LabDesignController {
     }
 
     @RequestMapping("/design/group")
-    public String createGroup(@RequestParam(name = "fileOption") Integer fileId,
+    public String createGroup(
+//                              @RequestParam(name = "fileOption") Integer fileId,
                               @RequestParam("title") String title,
                               @RequestParam("des") String des,
                               @RequestParam("aim") String aim,
                               @RequestParam("type") final Integer type,
                               @RequestParam(name = "file", required = false) MultipartFile file, Model model, HttpSession session) throws IOException {
-        System.out.println("----------------------" + fileId + "-------------------");
         LogUtils.log(Long.toString(file.getSize()));
         if (file.getSize() == 0) {
-            LabGroup lab = mLabDesignerService.createLabGroup(title, des, aim, type);
-            mLabDesignerService.addFile(lab, fileId, type);
-            session.setAttribute("labGroup", lab);
-            return "redirect:/design/page?labGroup=" + lab.getId();
+//            LabGroup lab = mLabDesignerService.createLabGroup(title, des, aim, type);
+//            mLabDesignerService.addFile(lab, fileId, type);
+//            session.setAttribute("labGroup", lab);
+            model.addAttribute("error","数据为空，无法创建实验");
+            return "views/common/error";
         } else if (file.getSize() > 104857600l) {
             model.addAttribute("error", "文件大小不能超过100M");
             return "views/common/error";

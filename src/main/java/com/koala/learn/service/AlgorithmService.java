@@ -17,6 +17,7 @@ import weka.filters.supervised.instance.SMOTE;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -35,6 +36,9 @@ public class AlgorithmService {
         return algorithmMapper.getById(id);
     }
 
+    public List<Algorithm> getAllAlgos(){
+        return  algorithmMapper.selectAllAlgorithm();
+    }
     public String initSmoteEchart(){
         String key = RedisKeyUtil.getInitSmote();
         String cache=mJedisAdapter.get(key);

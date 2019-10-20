@@ -10,10 +10,12 @@
       <arg column="data_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="type" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="type_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="blog_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="cata_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, algo_desc , use_for, data_desc, type,type_id
+    id, name, algo_desc , use_for, data_desc, type,type_id,blog_id,cata_desc
   </sql>
   <select id="selectAllAlgorithm" resultMap="BaseResultMap">
     SELECT

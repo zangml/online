@@ -2,13 +2,12 @@ package com.koala.learn.controller;
 
 import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
+import com.koala.learn.dao.ClassifierMapper;
 import com.koala.learn.entity.Algorithm;
+import com.koala.learn.entity.Blog;
 import com.koala.learn.entity.Classifier;
 import com.koala.learn.entity.ClassifierParam;
-import com.koala.learn.service.AlgorithmService;
-import com.koala.learn.service.LabDesignerService;
-import com.koala.learn.service.LabService;
-import com.koala.learn.service.WxComponentService;
+import com.koala.learn.service.*;
 import com.koala.learn.vo.FeatureVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,10 +39,43 @@ public class AlgorithmController {
     @Autowired
     WxComponentService wxComponentService;
 
+    @Autowired
+    BlogService blogService;
+
+
 
 
     @RequestMapping("get_list")
-    public String getAlgoList(){
+    public String getAlgoList(Model model){
+
+        List<Algorithm> algorithmList=algorithmService.getAllAlgos();
+
+        List<Algorithm> preList=new ArrayList<>();
+        List<Algorithm> featureList=new ArrayList<>();
+        List<Algorithm> classfierList=new ArrayList<>();
+        List<Algorithm> regressionList=new ArrayList<>();
+
+        for(Algorithm algorithm :algorithmList){
+            if(algorithm.getType().equals(0)){
+                preList.add(algorithm);
+            }
+            if(algorithm.getType().equals(2)){
+                featureList.add(algorithm);
+            }
+            if(algorithm.getType().equals(1)){
+                Classifier classifier=labService.getClassifierById(algorithm.getTypeId());
+                if(classifier.getLabId().equals(1)){
+                    classfierList.add(algorithm);
+                }
+                if(classifier.getLabId().equals(0)){
+                    regressionList.add(algorithm);
+                }
+            }
+        }
+        model.addAttribute("preList",preList);
+        model.addAttribute("featureList",featureList);
+        model.addAttribute("classfierList",classfierList);
+        model.addAttribute("regressionList",regressionList);
         return "views/algorithm/algo_list";
     }
 
@@ -52,6 +84,7 @@ public class AlgorithmController {
 
         Algorithm algorithm=algorithmService.getAlgoById(id);
 
+        Blog blog = blogService.getBlogById(algorithm.getBlogId());
         int type=algorithm.getType();
         if(type==0 || type==2){
             FeatureVo featureVo=labDesignerService.selectFeatureVoById(algorithm.getTypeId());
@@ -64,6 +97,7 @@ public class AlgorithmController {
             model.addAttribute("classifier",classifier);
         }
         model.addAttribute("algorithm",algorithm);
+        model.addAttribute("blog",blog);
         return "views/algorithm/algo_detail";
 
     }

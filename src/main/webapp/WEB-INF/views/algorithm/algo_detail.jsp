@@ -52,7 +52,7 @@
             <div class="algo_right_container">
                 <div class="algo_input_container">
                     <div class="container">
-                        <c:if test="${algorithm.type==0}" >
+                        <c:if test="${algorithm.type==0 || algorithm.typeId==4}" >
                         <div class="panel col-md-4" style="margin-left: 5px;width: 400px; height:200px;background-color:#F5F5F5;border: 0px ;">
                             <div class="panel-primary panel-heading">
                                 <p align="center">${vo.feature.name}</p>
@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                         </c:if>
-                        <c:if test="${algorithm.type==2}" >
+                        <c:if test="${algorithm.type==2 && algorithm.typeId!=4}" >
                             <div class="panel col-md-4" style="margin-left: 5px;width: 400px; height:300px;background-color:#F5F5F5;border: 0px;">
                                 <div class="panel-primary panel-heading">
                                     <p align="center">${vo.feature.name}</p>
@@ -113,16 +113,18 @@
                     </div>
                 </div>
                 <div class="algo_figure_container">
-                    <c:if test="${algorithm.type==0}">
-                        <c:if test="${algorithm.id != 6}">
+                    <c:if test="${algorithm.type==0 || algorithm.typeId==4}">
+                        <c:if test="${algorithm.typeId != 4}">
                             <button data-toggle="modal" data-target="#ajaxloader2" data-backdrop="static" onclick="initFeature(${vo.feature.id})" class="btn btn-primary pull-right">查看原始数据</button>
                         </c:if>
                         <div id="echart" style="width:400px;height: 300px;margin-top: 20px;margin-left: 30px"></div>
                     </c:if>
+
                     <c:if test="${algorithm.type==1}">
                         <h3 style="padding-left: 20px; padding-top: 10px">训练结果</h3>
                         <div id="res_table" style="margin-top: 20px"></div>
                     </c:if>
+
                     <c:if test="${algorithm.type==2}">
                         <div id="res_feature" style="margin-top: 90px;margin-left: 20px"></div>
                         <br>
@@ -130,6 +132,18 @@
                     </c:if>
 
                 </div>
+            </div>
+        </div>
+        <div style="height: 80px;line-height: 80px;width: 1000px;text-align: center;border-bottom: 2px darkblue dashed;">
+            <h2 style="color: #2c4a5e">算法代码</h2>
+        </div>
+        <div class="algo_code_container">
+            <div class="card-block">
+                <hr>
+                <article class="post-content" >
+                    ${blog.htmlContent}
+                </article>
+                <hr>
             </div>
         </div>
 
