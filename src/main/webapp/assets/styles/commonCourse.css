@@ -1,0 +1,65 @@
+.tiy{
+    border: none;
+    display: inline-block;
+    outline: 0;
+    padding: 8px 18px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: #fff;
+    background-color: #e9686b;
+    text-align: center;
+    transition: .2s ease-out;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.12), 0px 1px 2px rgba(0,0,0,0.24);
+    font-family: '微软雅黑';
+    border-radius: 2px;
+}
+
+table.dataintable {
+    margin-top: 15px;
+    border-collapse: collapse;
+    border: 1px solid #aaa;
+    width: 100%;
+}
+table.dataintable th {
+    vertical-align: baseline;
+    padding: 5px 15px 5px 6px;
+    background-color: #3F3F3F;
+    border: 1px solid #3F3F3F;
+    text-align: left;
+    color: #fff;
+}
+[target=_blank] {
+    text-decoration: none;
+    color: #900b09;
+    background: transparent;
+    border-bottom: 1px solid #900b09;
+}
+table.dataintable tr:nth-child(odd) {
+    background-color: #F5F5F5;
+}
+table.dataintable tr:nth-child(even) {
+    background-color: #fff;
+}
+
+table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}

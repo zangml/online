@@ -1,0 +1,123 @@
+.dataset_container{
+  margin: 10px auto;
+  background: #fafafa;
+  height: 550px;
+  width: 1000px;
+}
+.dataset_list{
+  float: left;
+  height: 550px;
+  width: 500px;
+  text-align: center;
+  padding-top: 20px;
+}
+.dataset_list h2{
+  font-size: 32px;
+  color: #2c4a5e;
+}
+.dataset_list .line{
+  height: 3px;
+  width: 400px;
+  background: rgba(103,103,103,0.5);
+  margin: 10px auto;
+}
+.dataset_list ul>li{
+  height: 50px;
+  line-height: 50px;
+  width: 400px;
+  margin: 20px auto;
+  border: 1px solid #cccccc;
+  border-radius: 10px;
+}
+.dataset_list ul li a{
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  color: black;
+  font-size: 22px;
+}
+.dataset_upload{
+  float: right;
+  height: 300px;
+  width: 300px;
+  text-align: center;
+  box-sizing: border-box;
+  padding-top: 100px;
+  padding-right: 100px;
+}
+.data_upload_container{
+  margin:20px auto;
+  border: 1px solid #2c4a5e;
+  height: 450px;
+  width: 500px;
+  box-sizing: border-box;
+}
+.data_upload_container p{
+  width: 500px;
+  margin-top: 20px;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+.data_upload_container p input[type='text']{
+  width: 350px;
+  height: 30px;
+  border-radius: 3px;
+}
+.data_upload_container p textarea{
+  width: 350px;
+  border-radius: 3px;
+}
+.data_upload_container input[type='submit']{
+  width: 100px;
+  height: 40px;
+  margin: 30px 200px 0;
+  border-radius: 5px;
+}
+.data_temp{
+  margin: 10px auto;
+  background: #fafafa;
+  height: 1200px;
+  width: 1000px;
+}
+.data_temp .data_title{
+  height: 100px;
+  line-height: 100px;
+  width: 1000px;
+  text-align: start;
+  border-bottom: 2px darkblue dashed;
+}
+.data_temp .data_title h2{
+  font-size: 32px;
+  color: #2c4a5e;
+  text-indent: 2em;
+}
+.data_desp_container{
+  height: 1250px;
+  width: 1000px;
+}
+.data_desp_container .data_desp_title{
+  height: 60px;
+  line-height: 60px;
+  width: 600px;
+  font-size: 24px;
+  box-sizing: border-box;
+  padding-left: 10px;
+}
+.data_desp{
+  height: 200px;
+  width: 100%;
+  font-size: 16px;
+  background: white;
+  border: 1px solid #cccccc;
+  box-sizing: border-box;
+  padding-left: 10px;
+}
+.data_background{
+  height: 50px;
+  width: 100%;
+  font-size: 16px;
+  background: white;
+  border: 1px solid #cccccc;
+  box-sizing: border-box;
+  padding-left: 10px;
+}

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koala.learn.dao.LabGroupMapper">
+  <resultMap id="BaseResultMap" type="com.koala.learn.entity.LabGroup">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="des" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="file" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="owner" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="publish_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="lab_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="publish" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="aim" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, des, file, owner, create_time, publish_time, lab_type, publish, aim
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lab_group
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lab_group
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.koala.learn.entity.LabGroup" keyProperty="id" useGeneratedKeys="true">
+    insert into lab_group (id, name, des, 
+      file, owner, create_time, 
+      publish_time, lab_type, publish,
+      aim)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}, 
+      #{file,jdbcType=VARCHAR}, #{owner,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{publishTime,jdbcType=TIMESTAMP}, #{labType,jdbcType=INTEGER}, #{publish,jdbcType=INTEGER}, 
+      #{aim,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.koala.learn.entity.LabGroup">
+    insert into lab_group
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="des != null">
+        des,
+      </if>
+      <if test="file != null">
+        file,
+      </if>
+      <if test="owner != null">
+        owner,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="publishTime != null">
+        publish_time,
+      </if>
+      <if test="labType != null">
+        lab_type,
+      </if>
+      <if test="publish != null">
+        publish,
+      </if>
+      <if test="aim != null">
+        aim,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="des != null">
+        #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="file != null">
+        #{file,jdbcType=VARCHAR},
+      </if>
+      <if test="owner != null">
+        #{owner,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishTime != null">
+        #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="labType != null">
+        #{labType,jdbcType=INTEGER},
+      </if>
+      <if test="publish != null">
+        #{publish,jdbcType=INTEGER},
+      </if>
+      <if test="aim != null">
+        #{aim,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.koala.learn.entity.LabGroup">
+    update lab_group
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="des != null">
+        des = #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="file != null">
+        file = #{file,jdbcType=VARCHAR},
+      </if>
+      <if test="owner != null">
+        owner = #{owner,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishTime != null">
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="labType != null">
+        lab_type = #{labType,jdbcType=INTEGER},
+      </if>
+      <if test="publish != null">
+        publish = #{publish,jdbcType=INTEGER},
+      </if>
+      <if test="aim != null">
+        aim = #{aim,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.koala.learn.entity.LabGroup">
+    update lab_group
+    set name = #{name,jdbcType=VARCHAR},
+      des = #{des,jdbcType=VARCHAR},
+      file = #{file,jdbcType=VARCHAR},
+      owner = #{owner,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      lab_type = #{labType,jdbcType=INTEGER},
+      publish = #{publish,jdbcType=INTEGER},
+      aim = #{aim,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllByUserId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM lab_group
+    WHERE owner = #{userId}
+  </select>
+
+  <select id="selectAllPublish" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM lab_group
+    WHERE publish = 2
+  </select>
+</mapper>

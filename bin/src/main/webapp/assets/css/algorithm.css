@@ -1,0 +1,157 @@
+.algo_container{
+  height: 400px;
+  width: 1000px;
+  margin: 0 auto;
+  padding-top: 20px;
+  box-sizing: border-box;
+}
+.algo_container ul{
+  display: flex;
+  list-style: none;
+}
+.algo_container .algo_lists>li{
+  height: 350px;
+  width: 250px;
+  box-sizing: border-box;
+  text-align: center;
+  margin-right: 20px;
+  border: 1px solid #cccc;
+  box-shadow: 0 0 5px;
+}
+.algo_container .algo_lists>li:nth-child(4){
+  border: none;
+}
+.algo_container .algo_lists h3{
+  font-size: 32px;
+  font-weight: bold;
+  width: 100%;
+  height: 80px;
+  line-height:80px;
+  background: rgba(204,204,204,0.6);
+  color: dimgray;
+}
+.algo_container .algo_lists h3>a{
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+}
+.algo_container .algo_lists .algo_list{
+  margin-top: 20px;
+  flex-direction: column;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  box-sizing: border-box;
+}
+.algo_container .algo_lists .algo_list a:hover{
+  color: darkslateblue;
+}
+.algo_upload_container{
+  height: 100px;
+  width: 100%;
+  overflow: hidden;
+}
+.algo_upload_container img{
+  float: right;
+  width: 100px;
+  height: 100px;
+  margin-right: 100px;
+}
+
+.algo_desc_container{
+  width: 1000px;
+  margin: 60px auto 0;
+  height: 100%;
+  display: flex;
+}
+.algo_desc_container .algo_left_container{
+  width: 500px;
+  height: 100%;
+  box-sizing: border-box;
+  border-right: 2px dashed silver;
+}
+.algo_desc_container .algo_left_container .algo_desc{
+  height:160px;
+  width: 100%;
+  margin-top: 20px;
+}
+.algo_desc_container .algo_left_container .algo_desc .algo_desc_title{
+  display: inline-block;
+  font-size:22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  line-height: 50px;
+  text-indent: 1em;
+}
+.algo_desc_container .algo_left_container .algo_desc p{
+  height: 100px;
+  width: 450px;
+  margin-left: 20px;
+  background: white;
+  box-shadow: 0 0 10px #cccccc;
+}
+.algo_desc_container .algo_right_container{
+  width: 400px;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.algo_desc_container .algo_right_container .algo_input_container{
+  width: 400px;
+  height: 250px;
+  margin-top: 20px;
+  /*box-shadow: 0 0 10px #cccccc;*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.algo_desc_container .algo_right_container .algo_input_container .algo_name{
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.algo_desc_container .algo_right_container .algo_input_container .line{
+  height: 3px;
+  width: 300px;
+  background: #cccccc;
+  margin-bottom: 3px;
+}
+.algo_desc_container .algo_right_container .algo_input_container .algo_param{
+  width: 400px;
+  line-height: 40px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  padding-left: 20px;
+}
+.algo_desc_container .algo_right_container .algo_input_container .algo_param input[type='text']{
+  height: 30px;
+  width: 260px;
+  border-radius: 5px;
+}
+.algo_param_submit{
+  width: 400px;
+  box-sizing: border-box;
+  padding-left: 300px;
+  padding-bottom: 10px;
+}
+.algo_desc_container .algo_right_container .algo_input_container input[type='submit']{
+  width: 80px;
+  height: 30px;
+  color: darkblue;
+  border-radius: 3px;
+
+}
+.algo_desc_container .algo_right_container .algo_figure_container{
+  width: 400px;
+  height: 380px;
+  margin-bottom: 10px;
+}
+.algp_title{
+  height: 100px;
+  line-height: 100px;
+  width: 1000px;
+  text-align: start;
+  border-bottom: 2px darkblue dashed;
+}

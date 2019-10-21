@@ -1,0 +1,261 @@
+/*算法列表页开始*/
+*{
+  margin: 0;
+  padding: 0;
+}
+a,a:link,a:focus,a:hover,a:visited{
+  text-decoration: none!important;
+}
+.algo_container{
+  height: 400px;
+  width: 1000px;
+  margin: 50px auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.algo_container .algo_list{
+  width: 240px;
+  height: 400px;
+  text-align: center;
+  border: 1px solid black;
+  box-shadow:  0 0 5px;
+}
+.algo_container .algo_list>h2{
+  font-size: 32px;
+  font-weight: bold;
+  width: 100%;
+  height: 80px;
+  line-height:80px;
+  background: rgba(204,204,204,0.6);
+}
+.algo_container .algo_list>h2>a{
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  color: #607D8B;
+}
+.algo_container .algo_list>h2>a:hover{
+  color: #6a6a6a;
+}
+.algo_container .algo_list>ul{
+  list-style: none;
+  width: 100%;
+  border: none;
+  box-shadow: none;
+}
+.algo_container .algo_list>ul>li{
+  text-align: center;
+  width:100%;
+  font-size: 20px;
+  line-height: 50px;
+  color: #333;
+}
+.algo_container .algo_list>ul>li>a{
+  color: #333;
+}
+.algo_container .algo_list>ul>li a:hover{
+  /*color: darkslateblue;*/
+  color: #337ab7;
+}
+.add_algo_container{
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 20px;
+  text-align: center;
+  width: 100px;
+}
+.add_algo_container .add_algo_img{
+  height: 80px;
+  width: 80px;
+}
+.add_algo_container .add_algo_img>a{
+  font-size: 100px;
+  color: black;
+}
+.add_algo_container .add_algo_text{
+  padding-top: 5px;
+  height: 30px;
+  width: 100%;
+}
+.add_algo_container .add_algo_text>a{
+  font-size: 16px;
+  color: #333;
+}
+.add_algo_container:hover a{
+  color: darkslateblue;
+}
+/*算法列表页结束*/
+/*算法详情页*/
+.algo_desc_container{
+  width: 1000px;
+  margin: 0 auto;
+  height: 800px;
+  background: #fafafa;
+}
+.algo_desc_container .algo_title{
+  margin-top: 10px;
+  width: 100%;
+  height: 100px;
+  line-height: 60px;
+  padding: 5px 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+.algo_desc_container>.container{
+  display: flex;
+  justify-content: space-between;
+  width: 1000px;
+  height: 700px;
+  box-sizing: border-box;
+}
+.algo_desc_container .algo_left_container{
+  width: 50%;
+  height: 100%;
+  box-sizing: border-box;
+  border-right: 2px dashed silver;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+.algo_desc_container .algo_left_container .algo_desc{
+  width: 100%;
+  height: 200px;
+}
+.algo_desc_container .algo_left_container .algo_desc .algo_desc_title{
+  display: inline-block;
+  font-size:22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  line-height: 50px;
+  text-indent: 1em;
+}
+.algo_desc_container .algo_left_container .algo_desc p{
+  height: 100px;
+  width: 450px;
+  background: white;
+  box-shadow: 0 0 10px #cccccc;
+  box-sizing: border-box;
+  font-size: 14px;
+  color: black;
+  overflow: hidden;
+  text-indent: 2em;
+}
+.algo_right_container{
+  width: 50%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.algo_desc_container .algo_right_container .algo_input_container{
+  width: 400px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 10px #cccccc;
+  box-sizing: border-box;
+  position: relative;
+}
+.algo_input_container .algo_input_name{
+  font-size:18px;
+  color:#666;
+  width: 100%;
+  height:50px;
+  line-height: 50px;
+  text-align: center;
+  border-bottom: 1px solid #2e6da4;
+}
+.btn1{
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+.algo_figure_container{
+  width: 400px;
+  height: 350px;
+  box-sizing: border-box;
+  margin-top: 20px;
+  position: relative;
+}
+.btn2{
+  position: absolute;
+  top:12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.echart{
+  width: 400px;
+  height: 300px;
+  margin-top: 50px;
+}
+#res_feature{
+    font-size: 16px;
+}
+#res_feature a{
+    color: #337ab7;
+}
+#res_table{
+    margin-top: 20px;
+}
+.table{
+    table-layout: fixed;
+}
+
+.table td{
+    text-align: center;
+    overflow: hidden;
+    width: 80px;
+    box-sizing: border-box;
+}
+/*算法详情页结束*/
+/*算法代码开始*/
+.article_container{
+  margin: 0 auto;
+  width: 1000px;
+  background: #fafafa;
+}
+.post-content {
+  padding-top: 10px;
+}
+.post-content h3{
+  color: #237ab7;
+  text-indent: 1em;
+}
+.post-content h5{
+  font-size: 18px;
+  text-indent: 1em;
+  color: #333;
+}
+.post-content p{
+  font-size: 16px;
+  text-indent: 1em;
+}
+.post-content pre{
+  color: white;
+  background: black;
+}
+.nav_container{
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+}
+.nav_container ul{
+  list-style: none;
+}
+.nav_container>ul>li{
+  height: 50px;
+  width: 50px;
+  border: 1px solid #333;
+  border-bottom: none;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.nav_container>ul>li:last-child{
+  border-bottom: 1px solid #333;
+}
+/*算法代码结束*/

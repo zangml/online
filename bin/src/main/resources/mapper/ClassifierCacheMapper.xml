@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.koala.learn.dao.ClassifierCacheMapper" >
+  <resultMap id="BaseResultMap" type="com.koala.learn.entity.ClassifierCache" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="file" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="options" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="classifier" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="accuracy" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="hash" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, file, options, classifier, accuracy, hash
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from classifier_cache
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from classifier_cache
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.koala.learn.entity.ClassifierCache" >
+    insert into classifier_cache (id, file, options, 
+      classifier, accuracy, hash
+      )
+    values (#{id,jdbcType=INTEGER}, #{file,jdbcType=VARCHAR}, #{options,jdbcType=VARCHAR}, 
+      #{classifier,jdbcType=VARCHAR}, #{accuracy,jdbcType=VARCHAR}, #{hash,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.koala.learn.entity.ClassifierCache" >
+    insert into classifier_cache
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="file != null" >
+        file,
+      </if>
+      <if test="options != null" >
+        options,
+      </if>
+      <if test="classifier != null" >
+        classifier,
+      </if>
+      <if test="accuracy != null" >
+        accuracy,
+      </if>
+      <if test="hash != null" >
+        hash,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="file != null" >
+        #{file,jdbcType=VARCHAR},
+      </if>
+      <if test="options != null" >
+        #{options,jdbcType=VARCHAR},
+      </if>
+      <if test="classifier != null" >
+        #{classifier,jdbcType=VARCHAR},
+      </if>
+      <if test="accuracy != null" >
+        #{accuracy,jdbcType=VARCHAR},
+      </if>
+      <if test="hash != null" >
+        #{hash,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.koala.learn.entity.ClassifierCache" >
+    update classifier_cache
+    <set >
+      <if test="file != null" >
+        file = #{file,jdbcType=VARCHAR},
+      </if>
+      <if test="options != null" >
+        options = #{options,jdbcType=VARCHAR},
+      </if>
+      <if test="classifier != null" >
+        classifier = #{classifier,jdbcType=VARCHAR},
+      </if>
+      <if test="accuracy != null" >
+        accuracy = #{accuracy,jdbcType=VARCHAR},
+      </if>
+      <if test="hash != null" >
+        hash = #{hash,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.koala.learn.entity.ClassifierCache" >
+    update classifier_cache
+    set file = #{file,jdbcType=VARCHAR},
+      options = #{options,jdbcType=VARCHAR},
+      classifier = #{classifier,jdbcType=VARCHAR},
+      accuracy = #{accuracy,jdbcType=VARCHAR},
+      hash = #{hash,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByHash" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from classifier_cache
+    WHERE hash = #{hash}
+  </select>
+</mapper>

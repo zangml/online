@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.koala.learn.dao.BlogCommentMapper" >
+    <resultMap id="BaseResultMap" type="com.koala.learn.entity.BlogComment" >
+        <constructor >
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="content" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="creat_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+            <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="blog_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List" >
+    id, content, creat_time,user_id,blog_id
+    </sql>
+
+    <insert id="insert" parameterType="com.koala.learn.entity.BlogComment" >
+    insert into blog_comment (id, content, creat_time,user_id,blog_id)
+    values (#{id}, #{content},now(),#{userId},#{blogId})
+    </insert>
+    <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from blog_comment
+    where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <select id="getOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from blog_comment
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByBlogId" resultType="com.koala.learn.entity.BlogComment">
+        select
+        <include refid="Base_Column_List" />
+        from blog_comment
+        where blog_id = #{blogId}
+    </select>
+
+</mapper>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koala.learn.dao.FeatureParamMapper">
+  <resultMap id="BaseResultMap" type="com.koala.learn.entity.FeatureParam">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="shell" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="feature_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="des" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="default_value" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, shell, name, feature_id, des, default_value
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from feature_param
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from feature_param
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.koala.learn.entity.FeatureParam">
+    insert into feature_param (id, shell, name, 
+      feature_id, des, default_value
+      )
+    values (#{id,jdbcType=INTEGER}, #{shell,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{featureId,jdbcType=INTEGER}, #{des,jdbcType=VARCHAR}, #{defaultValue,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.koala.learn.entity.FeatureParam">
+    insert into feature_param
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="shell != null">
+        shell,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="featureId != null">
+        feature_id,
+      </if>
+      <if test="des != null">
+        des,
+      </if>
+      <if test="defaultValue != null">
+        default_value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shell != null">
+        #{shell,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="featureId != null">
+        #{featureId,jdbcType=INTEGER},
+      </if>
+      <if test="des != null">
+        #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultValue != null">
+        #{defaultValue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.koala.learn.entity.FeatureParam">
+    update feature_param
+    <set>
+      <if test="shell != null">
+        shell = #{shell,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="featureId != null">
+        feature_id = #{featureId,jdbcType=INTEGER},
+      </if>
+      <if test="des != null">
+        des = #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultValue != null">
+        default_value = #{defaultValue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.koala.learn.entity.FeatureParam">
+    update feature_param
+    set shell = #{shell,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      feature_id = #{featureId,jdbcType=INTEGER},
+      des = #{des,jdbcType=VARCHAR},
+      default_value = #{defaultValue,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllByFeatureId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from feature_param
+    WHERE feature_id = #{featureId}
+  </select>
+</mapper>
