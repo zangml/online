@@ -18,6 +18,10 @@ public class FTPUtil {
     private static String ftpUser = "ftpuser";
     private static String ftpPass = "Xh110105";
 
+    //private static String ftpIp = "39.105.62.140";
+//    private static String ftpUser = "uftp";
+//    private static String ftpPass = "xh110105";
+
     public FTPUtil(String ip, int port, String user, String pwd){
         this.ip = ip;
         this.port = port;
