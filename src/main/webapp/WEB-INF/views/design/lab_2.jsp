@@ -240,7 +240,7 @@
                                 <c:forEach items="${vo.paramList}" var="featureParam">
                                     <div class="input-group">
                                         <span class="input-group-addon" title="${featureParam.des}">${featureParam.name}</span>
-                                        <input type="text" class="form-control" placeholder="${featureParam.defaultValue}" name="${featureParam.shell}">
+                                        <input type="text" class="form-control" placeholder="" name="${featureParam.shell}">
                                     </div>
                                 </c:forEach>
                             </form>

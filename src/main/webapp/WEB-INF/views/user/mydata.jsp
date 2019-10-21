@@ -15,11 +15,11 @@
     <script src="http://how2j.cn/study/js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <title>基于机器学习的PHM系统</title>
     <link href="<%=basePath%>assets/styles/mydesign.css" rel="stylesheet">
+
 </head>
 <body>
 <div class="categoryWithCarousel">
     <c:import url="/WEB-INF/views/common/header.jsp" />
-
     <div class="divcss5" >
         <div class="divcss5_content">
             <div class="divcss5_content_top1">
@@ -140,17 +140,8 @@
                 </div>
             </div>
         </div>
-
     </div>
-
-    <div class="end">
-        <div class="text1">
-            <div class="text2">
-                <h5>Copyright © 2013-2017 Tencent Cloud. All Rights Reserved. 腾讯云 版权所有 京ICP备11018762号</h5>
-            </div>
-        </div>
-    </div>
-
+    <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </div>
 </body>
 </html>

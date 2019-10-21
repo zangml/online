@@ -29,12 +29,12 @@
 
 <div class="categoryWithCarousel">
     <c:import url="/WEB-INF/views/common/header.jsp" />
-    <div class="homepageCategoryProducts">
+    <div class="homepage">
         <div style="height: 80px;line-height: 80px;width: 1000px;text-align: center;border-bottom: 2px darkblue dashed;">
             <h2 style="color: #2c4a5e">${algorithm.name}</h2>
         </div>
         <div class="algo_desc_container">
-            <div class="algo_left_container">
+            <div class="algo_left_container" id="algo_desc">
                 <div class="algo_desc">
                     <span class="algo_desc_title"><span class="line"></span>算法介绍：</span>
                     <p style="font-size: 14px; padding-left: 10px;padding-top: 5px;">${algorithm.algoDesc}</p>
@@ -49,26 +49,26 @@
                 </div>
 
             </div>
-            <div class="algo_right_container">
+            <div class="algo_right_container" id="algo_train">
                 <div class="algo_input_container">
                     <div class="container">
                         <c:if test="${algorithm.type==0 || algorithm.typeId==4}" >
-                        <div class="panel col-md-4" style="margin-left: 5px;width: 400px; height:200px;background-color:#F5F5F5;border: 0px ;">
-                            <div class="panel-primary panel-heading">
-                                <p align="center">${vo.feature.name}</p>
+                            <div class="panel col-md-4" style="margin-left: 5px;width: 400px; height:200px;background-color:#F5F5F5;border: 0px ;">
+                                <div class="panel-primary panel-heading">
+                                    <p align="center">${vo.feature.name}</p>
+                                </div>
+                                <div class="panel-body">
+                                    <form id="feature${vo.feature.id}">
+                                        <c:forEach items="${vo.paramList}" var="featureParam">
+                                            <div class="input-group">
+                                                <span class="input-group-addon" title="${featureParam.des}">${featureParam.name}</span>
+                                                <input type="text" class="form-control" placeholder="" name="${featureParam.shell}" value="${featureParam.defaultValue}">
+                                            </div>
+                                        </c:forEach>
+                                    </form>
+                                    <button data-toggle="modal" data-target="#ajaxloader2" data-backdrop="static" onclick="submitPre(${vo.feature.id})" class="btn btn-primary pull-right">提交</button>
+                                </div>
                             </div>
-                            <div class="panel-body">
-                                <form id="feature${vo.feature.id}">
-                                    <c:forEach items="${vo.paramList}" var="featureParam">
-                                        <div class="input-group">
-                                            <span class="input-group-addon" title="${featureParam.des}">${featureParam.name}</span>
-                                            <input type="text" class="form-control" placeholder="" name="${featureParam.shell}" value="${featureParam.defaultValue}">
-                                        </div>
-                                    </c:forEach>
-                                </form>
-                                <button data-toggle="modal" data-target="#ajaxloader2" data-backdrop="static" onclick="submitPre(${vo.feature.id})" class="btn btn-primary pull-right">提交</button>
-                            </div>
-                        </div>
 
                         </c:if>
                         <c:if test="${algorithm.type==1}">
@@ -147,7 +147,6 @@
             </div>
         </div>
 
-
     </div>
 </div>
 
@@ -155,6 +154,9 @@
     <div class="outer"></div>
     <div class="inner"></div>
 </div>
+
+
+<c:import url="/WEB-INF/views/common/footer.jsp"/>
 </body>
 <script language="JavaScript">
     var myChart = echarts.init(document.getElementById('echart'),"dark");

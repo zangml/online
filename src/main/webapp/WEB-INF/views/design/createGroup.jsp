@@ -18,23 +18,18 @@
 </head>
 <body>
 <div class="categoryWithCarousel">
-    <div class="headbar"  >
-        <div class="head ">
-            <!--<span class="glyphicon glyphicon-th-list" style="margin-left:10px"></span> -->
-            <span style="margin-left:10px" ><a href="/labs">开发者实验室</a></span>
-        </div>
-        <div class="rightMenu">
-
-                <span >
-                <a href="/design/upload/classifier">上传算法
-                </a></span>
-
-        </div>
-    </div>
-
-
-    <br>
-    <div class="container">
+    <%--<div class="headbar">--%>
+        <%--<div class="head ">--%>
+            <%--<span style="margin-left:10px" ><a href="/labs">PHM开发者实验室</a></span>--%>
+        <%--</div>--%>
+        <%--<div class="rightMenu">--%>
+                <%--<span >--%>
+                <%--<a href="/design/upload/classifier">上传算法--%>
+                <%--</a></span>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+    <c:import url="/WEB-INF/views/common/header.jsp"/>
+    <div class="container" style="padding-top: 20px">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-primary">
                 <div class="panel-heading"></div>
@@ -66,15 +61,15 @@
                             <div class="col-sm-10 col-sm-offset-2">
                                 <p class="help-block">实验文件只支持csv格式，默认最后一列为类属性。csv文件的第一行必须为属性名称。</p>
                             </div>
-                            <%--<div class="col-sm-10 col-sm-offset-2">--%>
-                                <%--平台数据：--%>
-                                <%--<c:forEach items="${files}" var="file">--%>
-                                    <%--<label>--%>
-                                        <%--<input  title="数据描述" data-trigger="focus" data-container="body" data-toggle="popover" data-placement="bottom"--%>
-                                                <%--data-content="${file.des}" type="radio" name="fileOption" value="${file.id}" checked>${file.name} <a href="/file/${file.id}">下载</a>--%>
-                                    <%--</label>--%>
-                                <%--</c:forEach>--%>
-                            <%--</div>--%>
+                            <div class="col-sm-10 col-sm-offset-2">
+                                平台数据：
+                                <c:forEach items="${files}" var="file">
+                                    <label>
+                                        <input  title="数据描述" data-trigger="focus" data-container="body" data-toggle="popover" data-placement="bottom"
+                                                data-content="${file.des}" type="radio" name="fileOption" value="${file.id}" checked>${file.name} <a href="/file/${file.id}">下载</a>
+                                    </label>
+                                </c:forEach>
+                            </div>
                             <%--<div class="col-sm-10 col-sm-offset-2">--%>
                                 <%--<button class="btn btn-primary">平台数据</button>--%>
                             <%--</div>--%>
@@ -98,6 +93,7 @@
             </div>
         </div>
     </div>
+    <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </div>
 <script>
     if (${msg}) 

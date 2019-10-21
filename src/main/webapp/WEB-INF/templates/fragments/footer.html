@@ -4,18 +4,6 @@
       data-th-fragment="footer">
 <head>
     <meta charset="UTF-8">
-</head>
-<body>
-
-<footer class="blog-footer bg-inverse" data-th-fragment="footer">
-	<a id="goToTop" href="#">
-		<i class="fa fa-chevron-up fa-3x" aria-hidden="true"></i>
-	</a>
-    <div class="container">
- 		<p class="m-0 text-center text-white">© 2019 <a href="https://phmlearn.com">phmlearn.com</a></p>
-    </div>
-	
-   	<!-- JavaScript -->
     <script src="/static/js/jquery-3.1.1.min.js" th:src="@{/static/js/jquery-3.1.1.min.js}"></script>
     <script src="/static/js/jquery.form.min.js" th:src="@{/static/js/jquery.form.min.js}"></script>
     <script src="/static/js/tether.min.js" th:src="@{/static/js/tether.min.js}"></script>
@@ -29,7 +17,15 @@
     <script src="/static/js/thymeleaf-bootstrap-paginator.js" th:src="@{/static/js/thymeleaf-bootstrap-paginator.js}"></script>
     <script src="/static/js/catalog-generator.js" th:src="@{/static/js/catalog-generator.js}"></script>
     <script src="/static/js/main.js" th:src="@{/static/js/main.js}"></script>
- </footer>
+</head>
+<body>
 
+<footer class="blog-footer bg-inverse" data-th-fragment="footer">
+    <div class="container">
+        <p class="m-0 text-center text-white" style="color: #999;">Copyright © 2019 工业互联网在线实验平台 All Rights Reserved.
+
+            © 京ICP备19015152号-1</p>
+    </div>
+ </footer>
 </body>
 </html>

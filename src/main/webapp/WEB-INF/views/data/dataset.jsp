@@ -15,33 +15,29 @@
     <script src="http://how2j.cn/study/js/jquery/2.0.0/jquery.min.js"></script>
     <link href="http://how2j.cn/study/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
     <script src="http://how2j.cn/study/js/bootstrap/3.3.6/bootstrap.min.js"></script>
-    <link href="<%=basePath%>assets/styles/course.css" rel="stylesheet">
-    <link href="<%=basePath%>assets/css/data.css" rel="stylesheet">
-    <link href="<%=basePath%>assets/css/bootstrap-directional-buttons.css" rel="stylesheet">
     <link href="<%=basePath%>assets/css/htmleaf-demo.css" rel="stylesheet">
+    <link href="<%=basePath%>assets/fonts/iconfont.css" rel="stylesheet">
+    <link href="<%=basePath%>assets/css/data.css" rel="stylesheet">
     <title>基于机器学习的PHM系统</title>
 </head>
 
 <div class="categoryWithCarousel">
-    <c:import url="/WEB-INF/views/common/header.jsp" />
-    <div class="homepageCategoryProducts">
-
-        <div class="dataset_container">
-            <div class="dataset_list">
-                <h2>数据集列表</h2>
-                <div class="line"></div>
-                <ul>
-                    <li><a href="/data/dataDes/1">风机结冰故障预测数据</a></li>
-                    <li><a href="#">刀具剩余寿命预测数据</a></li>
-                    <li><a href="#">转子部件脱落故障预测数据</a></li>
-                </ul>
-            </div>
-            <div class="dataset_upload">
-                <a href="/data/go_upload"><img src="http://image.phmlearn.com/38c10671-9027-4128-93d0-a45611cdea8d.jpeg"
-                                               title="upload" style="width: 100%; height:100%"></a><br>
-                <span>上传数据集</span>
-            </div>
+    <c:import url="/WEB-INF/views/common/header.jsp"/>
+    <div class="dataset_container">
+        <div class="dataset_list">
+            <h2>数据集列表</h2>
+            <div class="line"></div                                                                                                                                                >
+            <ul>
+                <li><a href="/data/dataDes/1">风机结冰故障预测数据</a></li>
+                <li><a href="#">刀具剩余寿命预测数据</a></li>
+                <li><a href="#">转子部件脱落故障预测数据</a></li>
+            </ul>
+        </div>
+        <div class="dataset_upload">
+            <a href="/data/go_upload" class="iconfont icon-hao" title="上传数据集"></a><br>
+            <span>上传数据集</span>
         </div>
     </div>
+    <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </div>
 </html>

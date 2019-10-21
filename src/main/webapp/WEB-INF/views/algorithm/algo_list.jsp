@@ -17,53 +17,53 @@
     <script src="http://how2j.cn/study/js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <link href="<%=basePath%>assets/styles/course.css" rel="stylesheet">
     <link href="<%=basePath%>assets/css/algorithm.css" rel="stylesheet">
+    <link href="<%=basePath%>assets/fonts/iconfont.css" rel="stylesheet">
     <link href="<%=basePath%>assets/css/bootstrap-directional-buttons.css" rel="stylesheet">
     <link href="<%=basePath%>assets/css/htmleaf-demo.css" rel="stylesheet">
     <title>基于机器学习的PHM系统</title>
 </head>
 
 <div class="categoryWithCarousel">
-    <c:import url="/WEB-INF/views/common/header.jsp" />
-    <div class="homepageCategoryProducts">
-
-        <div class="algo_container">
-            <ul class="algo_lists">
-                <li >
-                    <h3>数据预处理</h3>
-                    <ul class="algo_list">
-                        <c:forEach items="${preList}" var="pre">
-                            <li><a href="/algo/get_algo_detail/${pre.id}">${pre.cata_desc}</a></li>
-                        </c:forEach>
-                    </ul>
-                </li>
-                <li >
-                    <h3>特征提取</h3>
-                    <ul class="algo_list">
-                        <c:forEach items="${featureList}" var="feature">
-                            <li><a href="/algo/get_algo_detail/${feature.id}">${feature.cata_desc}</a></li>
-                        </c:forEach>
-
-                    </ul>
-                </li>
-                <li>
-                    <h3>故障诊断</h3>
-                    <ul class="algo_list">
-                        <c:forEach items="${classfierList}" var="classifier">
-                            <li><a href="/algo/get_algo_detail/${classifier.id}">${classifier.cata_desc}</a></li>
-                        </c:forEach>
-                    </ul>
-                </li>
-                <li>
-                    <h3>寿命预测</h3>
-                    <ul class="algo_list">
-                        <c:forEach items="${regressionList}" var="regression">
-                            <li><a href="/algo/get_algo_detail/${regression.id}">${regression.cata_desc}</a></li>
-                        </c:forEach>
-                    </ul>
-                </li>
+    <c:import url="/WEB-INF/views/common/header.jsp"/>
+    <div class="algo_container">
+        <div class="algo_list">
+            <h2>数据预处理</h2>
+            <ul class="algo_list">
+                <c:forEach items="${preList}" var="pre">
+                    <li><a href="/algo/get_algo_detail/${pre.id}">${pre.cata_desc}</a></li>
+                </c:forEach>
             </ul>
         </div>
+        <div class="algo_list">
+            <h2>特征提取</h2>
+            <ul class="algo_list">
+                <c:forEach items="${featureList}" var="feature">
+                    <li><a href="/algo/get_algo_detail/${feature.id}">${feature.cata_desc}</a></li>
+                </c:forEach>
 
+            </ul>
+        </div>
+        <div class="algo_list">
+            <h2>故障诊断</h2>
+            <ul class="algo_list">
+                <c:forEach items="${classfierList}" var="classifier">
+                    <li><a href="/algo/get_algo_detail/${classifier.id}">${classifier.cata_desc}</a></li>
+                </c:forEach>
+            </ul>
+        </div>
+        <div class="algo_list">
+            <h2>寿命预测</h2>
+            <ul class="algo_list">
+                <c:forEach items="${regressionList}" var="regression">
+                    <li><a href="/algo/get_algo_detail/${regression.id}">${regression.cata_desc}</a></li>
+                </c:forEach>
+            </ul>
+        </div>
     </div>
+    <div class="add_algo_container">
+        <p class="add_algo_img"><a href="/design/upload/classifier" class="iconfont icon-hao"></a></p>
+        <p class="add_algo_text"><a href="/design/upload/classifier">上传算法</a></p>
+    </div>
+    <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </div>
 </html>

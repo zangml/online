@@ -19,7 +19,6 @@
 <body>
 <div class="categoryWithCarousel">
     <c:import url="/WEB-INF/views/common/header.jsp" />
-
     <div class="divcss5" >
         <div class="divcss5_content">
             <div class="divcss5_content_top1">
@@ -70,7 +69,7 @@
                         <span>编程通过</span>
 
                     </div>
-                    <div style="height: 100px;padding: 10px 10px;border-bottom: 1px solid rgb(213,213,213);">
+                    <div style="height: 50px;padding: 10px 10px;border-bottom: 1px solid rgb(213,213,213);">
                         <h5>徽章</h5>
                     </div>
                     <div style="height: 50px;padding: 10px 10px;border-bottom: 1px solid rgb(213,213,213);">
