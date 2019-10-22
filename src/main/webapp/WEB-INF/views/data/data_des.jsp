@@ -20,7 +20,7 @@
     <script src="http://echarts.baidu.com/resource/echarts-gl-latest/dist/echarts-gl.min.js"></script>
     <link href="<%=basePath%>assets/styles/lab_1.css" rel="stylesheet">
     <link rel="stylesheet" href="<%=basePath%>assets/css/style.css">
-    <script src="<%=basePath%>assets/js/index.js"></script>
+    <script  src="<%=basePath%>assets/js/index.js"></script>
     <link href="<%=basePath%>assets/css/data.css" rel="stylesheet">
     <title>基于机器学习的PHM系统</title>
 </head>
@@ -28,99 +28,100 @@
 <body>
 
 <div class="categoryWithCarousel">
-    <c:import url="/WEB-INF/views/common/header.jsp"/>
-    <div class="data_temp">
-        <div class="data_title">
-            <h2>${dataset.name}</h2>
-        </div>
-        <div class="data_desp_container">
-            <div class="data_desp_title">
-                1. 背景介绍
-            </div>
-            <div class="data_background">
-                ${dataset.problem}
-            </div>
-            <div class="data_desp_title">
-                2. 数据描述
-            </div>
-            <div class="data_desp">
-                ${dataset.dataDesc}
-            </div>
-            <div class="scat_container">
-                <div id="selectedAttr" class="row" style="margin-top: 10px;">
-                    <button id="attr" onclick="easyAttribute(this)" class="btn btn-success"
-                            style="display: none;margin-left: 20px"></button>
-                </div>
-                <div class="row" style="margin-top: 20px;">
-                    <div class="col-sm-3" style="margin-left: 100px;">
-                        <div class="input-group-btn">
-                            <button id="btnType" type="button" class="btn btn-default dropdown-toggle"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">实验数据降维散点图
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li><a href="javascript:;" onclick="changeType(0,'数据降维散点图')">数据降维散点图</a></li>
-                                <li><a href="javascript:;" onclick="changeType(1,'单一属性类别分析')">单一属性类别分析</a></li>
-                                <li><a href="javascript:;" onclick="changeType(2,'二维属性类别分析')">二维属性类别分析</a></li>
-                                <li><a href="javascript:;" onclick="changeType(3,'特征相关性分析')">特征相关性分析</a></li>
-                                <li><a href="javascript:;" onclick="changeType(6,'PCA降维三维散点图')">PCA降维三维散点图</a></li>
-                            </ul>
-                        </div><!-- /btn-group -->
-                    </div>
+    <c:import url="/WEB-INF/views/common/header.jsp" />
+    <div class="homepageCategoryProducts">
 
-                    <div class="col-sm-2" id="attribute1">
-                        <div class="input-group-btn">
-                            <button id="btnAttribute1" type="button" class="btn btn-default dropdown-toggle"
-                                    data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">${attributes[0]} <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <c:forEach items="${attributes}" var="name">
-                                    <li><a href="javascript:;" onclick="changeAttribute1(this)">${name}</a></li>
-                                </c:forEach>
-                            </ul>
+        <div class="data_temp">
+            <div class="data_title">
+                <h2>${dataset.name}</h2>
+            </div>
+            <div class="data_desp_container">
+                <div class="data_desp_title">
+                    1. 背景介绍
+                </div>
+                <div class="data_background">
+                    ${dataset.problem}
+                </div>
+                <div class="data_desp_title">
+                    2. 数据描述
+                </div>
+                <div class="data_desp">
+                    ${dataset.dataDesc}
+                </div>
+
+                <div class="divcss5" style="position:relative;">
+                    <div class="divcss5_data" style="position: relative;"  >
+                        <div class="container">
+
+                            <div id="selectedAttr" class="row" style="margin-top: 10px;">
+                                <button id="attr" onclick="easyAttribute(this)" class="btn btn-success" style="display: none;margin-left: 20px"></button>
+                            </div>
+                            <div class="row" style="margin-top: 20px;">
+                                <div class="col-sm-3" style="margin-left: 100px;">
+                                    <div class="input-group-btn">
+                                        <button id="btnType" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">实验数据降维散点图 <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#" onclick="changeType(0,'数据降维散点图')">数据降维散点图</a></li>
+                                            <li><a href="#" onclick="changeType(1,'单一属性类别分析')">单一属性类别分析</a></li>
+                                            <li><a href="#" onclick="changeType(2,'二维属性类别分析')">二维属性类别分析</a></li>
+                                            <li><a href="#" onclick="changeType(3,'特征相关性分析')">特征相关性分析</a></li>
+                                            <li><a href="#" onclick="changeType(6,'PCA降维三维散点图')">PCA降维三维散点图</a></li>
+                                        </ul>
+                                    </div><!-- /btn-group -->
+                                </div>
+
+                                <div class="col-sm-2" id="attribute1">
+                                    <div class="input-group-btn">
+                                        <button id="btnAttribute1" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${attributes[0]} <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <c:forEach items="${attributes}" var="name">
+                                                <li><a href="#" onclick="changeAttribute1(this)">${name}</a></li>
+                                            </c:forEach>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-2" id="attribute2">
+                                    <div class="input-group-btn">
+                                        <button id="btnAttribute2" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${attributes[0]} <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <c:forEach items="${attributes}" var="name">
+                                                <li><a href="#" onclick="changeAttribute2(this)">${name}</a></li>
+                                            </c:forEach>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <button id="submit" data-toggle="modal" data-target="#ajaxloader2" data-backdrop="static" onclick="submit()" class="btn btn-primary">查看</button>
+                            </div>
+                            <div id="echart" style="width:1000px;height: 400px;margin-top: 20px"></div>
                         </div>
                     </div>
-
-                    <div class="col-sm-2" id="attribute2">
-                        <div class="input-group-btn">
-                            <button id="btnAttribute2" type="button" class="btn btn-default dropdown-toggle"
-                                    data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">${attributes[0]} <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <c:forEach items="${attributes}" var="name">
-                                    <li><a href="javascript:;" onclick="changeAttribute2(this)">${name}</a></li>
-                                </c:forEach>
-                            </ul>
-                        </div>
+                    <div class="data_desp_title">
+                        3. 数据集下载
                     </div>
-
-                    <button id="submit" data-toggle="modal" data-target="#ajaxloader2" data-backdrop="static"
-                            onclick="submit()" class="btn btn-primary">查看
-                    </button>
+                    <div class="data_download">
+                        &nbsp;&nbsp;&nbsp;<a href="${dataset.downloadUrl}">${dataset.name}.csv</a>
+                    </div>
                 </div>
-                <div id="echart" style="width:1000px;height: 400px;margin-top: 10px"></div>
-            </div>
-            <div class="data_desp_title">
-                3. 数据集下载
-            </div>
-            <div class="data_download">
-                <a href="${dataset.downloadUrl}">${dataset.name}.csv</a>
             </div>
         </div>
     </div>
-        <c:import url="/WEB-INF/views/common/footer.jsp"/>
-    <div id="ajaxloader2" class="modal" style="display: none;margin-top: 170px;">
-        <div class="outer"></div>
-        <div class="inner"></div>
-    </div>
+</div>
+
+<div id="ajaxloader2" class="modal" style="display: none;margin-top: 170px;">
+    <div class="outer"></div>
+    <div class="inner"></div>
+</div>
 
 </body>
 <script language="JavaScript">
-    var myChart = echarts.init(document.getElementById('echart'), "dark");
+    var myChart = echarts.init(document.getElementById('echart'),"dark");
     var option = {};
     myChart.setOption(option);
     var index = 0;
-    myChart.on('click', function (param) {
-        var clone = $("#attr").clone().css("display", "inline").attr('id', param.data).attr('name', 'feature' + index).text(param.name);
+    myChart.on('click',function (param) {
+        var clone = $("#attr").clone().css("display","inline").attr('id',param.data).attr('name','feature'+index).text(param.name);
         clone.insertBefore("#attr")
         index++;
     })
@@ -130,14 +131,13 @@
     var attribute2 = 'wind_speed';
     $("#attribute1").hide();
     $("#attribute2").hide();
-
-    function changeType(a, b) {
+    function changeType(a,b) {
         type = a;
         $("#btnType").text(b);
-        if (type == 1 || type == 4) {
+        if (type==1||type==4){
             $("#attribute2").hide();
             $("#attribute1").show();
-        } else if (type == 2) {
+        }else if (type==2){
             $("#attribute2").show();
             $("#attribute1").show();
         } else {
@@ -159,26 +159,25 @@
     }
 
     function submit() {
-        var url = "/design/390/attribute/" + type + "?attribute1=" + attribute1 + "&attribute2=" + attribute2;
+        var url = "/design/390/attribute/"+type+"?attribute1="+attribute1+"&attribute2="+attribute2;
         console.error(url)
         $.ajax({
-            type: "GET",
-            url: url,
-            async: true,
-            success: function (data) {
+            type:"GET",
+            url:url,
+            async:true,
+            success:function (data) {
                 console.log(data);
                 option = $.parseJSON(data);
                 $('#ajaxloader2').modal('hide')
                 myChart.clear()
                 myChart.setOption(option);
             },
-            error: function (e) {
+            error:function (e) {
                 $('#ajaxloader2').modal('hide')
-                alert("error" + e);
+                alert("error"+e);
             }
         })
     }
-
     function easyAttribute(v) {
         attribute1 = v.textContent;
         submit()

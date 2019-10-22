@@ -22,7 +22,8 @@
 
 <div class="categoryWithCarousel">
     <c:import url="/WEB-INF/views/common/header.jsp"/>
-    <div class="col-md-6 col-md-offset-3" style="margin-top: 20px">
+    <div class="container" style="padding-top: 20px">
+       <div class="col-md-6 col-md-offset-3" style="margin-top: 20px">
         <div class="panel panel-primary">
             <div class="panel-heading"></div>
             <div class="panel-body">
@@ -72,6 +73,7 @@
                 </form>
             </div>
         </div>
+       </div>
     </div>
     <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </div>

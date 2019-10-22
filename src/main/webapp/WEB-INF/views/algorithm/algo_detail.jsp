@@ -52,7 +52,7 @@
             <div class="algo_right_container" id="algo_train">
                 <div class="algo_input_container">
                     <div class="container">
-                        <c:if test="${algorithm.type==0 || algorithm.typeId==4}" >
+                        <c:if test="${algorithm.type==0 || algorithm.id==6}" >
                             <div class="panel col-md-4" style="margin-left: 5px;width: 400px; height:200px;background-color:#F5F5F5;border: 0px ;">
                                 <div class="panel-primary panel-heading">
                                     <p align="center">${vo.feature.name}</p>
@@ -113,7 +113,7 @@
                     </div>
                 </div>
                 <div class="algo_figure_container">
-                    <c:if test="${algorithm.type==0 || algorithm.typeId==4}">
+                    <c:if test="${algorithm.type==0 || algorithm.id==6}">
                         <c:if test="${algorithm.typeId != 4}">
                             <button data-toggle="modal" data-target="#ajaxloader2" data-backdrop="static" onclick="initFeature(${vo.feature.id})" class="btn btn-primary pull-right">查看原始数据</button>
                         </c:if>
@@ -146,18 +146,17 @@
                 <hr>
             </div>
         </div>
-
     </div>
+
 </div>
 
 <div id="ajaxloader2" class="modal" style="display: none;margin-top: 170px;">
     <div class="outer"></div>
     <div class="inner"></div>
 </div>
-
-
-<c:import url="/WEB-INF/views/common/footer.jsp"/>
 </body>
+
+
 <script language="JavaScript">
     var myChart = echarts.init(document.getElementById('echart'),"dark");
     var option = {};

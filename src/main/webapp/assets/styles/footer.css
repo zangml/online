@@ -3,6 +3,7 @@
     height: 220px;
     background: #333333;
     text-align: center;
+    margin-bottom: 0px;
 }
 .footer_container>p{
     height: 30px;
