@@ -9,7 +9,7 @@ a,a:link,a:focus,a:hover,a:visited{
 .algo_container{
   height: 400px;
   width: 1000px;
-  margin: 50px auto;
+  margin: 80px auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -259,3 +259,11 @@ a,a:link,a:focus,a:hover,a:visited{
   border-bottom: 1px solid #333;
 }
 /*算法代码结束*/
+/*算法上传页面开始*/
+.upload_algo_container{
+  padding-top: 60px;
+  padding-bottom: 60px;
+  width: 1170px;
+  margin: 0 auto;
+}
+/*算法上传页面结束*/

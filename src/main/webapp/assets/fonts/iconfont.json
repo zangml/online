@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "216536",
+      "name": "个人资料",
+      "font_class": "gerenziliao",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "718287",
+      "name": "设计",
+      "font_class": "sheji",
+      "unicode": "e6cd",
+      "unicode_decimal": 59085
+    },
+    {
       "icon_id": "2028110",
       "name": "注册",
       "font_class": "zhuce",
@@ -25,6 +39,13 @@
       "font_class": "hao",
       "unicode": "e508",
       "unicode_decimal": 58632
+    },
+    {
+      "icon_id": "7269452",
+      "name": "完成",
+      "font_class": "wancheng",
+      "unicode": "e609",
+      "unicode_decimal": 58889
     },
     {
       "icon_id": "7803110",

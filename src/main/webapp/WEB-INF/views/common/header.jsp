@@ -40,8 +40,8 @@
     <c:choose>
         <c:when test="${sessionScope.get('user') == null}">
             <span class="login_container">
-                <a href="/goReg" class="iconfont icon-zhuce">注册</a>
-                <a href="/goLog" class="iconfont icon-denglu">登录</a>
+                <a href="/goReg" class="iconfont icon-zhuce">&nbsp;注册</a>
+                <a href="/goLog" class="iconfont icon-denglu">&nbsp;登录</a>
             </span>
         </c:when>
         <c:otherwise>

@@ -49,7 +49,7 @@
             </div>
         </div>
     </div>
-    <%--<c:import url="/WEB-INF/views/common/footer.jsp"/>--%>
+    <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </div>
 </body>
 </html>

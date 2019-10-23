@@ -343,23 +343,6 @@
     div.divcss5_content_top2 a:hover{
         color: white;
     }
-    ul {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-        overflow: hidden;
-        background-color: rgb(245,245,245);
-        border-bottom: 2px solid rgb(71,177,136);
-    }
-    ul > li {
-        float: left;
-    }
-    ul a {
-        display: block;
-        padding: 20px;
-        color: black;
-        text-decoration: none;
-    }
     .dropdown {
         display: inline-block;
         position: absolute;  /*此容器如果相对定位的话，不显示下拉内容。设成绝对定位或不定位就可以，不知道原因。*/

@@ -22,54 +22,56 @@
 
 <div class="categoryWithCarousel">
     <c:import url="/WEB-INF/views/common/header.jsp"/>
-    <div class="col-md-6 col-md-offset-3" style="margin-top: 20px">
-        <div class="panel panel-primary">
-            <div class="panel-heading"></div>
-            <div class="panel-body">
-                <form class="form-horizontal" role="form" action="/data/upload" method="post"
-                      enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="labName" class="col-sm-2 control-label">数据集名称</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="name" class="form-control" id="labName" placeholder="请输入数据集名称">
+    <div class="container" style="padding-top: 30px;padding-bottom: 30px">
+        <div class="col-md-6 col-md-offset-3" style="width: 650px">
+            <div class="panel panel-primary">
+                <div class="panel-heading"></div>
+                <div class="panel-body">
+                    <form class="form-horizontal" role="form" action="/data/upload" method="post"
+                          enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="labName" class="col-sm-2 control-label labname">数据集名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="name" class="form-control" id="labName" placeholder="请输入数据集名称">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="labDes" class="col-sm-2 control-label">背景介绍</label>
-                        <div class="col-sm-10">
+                        <div class="form-group">
+                            <label for="labDes" class="col-sm-2 control-label">背景介绍</label>
+                            <div class="col-sm-10">
                                 <textarea rows="5" name="problem" class="form-control" id="labDes"
                                           placeholder="请输入背景介绍"></textarea>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="labDes" class="col-sm-2 control-label">数据描述</label>
-                        <div class="col-sm-10">
+                        <div class="form-group">
+                            <label for="labDes" class="col-sm-2 control-label">数据描述</label>
+                            <div class="col-sm-10">
                                 <textarea rows="3" name="desc" class="form-control" id="labAim"
                                           placeholder="请输入数据描述"></textarea>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="labFile" class="col-sm-2 control-label ">上传文件</label>
-                        <div class="col-sm-10">
-                            <input type="file" name="file" id="labFile" accept=".csv,.arff">
-                        </div>
-                        <div class="col-sm-10 col-sm-offset-2">
-                            <p class="help-block">实验文件只支持csv格式，默认最后一列为类属性。csv文件的第一行必须为属性名称。</p>
+                        <div class="form-group">
+                            <label for="labFile" class="col-sm-2 control-label ">上传文件</label>
+                            <div class="col-sm-10">
+                                <input type="file" name="file" id="labFile" accept=".csv,.arff">
+                            </div>
+                            <div class="col-sm-10 col-sm-offset-2">
+                                <p class="help-block">实验文件只支持csv格式，默认最后一列为类属性。csv文件的第一行必须为属性名称。</p>
+                            </div>
+
                         </div>
 
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label ">标签类型</label>
-                        <div class="col-sm-10" style="margin-top: 5px">
-                            <label><input name="type" type="radio" checked="true" value="1"/> 标称型 </label>
-                            <label><input name="type" type="radio" value="0"/> 数值型 </label>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label ">标签类型</label>
+                            <div class="col-sm-10" style="margin-top: 5px">
+                                <label><input name="type" type="radio" checked="true" value="1"/> 标称型 </label>
+                                <label><input name="type" type="radio" value="0"/> 数值型 </label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="button_container">
-                        <button type="submit" class="btn btn-primary btnSub">上传数据</button>
-                    </div>
-                </form>
+                        <div class="button_container">
+                            <button type="submit" class="btn btn-primary btnSub">上传数据</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

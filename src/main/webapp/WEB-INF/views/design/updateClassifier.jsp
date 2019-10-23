@@ -14,29 +14,29 @@
     <link href="http://how2j.cn/study/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
     <script src="http://how2j.cn/study/js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <link href="<%=basePath%>assets/styles/lab_detail.css" rel="stylesheet">
+    <link href="<%=basePath%>assets/css/algorithm.css" rel="stylesheet">
     <title>上传算法</title>
 </head>
 <body>
 <div class="categoryWithCarousel">
-    <div class="headbar"  >
-        <div class="head ">
-            <!--<span class="glyphicon glyphicon-th-list" style="margin-left:10px"></span> -->
-            <span style="margin-left:10px" ><a href="/">返回主页</a></span>
-        </div>
-        <div class="rightMenu">
+    <%--<div class="headbar"  >--%>
+        <%--<div class="head ">--%>
+            <%--<!--<span class="glyphicon glyphicon-th-list" style="margin-left:10px"></span> -->--%>
+            <%--<span style="margin-left:10px" ><a href="/">返回主页</a></span>--%>
+        <%--</div>--%>
+        <%--<div class="rightMenu">--%>
 
-                <span >
-                <a>
-                    上传算法
-                </a></span>
+                <%--<span >--%>
+                <%--<a>--%>
+                    <%--上传算法--%>
+                <%--</a></span>--%>
 
-        </div>
-    </div>
-
-
-    <br>
-    <div class="container">
-        <div class="col-md-8 col-md-offset-2">
+        <%--</div>--%>
+    <%--</div>--%>
+    <%--<br>--%>
+        <c:import url="/WEB-INF/views/common/header.jsp"/>
+        <div class="upload_algo_container">
+        <div class="col-md-8 col-md-offset-2" style="float:none;">
             <div class="panel panel-primary">
                 <div class="panel-heading"></div>
                 <div class="panel-body">
@@ -70,7 +70,7 @@
                             </div>
                         </div>
                         <dev class="form-group">
-                            <label class="control-label ">算法参数</label>
+                            <label class="control-label col-sm-2">算法参数</label>
                             <div id="param" class="panel  col-sm-offset-2" style="display: none">
                                 <input type="text" name="paramName" style="width: 120px;display:inline" class="form-control"placeholder="参数名">
                                 <input type="text" name="paramDes" style="width: 120px;display:inline;" class="form-control"placeholder="参数描述">
@@ -81,8 +81,8 @@
 
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-6">
-                                <button type="submit" class="btn btn-primary">上传算法</button>
                                 <button type="button" onclick="addParam()" class="btn btn-success">添加参数</button>
+                                <button type="submit" class="btn btn-primary" style="margin-left: 100px">上传算法</button>
                             </div>
                         </div>
                     </form>
@@ -91,6 +91,7 @@
             </div>
         </div>
     </div>
+    <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </div>
 <script>
     $(function () {

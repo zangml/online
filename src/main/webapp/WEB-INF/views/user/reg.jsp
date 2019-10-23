@@ -24,7 +24,9 @@
 <div class="index-main">
     <div class="index-main-body">
         <div class="index-header">
-            <h1 class="logo hide-text"><img src="assets/images/res/nk.png" alt=""></h1>
+            <h1 class="logo hide-text">
+                <img src="../../../static/images/mrtx.png" style="height: 60px;" alt="">
+            </h1>
             <h2 class="subtitle">
                 ${msg}
             </h2>

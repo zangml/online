@@ -26,43 +26,6 @@
         color:rgb(135,135,135);
         border-top:1px solid #555555;
     }
-    div.categoryWithCarousel{
-        width: 100%;
-        position:relative;
-    }
-    div.categoryWithCarousel div.headbar{
-        background-color: rgb(48,54,69);
-        height: 60px;
-        width: 100%;
-    }
-    div.categoryWithCarousel div.head{
-        width: 250px;
-        background-color: rgb(48,54,69);
-        height: 60px;
-        line-height: 60px;
-        font-size: 25px;
-        font-weight: bold;
-        margin-left: 00px;
-        margin-right: 30px;
-        display: inline-block;
-    }
-    div.categoryWithCarousel div.head a{
-        color: rgb(113,177,194);
-    }
-    div.categoryWithCarousel div.rightMenu{
-        display: inline-block;
-    }
-    div.categoryWithCarousel div.rightMenu a{
-        font-size: 16px;
-        color: rgb(163,166,174);
-        text-decoration:none;
-    }
-    div.categoryWithCarousel div.rightMenu a:hover{
-        font-size: 16px;
-        color: rgb(163,166,174);
-        text-decoration:none;
-        color: white;
-    }
 
     #a1{
         font-size: 16px;
