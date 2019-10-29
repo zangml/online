@@ -2,9 +2,11 @@ package com.koala.learn.dao;
 
 import com.koala.learn.entity.Blog;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface BlogMapper {
     long save(Blog blog);
     int deleteById(Long id);

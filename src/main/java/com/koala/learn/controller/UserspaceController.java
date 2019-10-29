@@ -68,7 +68,7 @@ public class UserspaceController {
 	
 	@GetMapping("/{username}")
 	public String userSpace(@PathVariable("username") String username, Model model) {
-		System.out.println("调用了/u/"+username+" *************************");
+//		System.out.println("调用了/u/"+username+" *************************");
 		User user = userMapper.selectByUsername(username);
 		model.addAttribute("user", user);
 		return "redirect:/u/" + username + "/blogs";
@@ -161,17 +161,17 @@ public class UserspaceController {
 	 * @param
 	 * @return
 	 */
-//	@PostMapping("/{username}/avatar")
-////	@PreAuthorize("authentication.name.equals(#username)")
-//	public ResponseEntity<Response> saveAvatar(@PathVariable("username") String username, @RequestBody User user) {
-//		if(!holder.getUser().getUsername().equals(username)){
-//			return ResponseEntity.ok().body(new Response(false, "无权限"));
-//		}
-//		String avatarUrl = user.getAvatar();
-//
-//		User originalUser = userMapper.selectByPrimaryKey(user.getId());
-//		originalUser.setAvatar(avatarUrl);
-//		userMapper.updateByPrimaryKeySelective(originalUser);
+	@PostMapping("/{username}/avatar")
+//	@PreAuthorize("authentication.name.equals(#username)")
+	public ResponseEntity<Response> saveAvatar(@PathVariable("username") String username, @RequestBody User user) {
+		if(!holder.getUser().getUsername().equals(username)){
+			return ResponseEntity.ok().body(new Response(false, "无权限"));
+		}
+		String avatarUrl = user.getAvatar();
+
+		User originalUser = userMapper.selectByPrimaryKey(user.getId());
+		originalUser.setAvatar(avatarUrl);
+		userMapper.updateByPrimaryKeySelective(originalUser);
 //		try{
 //			List<Blog> blogList= blogMapper.findByUserId(originalUser.getId());
 //			for(Blog blog:blogList){
@@ -186,9 +186,9 @@ public class UserspaceController {
 //		}catch (Exception e){
 //			e.printStackTrace();
 //		}
-//		return ResponseEntity.ok().body(new Response(true, "处理成功", avatarUrl));
-//	}
-//
+		return ResponseEntity.ok().body(new Response(true, "处理成功", avatarUrl));
+	}
+
 	
 	@GetMapping("/{username}/blogs")
 	public String listBlogsByOrder(@PathVariable("username") String username,

@@ -23,6 +23,7 @@ import weka.core.converters.ArffSaver;
  * Created by koala on 2018/1/15.
  */
 public class RangeDivider implements IDivider {
+
     @Override
     public void divide(File src, Map<String, String> param) {
         if(src.getAbsolutePath().endsWith("csv")){
@@ -88,7 +89,7 @@ public class RangeDivider implements IDivider {
             key = RedisKeyUtil.getDividerOutKey(Integer.valueOf(param.get("labId")),-1);
         }
         System.out.println(key);
-        Jedis jedis = new Jedis("redis://localhost:6379/");
+        Jedis jedis = new Jedis("redis://188.131.184.204:6379/");
         jedis.auth("LvPeng0218");
         jedis.hset(key,"train",trainFile.getAbsolutePath());
         jedis.hset(key,"test",testFile.getAbsolutePath());

@@ -2,7 +2,9 @@ package com.koala.learn.dao;
 
 import com.koala.learn.entity.WxUser;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface WxUserMapper {
 
     int deleteByPrimaryKey(Integer id);

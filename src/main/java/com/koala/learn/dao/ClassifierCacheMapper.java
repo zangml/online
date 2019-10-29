@@ -1,7 +1,9 @@
 package com.koala.learn.dao;
 
 import com.koala.learn.entity.ClassifierCache;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ClassifierCacheMapper {
     int deleteByPrimaryKey(Integer id);
 

@@ -10,16 +10,17 @@ import java.io.InputStreamReader;
 public class PythonUtils {
     public static String execPy(String py){
         StringBuilder sb = new StringBuilder();
-        Process process = null;
+        Process process;
         try {
             process = Runtime.getRuntime().exec(py);
-            //process.waitFor();
             BufferedReader stdOut=new BufferedReader(new InputStreamReader(process.getInputStream()));
             String s;
             while((s=stdOut.readLine())!=null){
                 sb.append(s);
             }
-        } catch (IOException e) {
+            stdOut.close();
+            process.waitFor();
+        } catch (IOException | InterruptedException e) {
             sb.append(e.getMessage());
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -34,6 +35,5 @@ public class PythonUtils {
         System.out.println(out);
     }
 }
-     //PHM领域的算法 封装成模型 结合具体问题进行尝试；
 
 

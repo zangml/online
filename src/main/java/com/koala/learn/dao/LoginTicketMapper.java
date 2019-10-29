@@ -3,7 +3,9 @@ package com.koala.learn.dao;
 import com.koala.learn.entity.LoginTicket;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface LoginTicketMapper {
     int deleteByPrimaryKey(Integer id);
 

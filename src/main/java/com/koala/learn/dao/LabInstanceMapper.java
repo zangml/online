@@ -2,9 +2,10 @@ package com.koala.learn.dao;
 
 import com.koala.learn.entity.LabInstance;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface LabInstanceMapper {
     int deleteByPrimaryKey(Integer id);
 

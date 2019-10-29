@@ -41,7 +41,7 @@ public class JedisAdapter implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        pool = new JedisPool();
+        pool = new JedisPool("188.131.184.204",6379);
     }
 
     public long sadd(String key, String value) {
@@ -405,7 +405,7 @@ public class JedisAdapter implements InitializingBean {
         config.setMaxTotal(MAX_ACTIVE);
         config.setMaxIdle(MAX_IDLE);
         config.setMaxWaitMillis(MAX_WAIT);
-        JedisPool pool = new JedisPool(config, "127.0.0.1", 6379, TIMEOUT, "123456");
+        JedisPool pool = new JedisPool(config, "188.131.184.204", 6379, TIMEOUT, "LvPeng0218");
         pool.getResource().set("aaa","111");
         System.out.println(pool.getResource().get("aaa"));
     }

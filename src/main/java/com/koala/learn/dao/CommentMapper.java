@@ -3,9 +3,11 @@ package com.koala.learn.dao;
 import com.koala.learn.entity.Comment;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface CommentMapper {
     int deleteByPrimaryKey(Integer id);
 

@@ -1,9 +1,10 @@
 package com.koala.learn.dao;
 
 import com.koala.learn.entity.GroupInstance;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface GroupInstanceMapper {
     int deleteByPrimaryKey(Integer id);
 

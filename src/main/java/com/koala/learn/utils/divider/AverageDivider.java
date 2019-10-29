@@ -23,6 +23,7 @@ import weka.core.converters.CSVLoader;
  * Created by koala on 2018/1/15.
  */
 public class AverageDivider implements IDivider {
+
     @Override
     public void divide(File src, Map<String, String> param) {
         if(src.getAbsolutePath().endsWith("csv")){
@@ -79,7 +80,7 @@ public class AverageDivider implements IDivider {
         }else {
             key = RedisKeyUtil.getDividerOutKey(Integer.valueOf(param.get("labId")),-1);
         }
-        Jedis jedis = new Jedis("redis://localhost:6379/");
+        Jedis jedis = new Jedis("redis://188.131.184.204:6379/");
         jedis.auth("LvPeng0218");
         System.out.println(key);
         jedis.hset(key,"train",trainFile.getAbsolutePath());

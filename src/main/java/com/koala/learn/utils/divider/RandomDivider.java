@@ -8,8 +8,11 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import com.koala.learn.component.JedisAdapter;
 import com.koala.learn.utils.RedisKeyUtil;
 import com.koala.learn.utils.WekaUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader;
@@ -18,7 +21,9 @@ import weka.core.converters.ArffSaver;
 /**
  * Created by koala on 2018/1/15.
  */
+@Service
 public class RandomDivider implements IDivider {
+
     @Override
     public void divide(File src, Map<String, String> param) {
         if(src.getAbsolutePath().endsWith("csv")){
@@ -73,7 +78,7 @@ public class RandomDivider implements IDivider {
             key = RedisKeyUtil.getDividerOutKey(Integer.valueOf(param.get("labId")),-1);
         }
         System.out.println(key);
-        Jedis jedis = new Jedis("redis://localhost:6379/");
+        Jedis jedis = new Jedis("redis://188.131.184.204:6379/");
         jedis.auth("LvPeng0218");
         jedis.hset(key,"train",trainFile.getAbsolutePath());
         jedis.hset(key,"test",testFile.getAbsolutePath());
