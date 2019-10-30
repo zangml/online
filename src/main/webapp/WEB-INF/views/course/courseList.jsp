@@ -18,6 +18,7 @@
     <link href="<%=basePath%>assets/styles/course.css" rel="stylesheet">
     <link href="<%=basePath%>assets/css/bootstrap-directional-buttons.css" rel="stylesheet">
     <link href="<%=basePath%>assets/css/htmleaf-demo.css" rel="stylesheet">
+    <link href="<%=basePath%>assets/styles/footer.css" rel="stylesheet">
     <title>基于机器学习的PHM系统</title>
 </head>
 
@@ -69,6 +70,12 @@
             </div>
         </div>
     </div>
-    <c:import url="/WEB-INF/views/common/footer.jsp"/>
+    <%--<c:import url="/WEB-INF/views/common/footer.jsp"/>--%>
+</div>
+<div class="footer_container" style="height: 240px;">
+    <p>微信小程序链接</p>
+    <img src="../../../static/images/wx.jpg">
+    <p>Copyright © 2019 工业互联网在线实验平台 All Rights Reserved.</p>
+    <p> © 京ICP备19015152号-1</p>
 </div>
 </html>

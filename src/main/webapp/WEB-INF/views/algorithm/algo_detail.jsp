@@ -138,6 +138,9 @@
     </div>
     <hr style="margin: 10px 0">
     <div class="article_container">
+        <div class="algo_title">
+            <h2>算法代码</h2>
+        </div>
         <article class="post-content">
             ${blog.htmlContent}
         </article>
