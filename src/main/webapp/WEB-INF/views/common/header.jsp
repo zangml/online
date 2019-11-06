@@ -39,17 +39,38 @@
     </ul>
     <c:choose>
         <c:when test="${sessionScope.get('user') == null}">
+            <div class="userContainer">
+        <span class='userInfo'>
+            <a href="/goLog" style="display: inline-block;height: 100%;width: 100%">
+            <img src="../../../static/images/info.png" title="消息通知">
+            <span style="display: none"/>
+            </a>
+        </span>
+            </div>
             <span class="login_container">
                 <a href="/goReg" class="iconfont icon-zhuce">&nbsp;注册</a>
                 <a href="/goLog" class="iconfont icon-denglu">&nbsp;登录</a>
             </span>
         </c:when>
         <c:otherwise>
+            <div class="userContainer">
+        <span class='userInfo'>
+            <a href="/user/info" style="display: inline-block;height: 100%;width: 100%">
+            <img src="../../../static/images/info.png" title="消息通知">
+                <%--判断该用户的未读消息数：如果未读消息数为0，不显示span。否则显示span--%>
+                <%--<c:when test="${sessionScope.get('Message.hasRead') == 0}">--%>
+                    <%--<span/>--%>
+                <%--</c:when>--%>
+            </a>
+        </span>
+            </div>
             <span class="login_container">
-                <a href="/user/mydata" class="iconfont icon-touxiang" style="font-size: 22px;">&nbsp;&nbsp;${user.username}</a>
+                <a href="/user/mydata" class="iconfont icon-touxiang"
+                   style="font-size: 22px;">&nbsp;&nbsp;${user.username}</a>
             </span>
         </c:otherwise>
     </c:choose>
+
 </div>
 </body>
 </html>

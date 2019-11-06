@@ -16,6 +16,7 @@
     <title>基于机器学习的PHM系统</title>
     <link href="<%=basePath%>assets/fonts/iconfont.css" rel="stylesheet">
     <link href="<%=basePath%>assets/css/user.css" rel="stylesheet">
+    <script src="../../../static/js/userInfos/userInfo.js"></script>
 </head>
 <body>
 <div class="categoryWithCarousel">
@@ -33,9 +34,10 @@
                 </div>
                 <div class="user_list_container">
                     <ul>
-                        <li><a href="/user/labs" class="iconfont icon-wancheng" style="background: #f7f7f7"> 我完成的实验</a></li>
+                        <li><a href="/user/labs" class="iconfont icon-wancheng current"> 我完成的实验</a></li>
                         <li><a href="/user/design" class="iconfont icon-sheji"> 我设计的实验</a></li>
-                        <li><a href="/user/mydata"  class="iconfont icon-gerenziliao"> 我的个人资料</a></li>
+                        <li><a href="/user/mydata" class="iconfont icon-gerenziliao"> 我的个人资料</a></li>
+                        <li><a href="/user/info" class="iconfont icon-xiaoxitishi"> 我的消息通知</a></li>
                     </ul>
                 </div>
             </div>

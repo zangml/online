@@ -37,55 +37,51 @@
                 <ul>
                     <li><a href="/user/labs" class="iconfont icon-wancheng"> 我完成的实验</a></li>
                     <li><a href="/user/design" class="iconfont icon-sheji"> 我设计的实验</a></li>
-                    <li><a href="/user/mydata" class="iconfont icon-gerenziliao current"> 我的个人资料</a></li>
+                    <li><a href="/user/mydata" class="iconfont icon-gerenziliao"> 我的个人资料</a></li>
                     <li><a href="/user/info" class="iconfont icon-xiaoxitishi"> 我的消息通知</a></li>
                 </ul>
             </div>
         </div>
         <div class="user_right_container">
 
-            <div class="titleContainer">
-                <strong>基本信息</strong>
-                <a href="/logout" class="btn btn-danger pull-right">退出登录</a>
-                <a href="/user/editdata" class="btn pull-right"
-                   style="background: rgb(71,177,136);color: white;margin-right: 20px">编辑资料</a>
+            <div class="titleContainer" style="display: flex;justify-content: space-between;box-sizing: border-box;padding: 10px 0;">
+                <strong>消息通知</strong>
+                <c ></c>
+                <span style="margin-right: 20px">未读消息：${Message.hasRead}</span>
             </div>
-            <div class="information">
-                我的昵称：${user.username}
+            <div class="messageContainer">
+                <%--点击标题跳转到实验结果响应页--%>
+                <p class="mesTitle"><a href="#">标题标题标题</a></p>
+                <p class="mesContent">内容内容内容</p>
             </div>
+            <div class="messageContainer">
+                <p class="mesTitle"><a href="#">标题标题标题</a></p>
+                <p class="mesContent">内容内容内容</p>
+            </div>
+            <div class="messageContainer">
+                <p class="mesTitle"><a href="#">标题标题标题</a></p>
+                <p class="mesContent">内容内容内容</p>
+            </div>
+            <div class="messageContainer">
+                <p class="mesTitle"><a href="#">标题标题标题</a></p>
+                <p class="mesContent">内容内容内容</p>
+            </div>
+            <div class="messageContainer">
+                <p class="mesTitle"><a href="#">标题标题标题</a></p>
+                <p class="mesContent">内容内容内容</p>
+            </div>
+            <div class="messageContainer">
+                <p class="mesTitle"><a href="#">标题标题标题</a></p>
+                <p class="mesContent">内容内容内容</p>
+            </div>
+            <%--<c:forEach items="${Message}" var ='message'>--%>
+                <%----%>
+            <%--</c:forEach>--%>
 
-            <div class="information">
-                真实姓名：${user.relname}
-            </div>
-            <div class="information">
-                我的性别：
-                <c:choose>
-                    <c:when test="${user.sex == 0}">
-                        女
-                    </c:when>
-                    <c:otherwise>
-                        男
-                    </c:otherwise>
-                </c:choose>
-            </div>
-
-            <div class="information">
-                我的学校：${user.school}
-            </div>
-            <div class="information">
-                我的班级：${user.classId}
-            </div>
-
-            <div class="information">
-                我的学号：${user.studentId}
-            </div>
-
-            <div class="information">
-                我的年级：${user.grade}
-            </div>
         </div>
     </div>
     <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </div>
 </body>
 </html>
+

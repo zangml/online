@@ -16,6 +16,7 @@
     <title>基于机器学习的PHM系统</title>
     <link href="<%=basePath%>assets/fonts/iconfont.css" rel="stylesheet">
     <link href="<%=basePath%>assets/css/user.css" rel="stylesheet">
+    <script src="../../../static/js/userInfos/userInfo.js"></script>
 </head>
 <body>
 <div class="categoryWithCarousel">
@@ -26,7 +27,7 @@
                 <p class='user_tx'>
                     <a href="#" style="display: inline-block;height: 100%;width: 100%;border-radius: 50%">
                         <img src="../../../static/images/camera.png" alt="" class="avatar">
-                        <input type="file" />
+                        <input type="file"/>
                     </a>
                 </p>
                 <p class='user_name'>${user.username}</p>
@@ -34,8 +35,9 @@
             <div class="user_list_container">
                 <ul>
                     <li><a href="/user/labs" class="iconfont icon-wancheng"> 我完成的实验</a></li>
-                    <li><a href="/user/design" class="iconfont icon-sheji" style="background: #f7f7f7"> 我设计的实验</a></li>
+                    <li><a href="/user/design" class="iconfont icon-sheji current"> 我设计的实验</a></li>
                     <li><a href="/user/mydata" class="iconfont icon-gerenziliao"> 我的个人资料</a></li>
+                    <li><a href="/user/info" class="iconfont icon-xiaoxitishi"> 我的消息通知</a></li>
                 </ul>
             </div>
         </div>
@@ -44,7 +46,7 @@
                 <div class="productItem">
                     <div class="productItem_pic">
                         <a onclick="changeType(${vo.labId},'${vo.url}')">
-                            <img src="../../../static/images/lab.jpg"  >
+                            <img src="../../../static/images/lab.jpg">
                         </a>
                         <div class="subscript">${vo.finishText}</div>
                     </div>

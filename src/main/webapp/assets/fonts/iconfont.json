@@ -13,6 +13,13 @@
       "unicode_decimal": 58896
     },
     {
+      "icon_id": "457662",
+      "name": "消息提示",
+      "font_class": "xiaoxitishi",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
       "icon_id": "718287",
       "name": "设计",
       "font_class": "sheji",

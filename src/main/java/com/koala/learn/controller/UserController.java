@@ -149,6 +149,11 @@ public class UserController {
         return "views/user/mydata";
     }
 
+    @RequestMapping("/user/info")
+    public String goUserInfo() {
+        return "views/user/info";
+    }
+
     @RequestMapping(path = {"/logout"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String logout(@CookieValue("ticket") String ticket, HttpSession session) {
         mUserService.logout(ticket);
