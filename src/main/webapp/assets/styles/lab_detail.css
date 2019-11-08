@@ -175,6 +175,11 @@ div.carouselBackgroundDiv{
     border-bottom: 1px solid rgb(213,213,213);
     float: left;
 }
+.task_result{
+    width: 100%;
+    border-bottom: 1px solid rgb(213,213,213);
+    float: left;
+}
 .number{
     color: rgb(117,117,117);
     font-size: 28px;

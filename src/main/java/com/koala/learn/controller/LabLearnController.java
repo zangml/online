@@ -8,6 +8,7 @@ import com.koala.learn.entity.*;
 import com.koala.learn.service.LabDesignerService;
 import com.koala.learn.service.LabService;
 import com.koala.learn.service.LabLearnService;
+import com.koala.learn.service.MQSender;
 import com.koala.learn.utils.RedisKeyUtil;
 import com.koala.learn.utils.treat.ViewUtils;
 import com.koala.learn.vo.FeatureVo;
@@ -75,6 +76,9 @@ public class LabLearnController {
 
     @Autowired
     JedisAdapter mAdapter;
+
+    @Autowired
+    MQSender mqSender;
     private static Logger logger = LoggerFactory.getLogger(LabLearnController.class);
 
     @RequestMapping("/learn/create/{groupInstance}/{labId}")
@@ -143,22 +147,32 @@ public class LabLearnController {
         model.addAttribute("lab", lab);
         model.addAttribute("instance", instanceId);
         model.addAttribute("des", mJedisAdapter.get(RedisKeyUtil.getClassifierDesKey(labId)));
-        if(lab.getLableType()==1) {
+        if (lab.getLableType()==1) {//分类实验
             List<Classifier> classifierList = mLabService.getClassifier(1);
+            List<Classifier> DLClassifierList=mLabService.getClassifier(3);
             for (Classifier classifier : classifierList) {
                 List<ClassifierParam> paramList = mLabService.getParamByClassifierId(classifier.getId());
                 classifier.setParams(paramList);
             }
-            System.out.println(lab.getLableType());
-            model.addAttribute("classifierList", classifierList);
-        }else if(lab.getLableType()==0) {
-            List<Classifier> classifierList = mLabService.getClassifier(0);
-            for (Classifier classifier : classifierList) {
+            for(Classifier classifier : DLClassifierList){
                 List<ClassifierParam> paramList = mLabService.getParamByClassifierId(classifier.getId());
                 classifier.setParams(paramList);
             }
-            System.out.println(lab.getLableType());
             model.addAttribute("classifierList", classifierList);
+            model.addAttribute("DLClassifierList", DLClassifierList);
+        }else if(lab.getLableType()==0){//回归实验
+            List<Classifier> MLClassifierList = mLabService.getClassifier(0);
+            List<Classifier> DLClassifierList=mLabService.getClassifier(4);
+            for (Classifier classifier : MLClassifierList) {
+                List<ClassifierParam> paramList = mLabService.getParamByClassifierId(classifier.getId());
+                classifier.setParams(paramList);
+            }
+            for (Classifier classifier : DLClassifierList) {
+                List<ClassifierParam> paramList = mLabService.getParamByClassifierId(classifier.getId());
+                classifier.setParams(paramList);
+            }
+            model.addAttribute("classifierList", MLClassifierList);
+            model.addAttribute("DLClassifierList", DLClassifierList);
         }
 
         model.addAttribute("selectedClassifiers", mLabLearnService.getSelectedClassifier(labId, instanceId));
@@ -189,13 +203,49 @@ public class LabLearnController {
             model.addAttribute("error", "未选择算法");
             return "views/common/error";
         } else {
+            int labState=0;
             Lab lab = mLabMapper.selectByPrimaryKey(labId);
             List<String> classifierList = mJedisAdapter.lrange(classifierKey, 0, mJedisAdapter.llen(classifierKey));
             List<List<String>> res = new ArrayList<>();
-            if (lab.getLableType() == 1) {
+            if (lab.getLableType().equals(1)) {
                 res.add(Arrays.asList("算法", "召回率", "准确率", "精确率", "F-Measure", "ROC-Area"));
-            } else {
+            } else if(lab.getLableType().equals(0)) {
                 res.add(Arrays.asList("算法", "可释方差值", "平均绝对误差", "均方根误差", "中值绝对误差", "R方值"));
+            }
+            for(String str:classifierList){
+                Classifier classifier = mGson.fromJson(str, Classifier.class);
+                if(classifier.getLabId().equals(3) || classifier.getLabId().equals(4)){
+                    String dividerOutKey = RedisKeyUtil.getDividerOutKey(labId,instanceId);
+                    File train = new File(mJedisAdapter.hget(dividerOutKey,"train"));
+                    String cacheKye = RedisKeyUtil.getCacheKey(labId,train.getAbsolutePath(),classifier.getName()+str.hashCode());
+                    String cacheValue = mJedisAdapter.get(cacheKye);
+                    if(cacheValue==null){
+                        DeepLearningMessage message=new DeepLearningMessage();
+                        message.setClassifierList(classifierList);
+                        message.setInstanceId(instanceId);
+                        message.setLabId(labId);
+                        message.setUserId(mHolder.getUser().getId());
+                        message.setDate(new Date());
+                        message.setLabType(lab.getLableType());
+                        mqSender.sendLabMessage(message);
+//                        model.addAttribute("error","您选择的算法包含深度学习算法，正在为您加紧训练中，训练完成后会以站内信的形式通知您，请注意查收~");
+                        res.add(Arrays.asList(classifier.getName(),null,null,null,null,null));
+                        model.addAttribute("res", res);
+                        model.addAttribute("labState",labState);
+                        model.addAttribute("options",new EchatsOptions());
+                        List<String> classifierNameList = new ArrayList<>();
+                        classifierNameList.add("快速特征选择");
+                        model.addAttribute("classNames",classifierNameList);
+                        model.addAttribute("lab", mLabMapper.selectByPrimaryKey(labId));
+                        LabInstance labInstance = mLabInstanceMapper.selectByPrimaryKey(instanceId);
+                        GroupInstance groupInstance = groupInstanceMapper.selectByPrimaryKey(labInstance.getGroupInstanceId());
+                        model.addAttribute("labId",labId);
+                        model.addAttribute("instanceId",instanceId);
+                        model.addAttribute("groupInstanceId", groupInstance.getId());
+                        model.addAttribute("groupId", groupInstance.getGroupId());
+                        return "views/learn/lab_5";
+                    }
+                }
             }
             List<String> echatsOptions = new ArrayList<>();
             List<String> classifierNameList = new ArrayList<>();
@@ -278,17 +328,20 @@ public class LabLearnController {
 
             LabInstance labInstance = mLabInstanceMapper.selectByPrimaryKey(instanceId);
             GroupInstance groupInstance = groupInstanceMapper.selectByPrimaryKey(labInstance.getGroupInstanceId());
+            model.addAttribute("labId",labId);
+            model.addAttribute("instanceId",instanceId);
             model.addAttribute("groupInstanceId", groupInstance.getId());
             model.addAttribute("groupId", groupInstance.getGroupId());
             if (res != null) {
                 LabInstance instances = mLabInstanceMapper.selectByPrimaryKey(instanceId);
                 instances.setResult(1);
+                labState=1;
                 mLabInstanceMapper.updateByPrimaryKey(instances);
                 model.addAttribute("res", res);
-                instances.setResult(1);
                 model.addAttribute("options",echatsOptions);
                 model.addAttribute("classNames", classifierNameList);
                 model.addAttribute("lab", mLabMapper.selectByPrimaryKey(labId));
+                model.addAttribute("labState", labState);
                 return "views/learn/lab_5";
             } else {
                 model.addAttribute("error", "训练失败");

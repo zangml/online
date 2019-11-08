@@ -24,6 +24,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,12 +41,14 @@ import weka.core.converters.ArffLoader;
  * Created by koala on 2018/1/16.
  */
 @Service
-public class LabLearnService {
+public class LabLearnService implements Serializable {
 
     @Autowired
     JedisAdapter mJedisAdapter;
+
     @Autowired
     Gson mGson;
+
     @Autowired
     FeatureParamMapper mFeatureParamMapper;
 
@@ -85,9 +88,7 @@ public class LabLearnService {
         return attributeList;
     }
 
-    public void addFeature(HttpSession session, Lab lab, Feature feature, Map<String,String> map, LabInstance instance) throws IOException, BeansException {
-        String featureKey = RedisKeyUtil.getFeatureInstanceKey(lab.getId(),instance.getId());
-        System.out.println(featureKey);
+    public void addFeature(HttpSession session, Lab lab, Feature feature,Integer featureType, Map<String,String> map, LabInstance instance) throws IOException, BeansException {
         File parent = new File(new File(lab.getFile()).getParent()+"/");
         if (!parent.exists()){
             parent.mkdirs();
@@ -146,7 +147,13 @@ public class LabLearnService {
         vo.setParamList(paramList);
         vo.setName(name);
         Gson gson = new Gson();
-        mJedisAdapter.lpush(featureKey,gson.toJson(vo));
+        if(featureType.equals(1)|| featureType.equals(2)){
+            String featureKey = RedisKeyUtil.getFeatureInstanceKey(lab.getId(),instance.getId());
+            mJedisAdapter.lpush(featureKey,gson.toJson(vo));
+        }else if(featureType.equals(0)|| featureType.equals(3)){
+            String preKey = RedisKeyUtil.getPreInstanceKey(lab.getId(),instance.getId());
+            mJedisAdapter.lpush(preKey,gson.toJson(vo));
+        }
     }
 
 

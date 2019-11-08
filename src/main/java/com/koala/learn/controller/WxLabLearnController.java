@@ -158,7 +158,7 @@ public class WxLabLearnController {
         Feature feature = mFeatureMapper.selectByPrimaryKey(featureId);
         LabInstance instance = mLabInstanceMapper.selectByPrimaryKey(instanceId);
         try {
-            mLabLearnService.addFeature(session, lab, feature, param, instance);
+            mLabLearnService.addFeature(session, lab, feature,feature.getFeatureType(), param, instance);
             return ServerResponse.createBySuccessMessage("处理成功");
         } catch (IOException e) {
             e.printStackTrace();
@@ -363,7 +363,7 @@ public class WxLabLearnController {
         return ServerResponse.createBySuccess(map);
     }
     private String getPreHandle(Integer labId,Integer instanceId){
-        String key = RedisKeyUtil.getFeatureInstanceKey(labId,instanceId);
+        String key = RedisKeyUtil.getPreInstanceKey(labId,instanceId);
         List<String> features = mJedisAdapter.lrange(key,0,mJedisAdapter.llen(key));
         String preHandle=features.get(features.size()-1);
         StringBuilder sb = new StringBuilder();

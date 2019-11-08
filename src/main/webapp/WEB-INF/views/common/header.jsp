@@ -51,12 +51,29 @@
     </div>
     <c:choose>
         <c:when test="${sessionScope.get('user') == null}">
+            <div class="userContainer">
+                <span class='userInfo'>
+                    <a href="/goLog" style="display: inline-block;height: 100%;width: 100%">
+                    <img src="../../../static/images/info.png" title="消息通知">
+                    <span style="display: none"/>
+            </a>
+        </span>
+
+            </div>
             <span class="login_container">
                 <a href="/goReg" class="iconfont icon-zhuce">注册</a>
                 <a href="/goLog" class="iconfont icon-denglu">登录</a>
             </span>
         </c:when>
         <c:otherwise>
+            <div class="userContainer">
+        <span class='userInfo'>
+            <a href="/user/info" style="display: inline-block;height: 100%;width: 100%">
+            <img src="../../../static/images/info.png" title="消息通知" style="height: 28px;margin-top: 15px;">
+                <span id="info_dot" style="display: none"/>
+            </a>
+        </span>
+            </div>
             <span class="login_container">
                 <a href="/user/mydata" class="iconfont icon-touxiang" style="font-size: 22px;">&nbsp;&nbsp;${user.username}</a>
             </span>
@@ -64,4 +81,43 @@
     </c:choose>
 </div>
 </body>
+<script>
+    $(function () {
+        var isCompleted=false;
+
+        var userId=${user.id};
+
+        console.log(userId);
+
+        if(userId){
+            reqs();
+            function reqs() {
+                $.ajax({
+                    type: 'get',
+                    url: '/design/get_unRead_msg/${user.id}',
+                    async:true,
+                    success: function(data) {
+                        console.log(data);
+                        if(data.status==0){
+                            isCompleted=true;
+                            var info_dot= document.getElementById('info_dot');
+                            console.log(info_dot);
+                            info_dot.style.display="block";
+                        }
+                    },
+                    error: function() {
+                        console.log('请求失败~');
+                    }
+                });
+            }
+            // var param= setInterval(function() {
+            //     !isCompleted && reqs();
+            // }, 3000000);
+            //
+            // if(isCompleted){
+            //     clearInterval(param);
+            // }
+        }
+    });
+</script>
 </html>

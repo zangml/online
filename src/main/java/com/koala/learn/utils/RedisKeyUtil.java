@@ -45,7 +45,7 @@ public class RedisKeyUtil {
     private static String BIZ_FILE = "FILE";
     private static String GET_FFT="GET_FFT";
 
-
+    private static String BIZ_PRE_INSTANCE = "PRE_INSTANCE";
     private static String BIZ_FEATURE_INSTANCE = "FEATURE_INSTANCE";
     private static String BIZ_FILE_INSTANCE = "FILE_INSTANCE";
     private static String BIZ_FILE_FEATURE = "FILE_FEATURE";
@@ -181,6 +181,9 @@ public class RedisKeyUtil {
 
     public static String getFeatureInstanceKey(Integer labId,Integer instanceId){
         return BIZ_FEATURE_INSTANCE+SPLIT+labId+SPLIT+instanceId;
+    }
+    public static String getPreInstanceKey(Integer labId,Integer instanceId){
+        return BIZ_PRE_INSTANCE+SPLIT+labId+SPLIT+instanceId;
     }
 
     private final static String BIZ_CLASSIFIER_INSTANCE = "CLASSIFIER_INSTANCE";

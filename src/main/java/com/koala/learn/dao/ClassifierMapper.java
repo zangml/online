@@ -21,7 +21,7 @@ public interface ClassifierMapper {
 
     int updateByPrimaryKey(Classifier record);
 
-    List<Classifier> selectByLabId(Integer labId);
+    List<Classifier> selectByLabType(Integer type);
 
     Classifier selectByLabel(String label);
 }

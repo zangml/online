@@ -137,7 +137,7 @@
         <div style="height: 80px;line-height: 80px;width: 1000px;text-align: center;border-bottom: 2px darkblue dashed;">
             <h2 style="color: #2c4a5e">算法代码</h2>
         </div>
-        <div class="algo_code_container">
+        <div class="algo_code_container" id="code">
             <div class="card-block">
                 <hr>
                 <article class="post-content" >
@@ -150,6 +150,14 @@
 
 </div>
 
+<div class="nav_container">
+    <ul>
+        <li><a href="#algo_desc">算法介绍</a></li>
+        <li><a href="#code">算法代码</a></li>
+        <li><a href="#">返回顶部</a></li>
+    </ul>
+</div>
+
 <div id="ajaxloader2" class="modal" style="display: none;margin-top: 170px;">
     <div class="outer"></div>
     <div class="inner"></div>
@@ -158,6 +166,10 @@
 
 
 <script language="JavaScript">
+    $(function(){
+        var code = document.getElementsByTagName('code')[0]
+        code.setAttribute('id','code')
+    });
     var myChart = echarts.init(document.getElementById('echart'),"dark");
     var option = {};
     myChart.setOption(option);

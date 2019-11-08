@@ -1,6 +1,7 @@
 package com.koala.learn.controller;
 
 import com.koala.learn.commen.LogAnnotation;
+import com.koala.learn.component.HostHolder;
 import com.koala.learn.entity.*;
 import com.koala.learn.service.BlogService;
 import com.koala.learn.service.CourseService;
@@ -34,6 +35,9 @@ public class CourseController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    HostHolder holder;
+
     @RequestMapping(path = {"/","/index"})
     public String courseList(Model model){
         List<CourseType> typeList = mCourseService.getCourseTypeList();
@@ -41,6 +45,12 @@ public class CourseController {
 //        List<Algorithm> algorithmList=labCourseService.getAllAlgorithm();
         model.addAttribute("typeList",typeList);
         model.addAttribute("labCourseList",labCourseList);
+        User user=holder.getUser();
+        if(user==null){
+            model.addAttribute("userId",0);
+        }else {
+            model.addAttribute("userId",user.getId());
+        }
 //        model.addAttribute("algorithmList",algorithmList);
         return "views/course/courseList";
     }

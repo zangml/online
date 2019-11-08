@@ -19,9 +19,35 @@ $(function() {
         imgurl: 'http://localhost:8081',
         base64url: 'http://localhost:8081'
     });
- 
 
-    
+
+    (function ($) {
+        $.fn.extend({
+            insertAtCaret: function (myValue) {
+                var $t = $(this)[0];
+                if (document.selection) {
+                    this.focus();
+                    var sel = document.selection.createRange();
+                    sel.text = myValue;
+                    this.focus();
+                } else
+                if ($t.selectionStart || $t.selectionStart == '0') {
+                    var startPos = $t.selectionStart;
+                    var endPos = $t.selectionEnd;
+                    var scrollTop = $t.scrollTop;
+                    $t.value = $t.value.substring(0, startPos) + myValue + $t.value.substring(endPos, $t.value.length);
+                    this.focus();
+                    $t.selectionStart = startPos + myValue.length;
+                    $t.selectionEnd = startPos + myValue.length;
+                    $t.scrollTop = scrollTop;
+                } else {
+                    this.value += myValue;
+                    this.focus();
+                }
+            }
+        })
+    })(jQuery);
+
     // 初始化下拉
     $('.form-control-chosen').chosen();
     
@@ -41,14 +67,16 @@ $(function() {
 		    processData: false,
 		    contentType: false,
 		    success: function(data){
-		    	var mdcontent=$("#md").val();
-		    	 $("#md").val(mdcontent + "\n![]("+data.data +") \n");
+		    	// var mdcontent=$("#md").val();
+		    	//  $("#md").val(mdcontent + "\n![]("+data.data +") \n");
+                $("#md").insertAtCaret("\n![]("+data.data +") \n");
 	         }
 		}).done(function(res) {
 			$('#file').val('');
 		}).fail(function(res) {});
  	})
- 
+
+
  	// 发布博客
  	$("#submitBlog").click(function() {
 

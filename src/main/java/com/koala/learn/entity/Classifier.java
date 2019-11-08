@@ -7,7 +7,7 @@ public class Classifier {
 
     private String name;
 
-    private Integer labId;
+    private Integer labId; //1代表机器学习分类算法  0代表机器学习回归算法 3代表深度学习分类算法 4 代表深度学习回归算法
 
     private String path;
 

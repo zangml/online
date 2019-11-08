@@ -185,7 +185,11 @@ public class UserService {
             vo.setLabId(instance.getGroupId());
             if (map.get(instance.getGroupId()) == null){
                 LabGroup labGroup = mLabGroupMapper.selectByPrimaryKey(instance.getGroupId());
-                map.put(instance.getGroupId(),labGroup);
+                if(labGroup!=null){
+                    map.put(instance.getGroupId(),labGroup);
+                }else {
+                    continue;
+                }
             }
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             vo.setTitle(map.get(instance.getGroupId()).getName()+"："+df.format(instance.getCreateTime()));

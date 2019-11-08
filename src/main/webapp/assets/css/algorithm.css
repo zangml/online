@@ -225,9 +225,9 @@ a,a:link,a:focus,a:hover,a:visited{
   width: 1000px;
   background: #fafafa;
 }
-/*!*.post-content {*!*/
-  /*!*padding-top: 10px;*!*/
-/*!*}*!*/
+.post-content {
+  padding-top: 10px;
+}
 /*.post-content h3{*/
   /*color: #237ab7;*/
   /*text-indent: 1em;*/
@@ -241,10 +241,10 @@ a,a:link,a:focus,a:hover,a:visited{
   /*font-size: 16px;*/
   /*text-indent: 1em;*/
 /*}*/
-/*.post-content pre{*/
-  /*color: white;*/
-  /*background: black;*/
-/*}*/
+.post-content pre{
+  color: white;
+  background: black;
+}
 .nav_container{
   position: fixed;
   right: 50px;

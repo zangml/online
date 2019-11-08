@@ -231,26 +231,54 @@
     </div>
     <div class="container" style="width: 100%">
         <div class="col-md-8" style="padding-top: 20px">
-            <c:forEach items="${classifierList}" var="classifier">
-                <div class="panel col-md-4">
-                    <div class="panel-primary panel-heading">
-                        <p align="center">${classifier.name}</p>
+            <div id="masonry" class="container-fluid" >
+                <h4 style="color: white">机器学习算法</h4>
+                <c:forEach items="${classifierList}" var="classifier">
+                    <div class="panel col-md-4">
+                        <div class="panel-primary panel-heading">
+                            <p align="center">${classifier.name}</p>
+                        </div>
+                        <div class="panel-body">
+                            <form id="classifier${classifier.id}">
+                                <c:forEach items="${classifier.params}" var="cparam">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" title="${cparam.paramDes}">${cparam.paramDes}</span>
+                                        <input type="text" class="form-control" placeholder="" name="${cparam.paramName}"
+                                               value="${cparam.defaultValue}">
+                                        <input type="hidden" value="${classifier.path}" name="classifier" />
+                                    </div>
+                                </c:forEach>
+                            </form>
+                            <button onclick="setClassify(${classifier.id})" class="btn btn-primary pull-right">提交</button>
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        <form id="classifier${classifier.id}">
-                            <c:forEach items="${classifier.params}" var="cparam">
-                                <div class="input-group">
-                                    <span class="input-group-addon" title="${cparam.paramDes}">${cparam.paramDes}</span>
-                                    <input type="text" class="form-control" placeholder="" name="${cparam.paramName}"
-                                           value="${cparam.defaultValue}">
-                                    <input type="hidden" value="${classifier.path}" name="classifier" />
-                                </div>
-                            </c:forEach>
-                        </form>
-                        <button onclick="setClassify(${classifier.id})" class="btn btn-primary pull-right">提交</button>
+                </c:forEach>
+
+            </div>
+            <div class="container-fluid" >
+                <h4 style="color: white">深度学习算法</h4>
+                <c:forEach items="${DLClassifierList}" var="classifier">
+                    <div class="panel col-md-4">
+                        <div class="panel-primary panel-heading">
+                            <p align="center">${classifier.name}</p>
+                        </div>
+                        <div class="panel-body">
+                            <form id="classifier${classifier.id}">
+                                <c:forEach items="${classifier.params}" var="cparam">
+                                    <div class="input-group">
+                                        <span class="input-group-addon" title="${cparam.paramDes}">${cparam.paramDes}</span>
+                                        <input type="text" class="form-control" placeholder="" name="${cparam.paramName}"
+                                               value="${cparam.defaultValue}">
+                                        <input type="hidden" value="${classifier.path}" name="classifier" />
+                                    </div>
+                                </c:forEach>
+                            </form>
+                            <button onclick="setClassify(${classifier.id})" class="btn btn-primary pull-right">提交</button>
+                        </div>
                     </div>
-                </div>
-            </c:forEach>
+                </c:forEach>
+            </div>
+
         </div>
         <div class="col-md-4">
                  <span>

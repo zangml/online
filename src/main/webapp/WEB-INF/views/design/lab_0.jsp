@@ -93,42 +93,6 @@
     div.categoryWithCarousel div.rightMenu img{
         height: 30px;
     }
-    div.carousel-of-product{
-        height: 510px;
-        width:1024px;
-        margin:0px auto;
-    }
-    img.carouselImage{
-        height: 510px !important;
-    }
-    div.carouselBackgroundDiv{
-        width:100%;
-        height:510px;
-        background-color:#E8E8E8;
-        position:absolute;
-        top:36px;
-        z-index:-1;
-    }
-    #left{
-        background: rgb(245,245,245);
-        width: 300px;
-        height: 900px;
-        float: left;
-        position: absolute;
-        overflow: auto;
-        top: 60px;
-
-    }
-    #right{
-        background: yellow;
-        width: 1000px;
-        height: 500px;
-        float: right;
-        position: absolute;
-        overflow: auto;
-        top: 60px;
-
-    }
     .divcss5{ width:100%;padding:0px;border:0px solid #F00}
 
     .divcss5_left{
@@ -154,22 +118,6 @@
         display: block;
         float: left;
     }
-    .clear{ clear:both}
-
-    .button {
-        background-color: #4CAF50;
-        border: none;
-        color: white;
-        padding: 5px 2px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 3px;
-        cursor: pointer;
-        border-radius: 4px;
-        float: right;
-    }
     .button1{
         background-color: white;
         border: none;
@@ -182,24 +130,6 @@
         margin: 4px 3px;
         cursor: pointer;
         border-radius: 4px;
-    }
-    .text1 {
-        width:200px;     /* 这里是输入框的长度 */
-        height:40px;   /* 这里是输入框的宽度 */
-        position:relative;   /* 这里规定输入框的定位类型 */
-        top:10px;   /* 这里规定输入框于原位置向下偏移100px  */
-        left:0px;    /*  这里规定输入框于原位置向右偏移300px  */
-        background:rgb(29,31,32);
-        border: 0px;
-    }
-    .text2 {
-        width:200px;     /* 这里是输入框的长度 */
-        height:40px;   /* 这里是输入框的宽度 */
-        position:relative;   /* 这里规定输入框的定位类型 */
-        top:0px;   /* 这里规定输入框于原位置向下偏移100px  */
-        left:0px;    /*  这里规定输入框于原位置向右偏移300px  */
-        background:rgb(39,41,42);
-        border: 0px;
     }
     table,th,td
     {

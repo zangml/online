@@ -113,7 +113,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectByLabId" resultMap="ResultMapWithBLOBs">
+  <select id="selectByLabType" resultMap="ResultMapWithBLOBs">
     SELECT
     <include refid="Base_Column_List" />,
     <include refid="Blob_Column_List" />

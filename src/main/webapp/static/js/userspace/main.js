@@ -6,7 +6,7 @@
  */
 "use strict";
 //# sourceURL=main.js
- 
+
 // DOM 加载完再执行
 $(function() {
 	var avatarApi;
@@ -58,7 +58,7 @@ $(function() {
 		    processData: false,
 		    contentType: false,
 		    success: function(data){
-		    	
+
 		    	var avatarUrl = data;
 				$.ajax({ 
 					 url: avatarApi, 

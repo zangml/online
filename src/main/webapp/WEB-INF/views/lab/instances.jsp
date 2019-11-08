@@ -128,39 +128,6 @@
         width: 100%;
         position:relative;
     }
-    div.headbar{
-        background-color: rgb(48,54,69);
-        height: 60px;
-    }
-    div.headbar .button{
-        background-color: rgb(66,182,238);
-        border: none;
-        color: white;
-        padding: 5px 2px;
-        width: 60px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 15px;
-        margin-top: 16px;
-        float: right;
-        margin-right:20px;
-
-    }
-    div.head{
-        width: 200px;
-        background-color: rgb(48,54,69);
-        height: 60px;
-        line-height: 60px;
-        font-size: 25px;
-        font-weight: bold;
-        color: rgb(113,177,194);
-        margin-left: 00px;
-        margin-right: 30px;
-        display: inline-block;
-    }
     div.rightMenu{
         display: inline-block;
     }
@@ -504,7 +471,20 @@
         <div class="container">
             <div class="col-sm-12">
                 <table class="table">
-                    <caption>算法对比</caption>
+                    <caption>训练结果</caption>
+                    <tbody>
+                    <c:forEach items="${res}" var="line">
+                        <tr>
+                            <c:forEach items="${line}" var="item">
+                                <th>${item}</th>
+                            </c:forEach>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+                <br>
+                <table class="table">
+                    <caption>实验信息</caption>
                     <thead>
                     <tr>
                         <c:forEach items="${titles}" var="title">
@@ -516,6 +496,7 @@
                     <c:forEach items="${resList}" var="res">
                         <tr>
                             <th>实例${res.id}</th>
+                            <th>${res.preHandle}</th>
                             <th>${res.feature}</th>
                             <th>${res.classifier}</th>
                             <th>${res.divier}</th>

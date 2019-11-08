@@ -147,7 +147,7 @@ public class UserspaceController {
 //	@PreAuthorize("authentication.name.equals(#username)")
 	public ModelAndView avatar(@PathVariable("username") String username, Model model) {
 		if(!holder.getUser().getUsername().equals(username)){
-			return new ModelAndView("/userspace/avatar", "userModel", model);
+			return new ModelAndView("templates/userspace/avatar", "userModel", model);
 		}
 		User  user = userMapper.selectByUsername(username);
 		model.addAttribute("user", user);
@@ -168,24 +168,11 @@ public class UserspaceController {
 			return ResponseEntity.ok().body(new Response(false, "无权限"));
 		}
 		String avatarUrl = user.getAvatar();
-
+		System.out.println("原头像"+avatarUrl);
 		User originalUser = userMapper.selectByPrimaryKey(user.getId());
 		originalUser.setAvatar(avatarUrl);
+
 		userMapper.updateByPrimaryKeySelective(originalUser);
-//		try{
-//			List<Blog> blogList= blogMapper.findByUserId(originalUser.getId());
-//			for(Blog blog:blogList){
-//				System.out.println("将头像更改到esBlog中，blogId"+blog.getId());
-//				EsBlog esBlog = esBlogService.getEsBlogByBlogId(blog.getId());
-//				System.out.println("将头像更改到esBlog中，获取到的esBlog为"+esBlog);
-//				esBlog.update(blog);
-//				esBlog.setUsername(originalUser.getUsername());
-//				esBlog.setAvatar(avatarUrl);
-//				esBlogService.updateEsBlog(esBlog);
-//			}
-//		}catch (Exception e){
-//			e.printStackTrace();
-//		}
 		return ResponseEntity.ok().body(new Response(true, "处理成功", avatarUrl));
 	}
 

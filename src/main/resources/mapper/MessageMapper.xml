@@ -6,33 +6,22 @@
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="from_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="to_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="lab_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+      <arg column="instance_id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
       <arg column="created_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="has_read" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="conversation_id" jdbcType="VARCHAR" javaType="java.lang.String" />
-    </constructor>
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.koala.learn.entity.Message" >
-    <constructor >
-      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="from_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="to_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="created_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="has_read" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="conversation_id" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="to_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="content" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, from_id, to_id, created_date, has_read, conversation_id
+    id, from_id, to_id,lab_id,instance_id, created_date, has_read, to_url,title,content
   </sql>
-  <sql id="Blob_Column_List" >
-    content
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from message
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -41,61 +30,13 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.koala.learn.entity.Message" >
-    insert into message (id, from_id, to_id, 
-      created_date, has_read, conversation_id, 
+    insert into message (id, from_id, to_id, lab_id,instance_id,
+      created_date, has_read, to_url,title,
       content)
-    values (#{id,jdbcType=INTEGER}, #{fromId,jdbcType=INTEGER}, #{toId,jdbcType=INTEGER}, 
-      #{createdDate,jdbcType=TIMESTAMP}, #{hasRead,jdbcType=INTEGER}, #{conversationId,jdbcType=VARCHAR}, 
-      #{content,jdbcType=LONGVARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.koala.learn.entity.Message" >
-    insert into message
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="fromId != null" >
-        from_id,
-      </if>
-      <if test="toId != null" >
-        to_id,
-      </if>
-      <if test="createdDate != null" >
-        created_date,
-      </if>
-      <if test="hasRead != null" >
-        has_read,
-      </if>
-      <if test="conversationId != null" >
-        conversation_id,
-      </if>
-      <if test="content != null" >
-        content,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="fromId != null" >
-        #{fromId,jdbcType=INTEGER},
-      </if>
-      <if test="toId != null" >
-        #{toId,jdbcType=INTEGER},
-      </if>
-      <if test="createdDate != null" >
-        #{createdDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="hasRead != null" >
-        #{hasRead,jdbcType=INTEGER},
-      </if>
-      <if test="conversationId != null" >
-        #{conversationId,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
+    values (#{id,jdbcType=INTEGER}, #{fromId,jdbcType=INTEGER}, #{toId,jdbcType=INTEGER},
+      #{labId,jdbcType=INTEGER}, #{instanceId,jdbcType=INTEGER},
+      #{createdDate,jdbcType=TIMESTAMP}, #{hasRead,jdbcType=INTEGER}, #{toUrl,jdbcType=VARCHAR},
+      #{title,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.koala.learn.entity.Message" >
     update message
@@ -106,38 +47,76 @@
       <if test="toId != null" >
         to_id = #{toId,jdbcType=INTEGER},
       </if>
+      <if test="labId != null" >
+        lab_id = #{labId,jdbcType=INTEGER},
+      </if>
+      <if test="instanceId != null" >
+        instance_id = #{instanceId,jdbcType=INTEGER},
+      </if>
       <if test="createdDate != null" >
         created_date = #{createdDate,jdbcType=TIMESTAMP},
       </if>
       <if test="hasRead != null" >
         has_read = #{hasRead,jdbcType=INTEGER},
       </if>
-      <if test="conversationId != null" >
-        conversation_id = #{conversationId,jdbcType=VARCHAR},
+      <if test="toUrl != null" >
+        to_url = #{toUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
-        content = #{content,jdbcType=LONGVARCHAR},
+        content = #{content,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.koala.learn.entity.Message" >
-    update message
-    set from_id = #{fromId,jdbcType=INTEGER},
-      to_id = #{toId,jdbcType=INTEGER},
-      created_date = #{createdDate,jdbcType=TIMESTAMP},
-      has_read = #{hasRead,jdbcType=INTEGER},
-      conversation_id = #{conversationId,jdbcType=VARCHAR},
-      content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.koala.learn.entity.Message" >
     update message
     set from_id = #{fromId,jdbcType=INTEGER},
       to_id = #{toId,jdbcType=INTEGER},
+      lab_id = #{labId,jdbcType=INTEGER},
+      instance_id = #{instanceId,jdbcType=INTEGER},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       has_read = #{hasRead,jdbcType=INTEGER},
-      conversation_id = #{conversationId,jdbcType=VARCHAR}
+      to_url = #{toUrl,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByLabIdAndUserId" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from message
+    where lab_id = #{labId,jdbcType=INTEGER}
+    and to_id =#{userId,jdbcType=INTEGER}
+    and instance_id=#{instanceId,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectUnReadMsgByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from message
+    where to_id =#{userId,jdbcType=INTEGER}
+    and has_read=0
+  </select>
+
+  <select id="selectAllMsgByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from message
+    where to_id =#{userId,jdbcType=INTEGER}
+    order by created_date desc
+  </select>
+
+  <select id="selectByLabIdAndInstanceId" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from message
+    where lab_id = #{labId,jdbcType=INTEGER}
+    and instance_id=#{instanceId,jdbcType=INTEGER}
+  </select>
+
 </mapper>

@@ -1,0 +1,301 @@
+/*个人资料页面开始*/
+.user_container {
+  height: 600px;
+  width: 1100px;
+  margin: 40px auto;
+}
+
+.user_left_container {
+  height: 100%;
+  width: 35%;
+  float: left;
+}
+
+.user_tx_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 250px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 30px;
+}
+
+.user_tx_container .user-content-container {
+  height: 130px;
+  width: 130px;
+}
+.blog-content-container {
+  margin-top: 2.0em;
+  background-color: #fff;
+}
+
+.user_tx > a {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  position: relative;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+
+}
+
+.user_tx > a > input {
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  cursor: pointer;
+  left: 0;
+  top: 0;
+}
+
+.user-avatar-130 {
+  border-radius: 10%;
+  height: 130px;
+  width: 130px;
+}
+
+.user_tx_container .user_name {
+  font-size: 24px;
+}
+
+.user_list_container {
+  height: 300px;
+  width: 100%;
+}
+
+.user_list_container > ul {
+  height: 100%;
+  width: 100%;
+  list-style: none;
+  text-align: center;
+}
+
+.user_list_container > ul > li {
+  height: 70px;
+  line-height: 70px;
+  width: 100%;
+}
+
+.user_list_container > ul > li > a {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  color: #333;
+  font-size: 22px;
+}
+
+.user_list_container > ul > li:hover {
+  background: #f7f7f7;
+}
+
+.user_right_container {
+  height: 100%;
+  width: 60%;
+  float: right;
+  background: #f7f7f7;
+  overflow: auto;
+}
+
+.information {
+  font-size: 22px;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  box-sizing: border-box;
+  padding-left: 10%;
+}
+
+.current {
+  background: #f7f7f7;
+}
+
+/*个人资料页面结束*/
+/*编辑资料开始*/
+
+input[type='text'] {
+  height: 30px;
+  width: 50%;
+  border-radius: 5px;
+}
+
+.btn_container {
+  height: 60px;
+  line-height: 60px;
+  width: 100%;
+  text-align: center;
+}
+
+.submit_btn {
+  background: rgb(71, 177, 136);
+  color: white;
+  width: 80px;
+  margin-right: 100px;
+}
+
+.reset_btn {
+  width: 80px;
+}
+
+/*编辑资料结束*/
+/*实验卡片开始*/
+.productItem {
+  width: 190px;
+  margin: 0 auto;
+  overflow: hidden;
+  margin: 8px;
+  border-radius: 5px;
+  position: relative;
+  background-color: white;
+  cursor: pointer;
+  float: left;
+  box-shadow: 0 0 5px;
+}
+
+.productItem_pic {
+  height: 200px;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  cursor: pointer;
+  float: right;
+}
+
+.productItemDesc {
+  height: 55px;
+  width: 100%;
+  font-size: 16px;
+  float: right;
+  color: #666;
+  text-align: left;
+  padding-top: 8px;
+}
+
+.productItem_pic a {
+  height: 55px;
+  width: 100%;
+  display: block;
+  cursor: pointer;
+}
+
+.productItem_pic > a > img {
+  height: 200px;
+  width: 190px;
+}
+
+.subscript {
+  color: #fff;
+  height: 30px;
+  width: 100px;
+  position: absolute;
+  top: 0px;
+  right: -30px;
+  text-align: center;
+  line-height: 30px;
+  font-family: "黑体";
+  background-color: #0c60ee;
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+div.productItem span.productPrice {
+  font-size: 16px;
+  color: #FF003A;
+  display: block;
+  padding-left: 16px;
+  margin-top: -10px;
+}
+
+div.productItem img:hover {
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+}
+
+.nav-inverse li a:hover {
+  background-color: rgb(71, 177, 136);
+  color: white;
+
+}
+
+.nav-inverse li a:focus {
+  color: white;
+  background-color: rgb(71, 177, 136);
+
+}
+
+.nav li.active {
+  color: white;
+  background-color: rgb(71, 177, 136);
+
+}
+
+/*消息页面开始*/
+.titleContainer {
+  height: 50px;
+  margin: 15px 20px;
+  padding: 5px 0;
+  border-bottom: 1px solid rgb(202, 202, 202);
+  font-size: 20px;
+}
+
+.messageContainer {
+  height: 100px;
+  width: 90%;
+  margin: 20px auto;
+  background: rgba(255, 255, 255, 0.7);
+  padding-top: 10px;
+}
+
+.mesTitle {
+  height: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 20px;
+  color: #333;
+  position: relative;
+  text-indent: 30px;
+  padding-right: 20px;
+  line-height: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mesContent {
+  width: 100%;
+  font-size: 14px;
+  box-sizing: border-box;
+  overflow: auto;
+  height: 60px;
+  color: #666;
+  text-indent: 30px;
+  margin-top:20px;
+}
+.mes_dot {
+  display: inline-block;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+  background-color: red;
+}
+#mes_del{
+  display: inline-block;
+  height: 100%;
+  color: red;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+/*消息页面结束*/

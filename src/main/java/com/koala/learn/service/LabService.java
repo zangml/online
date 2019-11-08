@@ -10,6 +10,7 @@ import com.koala.learn.entity.*;
 import com.koala.learn.utils.RedisKeyUtil;
 import com.koala.learn.vo.*;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
@@ -88,6 +89,45 @@ public class LabService {
         groupInstanceMapper.insert(groupInstance);
         return groupInstance.getId();
     }
+
+    public List<List<?>> getRes(Integer labId,Integer instanceId){
+        String classifierKey = RedisKeyUtil.getClassifierInstanceKey(labId, instanceId);
+        Lab lab =getLabById(labId);
+        List<String> classifierList = mJedisAdapter.lrange(classifierKey, 0, mJedisAdapter.llen(classifierKey));
+        List<List<?>> res=new ArrayList<>();
+        if (lab.getLableType() == 1) {
+            res.add(Arrays.asList("算法名", "召回率", "准确率", "精确率", "F-Measure", "ROC-Area"));
+        } else {
+            res.add(Arrays.asList("算法名", "可释方差值", "平均绝对误差", "均方根误差", "中值绝对误差", "R方值"));
+        }
+        for (String str : classifierList) {
+            Classifier classifier = mGson.fromJson(str, Classifier.class);
+            String dividerOutKey = RedisKeyUtil.getDividerOutKey(labId,instanceId);
+            File train = new File(mJedisAdapter.hget(dividerOutKey,"train"));
+            String classifierStr = mGson.toJson(classifier);
+            String cacheKye = RedisKeyUtil.getCacheKey(labId,train.getAbsolutePath(),classifier.getName()+classifierStr.hashCode());
+            String cacheValue = mJedisAdapter.get(cacheKye);
+            if (lab.getLableType() == 1) {
+                Result result = mGson.fromJson(cacheValue,Result.class);
+                if (result != null) {
+                    List<String> cache = Arrays.asList(classifier.getName(),
+                            result.getRecall() + "", result.getAccuracy() + "",
+                            result.getPrecision() + "", result.getfMeasure() + "", result.getRocArea() + "");
+                    res.add(cache);
+                }
+            } else if (lab.getLableType() == 0) {
+                RegResult regResult = mGson.fromJson(cacheValue,RegResult.class);
+                if (regResult != null) {
+                    List<String> cache = Arrays.asList(classifier.getName(),
+                            regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
+                            regResult.getSquaredError() + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
+                    res.add(cache);
+                }
+            }
+        }
+        return res;
+
+    }
     public void getGroupInstanceInfo(Model model,Integer groupId,Integer instanceId){
         LabGroup group = groupMapper.selectByPrimaryKey(groupId);
         GroupInstance groupInstance = groupInstanceMapper.selectByPrimaryKey(instanceId);
@@ -101,9 +141,6 @@ public class LabService {
         for (Lab lab:labs){
             GroupInstanceVo vo = new GroupInstanceVo();
             vo.setLab(lab);
-            System.out.println(lab.getId());
-            System.out.println(mHolder.getUser().getId());
-            System.out.println(groupInstance.getId());
             List<LabInstance> instances =  mLabInstanceMapper.selectByLabUser(lab.getId(),mHolder.getUser().getId(),groupInstance.getId());
             if (instances==null || instances.size()==0){
                 vo.setState(0);
@@ -134,11 +171,11 @@ public class LabService {
             }
         }
         if(group.getLabType()==1) {
-            model.addAttribute("titles", Arrays.asList("名称", "特征提取", "算法", "训练集划分", "准确率", "时间"));
+            model.addAttribute("titles", Arrays.asList("名称", "数据预处理","特征提取", "算法", "训练集划分", "准确率", "时间"));
             model.addAttribute("resList", resultVos);
             model.addAttribute("resTypeList", Arrays.asList("Accuracy", "Precision", "Recall", "F-Measure", "ROC-Area"));
         }else if(group.getLabType()==0){
-            model.addAttribute("titles", Arrays.asList("名称", "特征提取", "算法", "训练集划分", "均方根误差", "时间"));
+            model.addAttribute("titles", Arrays.asList("名称", "数据预处理","特征提取","算法", "训练集划分", "均方根误差", "时间"));
             model.addAttribute("resList", resultVos);
             model.addAttribute("resTypeList", Arrays.asList("VarianceScore", "AbsoluteError", "SquaredError", "MedianSquaredError", "R2Score"));
         }
@@ -162,7 +199,7 @@ public class LabService {
         return mClassifierMapper.selectByPrimaryKey(id);
     }
     public List<Classifier> getClassifier(int id){
-        return mClassifierMapper.selectByLabId(id);
+        return mClassifierMapper.selectByLabType(id);
     }
 
     public List<Classifier> getSelectedClassifier(Integer labId){
@@ -295,9 +332,10 @@ public class LabService {
             for (int i=0;i<list.size();i++){
                 Classifier classifier = mGson.fromJson(list.get(i),Classifier.class);
                 legends.add("实例"+instance.getId()+":"+classifier.getName()+i);
-                SimpleDateFormat df = new SimpleDateFormat("MM-dd HH:mm:ss");
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 InstanceResultVo vo = new InstanceResultVo();
                 vo.setId(instance.getId());
+                vo.setPreHandle(getPre(labId,instance.getId()));
                 vo.setFeature(getFeature(labId,instance.getId()));
                 vo.setClassifier(getClassifier(classifier));
                 vo.setDate(df.format(instance.getCreateTime()));
@@ -307,6 +345,24 @@ public class LabService {
             }
             return resultVos;
         }
+    }
+    public List<InstanceResultVo> getDesignResult(Integer labId,List<String> classifierList,LabGroup group){
+        List<InstanceResultVo> resultVos = new ArrayList<>();
+
+        for (int i=0;i<classifierList.size();i++){
+            Classifier classifier = mGson.fromJson(classifierList.get(i),Classifier.class);
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            InstanceResultVo vo = new InstanceResultVo();
+            vo.setId(labId);
+            vo.setPreHandle(getPre(labId,-1));
+            vo.setFeature(getFeature(labId,-1));
+            vo.setClassifier(getClassifier(classifier));
+            vo.setDate(df.format(group.getCreateTime()));
+            vo.setResult(getRes(labId,-1,classifier));
+            vo.setDivier(getDivier(labId,-1));
+            resultVos.add(vo);
+        }
+        return resultVos;
     }
     public List<LabResultVo> getValueMapForWx(Integer labId, Integer instanceId, HttpSession session){
         logger.info("-------LabResultVo----------------");
@@ -402,8 +458,31 @@ public class LabService {
 
     }
 
+    private String getPre(Integer labId,Integer instanceId){
+        String key;
+        if(instanceId==-1){
+            key = RedisKeyUtil.getPreKey(labId);
+        }else {
+            key = RedisKeyUtil.getPreInstanceKey(labId,instanceId);
+        }
+        List<String> features = mJedisAdapter.lrange(key,0,mJedisAdapter.llen(key));
+        StringBuilder sb = new StringBuilder();
+        for (int i=features.size()-1;i>=0;i--){
+            FeatureVo vo = mGson.fromJson(features.get(i),FeatureVo.class);
+            sb.append(features.size()-i).append("、").append(vo.getFeature().getName()).append("<br>");
+            for (FeatureParam param:vo.getParamList()){
+                sb.append("&nbsp&nbsp&nbsp&nbsp&nbsp").append(param.getName()).append("=").append(param.getDefaultValue()).append("<br>");
+            }
+        }
+        return sb.toString();
+    }
     private String getFeature(Integer labId,Integer instanceId){
-        String key = RedisKeyUtil.getFeatureInstanceKey(labId,instanceId);
+        String key;
+        if(instanceId==-1){
+            key = RedisKeyUtil.getFeatureKey(labId);
+        }else {
+            key = RedisKeyUtil.getFeatureInstanceKey(labId,instanceId);
+        }
         List<String> features = mJedisAdapter.lrange(key,0,mJedisAdapter.llen(key));
         StringBuilder sb = new StringBuilder();
         for (int i=features.size()-1;i>=0;i--){
@@ -428,7 +507,12 @@ public class LabService {
     }
 
     private String getDivier(Integer labId,Integer instanceId){
-        String key = RedisKeyUtil.getDividerInstanceKey(labId,instanceId);
+        String key;
+        if(instanceId==-1){
+            key = RedisKeyUtil.getDividerKey(labId);
+        }else {
+            key = RedisKeyUtil.getDividerInstanceKey(labId,instanceId);
+        }
         String value = mJedisAdapter.get(key);
         if (StringUtils.isBlank(value)){
             return "";
@@ -448,11 +532,12 @@ public class LabService {
             System.out.println(value);
             logger.info(value);
             return value.substring(0, value.length() > 5 ? 5 : value.length());
-        }else{
+        }else if(lab.getLableType()==1){
             String value= mJedisAdapter.hget(key).get("Accuracy");
             System.out.println(value);
             logger.info(value);
             return value.substring(0, value.length() > 5 ? 5 : value.length());
         }
+        return null;
     }
 }

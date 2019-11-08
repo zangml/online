@@ -238,6 +238,11 @@
                 </c:forEach>
                 </tbody>
             </table>
+            <c:if test="${labState==0}">
+                <div style="color: white">
+                    <p>正在训练中，训练完成后会站内信通知，请注意查收~</p>
+                </div>
+            </c:if>
             <br>
             <div style="margin-left: 100px;">
                 <div class="input-group-btn">
@@ -259,7 +264,7 @@
 
                     ${lab.title}</a>
                     &nbsp&nbsp &nbsp&nbsp
-                   <a href="/labs/group/${groupId}/${groupInstanceId}" class="button">查看</a>
+                   <a href="/labs/group/${labId}/${instanceId}/${groupId}/${groupInstanceId}" class="button">查看</a>
 
                     <hr>
                   <div class="border1">

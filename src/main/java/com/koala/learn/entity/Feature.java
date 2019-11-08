@@ -9,11 +9,23 @@ public class Feature {
 
     private String des;
 
-    public Feature(Integer id, String name, String label, String des) {
+    private Integer featureType;
+
+
+    public Feature(Integer id, String name, String label, String des,Integer featureType) {
         this.id = id;
         this.name = name;
         this.label = label;
         this.des = des;
+        this.featureType=featureType;
+    }
+
+    public Integer getFeatureType() {
+        return featureType;
+    }
+
+    public void setFeatureType(Integer featureType) {
+        this.featureType = featureType;
     }
 
     public Feature() {

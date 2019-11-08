@@ -71,7 +71,7 @@
                 <h2>任务大纲</h2>
             </div>
             <c:forEach items="${labs}" var="labItem" varStatus="index">
-                <div class="task">
+                <div class="task_result">
                     <span class="number">${index.index+1}</span>
                     <span class="a1">
                         <a href="/design/${labItem.id}/lab_1">${labItem.title}</a>
@@ -86,12 +86,54 @@
                             </c:otherwise>
                         </c:choose>
                     </span></br>
+                    <div class="container">
+                        <div class="col-sm-12">
+                            <table class="table">
+                                <caption>训练结果</caption>
+                                <tbody>
+                                <c:forEach items="${res}" var="line">
+                                    <tr>
+                                        <c:forEach items="${line}" var="item">
+                                            <th>${item}</th>
+                                        </c:forEach>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                            <br>
+                            <table class="table">
+                                <caption>实验信息</caption>
+                                <thead>
+                                <tr>
+                                    <c:forEach items="${titles}" var="title">
+                                        <th>${title}</th>
+                                    </c:forEach>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${resList}" var="res">
+                                    <tr>
+                                        <th>实验${res.id}</th>
+                                        <th>${res.preHandle}</th>
+                                        <th>${res.feature}</th>
+                                        <th>${res.classifier}</th>
+                                        <th>${res.divier}</th>
+                                        <th>${res.result}</th>
+                                        <th>${res.date}</th>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </c:forEach>
             <div class="task">
-                <div class="sbutton">
-                    <a  id="finish" onclick="finish()" class="button">完成</a>
-                </div>
+                <c:if test="${labState}">
+                    <div class="sbutton">
+                        <a  id="finish" onclick="finish()" class="button">发布实验</a>
+                    </div>
+                </c:if>
             </div>
 
         </div>

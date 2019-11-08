@@ -71,4 +71,8 @@
     </div>
     <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </div>
+
+<
+<script language="JavaScript">
+</script>
 </html>

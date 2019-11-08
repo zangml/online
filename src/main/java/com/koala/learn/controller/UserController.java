@@ -2,6 +2,8 @@ package com.koala.learn.controller;
 
 import com.koala.learn.commen.ServerResponse;
 import com.koala.learn.component.HostHolder;
+import com.koala.learn.dao.MessageMapper;
+import com.koala.learn.entity.Message;
 import com.koala.learn.entity.User;
 import com.koala.learn.service.EventProducer;
 import com.koala.learn.service.UserService;
@@ -36,6 +38,10 @@ public class UserController {
 
     @Autowired
     HostHolder mHolder;
+
+    @Autowired
+    MessageMapper messageMapper;
+
 
 
 
@@ -148,7 +154,32 @@ public class UserController {
         model.addAttribute("user",mHolder.getUser());
         return "views/user/mydata";
     }
+    @RequestMapping("user/info")
+    public String myInfo(Model model){
+        model.addAttribute("user",mHolder.getUser());
+        List<Message> list= messageMapper.selectAllMsgByUserId(mHolder.getUser().getId());
+        logger.info("该用户共有"+list.size()+"条消息");
+        model.addAttribute("msgList",list);
+        return "views/user/info";
+    }
 
+    @RequestMapping("/user/message/delete/{msgId}")
+    @ResponseBody
+    public ServerResponse deleteUserMsg(@PathVariable("msgId") Integer msgId){
+        User user=mHolder.getUser();
+        if(user==null){
+            return ServerResponse.createByErrorMessage("请先登录");
+        }
+        Message msg=messageMapper.selectByPrimaryKey(msgId);
+        if(msg.getToId()!=user.getId()){
+            return ServerResponse.createByErrorMessage("无权限操作");
+        }
+        int count= messageMapper.deleteByPrimaryKey(msgId);
+        if(count<=0){
+            return ServerResponse.createByErrorMessage("删除失败");
+        }
+        return ServerResponse.createBySuccess();
+    }
     @RequestMapping(path = {"/logout"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String logout(@CookieValue("ticket") String ticket, HttpSession session) {
         mUserService.logout(ticket);

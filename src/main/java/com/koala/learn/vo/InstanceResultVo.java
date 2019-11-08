@@ -5,6 +5,7 @@ package com.koala.learn.vo;
  */
 public class InstanceResultVo {
     private int id;
+    private String preHandle;
     private String feature;
     private String classifier;
     private String divier;
@@ -17,6 +18,14 @@ public class InstanceResultVo {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getPreHandle() {
+        return preHandle;
+    }
+
+    public void setPreHandle(String preHandle) {
+        this.preHandle = preHandle;
     }
 
     public String getFeature() {

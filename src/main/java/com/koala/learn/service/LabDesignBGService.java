@@ -86,7 +86,9 @@ public class LabDesignBGService {
         }
         vo.setParamList(paramList);
         Gson gson = new Gson();
+        String featureInstanceKey = RedisKeyUtil.getFeatureInstanceKey(lab.getId(),-1);
         mJedisAdapter.lpush(featureKey,gson.toJson(vo));
+        mJedisAdapter.lpush(featureInstanceKey,gson.toJson(vo));
     }
     public void savePre(Lab lab, Feature feature, Map<String,String> map){
 
@@ -102,6 +104,8 @@ public class LabDesignBGService {
         }
         vo.setParamList(paramList);
         Gson gson = new Gson();
+        String featureInstanceKey = RedisKeyUtil.getFeatureInstanceKey(lab.getId(),-1);
+        mJedisAdapter.lpush(featureInstanceKey,gson.toJson(vo));
         mJedisAdapter.lpush(preKey,gson.toJson(vo));
     }
     public File addPre(HttpSession session, Feature feature, Map<String,String> param, Lab lab)  {
@@ -141,6 +145,8 @@ public class LabDesignBGService {
             System.out.println(e.getMessage());
             return null;
         }
+
+
 
     }
 
