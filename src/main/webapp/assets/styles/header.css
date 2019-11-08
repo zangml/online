@@ -157,7 +157,7 @@ a:hover {
 }
 
 .userInfo img {
-    height: 28px;
+    height: 28px !important;
     margin-top: 15px;
 }
 

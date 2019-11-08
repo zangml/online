@@ -200,54 +200,8 @@
         float: left;
         margin-bottom: 20px;
     }
-    div.item img{
-        width:100%;
-        height: auto;
-    }
-    div#carousel-example-generic{
-        width: 100%;
-        height: 350px;
-        margin:0 auto;
-        background-position: center;
-        display: block;
 
-    }
-    .top2_head{
-        background-color: rgb(66,182,238);
-        height: 50px;
-        line-height: 50px;
-        text-align: center;
-        font-size: 15px;
-        color: white;
-    }
-    .top_content{
-        background-color: white;
-        padding: 10px 10px;
-    }
-    div.top_content a:hover{
-        color: rgb(66,182,238);
-    }
 
-    .divcss5_content_bottom{
-        width: 100%;
-        height: 1400px;
-        background-color: white;
-        float: left;
-        padding: 20px 20px;
-    }
-    .phm{
-        height: 150px;
-        padding-top: 30px;
-        padding-bottom: 30px;
-        border-bottom: 1px dashed rgb(218,218,218);
-    }
-
-    .clear{ clear:both}
-    ul.circle {list-style-type:circle;}
-    .spani{
-        margin-top: 20px;
-        float: right;
-    }
     div.divcss5_content .button{
         background-color: rgb(71,177,136);
         border: none;

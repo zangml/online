@@ -25,7 +25,7 @@ public class NormalizationFeature implements IFeature {
             file = WekaUtils.arff2csv(file);
         }
         try{
-            String ocsvmdec = "python "+ Const.NORMALIZATION_FEATURE
+            String ocsvmdec = "python3 "+ Const.NORMALIZATION_FEATURE
                     +" path="+file.getAbsolutePath()+" opath="+out;
             System.out.println(ocsvmdec);
             PythonUtils.execPy(ocsvmdec);

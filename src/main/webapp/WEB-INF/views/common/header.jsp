@@ -69,7 +69,7 @@
             <div class="userContainer">
         <span class='userInfo'>
             <a href="/user/info" style="display: inline-block;height: 100%;width: 100%">
-            <img src="../../../static/images/info.png" title="消息通知" style="height: 28px;margin-top: 15px;">
+            <img src="http://image.phmlearn.com/ffcd8771-09b2-4916-b1ba-4d0cf0e9ad45.png" title="消息通知" style="height: 28px;margin-top: 15px;">
                 <span id="info_dot" style="display: none"/>
             </a>
         </span>
@@ -86,8 +86,6 @@
         var isCompleted=false;
 
         var userId=${user.id};
-
-        console.log(userId);
 
         if(userId){
             reqs();

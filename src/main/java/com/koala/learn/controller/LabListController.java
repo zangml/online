@@ -74,7 +74,7 @@ public class LabListController {
         List<List<?>> res=mLabService.getRes(labId,instanceId);
 
         Message message =messageMapper.selectByLabIdAndInstanceId(labId,instanceId);
-        if(message.getHasRead()==0){
+        if(message!=null && message.getHasRead()==0){
             message.setHasRead(1);
             messageMapper.updateByPrimaryKeySelective(message);
         }

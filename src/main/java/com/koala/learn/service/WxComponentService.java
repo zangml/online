@@ -57,7 +57,7 @@ public class WxComponentService {
             out=WekaUtils.csv2arff(out);
             return out;
         }
-        String ocsvmdec = "python "+ Const.OCSVM_FOR_WX+ " nu="+nu
+        String ocsvmdec = "python3 "+ Const.OCSVM_FOR_WX+ " nu="+nu
                 +" path="+input.getAbsolutePath()+" opath="+out;
         System.out.println(ocsvmdec);
         PythonUtils.execPy(ocsvmdec);
@@ -73,7 +73,7 @@ public class WxComponentService {
             out=WekaUtils.csv2arff(out);
             return out;
         }
-        String isoLationmdec = "python "+ Const.ISOLATIONFOREST_FOR_WX+ " contamination="+contamination
+        String isoLationmdec = "python3 "+ Const.ISOLATIONFOREST_FOR_WX+ " contamination="+contamination
                 +" path="+input.getAbsolutePath()+" opath="+out;
         System.out.println(isoLationmdec);
         PythonUtils.execPy(isoLationmdec);
@@ -89,7 +89,7 @@ public class WxComponentService {
             out=WekaUtils.csv2arff(out);
             return out;
         }
-        String isoLationmdec = "python "+ Const.CLEAR_ISOLATIONFOREST_FOR_WX+ " contamination="+contamination
+        String isoLationmdec = "python3 "+ Const.CLEAR_ISOLATIONFOREST_FOR_WX+ " contamination="+contamination
                 +" path="+input.getAbsolutePath()+" opath="+out;
         System.out.println(isoLationmdec);
         PythonUtils.execPy(isoLationmdec);
@@ -106,7 +106,7 @@ public class WxComponentService {
             out=WekaUtils.csv2arff(out);
             return out;
         }
-        String normaldec = "python "+ Const.NORMALIZATION_FOR_WX
+        String normaldec = "python3 "+ Const.NORMALIZATION_FOR_WX
                 +" path="+input.getAbsolutePath()+" opath="+out;
         System.out.println(normaldec);
         PythonUtils.execPy(normaldec);
@@ -123,7 +123,7 @@ public class WxComponentService {
             out = WekaUtils.csv2arff(out);
             return out;
         }
-        String fftDesc = "python " + Const.FFT_FOR_WX + " attribute=" + attribute
+        String fftDesc = "python3 " + Const.FFT_FOR_WX + " attribute=" + attribute
                 + " path=" + input.getAbsolutePath() + " opath=" + out;
         System.out.println(fftDesc);
         PythonUtils.execPy(fftDesc);
@@ -141,7 +141,7 @@ public class WxComponentService {
             out=WekaUtils.csv2arff(out);
             return out;
         }
-        String waveDesc ="python " + Const.WAVE_FEATURE + " wave_layer=" + waveLayer +" len_piece="+windowLength
+        String waveDesc ="python3 " + Const.WAVE_FEATURE + " wave_layer=" + waveLayer +" len_piece="+windowLength
                 + " path=" + input.getAbsolutePath() + " opath=" + out;
         System.out.println(waveDesc);
         PythonUtils.execPy(waveDesc);
@@ -162,7 +162,7 @@ public class WxComponentService {
             out = WekaUtils.csv2arff(out);
             return out;
         }
-        String timeDesc = "python " + Const.TIME_FEATURE_FOR_WX + " len_piece=" + windowLength + " avg=" +avg + " std=" +std
+        String timeDesc = "python3 " + Const.TIME_FEATURE_FOR_WX + " len_piece=" + windowLength + " avg=" +avg + " std=" +std
                 + " var=" +var+ " skew=" +skew+ " kur=" +kur+ " ptp=" + ptp
                 + " path=" + input.getAbsolutePath() + " opath=" + out;
         System.out.println(timeDesc);
@@ -186,7 +186,7 @@ public class WxComponentService {
             System.out.println("从缓存中获取："+cacheValue);
             return cacheValue;
         }
-        String waveDesc ="python " + Const.PCA_WX + " n_components=" + dimension
+        String waveDesc ="python3 " + Const.PCA_WX + " n_components=" + dimension
                 + " path=" + input.getAbsolutePath() + " opath=" + out;
         System.out.println(waveDesc);
         String res= PythonUtils.execPy(waveDesc);
@@ -281,7 +281,7 @@ public class WxComponentService {
         File test  = new File(Const.TEST_CLASSIFIER_FOR_WX);
 
 
-        StringBuilder sb = new StringBuilder("python ");
+        StringBuilder sb = new StringBuilder("python3 ");
         sb.append(classifier.getPath());
         for (int i = 0; i < options.length; i = i + 2) {
             sb.append(" ").append(options[i].trim()).append("=").append(options[i + 1].trim());
@@ -323,7 +323,7 @@ public class WxComponentService {
         classifier.setParams(paramList);
         String[] options = mLabLearnService.resolveOptions(classifier);
 
-        StringBuilder sb = new StringBuilder("python ");
+        StringBuilder sb = new StringBuilder("python3 ");
         sb.append(classifier.getPath());
         for (int i = 0; i < options.length; i = i + 2) {
             sb.append(" ").append(options[i].trim()).append("=").append(options[i + 1].trim());

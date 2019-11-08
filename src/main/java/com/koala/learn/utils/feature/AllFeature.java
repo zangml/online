@@ -52,7 +52,7 @@ public class AllFeature implements IFeature {
             file = WekaUtils.arff2csv(file);
         }
         try {
-            String allFeatureDec = "python " + Const.ALL_FEATURE
+            String allFeatureDec = "python3 " + Const.ALL_FEATURE
                     + " len_piece=" + windowLength+ " freq=" + freq+ " wave_layer=" + waveLayer
                     + " avg=" + avg+ " std=" + std+ " var=" + var
                     + " skew=" + skew+ " kur=" + kur+ " ptp=" + ptp
