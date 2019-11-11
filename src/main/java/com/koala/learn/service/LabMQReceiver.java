@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -115,7 +117,9 @@ public class LabMQReceiver implements MessageListener {
         String classifierStr = gson.toJson(classifier);
         String[] options = labLearnService.resolveOptions(classifier);
         File csvTrain = WekaUtils.arff2csv(train);
+        PythonUtils.transFile(csvTrain);
         File csvTest = WekaUtils.arff2csv(test);
+        PythonUtils.transFile(csvTest);
         StringBuilder sb = new StringBuilder("python3 ");
         sb.append(classifier.getPath());
         for (int i=0;i<options.length;i=i+2){
@@ -124,7 +128,8 @@ public class LabMQReceiver implements MessageListener {
         sb.append(" train=").append(csvTrain.getAbsolutePath()).append(" test=").append(csvTest.getAbsolutePath());
         logger.info("开始训练 python语句为："+sb.toString());
         long startTime=System.nanoTime();
-        String resParam = PythonUtils.execPy(sb.toString());
+//        String resParam = PythonUtils.execPy(sb.toString());
+        String resParam=PythonUtils.execPyRemote(sb.toString());
         long endTime=System.nanoTime();
         logger.info("python语句执行完毕,共用时"+ ((endTime-startTime)/1000000000) + "秒" );
 
@@ -155,5 +160,18 @@ public class LabMQReceiver implements MessageListener {
             mJedisAdapter.set(cacheKye,gson.toJson(regResult));
             logger.info("已经保存训练结果到缓存");
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        File file =new File("/usr/local/data/socket/123/");
+        if(!file.exists()){
+            file.mkdirs();
+        }
+        FileOutputStream fos=new FileOutputStream("/usr/local/data/socket/123/1.csv");
+
+        fos.write("asdasfasfadfafdfdf".getBytes());
+        fos.write("asdasfasfadfafdfdf".getBytes());
+        fos.write("asdasfasfadfafdfdf".getBytes());
+        fos.close();
     }
 }
