@@ -17,19 +17,21 @@ public class PythonUtils {
     private static final int PORT_PY=20001;
 
     private static final Logger logger= LoggerFactory.getLogger(PythonUtils.class);
+
     public static String execPy(String py){
         StringBuilder sb = new StringBuilder();
         Process process;
         try {
             process = Runtime.getRuntime().exec(py);
+
+//            process.waitFor();
             BufferedReader stdOut=new BufferedReader(new InputStreamReader(process.getInputStream()));
             String s;
             while((s=stdOut.readLine())!=null){
                 sb.append(s);
             }
             stdOut.close();
-            process.waitFor();
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             sb.append(e.getMessage());
             System.out.println(e.getMessage());
             e.printStackTrace();
