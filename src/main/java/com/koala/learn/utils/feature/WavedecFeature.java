@@ -36,7 +36,7 @@ public class WavedecFeature implements IFeature {
             {
                 out = new File(out.getAbsolutePath().replace("arff","csv"));
             }
-            String wavedec = "python3 "+ Const.WAVE_FEATURE+ " wave_layer="+waveLayer+ " len_piece="+windowLength
+            String wavedec = "python "+ Const.WAVE_FEATURE+ " wave_layer="+waveLayer+ " len_piece="+windowLength
                     +" path="+file.getAbsolutePath()+" opath="+out;
             System.out.println(wavedec);
             PythonUtils.execPy(wavedec);

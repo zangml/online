@@ -29,7 +29,7 @@ public class IsolationForestFeature implements IFeature {
             {
                 out = new File(out.getAbsolutePath().replace("arff","csv"));
             }
-            String ifdec = "python3 "+ Const.ISOLATIONFOREST_FEATURE+ " contamination="+contamination
+            String ifdec = "python "+ Const.ISOLATIONFOREST_FEATURE+ " contamination="+contamination
                     +" path="+file.getAbsolutePath()+" opath="+out;
             System.out.println(ifdec);
             PythonUtils.execPy(ifdec);

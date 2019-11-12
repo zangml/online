@@ -263,7 +263,7 @@ public class LabLearnService implements Serializable {
             if (classifier.getPath().endsWith("py")){
                 File csvTrain = WekaUtils.arff2csv(train);
                 File csvTest = WekaUtils.arff2csv(test);
-                StringBuilder sb = new StringBuilder("python3 ");
+                StringBuilder sb = new StringBuilder("python ");
                 sb.append(classifier.getPath());
                 for (int i=0;i<options.length;i=i+2){
                     sb.append(" ").append(options[i]).append("=").append(options[i+1]);
@@ -340,7 +340,7 @@ public class LabLearnService implements Serializable {
             if (classifier.getPath().endsWith("py")){
                 File csvTrain = WekaUtils.arff2csv(train);
                 File csvTest = WekaUtils.arff2csv(test);
-                StringBuilder sb = new StringBuilder("python3 ");
+                StringBuilder sb = new StringBuilder("python ");
                 sb.append(classifier.getPath());
                 for (int i=0;i<options.length;i=i+2){
                     sb.append(" ").append(options[i]).append("=").append(options[i+1]);

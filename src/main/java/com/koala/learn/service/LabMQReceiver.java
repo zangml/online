@@ -161,17 +161,4 @@ public class LabMQReceiver implements MessageListener {
             logger.info("已经保存训练结果到缓存");
         }
     }
-
-    public static void main(String[] args) throws IOException {
-        File file =new File("/usr/local/data/socket/123/");
-        if(!file.exists()){
-            file.mkdirs();
-        }
-        FileOutputStream fos=new FileOutputStream("/usr/local/data/socket/123/1.csv");
-
-        fos.write("asdasfasfadfafdfdf".getBytes());
-        fos.write("asdasfasfadfafdfdf".getBytes());
-        fos.write("asdasfasfadfafdfdf".getBytes());
-        fos.close();
-    }
 }

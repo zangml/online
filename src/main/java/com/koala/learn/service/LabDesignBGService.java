@@ -276,7 +276,7 @@ public class LabDesignBGService {
         File test = new File(Const.UPDATE_CLASS_TEST_ROOT,testFile.getOriginalFilename());
         testFile.transferTo(test);
         List<File> dividerFiles = divideFile(test,0.8f);
-        StringBuilder sb = new StringBuilder("python3 ");
+        StringBuilder sb = new StringBuilder("python ");
         sb.append(cFile.getAbsolutePath()).append(" ");
         sb.append("test=").append(dividerFiles.get(0).getAbsolutePath()).append(" ");
         sb.append("train=").append(dividerFiles.get(1).getAbsolutePath());

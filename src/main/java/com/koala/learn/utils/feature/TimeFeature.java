@@ -30,7 +30,7 @@ public class TimeFeature implements IFeature {
             file = WekaUtils.arff2csv(file);
         }
         try{
-            String timeFeatureDec = "python3 "+ Const.TIME_FEATURE+ " len_piece="+windowLength
+            String timeFeatureDec = "python "+ Const.TIME_FEATURE+ " len_piece="+windowLength
                     +" path="+file.getAbsolutePath()+" opath="+out;
             System.out.println(timeFeatureDec);
             PythonUtils.execPy(timeFeatureDec);

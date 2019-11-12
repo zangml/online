@@ -311,7 +311,7 @@ public class LabDesignController {
                 System.out.println(test.getAbsolutePath());
                 File csvTrain = WekaUtils.arff2csv(train);
                 File csvTest = WekaUtils.arff2csv(test);
-                StringBuilder sb = new StringBuilder("python3 ");
+                StringBuilder sb = new StringBuilder("python ");
                 sb.append(classifier.getPath());
                 for (int i = 0; i < options.length; i = i + 2) {
                     sb.append(" ").append(options[i].trim()).append("=").append(options[i + 1].trim());

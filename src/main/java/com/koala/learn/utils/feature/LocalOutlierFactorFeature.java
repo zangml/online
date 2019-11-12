@@ -29,7 +29,7 @@ public class LocalOutlierFactorFeature implements IFeature {
             {
                 out = new File(out.getAbsolutePath().replace("arff","csv"));
             }
-            String ifdec = "python3 "+ Const.LOCALOUTLIERFACTOR_FEATURE+ " contamination="+contamination
+            String ifdec = "python "+ Const.LOCALOUTLIERFACTOR_FEATURE+ " contamination="+contamination
                     +" path="+file.getAbsolutePath()+" opath="+out;
             System.out.println(ifdec);
             PythonUtils.execPy(ifdec);
