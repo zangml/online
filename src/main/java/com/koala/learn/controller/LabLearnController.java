@@ -254,9 +254,10 @@ public class LabLearnController {
             if (relative != null) {
                 mJedisAdapter.set(RedisKeyUtil.getAttributeKey(null, 3, labId), relative);
                 echatsOptions.add(relative);
-            } else {
-                echatsOptions.add(mGson.toJson(ViewUtils.resloveRegRelative(lab.getFile())));
             }
+//            else {
+//                echatsOptions.add(mGson.toJson(ViewUtils.resloveRegRelative(lab.getFile())));
+//            }
             for (String str : classifierList) {
                 Classifier classifier = mGson.fromJson(str, Classifier.class);
                 classifierNameList.add(classifier.getName());

@@ -91,6 +91,7 @@ public class Const {
     public static final String PCA_WX="/usr/local/sk/pca_wx.py";//微信调用pca组件
 
     public static final String MQ_QUEUE_KEY="phmQueueKey";
+    public static final String MQ_QUEUE="phmQueue";
     public static final String MQ_EXCHANGE="phmExchange";
 
     public static final Integer SMOTE_ID=3;
