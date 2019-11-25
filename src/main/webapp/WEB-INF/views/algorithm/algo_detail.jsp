@@ -87,7 +87,7 @@
                                             </div>
                                         </c:forEach>
                                     </form>
-                                    <button onclick="submitClassify(${classifier.id})" class="btn btn-primary pull-right">训练数据</button>
+                                    <button data-toggle="modal" data-target="#ajaxloader2" data-backdrop="static" onclick="submitClassify(${classifier.id})" class="btn btn-primary pull-right">训练数据</button>
                                 </div>
                             </div>
                         </c:if>

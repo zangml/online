@@ -86,7 +86,7 @@ public class RandomDivider implements IDivider {
     }
 
     public static void main(String[] args) {
-        File file = new File("/Users/zangmenglei/PHM/116/train1.arff");
+        File file = new File("/usr/local/data/lab_shouce/djms_out.csv");
         Map<String,String> map = new HashMap<>();
         map.put("radio","0.8");
         IDivider divider = new RandomDivider();

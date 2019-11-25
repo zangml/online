@@ -1,9 +1,6 @@
 package com.koala.learn.utils;
 
 import com.csvreader.CsvReader;
-import com.csvreader.CsvWriter;
-import com.koala.learn.Const;
-import com.koala.learn.utils.divider.AverageDivider;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,20 +10,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import weka.classifiers.evaluation.Evaluation;
-import weka.classifiers.trees.J48;
 import weka.core.Attribute;
-import weka.core.AttributeStats;
-import weka.core.Instance;
 import weka.core.Instances;
-import weka.core.converters.ArffLoader;
-import weka.core.converters.CSVLoader;
-import weka.core.converters.CSVSaver;
 
 /**
  * Created by koala on 2017/12/4.
@@ -139,10 +125,9 @@ public class WindowUtils {
     }
 
     public static void main(String[] args) throws IOException {
-        File in = new File("/Users/zangmenglei/test/diabetes.arff");
-        ArffLoader loader = new ArffLoader();
-        loader.setSource(in);
-        File out = new File("/Users/zangmenglei/test/diabetes_out_window.arff");
-        window(loader.getDataSet(),3,2,out);
+        File in = new File("/Users/zangmenglei/data/data1.csv");
+        File out = new File("/Users/zangmenglei/data/data1_win.arff");
+        window(in,15,5,out);
+        WekaUtils.arff2csv(out);
     }
 }

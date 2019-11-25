@@ -240,7 +240,9 @@ public class UserspaceController {
 	public String getBlogById(@PathVariable("username") String username, @PathVariable("id") Long id, Model model) {
 		User principal = null;
 		Blog blog = blogService.getBlogById(id);
-		User blogUser=userMapper.selectByUsername(username);
+		Integer userId=blog.getUserId();
+		User blogUser=userMapper.selectByPrimaryKey(userId);
+
 		// 每次读取，简单的可以认为阅读量增加1次
 		if(holder.getUser()!=null) {
 			blogService.readingIncrease(id);

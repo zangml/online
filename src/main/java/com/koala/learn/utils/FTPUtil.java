@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -44,7 +45,7 @@ public class FTPUtil {
     }
 
 
-    private boolean upload(String remotePath,List<File> fileList) throws IOException {
+    private  boolean upload(String remotePath,List<File> fileList) throws IOException {
         boolean uploaded = true;
         FileInputStream fis = null;
         //连接FTP服务器
@@ -132,5 +133,13 @@ public class FTPUtil {
 
     public void setFtpClient(FTPClient ftpClient) {
         this.ftpClient = ftpClient;
+    }
+
+
+    public static void main(String[] args) throws IOException {
+        List<File> fileList=new ArrayList<>();
+        FTPUtil ftpUtil = new FTPUtil(ftpIp,21,ftpUser,ftpPass);
+        fileList.add(new File("/usr/local/data/lab_shouce/djms_out.csv"));
+        ftpUtil.upload("fileForPHM",fileList);
     }
 }
