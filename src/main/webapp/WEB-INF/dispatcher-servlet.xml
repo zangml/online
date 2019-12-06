@@ -106,6 +106,9 @@
         <bean class="com.koala.learn.interceptor.PassportInterceptor"/>
 
         <mvc:interceptor>
+            <mvc:mapping path="/algo/**"/>
+            <mvc:mapping path="/data/**"/>
+            <mvc:mapping path="/u/**"/>
             <mvc:mapping path="/labs/*"/>
             <mvc:mapping path="/labs" />
             <mvc:mapping path="/oj/*" />
@@ -118,6 +121,9 @@
             <bean class="com.koala.learn.interceptor.LoginRequiredInterceptor" />
         </mvc:interceptor>
         <mvc:interceptor>
+            <mvc:mapping path="/algo/**"/>
+            <mvc:mapping path="/data/**"/>
+            <mvc:mapping path="/u/**"/>
             <mvc:mapping path="/labs/**"/>
             <mvc:mapping path="/oj/**" />
             <mvc:mapping path="/design/**" />
