@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koala.learn.dao.UploadAlgoMapper">
+  <resultMap id="BaseResultMap" type="com.koala.learn.entity.UploadAlgo">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="algo_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="algo_des" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="algo_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="algo_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="test_file" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="algo_address" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, algo_name, algo_des , algo_type, algo_id, user_id,test_file,algo_address
+  </sql>
+
+  <insert id="insert" parameterType="com.koala.learn.entity.UploadAlgo" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
+    insert into upload_algo ( algo_name, algo_des,algo_type, algo_id, user_id,test_file,algo_address)
+    values ( #{algoName}, #{algoDes},
+      #{algoType}, #{algoId}, #{userId},
+      #{testFile}, #{algoAddress})
+  </insert>
+</mapper>

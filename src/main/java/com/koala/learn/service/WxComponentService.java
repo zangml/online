@@ -4,14 +4,13 @@ import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
+import com.koala.learn.component.HostHolder;
 import com.koala.learn.component.JedisAdapter;
 import com.koala.learn.dao.ClassifierMapper;
 import com.koala.learn.dao.ClassifierParamMapper;
-import com.koala.learn.entity.Classifier;
-import com.koala.learn.entity.ClassifierParam;
-import com.koala.learn.entity.RegResult;
-import com.koala.learn.entity.Result;
+import com.koala.learn.entity.*;
 import com.koala.learn.utils.*;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +21,7 @@ import weka.core.Instances;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class WxComponentService {
@@ -44,6 +40,12 @@ public class WxComponentService {
 
     @Autowired
     JedisAdapter mJedisAdapter;
+
+    @Autowired
+    MQSender mqSender;
+
+    @Autowired
+    HostHolder holder;
 
     public static final Logger logger = LoggerFactory.getLogger(WxComponentService.class);
 
@@ -209,7 +211,7 @@ public class WxComponentService {
         String wxComponentAlgorithmCacheKey = RedisKeyUtil.getWxComponentAlgorithmCache(param, classifierId);
         String cache=mJedisAdapter.get(wxComponentAlgorithmCacheKey);
         if(cache!=null){
-            if(labType==1){
+            if(labType==1 || labType==3){
                 Result result = mGson.fromJson(cache,Result.class);
                 System.out.println("此结果是从缓存中获取的");
                 res.add(Arrays.asList("算法", "召回率", "准确率", "精确率", "F-Measure", "ROC-Area"));
@@ -217,7 +219,7 @@ public class WxComponentService {
                         result.getRecall() + "", result.getAccuracy() + "",
                         result.getPrecision() + "", result.getfMeasure() + "", result.getRocArea() + "");
                 res.add(resList);
-            }else {
+            }else if(labType==0 || labType==4) {
                 System.out.println("此结果是从缓存中获取的");
                 res.add(Arrays.asList("算法", "可释方差值", "平均绝对误差", "均方根误差", "中值绝对误差", "R方值"));
                 RegResult regResult =mGson.fromJson(cache,RegResult.class);
@@ -227,6 +229,25 @@ public class WxComponentService {
                 res.add(resList);
             }
             return ServerResponse.createBySuccess(res);
+        }
+        //如果是深度学习算法且没有缓存，需要异步处理
+        if(classifier.getLabId().equals(4)||classifier.getLabId().equals(3)){
+            String py=getDeepAlgoPyStr(param,classifierId,classifier);
+            logger.info("要执行的深度学习py语句："+py);
+            AlgoDLMessage message=new AlgoDLMessage();
+            message.setCreatTime(new Date());
+            message.setPy(py);
+            message.setType(Const.CLASSIFIER);
+            message.setAlgoName(classifier.getName());
+            message.setCacheKey(wxComponentAlgorithmCacheKey);
+            if(holder.getUser()!=null){
+                message.setUserId(holder.getUser().getId());
+            }
+            String paramsCacheKey = RedisKeyUtil.getWxComponentAlgorithmParamsCache(param, classifierId);
+            message.setParamsCacheKey(paramsCacheKey);
+            mJedisAdapter.set(paramsCacheKey,gethtmlParamStr(param,classifierId,classifier));
+            mqSender.sendAlgoMessage(message);
+            return ServerResponse.createBySuccess(null);
         }
         if (labType == 1) {
             res.add(Arrays.asList("算法", "召回率", "准确率", "精确率", "F-Measure", "ROC-Area"));
@@ -249,8 +270,6 @@ public class WxComponentService {
             res.add(Arrays.asList("算法", "可释方差值", "平均绝对误差", "均方根误差", "中值绝对误差", "R方值"));
             RegResult regResult =getRegResult(param,classifierId,classifier);
 
-            System.out.println("运算结果：----"+ regResult);
-
             if (regResult == null) {
                 return ServerResponse.createByErrorMessage("运算失败");
             }
@@ -267,6 +286,23 @@ public class WxComponentService {
 
     }
 
+    private String gethtmlParamStr(Map<String, String> param,Integer classifierId,Classifier classifier) {
+        List<ClassifierParam> paramList = mClassifierParamMapper.selectByClassifierId(classifierId);
+        for (ClassifierParam cp:paramList){
+            if (param.containsKey(cp.getParamName())){
+                cp.setDefaultValue(param.get(cp.getParamName()));
+            }
+        }
+        classifier.setParams(paramList);
+        StringBuilder sb = new StringBuilder();
+        for (ClassifierParam classifierParam:classifier.getParams()){
+            if (StringUtils.isNotBlank(classifierParam.getDefaultValue())){
+                sb.append(classifierParam.getParamDes()).append("=").append(classifierParam.getDefaultValue()).append("<br>");
+            }
+        }
+        return sb.toString();
+
+    }
     public Result getResult(Map<String,String> param,Integer classifierId,Classifier classifier){
         List<ClassifierParam> paramList = mClassifierParamMapper.selectByClassifierId(classifierId);
         for (ClassifierParam cp:paramList){
@@ -376,5 +412,27 @@ public class WxComponentService {
         return "0与1的样本数量比为"+ratioString+":1";
     }
 
+
+    private String getDeepAlgoPyStr(Map<String,String> param,Integer classifierId,Classifier classifier){
+        List<ClassifierParam> paramList = mClassifierParamMapper.selectByClassifierId(classifierId);
+        for (ClassifierParam cp:paramList){
+            if (param.containsKey(cp.getParamName())){
+                cp.setDefaultValue(param.get(cp.getParamName()));
+            }
+        }
+        classifier.setParams(paramList);
+        String[] options = mLabLearnService.resolveOptions(classifier);
+
+        File train = new File(Const.TRAIN_REGRESSION_FOR_DL);
+        File test  = new File(Const.TEST_REGRESSION_FOR_DL);
+
+        StringBuilder sb = new StringBuilder("python3 ");
+        sb.append(classifier.getPath());
+        for (int i = 0; i < options.length; i = i + 2) {
+            sb.append(" ").append(options[i].trim()).append("=").append(options[i + 1].trim());
+        }
+        sb.append(" train=").append(train.getAbsolutePath().trim()).append(" test=").append(test.getAbsolutePath().trim());
+        return sb.toString();
+    }
 }
 

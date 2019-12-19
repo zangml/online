@@ -1,14 +1,16 @@
 package com.koala.learn.controller;
 
+import com.google.gson.Gson;
 import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
+import com.koala.learn.component.JedisAdapter;
 import com.koala.learn.dao.ClassifierMapper;
-import com.koala.learn.entity.Algorithm;
-import com.koala.learn.entity.Blog;
-import com.koala.learn.entity.Classifier;
-import com.koala.learn.entity.ClassifierParam;
+import com.koala.learn.dao.ClassifierParamMapper;
+import com.koala.learn.dao.MessageMapper;
+import com.koala.learn.entity.*;
 import com.koala.learn.service.*;
 import com.koala.learn.vo.FeatureVo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +20,7 @@ import weka.core.Instances;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/algo/")
@@ -42,9 +41,20 @@ public class AlgorithmController {
     @Autowired
     BlogService blogService;
 
+    @Autowired
+    Gson gson;
 
+    @Autowired
+    ClassifierParamMapper mClassifierParamMapper;
 
+    @Autowired
+    JedisAdapter jedisAdapter;
 
+    @Autowired
+    LabLearnService labLearnService;
+
+    @Autowired
+    MessageMapper messageMapper;
     @RequestMapping("get_list")
     public String getAlgoList(Model model){
 
@@ -64,10 +74,10 @@ public class AlgorithmController {
             }
             if(algorithm.getType().equals(1)){
                 Classifier classifier=labService.getClassifierById(algorithm.getTypeId());
-                if(classifier.getLabId().equals(1)){
+                if(classifier.getLabId().equals(1)||classifier.getLabId().equals(3)){
                     classfierList.add(algorithm);
                 }
-                if(classifier.getLabId().equals(0)){
+                if(classifier.getLabId().equals(0)||classifier.getLabId().equals(4)){
                     regressionList.add(algorithm);
                 }
             }
@@ -80,12 +90,50 @@ public class AlgorithmController {
     }
 
     @RequestMapping("get_algo_detail/{id}")
-    public String getAlgoDetail(@PathVariable("id")Integer id, Model model){
+    public String getAlgoDetail(@PathVariable("id")Integer id,
+                                @RequestParam(value = "cacheKey",required = false)String cacheKey,
+                                @RequestParam(value = "paramsKey",required = false)String paramsKey,
+                                @RequestParam(value = "messageId",required = false)Integer messageId,
+                                Model model){
 
+
+        if(messageId!=null){
+            Message message=messageMapper.selectByPrimaryKey(messageId);
+            message.setHasRead(1);
+            messageMapper.updateByPrimaryKeySelective(message);
+        }
         Algorithm algorithm=algorithmService.getAlgoById(id);
 
         Blog blog = blogService.getBlogById(algorithm.getBlogId());
         int type=algorithm.getType();
+        List<List<String>> res = new ArrayList<>();
+        if(cacheKey!=null){
+            String cache=jedisAdapter.get(cacheKey);
+            if(cache!=null){
+                Classifier classifier=labService.getClassifierById(algorithm.getTypeId());
+                Integer labType=classifier.getLabId();
+                if(labType==1 || labType==3){
+                    Result result = gson.fromJson(cache,Result.class);
+                    res.add(Arrays.asList("算法", "召回率", "准确率", "精确率", "F-Measure", "ROC-Area"));
+                    List<String> resList = Arrays.asList(classifier.getName(),
+                            result.getRecall() + "", result.getAccuracy() + "",
+                            result.getPrecision() + "", result.getfMeasure() + "", result.getRocArea() + "");
+                    res.add(resList);
+                }else if(labType==0 || labType==4) {
+                    res.add(Arrays.asList("算法", "可释方差值", "平均绝对误差", "均方根误差", "中值绝对误差", "R方值"));
+                    RegResult regResult =gson.fromJson(cache,RegResult.class);
+                    List<String> resList = Arrays.asList(classifier.getName(),
+                            regResult.getVarianceScore() + "", regResult.getAbsoluteError() + "",
+                            Math.sqrt(regResult.getSquaredError()) + "", regResult.getMedianSquaredError() + "", regResult.getR2Score() + "");
+                    res.add(resList);
+                }
+            }
+        }
+        if(paramsKey!=null){
+            String paramStr=jedisAdapter.get(paramsKey);
+            model.addAttribute("paramStr",paramStr);
+        }
+        model.addAttribute("res",res);
         if(type==0 || type==2){
             FeatureVo featureVo=labDesignerService.selectFeatureVoById(algorithm.getTypeId());
             System.out.println(featureVo);
@@ -139,12 +187,14 @@ public class AlgorithmController {
 
     @RequestMapping("get_algo_result/{id}")
     @ResponseBody
-    public ServerResponse<List<List<String>>> handleAlgorithm(@RequestParam Map<String,String> param,
+    public ServerResponse handleAlgorithm(@RequestParam Map<String,String> param,
                                                               @PathVariable("id") Integer classifierId){
 
         Classifier classifier=labService.getClassifierById(classifierId);
-        return wxComponentService.getAlgorithm(param,classifierId,classifier.getLabId());
+        List<List<String>> res= wxComponentService.getAlgorithm(param,classifierId,classifier.getLabId()).getData();
+        return ServerResponse.createBySuccess(res);
     }
+
 
     @RequestMapping("get_feature_result/{id}")
     @ResponseBody

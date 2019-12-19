@@ -25,6 +25,7 @@ public class RedisKeyUtil {
     private static String GET_NORMALIZATION="GET_NORMALIZATION";
 
     private static String WX_COMPONENT_ALGORITHM_CACHE ="WX_COMPONENT_ALGORITHM_CACHE";
+    private static String WX_COMPONENT_ALGO_PARAMS_CACHE ="WX_COMPONENT_ALGO_PARAMS_CACHE";
     private static String WX_LAB_RECORD="WX_LAB_RECORD";
     private static String BIZ_ATTRIBUTE = "ATTRIBUTE";
 
@@ -89,6 +90,14 @@ public class RedisKeyUtil {
     public static String getWxComponentAlgorithmCache(Map<String,String> param, Integer classifierId){
         StringBuilder res=new StringBuilder();
         res.append(WX_COMPONENT_ALGORITHM_CACHE).append(SPLIT).append(classifierId).append(SPLIT);
+        for(String key:param.keySet()){
+            res.append(key).append(param.get(key));
+        }
+        return res.toString();
+    }
+    public static String getWxComponentAlgorithmParamsCache(Map<String,String> param, Integer classifierId){
+        StringBuilder res=new StringBuilder();
+        res.append(WX_COMPONENT_ALGO_PARAMS_CACHE).append(SPLIT).append(classifierId).append(SPLIT);
         for(String key:param.keySet()){
             res.append(key).append(param.get(key));
         }

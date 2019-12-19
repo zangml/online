@@ -1,6 +1,7 @@
 package com.koala.learn.controller;
 
 import com.google.gson.Gson;
+import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
 import com.koala.learn.component.HostHolder;
 import com.koala.learn.component.JedisAdapter;
@@ -241,17 +242,39 @@ public class LabDesignBGController {
         return mDesignBGService.finish(labId);
     }
 
+
+
     @RequestMapping(path = "/design/doUpload/classifier")
-    public String doUpload(@RequestParam(name = "classifierFile") MultipartFile classifierFile,
+    public String doUpload(@RequestParam(name = "classifierFile") MultipartFile uploadFile,
                            @RequestParam(name = "testFile") MultipartFile testFile,
+                           @RequestParam(name = "type",required = false) Integer type,
                            @RequestParam Map<String,Object> params, Model model,
                            HttpSession session){
 
         ServerResponse response = null;
+        System.out.println("上传算法，参数："+params);
+
         try {
-            response = mDesignBGService.uploadClassifier(session,classifierFile,testFile,params);
+            Integer algoType= Integer.parseInt((String)params.get("type"));
+            if(algoType==null){
+                model.addAttribute("error","算法类型不能为空");
+                return "views/common/error";
+            }
+            if(algoType.equals(Const.UPLOAD_ALGO_TYPE_PRE)){
+                response=mDesignBGService.uploadPre(uploadFile,testFile,params);
+            }
+            if(algoType.equals(Const.UPLOAD_ALGO_TYPE_FEA)){
+                response=mDesignBGService.uploadFea(uploadFile,testFile,params);
+            }
+            if(algoType.equals(Const.UPLOAD_ALGO_TYPE_CLA)){
+                response = mDesignBGService.uploadClassifier(uploadFile,testFile,params);
+            }
+            if(algoType.equals(Const.UPLOAD_ALGO_TYPE_REG)){
+                response=mDesignBGService.uploadRegressor(uploadFile,testFile,params);
+            }
             if (response.isSuccess()){
-                return "redirect:/design";
+                model.addAttribute("error","算法上传成功，正在等待审核~");
+                return "views/common/error";
             }else {
                 model.addAttribute("error",response.getMsg());
                 return "views/common/error";

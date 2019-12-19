@@ -10,16 +10,13 @@ import com.koala.learn.service.LabService;
 import com.koala.learn.service.LabLearnService;
 import com.koala.learn.service.MQSender;
 import com.koala.learn.utils.RedisKeyUtil;
-import com.koala.learn.utils.treat.ViewUtils;
 import com.koala.learn.vo.FeatureVo;
 import com.koala.learn.vo.LabViewVo;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;

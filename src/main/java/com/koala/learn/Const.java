@@ -8,16 +8,48 @@ public class Const {
 //    public static String ROOT = "/data/learn/";
     public static final String ROOT = "/Users/zangmenglei/PHM/";//根目录
 
-    public static final String DOWNLOAD_FILE_PREFIX="http://file.phmlearn.com/";
-    public static final String UPLOAD_FILE_ROOT="/ftpfile/fileForPHM/";
+    public static final String DOWNLOAD_FILE_PREFIX = "http://file.phmlearn.com/";
+    public static final String UPLOAD_FILE_ROOT = "/ftpfile/fileForPHM/";
 
     public static final String WINDOW = "currentWindow";
 
-    public static final String DEFAULT_AVATAR="http://image.phmlearn.com/02a885be-28de-414c-9f61-47845fc1c35e.jpeg";
+    public static final int CLASSIFIER = 1;
+    public static final int REGRESSION = 2;
 
-    public static final String UPDATE_CLASS_ROOT = "/usr/local/sk/"; //上传算法所在目录
+    /*
+         <option value="1">数据预处理</option>
+         <option value="2">特征提取</option>
+         <option value="3">故障诊断（分类）</option>
+         <option value="4">寿命预测（回归）</option>
+     */
+    public static final int UPLOAD_ALGO_TYPE_PRE=1;
+    public static final int UPLOAD_ALGO_TYPE_FEA=2;
+    public static final int UPLOAD_ALGO_TYPE_CLA=3;
+    public static final int UPLOAD_ALGO_TYPE_REG=4;
 
-    public static final String UPDATE_CLASS_TEST_ROOT = "/Users/zangmenglei/"; //上传算法测试文件所在目录
+    public static final String UPDATE_CLASS_ROOT_PRE = "/usr/local/sk/upload/pre/"; //上传算法所在目录
+
+    public static final String UPDATE_CLASS_ROOT_FEA = "/usr/local/sk/upload/fea/";
+
+    public static final String UPDATE_CLASS_ROOT_CLA = "/usr/local/sk/upload/cla/";
+
+    public static final String UPDATE_CLASS_ROOT_REG = "/usr/local/sk/upload/reg/";
+
+    public static final String DEFAULT_AVATAR = "http://image.phmlearn.com/02a885be-28de-414c-9f61-47845fc1c35e.jpeg";
+
+
+    public static final String UPLOAD_CLASS_TEST_ROOT_PRE = "/Users/zangmenglei/data/upload/pre/"; //上传算法测试文件所在目录
+
+    public static final String UPLOAD_CLASS_TEST_ROOT_FEA = "/Users/zangmenglei/data/upload/fea/";
+
+    public static final String UPLOAD_CLASS_TEST_ROOT_CLA = "/Users/zangmenglei/data/upload/cla/";
+
+    public static final String UPLOAD_CLASS_TEST_ROOT_REG = "/Users/zangmenglei/data/upload/reg/";
+
+    public static final String UPLOAD_CLASS_TEST_ROOT_PRE_OPATH = "/Users/zangmenglei/data/upload/pre/opath/"; //上传算法输出文件所在目录
+
+    public static final String UPLOAD_CLASS_TEST_ROOT_FEA_OPATH = "/Users/zangmenglei/data/upload/fea/opath/";
+
 
     public static final String IMAGE = "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3972224591,2666750413&fm=173&s=84DB4D325D8A604F4E6125DA0000C0B2&w=600&h=475&img.JPEG";
 
@@ -53,6 +85,11 @@ public class Const {
     public static final String DATA_FOR_FFT_WX="/usr/local/data/wx/dataForFFT.arff";//微信调用fft组件时用于展示的数据集
 
     public static final String FFT_FOR_WX="/usr/local/sk/fftForWx.py";//封装的微信调用fft算法
+
+
+    public static final String TRAIN_REGRESSION_FOR_DL="/usr/local/data/wx/train_regression.csv"; //深度学习算法组件训练数据
+
+    public static final String TEST_REGRESSION_FOR_DL="/usr/local/data/wx/test_regression.csv";//深度学习算法组件测试数据
 
     public static final String TRAIN_CLASSIFIER_FOR_WX="/usr/local/data/wx/train_classifier.csv";//微信调用的分类算法组件训练集
 
@@ -92,6 +129,8 @@ public class Const {
 
     public static final String MQ_QUEUE_KEY="phmQueueKey";
     public static final String MQ_QUEUE="phmQueue";
+    public static final String MQ_ALGO_QUEUE="algoQueue";
+    public static final String MQ_ALGO_QUEUE_KEY="algoQueueKey";
     public static final String MQ_EXCHANGE="phmExchange";
 
     public static final Integer SMOTE_ID=3;

@@ -25,6 +25,7 @@
     <title>基于机器学习的PHM系统</title>
 </head>
 
+
 <body>
 
 <div class="categoryWithCarousel">
@@ -120,9 +121,36 @@
                         <div id="echart" style="width:400px;height: 300px;margin-top: 20px;margin-left: 30px"></div>
                     </c:if>
 
-                    <c:if test="${algorithm.type==1}">
+                    <c:if test="${algorithm.type==1 && res.size()==0}">
                         <h3 style="padding-left: 20px; padding-top: 10px">训练结果</h3>
-                        <div id="res_table" style="margin-top: 20px"></div>
+                        <div id="res_table" style="margin-top: 20px;padding-left: 20px">
+                        </div>
+                    </c:if>
+
+                    <c:if test="${algorithm.type==1 && res.size()>0}">
+                        <h3 style="padding-left: 20px; padding-top: 10px">训练结果</h3>
+                        <div style="margin-top: 20px;padding-left: 30px">
+                            <p>
+                                您提交的算法已训练完成，之前选择的参数如下：
+                            </p>
+                            <br>
+                            <div>
+                                    ${paramStr}
+                                <br>
+                            </div>
+
+                            <table class="table" style="padding-left: 20px">
+                                <tbody>
+                                <c:forEach items="${res}" var="line">
+                                    <tr >
+                                        <c:forEach items="${line}" var="item">
+                                            <td text-align=center>${item}</td>
+                                        </c:forEach>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
                     </c:if>
 
                     <c:if test="${algorithm.type==2}">
@@ -270,18 +298,23 @@
             success:function (data) {
                 $('#ajaxloader2').modal('hide')
                 var tableInfos = document.getElementById('res_table');
-                var code = '<table class="table">';
                 var res=data.data;
-                code +='<tbody>';
-                for(var i=0;i<res.length;i++){
-                    code += '<TR>';
-                    for(var j=0;j<res[i].length;j++){
-                        code += '<td text-align=center>'+(res[i])[j]+'</td>'
+                var code = '<table class="table">';
+                if(res!=null){
+                    code +='<tbody>';
+                    for(var i=0;i<res.length;i++){
+                        code += '<TR>';
+                        for(var j=0;j<res[i].length;j++){
+                            code += '<td text-align=center>'+(res[i])[j]+'</td>'
+                        }
+                        code += '</TR>';
                     }
-                    code += '</TR>';
+                    code +='</tbody></table>';
+                    tableInfos.innerHTML = code;
                 }
-                code +='</tbody></table>';
-                tableInfos.innerHTML = code;
+                else{
+                    tableInfos.innerHTML ='您提交的算法正在训练中，训练完成之后会通知您，请注意查收~';
+                }
 
             },
             error:function (jqXHR) {

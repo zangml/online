@@ -23,10 +23,10 @@
     delete from feature
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.koala.learn.entity.Feature" >
-    insert into feature (id, name, label, 
+  <insert id="insert" parameterType="com.koala.learn.entity.Feature" useGeneratedKeys="true" keyProperty="id">
+    insert into feature (name, label,
       des,feature_type)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, 
+    values (#{name,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR},
       #{des,jdbcType=VARCHAR},#{featureType,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.koala.learn.entity.Feature" >

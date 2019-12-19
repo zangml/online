@@ -25,6 +25,11 @@ public class MQSender {
         amqpTemplate.convertAndSend(Const.MQ_QUEUE_KEY,gson.toJson(message));
     }
 
+    public void sendAlgoMessage(Object message){
+        logger.info("send message"+message);
+        amqpTemplate.convertAndSend(Const.MQ_ALGO_QUEUE_KEY,gson.toJson(message));
+    }
+
 
 
 }

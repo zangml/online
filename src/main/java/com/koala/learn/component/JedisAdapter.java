@@ -406,7 +406,7 @@ public class JedisAdapter implements InitializingBean {
         config.setMaxIdle(MAX_IDLE);
         config.setMaxWaitMillis(MAX_WAIT);
         JedisPool pool = new JedisPool(config, "188.131.184.204", 6379, TIMEOUT, "LvPeng0218");
-        pool.getResource().set("aaa","111");
+        pool.getResource().set("aaa","121");
         System.out.println(pool.getResource().get("aaa"));
     }
 }

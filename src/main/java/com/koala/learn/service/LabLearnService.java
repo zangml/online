@@ -430,5 +430,20 @@ public class LabLearnService implements Serializable {
         return options;
     }
 
+    public String[] resolveOptionsHtml(Classifier classifier){
+        List<String> optionList = new ArrayList<>();
+        for (ClassifierParam cp:classifier.getParams()){
+            if (StringUtils.isNotBlank(cp.getDefaultValue())){
+                optionList.add(cp.getParamDes());
+                optionList.add(cp.getDefaultValue());
+            }
+        }
+        String[] options = new String[optionList.size()];
+        for (int i=0;i<optionList.size();i=i+2){
+            options[i] =optionList.get(i);
+            options[i+1] = optionList.get(i+1);
+        }
+        return options;
+    }
 
 }

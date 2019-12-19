@@ -40,7 +40,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading"></div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" action="/design/doUpload/classifier" method="post" enctype="multipart/form-data">
+                    <form class="form-horizontal" id="algoForm" role="form" action="/design/doUpload/classifier" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="labName" class="col-sm-2 control-label">算法名称</label>
                             <div class="col-sm-10">
@@ -52,6 +52,19 @@
                             <div class="col-sm-10">
                                 <textarea  rows="5" name="des" class="form-control" id="labDes" placeholder="请输入实验描述"></textarea>
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="algoType" class="col-sm-2 control-label">算法类别</label>
+                            <div class="controls col-sm-10">
+                                <select id="algoType" name="type">
+                                    <option value="1">数据预处理</option>
+                                    <option value="2">特征提取</option>
+                                    <option value="3">故障诊断（分类）</option>
+                                    <option value="4">寿命预测（回归）</option>
+                                </select>
+                            </div>
+
                         </div>
 
                         <div class="form-group">
@@ -93,8 +106,18 @@
     </div>
 </div>
 <script>
+
+
     $(function () {
         $("[data-toggle='popover']").popover();
+    });
+
+
+
+
+    $('#algoType li').on('click', function(){
+        $('#algoTypes').val($(this).val());
+        $('#algoTypes').text($(this).text());
     });
 
     function removeParam(node) {

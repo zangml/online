@@ -22,20 +22,24 @@
 
     <!--定义queue -->
     <rabbit:queue name="phmQueue" durable="true" auto-delete="false" exclusive="false" />
+    <rabbit:queue name="algoQueue" durable="true" auto-delete="false" exclusive="false" />
 
-    <!-- 定义direct exchange，绑定queueTest -->
+    <!-- 定义direct exchange，绑定queue -->
     <rabbit:direct-exchange name="phmExchange" id="phmExchange" durable="true" auto-delete="false">
         <rabbit:bindings>
             <rabbit:binding queue="phmQueue" key="phmQueueKey"></rabbit:binding>
+            <rabbit:binding queue="algoQueue" key="algoQueueKey"></rabbit:binding>
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
     <!-- 消息接收者 -->
     <bean id="labMessageReceiver" class="com.koala.learn.service.LabMQReceiver"></bean>
+    <bean id="algoMessageReceiver" class="com.koala.learn.service.AlgoMQReceiver"></bean>
 
     <!-- queue litener  观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象-->
     <rabbit:listener-container connection-factory="connectionFactory">
         <rabbit:listener queues="phmQueue" ref="labMessageReceiver"/>
+        <rabbit:listener queues="algoQueue" ref="algoMessageReceiver"/>
     </rabbit:listener-container>
 
 </beans>

@@ -62,7 +62,7 @@
                 <div class="messageContainer">
                         <%--点击标题跳转到实验结果响应页--%>
                     <span></span>
-                    <p class="mesTitle" style="position: relative;text-indent: 30px"><a href="${msg.toUrl}">${msg.title}</a>
+                    <p class="mesTitle" style="position: relative;text-indent: 30px"><a href="${msg.toUrl}&messageId=${msg.id}">${msg.title}</a>
                         <c:if test="${msg.hasRead==0}">
                         <span style="position: absolute;left: 10px;top: 10px;height: 5px;width: 5px;border-radius: 50%;background-color: red"></span>
                         </c:if>
