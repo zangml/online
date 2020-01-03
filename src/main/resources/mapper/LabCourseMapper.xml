@@ -7,10 +7,11 @@
       <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="blog_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="cover" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="type" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, blog_id, cover
+    id, name, blog_id, cover,type
   </sql>
   <select id="selectAllLabCourse" resultMap="BaseResultMap">
     SELECT

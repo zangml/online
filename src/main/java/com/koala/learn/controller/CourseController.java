@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,10 +42,19 @@ public class CourseController {
     @RequestMapping(path = {"/","/index"})
     public String courseList(Model model){
         List<CourseType> typeList = mCourseService.getCourseTypeList();
-        List<LabCourse> labCourseList=labCourseService.getAllLabCourse();
-//        List<Algorithm> algorithmList=labCourseService.getAllAlgorithm();
+        List<LabCourse> labCourseListAll=labCourseService.getAllLabCourse();
+        List<LabCourse> labCourseList=new ArrayList<>();
+        List<LabCourse> guideList=new ArrayList<>();
+        for(LabCourse labCourse:labCourseListAll){
+            if(labCourse.getType().equals(1)){
+                labCourseList.add(labCourse);
+            }else if(labCourse.getType().equals(2)){
+                guideList.add(labCourse);
+            }
+        }
         model.addAttribute("typeList",typeList);
         model.addAttribute("labCourseList",labCourseList);
+        model.addAttribute("guideList",guideList);
         User user=holder.getUser();
         if(user==null){
             model.addAttribute("userId",0);

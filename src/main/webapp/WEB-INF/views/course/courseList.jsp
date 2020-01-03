@@ -68,6 +68,28 @@
                 </div>
             </div>
         </div>
+        <div class="eachHomepageCategoryProducts">
+            <div class="listBar">
+                <span class="left-mark"></span>
+                <span class="categoryTitle">课程指导手册</span>
+            </div>
+            <div class="courseListContainer">
+                <c:forEach items="${guideList}" var="labCourse">
+                    <div class="productItem">
+                        <a href="/course/lab/${labCourse.blogId}">
+                            <img src="${labCourse.cover}">
+                            <span class="productItemDesc">${labCourse.name}</span>
+                        </a>
+                    </div>
+                </c:forEach>
+                <div class="productItem">
+                    <a href="/u/blogs/model/9"><img
+                            src="../../static/images/add.png" style="width: 150px;height: 150px;margin-top: 30px">
+                        <span class="productItemDesc">创建文章</span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
     <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </div>

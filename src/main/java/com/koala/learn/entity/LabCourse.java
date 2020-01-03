@@ -6,16 +6,18 @@ public class LabCourse {
     private String name;
     private Long blogId;
     private String cover;
+    private Integer type; // 教程类型 1为案例 2为课程指导手册
 
     public LabCourse(){
 
     }
 
-    public LabCourse(Integer id, String name, Long blogId, String cover) {
+    public LabCourse(Integer id, String name, Long blogId, String cover,Integer type) {
         this.id = id;
         this.name = name;
         this.blogId = blogId;
         this.cover = cover;
+        this.type=type;
     }
 
     public Integer getId() {
@@ -48,5 +50,13 @@ public class LabCourse {
 
     public void setCover(String cover) {
         this.cover = cover;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 }
