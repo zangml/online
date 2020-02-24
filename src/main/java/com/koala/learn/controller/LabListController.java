@@ -1,11 +1,13 @@
 package com.koala.learn.controller;
 
 import com.google.gson.Gson;
+import com.koala.learn.component.HostHolder;
 import com.koala.learn.component.JedisAdapter;
 import com.koala.learn.dao.MessageMapper;
 import com.koala.learn.entity.Lab;
 import com.koala.learn.entity.Message;
 import com.koala.learn.entity.Result;
+import com.koala.learn.entity.User;
 import com.koala.learn.service.LabService;
 
 import com.koala.learn.utils.RedisKeyUtil;
@@ -35,11 +37,18 @@ public class LabListController {
     JedisAdapter mJedisAdapter;
 
     @Autowired
+    HostHolder holder;
+    @Autowired
     MessageMapper messageMapper;
 
     @RequestMapping("/labs")
     public String getExperimentList(Model model){
         model.addAttribute("labList", mLabService.getGroupList());
+        User user=holder.getUser();
+        if(user!=null && user.getRole().equals(0)){
+            model.addAttribute("error","本功能暂不对普通用户开放，敬请期待~");
+            return "views/common/error";
+        }
         return "views/lab/lablist";
     }
 

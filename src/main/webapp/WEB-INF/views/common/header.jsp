@@ -50,6 +50,11 @@
                     算法库
                 </a>
         </span>
+        <span>
+                <a href="/api/get_list/3">
+                    API
+                </a>
+        </span>
     </div>
     <c:choose>
         <c:when test="${sessionScope.get('user') == null}">

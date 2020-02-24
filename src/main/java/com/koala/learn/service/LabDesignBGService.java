@@ -71,8 +71,15 @@ public class LabDesignBGService {
 
     @Autowired
     UploadAlgoMapper uploadAlgoMapper;
+
     @Autowired
     Gson mGson;
+
+    @Autowired
+    APIMapper apiMapper;
+
+    @Autowired
+    APIParamMapper apiParamMapper;
 
     public BuildinFile getFileById(int id){
         return fileMapper.selectByPrimaryKey(id);
@@ -347,6 +354,36 @@ public class LabDesignBGService {
             return ServerResponse.createByErrorMessage("分类算法保存错误!");
         }
 
+        uploadAlgo.setAlgoId(classifier.getId());
+        uploadAlgo.setUserId(mHolder.getUser().getId());
+        uploadAlgo.setTestFile(test.getAbsolutePath());
+        uploadAlgo.setAlgoAddress(claFile.getAbsolutePath());
+        int insert = uploadAlgoMapper.insert(uploadAlgo);
+        if(insert<=0){
+            return ServerResponse.createByErrorMessage("分类算法保存上传信息错误!");
+        }
+        API api=new API();
+
+        api.setApiType(Const.UPLOAD_ALGO_TYPE_CLA);
+        api.setUploadAlgoId(uploadAlgo.getId());
+        api.setContentType("application/x-www-form-urlencoded");
+        api.setCreatTime(new Date());
+        api.setDesc(uploadAlgo.getAlgoDes());
+        api.setName(uploadAlgo.getAlgoName());
+        api.setRequestMethod("POST");
+        api.setStatus(0);
+        api.setUserId(uploadAlgo.getUserId());
+        api.setUpdateTime(new Date());
+        api.setPub(Integer.parseInt(params.get("pub").toString()));
+
+        api.setUrl("http://api.phmlearn.com/component/upload/ML/"+Const.UPLOAD_ALGO_TYPE_CLA+"/"+uploadAlgo.getId());
+
+        int apiInsetCount = apiMapper.insert(api);
+        if(apiInsetCount<=0){
+            return ServerResponse.createByErrorMessage("保存API信息错误");
+        }
+
+        //保存参数信息
         for (String key:params.keySet()){
             if (key.startsWith("paramName")){
                 if (StringUtils.isNotBlank(params.get(key).toString())){
@@ -356,19 +393,23 @@ public class LabDesignBGService {
                     classifierParam.setParamDes(params.get(key.replace("Name","Des")).toString());
                     classifierParam.setDefaultValue(params.get(key.replace("Name","Value")).toString());
                     mClassifierParamMapper.insert(classifierParam);
+
+                    APIParam apiParam=new APIParam();
+                    apiParam.setName(params.get(key).toString());
+                    apiParam.setCreatTime(new Date());
+                    apiParam.setDefaultValue(params.get(key.replace("Name","Value")).toString());
+                    apiParam.setParamDesc(params.get(key.replace("Name","Des")).toString());
+                    apiParam.setIsNecessary(params.get(key.replace("Name","Necessary")).toString());
+                    apiParam.setParamType(params.get(key.replace("Name","Type")).toString());
+                    apiParam.setStatus(1);
+                    apiParam.setUpdateTime(new Date());
+                    apiParam.setAPIId(api.getId());
+                    apiParamMapper.insert(apiParam);
                 }
             }
         }
 
-        uploadAlgo.setAlgoId(classifier.getId());
-        uploadAlgo.setUserId(mHolder.getUser().getId());
-        uploadAlgo.setTestFile(test.getAbsolutePath());
-        uploadAlgo.setAlgoAddress(claFile.getAbsolutePath());
-        int insert = uploadAlgoMapper.insert(uploadAlgo);
-        if(insert<=0){
-            return ServerResponse.createByErrorMessage("分类算法保存上传信息错误!");
-        }
-        return ServerResponse.createBySuccess();
+        return ServerResponse.createBySuccess(api.getUrl());
 
     }
     public ServerResponse uploadPre(MultipartFile uploadFile, MultipartFile testFile, Map<String, Object> params) throws IOException {
@@ -416,6 +457,38 @@ public class LabDesignBGService {
             return ServerResponse.createByErrorMessage("预处理算法保存错误!");
         }
 
+        uploadAlgo.setAlgoId(feature.getId());
+        uploadAlgo.setUserId(mHolder.getUser().getId());
+        uploadAlgo.setTestFile(test.getAbsolutePath());
+        uploadAlgo.setAlgoAddress(preFile.getAbsolutePath());
+        int insert = uploadAlgoMapper.insert(uploadAlgo);
+
+        if(insert<=0){
+            return ServerResponse.createByErrorMessage("预处理上传保存错误!");
+        }
+        API api=new API();
+
+        api.setApiType(Const.UPLOAD_ALGO_TYPE_PRE);
+        api.setUploadAlgoId(uploadAlgo.getId());
+        api.setContentType("application/x-www-form-urlencoded");
+        api.setCreatTime(new Date());
+        api.setDesc(uploadAlgo.getAlgoDes());
+        api.setName(uploadAlgo.getAlgoName());
+        api.setRequestMethod("POST");
+        api.setStatus(0);
+        api.setUserId(uploadAlgo.getUserId());
+        api.setUpdateTime(new Date());
+        api.setPub(Integer.parseInt(params.get("pub").toString()));
+
+
+        api.setUrl("http://api.phmlearn.com/component/upload/"+Const.UPLOAD_ALGO_TYPE_PRE+"/"+uploadAlgo.getId());
+
+        int apiInsetCount = apiMapper.insert(api);
+        if(apiInsetCount<=0){
+            return ServerResponse.createByErrorMessage("保存API信息错误");
+        }
+
+        //保存参数信息
         for (String key:params.keySet()){
             if (key.startsWith("paramName")){
                 if (StringUtils.isNotBlank(params.get(key).toString())){
@@ -426,19 +499,22 @@ public class LabDesignBGService {
                     featureParam.setDes(params.get(key.replace("Name","Des")).toString());
                     featureParam.setDefaultValue(params.get(key.replace("Name","Value")).toString());
                     mFeatureParamMapper.insert(featureParam);
+
+                    APIParam apiParam=new APIParam();
+                    apiParam.setName(params.get(key).toString());
+                    apiParam.setCreatTime(new Date());
+                    apiParam.setDefaultValue(params.get(key.replace("Name","Value")).toString());
+                    apiParam.setParamDesc(params.get(key.replace("Name","Des")).toString());
+                    apiParam.setIsNecessary(params.get(key.replace("Name","Necessary")).toString());
+                    apiParam.setParamType(params.get(key.replace("Name","Type")).toString());
+                    apiParam.setStatus(1);
+                    apiParam.setUpdateTime(new Date());
+                    apiParam.setAPIId(api.getId());
+                    apiParamMapper.insert(apiParam);
                 }
             }
         }
-
-        uploadAlgo.setAlgoId(feature.getId());
-        uploadAlgo.setUserId(mHolder.getUser().getId());
-        uploadAlgo.setTestFile(test.getAbsolutePath());
-        uploadAlgo.setAlgoAddress(preFile.getAbsolutePath());
-        int insert = uploadAlgoMapper.insert(uploadAlgo);
-        if(insert<=0){
-            return ServerResponse.createByErrorMessage("预处理上传保存错误!");
-        }
-        return ServerResponse.createBySuccess();
+        return ServerResponse.createBySuccess(api.getUrl());
     }
     public ServerResponse uploadFea(MultipartFile uploadFile, MultipartFile testFile, Map<String, Object> params) throws IOException {
         //保存算法文件
@@ -485,20 +561,6 @@ public class LabDesignBGService {
             return ServerResponse.createByErrorMessage("特征提取算法保存错误!");
         }
 
-        for (String key:params.keySet()){
-            if (key.startsWith("paramName")){
-                if (StringUtils.isNotBlank(params.get(key).toString())){
-                    FeatureParam featureParam = new FeatureParam();
-                    featureParam.setFeatureId(feature.getId());
-                    featureParam.setShell(params.get(key).toString());
-                    featureParam.setName(params.get(key).toString());
-                    featureParam.setDes(params.get(key.replace("Name","Des")).toString());
-                    featureParam.setDefaultValue(params.get(key.replace("Name","Value")).toString());
-                    mFeatureParamMapper.insert(featureParam);
-                }
-            }
-        }
-
         uploadAlgo.setAlgoId(feature.getId());
         uploadAlgo.setUserId(mHolder.getUser().getId());
         uploadAlgo.setTestFile(test.getAbsolutePath());
@@ -507,7 +569,56 @@ public class LabDesignBGService {
         if(insert<=0){
             return ServerResponse.createByErrorMessage("预处理上传保存错误!");
         }
-        return ServerResponse.createBySuccess();
+        API api=new API();
+
+        api.setApiType(Const.UPLOAD_ALGO_TYPE_FEA);
+        api.setUploadAlgoId(uploadAlgo.getId());
+        api.setContentType("application/x-www-form-urlencoded");
+        api.setCreatTime(new Date());
+        api.setDesc(uploadAlgo.getAlgoDes());
+        api.setName(uploadAlgo.getAlgoName());
+        api.setRequestMethod("POST");
+        api.setStatus(0);
+        api.setUserId(uploadAlgo.getUserId());
+        api.setUpdateTime(new Date());
+
+        api.setPub(Integer.parseInt(params.get("pub").toString()));
+        api.setUrl("http://api.phmlearn.com/component/upload/"+Const.UPLOAD_ALGO_TYPE_FEA+"/"+uploadAlgo.getId());
+
+        int apiInsertCount = apiMapper.insert(api);
+        if(apiInsertCount<=0){
+            return ServerResponse.createByErrorMessage("保存API信息错误");
+        }
+
+        //保存参数信息
+        for (String key:params.keySet()){
+            if (key.startsWith("paramName")){
+                if (StringUtils.isNotBlank(params.get(key).toString())){
+
+                    APIParam apiParam=new APIParam();
+                    apiParam.setName(params.get(key).toString());
+                    apiParam.setCreatTime(new Date());
+                    apiParam.setDefaultValue(params.get(key.replace("Name","Value")).toString());
+                    apiParam.setParamDesc(params.get(key.replace("Name","Des")).toString());
+                    apiParam.setIsNecessary(params.get(key.replace("Name","Necessary")).toString());
+                    apiParam.setParamType(params.get(key.replace("Name","Type")).toString());
+                    apiParam.setStatus(1);
+                    apiParam.setUpdateTime(new Date());
+                    apiParam.setAPIId(api.getId());
+                    apiParamMapper.insert(apiParam);
+
+                    FeatureParam featureParam = new FeatureParam();
+                    featureParam.setFeatureId(feature.getId());
+                    featureParam.setShell(params.get(key).toString());
+                    featureParam.setName(params.get(key).toString());
+                    featureParam.setDes(params.get(key.replace("Name","Des")).toString());
+                    featureParam.setDefaultValue(params.get(key.replace("Name","Value")).toString());
+                    mFeatureParamMapper.insert(featureParam);
+
+                }
+            }
+        }
+        return ServerResponse.createBySuccess(api.getUrl());
     }
     public ServerResponse uploadRegressor(MultipartFile uploadFile, MultipartFile testFile, Map<String, Object> params) throws IOException {
         String uploadFileName=uploadFile.getOriginalFilename();
@@ -560,19 +671,6 @@ public class LabDesignBGService {
             return ServerResponse.createByErrorMessage("回归算法保存错误!");
         }
 
-        for (String key:params.keySet()){
-            if (key.startsWith("paramName")){
-                if (StringUtils.isNotBlank(params.get(key).toString())){
-                    ClassifierParam classifierParam = new ClassifierParam();
-                    classifierParam.setClassifierId(classifier.getId());
-                    classifierParam.setParamName(params.get(key).toString());
-                    classifierParam.setParamDes(params.get(key.replace("Name","Des")).toString());
-                    classifierParam.setDefaultValue(params.get(key.replace("Name","Value")).toString());
-                    mClassifierParamMapper.insert(classifierParam);
-                }
-            }
-        }
-
         uploadAlgo.setAlgoId(classifier.getId());
         uploadAlgo.setUserId(mHolder.getUser().getId());
         uploadAlgo.setTestFile(test.getAbsolutePath());
@@ -581,7 +679,55 @@ public class LabDesignBGService {
         if(insert<=0){
             return ServerResponse.createByErrorMessage("回归算法保存上传信息错误!");
         }
-        return ServerResponse.createBySuccess();
+
+        API api=new API();
+
+        api.setApiType(Const.UPLOAD_ALGO_TYPE_REG);
+        api.setUploadAlgoId(uploadAlgo.getId());
+        api.setContentType("application/x-www-form-urlencoded");
+        api.setCreatTime(new Date());
+        api.setDesc(uploadAlgo.getAlgoDes());
+        api.setName(uploadAlgo.getAlgoName());
+        api.setRequestMethod("POST");
+        api.setStatus(0);
+        api.setUserId(uploadAlgo.getUserId());
+        api.setUpdateTime(new Date());
+        api.setPub(Integer.parseInt(params.get("pub").toString()));
+
+        api.setUrl("http://api.phmlearn.com/component/upload/ML/"+Const.UPLOAD_ALGO_TYPE_REG+"/"+uploadAlgo.getId());
+
+        int apiInsetCount = apiMapper.insert(api);
+        if(apiInsetCount<=0){
+            return ServerResponse.createByErrorMessage("保存API信息错误");
+        }
+
+        //保存参数信息
+        for (String key:params.keySet()){
+            if (key.startsWith("paramName")){
+                if (StringUtils.isNotBlank(params.get(key).toString())){
+                    APIParam apiParam=new APIParam();
+                    apiParam.setName(params.get(key).toString());
+                    apiParam.setCreatTime(new Date());
+                    apiParam.setDefaultValue(params.get(key.replace("Name","Value")).toString());
+                    apiParam.setParamDesc(params.get(key.replace("Name","Des")).toString());
+                    apiParam.setIsNecessary(params.get(key.replace("Name","Necessary")).toString());
+                    apiParam.setParamType(params.get(key.replace("Name","Type")).toString());
+                    apiParam.setStatus(1);
+                    apiParam.setUpdateTime(new Date());
+                    apiParam.setAPIId(api.getId());
+                    apiParamMapper.insert(apiParam);
+
+                    ClassifierParam classifierParam = new ClassifierParam();
+                    classifierParam.setClassifierId(classifier.getId());
+                    classifierParam.setParamName(params.get(key).toString());
+                    classifierParam.setParamDes(params.get(key.replace("Name","Des")).toString());
+                    classifierParam.setDefaultValue(params.get(key.replace("Name","Value")).toString());
+                    mClassifierParamMapper.insert(classifierParam);
+
+                }
+            }
+        }
+        return ServerResponse.createBySuccess(api.getUrl());
     }
 
     private List<File> divideFile(File source,float radio) throws IOException {
@@ -624,7 +770,7 @@ public class LabDesignBGService {
      * @return
      */
 
-    private  String getFileName(String prefix,String uploadFileName){
+    public  String getFileName(String prefix,String uploadFileName){
         StringBuilder res=new StringBuilder();
         Random random=new Random();
         int suffIndex=uploadFileName.lastIndexOf(".");

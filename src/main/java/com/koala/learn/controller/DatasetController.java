@@ -3,6 +3,7 @@ package com.koala.learn.controller;
 import com.koala.learn.Const;
 import com.koala.learn.entity.Dataset;
 import com.koala.learn.service.DatasetService;
+import com.koala.learn.service.LabDesignBGService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,9 @@ public class DatasetController {
 
     @Autowired
     DatasetService datasetService;
+
+    @Autowired
+    LabDesignBGService labDesignBGService;
 
     @RequestMapping("dataset")
     public String getDataset(){
@@ -55,12 +59,12 @@ public class DatasetController {
         }
 
         String filename=file.getOriginalFilename();
-        String suffix=filename.substring(filename.lastIndexOf('.'));
-        System.out.println("后缀:" + suffix);
-        File uploadFile =new File (Const.ROOT+ UUID.randomUUID()+suffix);
+        String randomName=labDesignBGService.getFileName("data",filename);
+
+        File uploadFile =new File (Const.UPLOAD_DATASET,randomName);
         System.out.println(uploadFile.getAbsolutePath());
         file.transferTo(uploadFile);
-        datasetService.uploadDataset(uploadFile);
+//        datasetService.uploadDataset(uploadFile);
 
         String downloadUrl=Const.DOWNLOAD_FILE_PREFIX+uploadFile.getName();
         System.out.println("downLoadURl:" +downloadUrl);
@@ -75,7 +79,8 @@ public class DatasetController {
 
         datasetService.save(dataset);
 
-        return "views/data/dataset";
+        model.addAttribute("error","数据集已上传，调用平台api处理数据集，请使用数据名："+randomName);
+        return "views/common/error";
     }
 
     @RequestMapping("dataDes/{id}")

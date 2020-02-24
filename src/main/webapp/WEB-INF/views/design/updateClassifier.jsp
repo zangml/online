@@ -68,6 +68,17 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="pub" class="col-sm-2 control-label">是否公开</label>
+                            <div class="controls col-sm-10">
+                                <select id="pub" name="pub">
+                                    <option value="0">私有</option>
+                                    <option value="1">公开</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
                             <label for="labClassifier" class="col-sm-2 control-label ">上传算法</label>
                             <div class="col-sm-10">
                                 <input  type="file" name="classifierFile" id="labClassifier" accept=".py">
@@ -86,16 +97,19 @@
                             <label class="control-label ">算法参数</label>
                             <div id="param" class="panel  col-sm-offset-2" style="display: none">
                                 <input type="text" name="paramName" style="width: 120px;display:inline" class="form-control"placeholder="参数名">
-                                <input type="text" name="paramDes" style="width: 120px;display:inline;" class="form-control"placeholder="参数描述">
+                                <input type="text" name="paramNecessary" style="width: 120px;display:inline;" class="form-control"placeholder="是否必须">
+                                <input type="text" name="paramType" style="width: 120px;display:inline;" class="form-control"placeholder="参数类型">
                                 <input type="text" name="paramValue" style="width: 120px;display:inline;"class="form-control"placeholder="默认值">
+                                <input type="text" name="paramDes" style="width: 120px;display:inline;" class="form-control"placeholder="参数描述">
                                 <span onclick="removeParam(this)" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                             </div>
                         </dev>
 
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-6">
-                                <button type="submit" class="btn btn-primary">上传算法</button>
                                 <button type="button" onclick="addParam()" class="btn btn-success">添加参数</button>
+
+                                <button type="submit" class="btn btn-primary">上传算法</button>
                             </div>
                         </div>
                     </form>
@@ -130,8 +144,10 @@
         var clone = $("#param").clone().attr("id","param1").css("display","block")
         clone.insertBefore("#param")
         clone.children('input:first').attr("name","paramName"+headIndex)
-        clone.children('input:nth-child(2)').attr("name","paramDes"+headIndex)
-        clone.children('input:last').attr("name","paramValue"+headIndex)
+        clone.children('input:nth-child(2)').attr("name","paramNecessary"+headIndex)
+        clone.children('input:nth-child(3)').attr("name","paramType"+headIndex)
+        clone.children('input:nth-child(4)').attr("name","paramValue"+headIndex)
+        clone.children('input:last').attr("name","paramDes"+headIndex)
         headIndex++;
     }
 </script>

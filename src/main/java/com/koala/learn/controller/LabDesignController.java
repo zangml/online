@@ -96,6 +96,11 @@ public class LabDesignController {
     @RequestMapping("/design")
     public String design(Model model) {
         model.addAttribute("files", mLabDesignerService.getBuildinFileList());
+        User user=mHolder.getUser();
+        if(user!=null && user.getRole().equals(0)){
+            model.addAttribute("error","本功能暂不对普通用户开放，敬请期待~");
+            return "views/common/error";
+        }
         return "views/design/createGroup";
     }
 

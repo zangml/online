@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koala.learn.dao.APIParamMapper">
+  <resultMap id="BaseResultMap" type="com.koala.learn.entity.APIParam">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="API_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="is_necessary" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="param_type" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="default_value" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="param_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="creat_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, API_id,name, is_necessary , param_type, default_value, param_desc,status,creat_time,update_time
+  </sql>
+
+  <insert id="insert" parameterType="com.koala.learn.entity.APIParam" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
+    insert into APIParam (API_id, name, is_necessary , param_type, default_value, param_desc,status,creat_time,update_time)
+    values (#{APIId}, #{name}, #{isNecessary},
+      #{paramType}, #{defaultValue}, #{paramDesc},
+      #{status}, #{creatTime}, #{updateTime})
+  </insert>
+
+  <select id="getAllByApiId" resultType="com.koala.learn.entity.APIParam" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List"/>
+    from APIParam
+    where API_id=#{apiId}
+    or API_id=0
+  </select>
+</mapper>
