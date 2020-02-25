@@ -26,7 +26,12 @@ public class ApiController {
     @RequestMapping("get_list/{id}")
     public String getApiList(@PathVariable(value = "id")Integer id, Model model){
         API api =apiService.getApiById(id);
-        List<APIParam> apiParams=apiService.getAllParamsByApiId(id);
+        List<APIParam> apiParams;
+        if(api.getApiType().equals(0)){
+            apiParams=apiService.getAllParamsByApiId(id);
+        }else{
+            apiParams=apiService.getAllParamsByApiIdIncludePub(id);
+        }
         List<API> myApis=apiService.getAllParamsByUserId(holder.getUser().getId());
         model.addAttribute("api",api);
         model.addAttribute("apiParams",apiParams);

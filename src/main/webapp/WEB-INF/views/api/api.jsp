@@ -46,9 +46,27 @@
                     <div class="accordion" id="accordionExample">
 
                         <div class="card">
+                            <div class="card-header" id="headingSix">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                        用户认证
+                                    </button>
+                                </h2>
+                            </div>
+
+                            <div id="collapseSix" class="collapse show" aria-labelledby="headingSix" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <ul>
+                                        <li><a href="/api/get_list/17">获取Api身份信息</a></li>
+                                        <li><a href="/api/get_list/18">获取access_token</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
                             <div class="card-header" id="headingOne">
                                 <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                         数据预处理
                                     </button>
                                 </h2>
@@ -231,6 +249,98 @@
                     <%--</pre>--%>
                     <h2 class="api_desc_title" id="fanhui">返回说明</h2>
 
+                    <c:if test="${api.id ==18}">
+                        <p>
+                            <strong>返回参数</strong>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>参数名</th>
+                                <th>是否必选</th>
+                                <th>类型</th>
+                                <th>说明</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>access_token</td>
+                                <td>是</td>
+                                <td>string</td>
+                                <td>access_token，身份认证信息</td>
+                            </tr>
+                            <tr>
+                                <td>expired</td>
+                                <td>是</td>
+                                <td>string</td>
+                                <td>access_token过期时间，有效期为一个月</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </p>
+                        <p>
+                            <strong>返回示例</strong>
+                        </p>
+                        <pre>
+                             <code>
+{
+    "status": 0,
+    "msg": null,
+    "data": {
+        "access_token": "5a17c156d5ab49059392f14dca82e22d.593f5260a202171018f06a4d4c1e5d07",
+        "expired": "2020-03-21 01:02:50"
+    },
+    "success": true
+}
+                    </code>
+                    </pre>
+
+                    </c:if>
+                    <c:if test="${api.id ==17}">
+                        <p>
+                            <strong>返回参数</strong>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>参数名</th>
+                                <th>是否必选</th>
+                                <th>类型</th>
+                                <th>说明</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>apiKey</td>
+                                <td>是</td>
+                                <td>string</td>
+                                <td>apiKey</td>
+                            </tr>
+                            <tr>
+                                <td>apiSecret</td>
+                                <td>是</td>
+                                <td>string</td>
+                                <td>apiSecret</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </p>
+                        <p>
+                            <strong>返回示例</strong>
+                        </p>
+                        <pre>
+                             <code>
+{
+    "status": 0,
+    "msg": null,
+    "data": {
+        "apiKey": "5a17c156d5ab490593932f1dca82e22d",
+        "apiSecret": "3B648CD3B72A171A4CB72678AA45A152"
+    },
+    "success": true
+}
+                    </code>
+                    </pre>
+
+                    </c:if>
                         <c:if test="${api.apiType ==1 || api.apiType ==2}">
                     <p>
                         <strong>返回参数</strong>

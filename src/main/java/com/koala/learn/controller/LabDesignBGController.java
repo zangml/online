@@ -273,7 +273,7 @@ public class LabDesignBGController {
                 response=mDesignBGService.uploadRegressor(uploadFile,testFile,params);
             }
             if (response.isSuccess()){
-                model.addAttribute("error","算法上传成功，正在等待审核~");
+                model.addAttribute("error","算法上传成功，可在api页面中我的api处查看~");
                 return "views/common/error";
             }else {
                 model.addAttribute("error",response.getMsg());

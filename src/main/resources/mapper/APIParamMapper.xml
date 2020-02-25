@@ -31,6 +31,13 @@
     <include refid="Base_Column_List"/>
     from APIParam
     where API_id=#{apiId}
+  </select>
+  <select id="getAllByApiIdIncludePub" resultType="com.koala.learn.entity.APIParam" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List"/>
+    from APIParam
+    where API_id=#{apiId}
     or API_id=0
   </select>
+
 </mapper>
