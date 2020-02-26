@@ -21,7 +21,7 @@ public class ApiService {
 
 
     public API getApiById(Integer id) {
-        return apiMapper.getById(id);
+        return apiMapper.selectById(id);
     }
 
     public List<APIParam> getAllParamsByApiIdIncludePub(Integer id) {

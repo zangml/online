@@ -9,29 +9,37 @@
       <arg column="is_necessary" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="param_type" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="default_value" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="param_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="creat_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, API_id,name, is_necessary , param_type, default_value, desc,status,creat_time,update_time
+    id, API_id,name, is_necessary , param_type, default_value, param_desc,status,creat_time,update_time
   </sql>
 
   <insert id="insert" parameterType="com.koala.learn.entity.APIParam" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
-    insert into APIParam (API_id, name, is_necessary , param_type, default_value, desc,status,creat_time,update_time)
+    insert into APIParam (API_id, name, is_necessary , param_type, default_value, param_desc,status,creat_time,update_time)
     values (#{APIId}, #{name}, #{isNecessary},
-      #{paramType}, #{defaultValue}, #{desc},
+      #{paramType}, #{defaultValue}, #{paramDesc},
       #{status}, #{creatTime}, #{updateTime})
   </insert>
 
+  <select id="getAllByApiId" resultType="com.koala.learn.entity.APIParam">
+    select
+    <include refid="Base_Column_List"/>
+    from APIParam
+    where API_id=#{apiId}
+  </select>
 
-<select id="selectByApiId" resultType="com.koala.learn.entity.APIParam">
+<select id="getAllByApiIdIncludePub" resultType="com.koala.learn.entity.APIParam">
   select
   <include refid="Base_Column_List"/>
   from APIParam
   where API_id=#{apiId}
+  or API_id=0
 </select>
+
 
 </mapper>
