@@ -51,6 +51,28 @@ public class UserService {
         return userMapper.selectByPrimaryKey(id);
     }
 
+    public User getUserByUsername(String username){
+        return userMapper.selectByUsername(username);
+    }
+
+    public ServerResponse loginApi(String username, String password){
+        User user =userMapper.selectByUsername(username);
+
+        if(user==null){
+            return ServerResponse.createByErrorMessage("用户名不存在");
+        }
+
+        if(user.getState().equals(0)){
+            return ServerResponse.createByErrorMessage("用户未激活");
+        }
+
+        if (!WendaUtil.MD5(password+user.getSalt()).equals(user.getPassword())){
+            return ServerResponse.createByErrorMessage("密码错误");
+        }
+
+        return ServerResponse.createBySuccess();
+    }
+
     public Map<String, Object> login(String username, String password) {
         Map<String, Object> map = new HashedMap();
         if (StringUtils.isBlank(username)) {

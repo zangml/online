@@ -5,7 +5,7 @@
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="api_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="desc" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="url" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="request_method" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="content_type" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -13,35 +13,28 @@
       <arg column="creat_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="api_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="upload_algo_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="uploadAlgoId" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="pub" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, api_desc , url, request_method, content_type,status,creat_time,update_time,api_type,
-    upload_algo_id,user_id,pub
+    id, name, desc , url, request_method, content_type,status,creat_time,update_time,api_type,
+    uploadAlgoId,user_id,pub
   </sql>
 
   <insert id="insert" parameterType="com.koala.learn.entity.API" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
-    insert into API ( name, api_desc , url, request_method, content_type,status,creat_time,update_time,api_type,
-    upload_algo_id,user_id,pub)
-    values ( #{name}, #{APIdesc},
+    insert into API ( name, desc , url, request_method, content_type,status,creat_time,update_time,api_type,
+    uploadAlgoId,user_id,pub)
+    values ( #{name}, #{desc},
       #{url}, #{requestMethod}, #{contentType},
       #{status}, #{creatTime}, #{updateTime}, #{apiType}, #{uploadAlgoId}, #{userId},#{pub})
   </insert>
 
-  <select id="getById" resultType="com.koala.learn.entity.API" parameterType="java.lang.Integer">
+  <select id="selectById" resultType="com.koala.learn.entity.API">
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List"/>
     from API
-    where id = #{id,jdbcType=INTEGER}
+    where id=#{id}
   </select>
-  <select id="getByUserId" resultType="com.koala.learn.entity.API" parameterType="java.lang.Integer">
-    select
-    <include refid="Base_Column_List" />
-    from API
-    where user_id = #{userId,jdbcType=INTEGER}
-  </select>
-
 </mapper>

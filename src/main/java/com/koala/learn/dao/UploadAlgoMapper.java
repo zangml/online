@@ -6,4 +6,6 @@ public interface UploadAlgoMapper {
 
     int insert(UploadAlgo uploadAlgo);
 
+    UploadAlgo selectById(Integer id);
+
 }

@@ -143,6 +143,31 @@ public class Const {
     public static final Integer TIME_FEATURE_ID=6;
     public static final Integer WAV_FEATURE_ID=5;
 
+    public static final String FILE_ROOT="/usr/local/data/api/file/";
+
+    public static final String FILE_PRE_ROOT="/usr/local/data/api/file/pre/";
+
+    public static final String FILE_FEATURE_ROOT="/usr/local/data/api/file/fea/";
+
+    public static final String FILE_CLASSIFY_ROOT="/usr/local/data/api/file/cla/";
+
+    public static final String FILE_REGRESSION_ROOT="/usr/local/data/api/file/reg/";
+
+    public static final String FILE_OPATH_ROOT="/usr/local/data/upload/";
+
+    public static final String FILE_ISOLATIONFOREST ="/usr/local/sk/IsolationForest.py";
+
+    public static final String FILE_NORMALIZATION ="/usr/local/sk/Normalization.py";
+
+    public static final String FILE_SMOTE ="/usr/local/sk/smote_py.py";
+
+    public static final String FILE_TIMEFEATURE ="/usr/local/sk/timeFeatureForWxWithoutLable.py";
+
+    public static final String FILE_FREQFEATURE ="/usr/local/sk/freqFeature.py";
+
+    public static final String FILE_WAVFEATURE ="/usr/local/sk/waveFeature_api.py";
+
+
 
 
 }

@@ -10,5 +10,7 @@ public interface APIMapper {
 
     API getById(Integer id);
 
+    API selectById(Integer id);
+
     List<API> getByUserId(Integer userId);
 }
