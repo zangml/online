@@ -283,8 +283,8 @@ public class ComponentApiController {
         }
 
         CsvDivider.divide(new File(Const.UPLOAD_DATASET,fileName),0.8);
-        File train=new File(CsvDivider.getTrainFileName(fileName,0.8));
-        File test=new File(CsvDivider.getTestFileName(fileName,0.8));
+        File train=new File(Const.UPLOAD_DATASET,CsvDivider.getTrainFileName(fileName,0.8));
+        File test=new File(Const.UPLOAD_DATASET,CsvDivider.getTestFileName(fileName,0.8));
         return componentApiService.execClassify(train.getAbsolutePath(),test.getAbsolutePath(),param,classifierId);
     }
 

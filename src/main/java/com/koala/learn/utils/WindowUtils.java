@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import weka.core.Attribute;
 import weka.core.Instances;
+import weka.core.converters.ArffSaver;
+
+import static com.koala.learn.utils.WekaUtils.readFromFile;
 
 /**
  * Created by koala on 2017/12/4.
@@ -59,7 +62,7 @@ public class WindowUtils {
                         }
                     }
                 }
-                sb.append(records.get(i).substring(0,1));
+                sb.append(records.get(i).substring(records.size()-1,records.size()));
                 writer.write(sb.toString());
                 writer.write("\n");
             }
@@ -74,7 +77,72 @@ public class WindowUtils {
         return null;
     }
 
+    public static File csv2arff(File file) throws  IOException{
+        File out = new File(file.getAbsolutePath().replace("csv","arff"));
+        if (out.exists()){
+            return out;
+        }
+        Instances instances = readFromFile(file.getAbsolutePath());
+        instances.setClassIndex(instances.numAttributes()-1);
+        ArffSaver arffSaver =new ArffSaver();
+        arffSaver.setInstances(instances);
+        arffSaver.setFile(out);
+        arffSaver.writeBatch();
+        return out;
+    }
 
+
+    public static File windowCSV(File file,int window,int step,File out) throws IOException {
+        if(file.getName().endsWith("csv")){
+            file=WekaUtils.csv2arff(file);
+        }
+        Instances instances=new Instances(new FileReader(file));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(out));
+        writer.write("@relation '"+instances.relationName()+"'\n");
+        writer.write("\n");
+
+        for (int i=0;i<window;i++){
+            for (int j=0;j<instances.numAttributes()-1;j++){
+                Attribute attribute = instances.attribute(j);
+
+                writer.write(attribute.toString().replace(attribute.name(),attribute.name()+i)+"\n");
+            }
+        }
+        writer.write(instances.attribute(instances.numAttributes()-1)+"\n");
+
+        writer.write("\n");
+        writer.write("@data\n");
+
+        for (int i=0;i<instances.size();i=i+step){
+
+            StringBuilder sb = new StringBuilder();
+            if ((i+window)<instances.size()){
+                for (int j=0;j<window;j++){
+                    String line = instances.get(i+j).toString();
+
+                    sb.append(line.substring(0,line.lastIndexOf(',')));
+                    sb.append(",");
+                }
+
+            }else{
+                for (int j=window-1;j>=0;j--){
+                    String line = instances.get(instances.size()-1-j).toString();
+                    sb.append(line.substring(0,line.lastIndexOf(',')));
+                    sb.append(",");
+                }
+            }
+            try {
+                sb.append(instances.get(i).stringValue(instances.numAttributes()-1));
+            }catch (Exception e){
+                sb.append(instances.get(i).value(instances.numAttributes()-1));
+            }
+            writer.write(sb.toString());
+            writer.write("\n");
+        }
+        writer.flush();
+        writer.close();
+        return out;
+    }
 
     public static File window(Instances instances,int window,int step,File out) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(out));
@@ -125,9 +193,9 @@ public class WindowUtils {
     }
 
     public static void main(String[] args) throws IOException {
-        File in = new File("/Users/zangmenglei/data/data1.csv");
-        File out = new File("/Users/zangmenglei/data/data1_win.arff");
-        window(in,15,5,out);
-        WekaUtils.arff2csv(out);
+        File in = new File("/Users/zangmenglei/data/data1.arff");
+        File out = new File("/Users/zangmenglei/data/data1_win_2.arff");
+        windowCSV(in,15,5,out);
+//        WekaUtils.arff2csv(out);
     }
 }
