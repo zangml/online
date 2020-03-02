@@ -498,12 +498,7 @@ public class ComponentApiController {
      * @return
      */
     @PostMapping("/upload/ML/{apiType}/{apiId}")
-    public ServerResponse uploadMLApi(@RequestParam(value = "train_file",required = false) MultipartFile trainFile,
-                                      @RequestParam(value = "Base64_train" ,required = false) String base64Train,
-                                      @RequestParam(value = "test_file",required =  false) MultipartFile testFile,
-                                      @RequestParam(value = "Base64_test" ,required = false) String base64Test,
-                                      @RequestParam(value = "train_name" ,required = false) String trainName,
-                                      @RequestParam(value = "test_name" ,required = false) String testName,
+    public ServerResponse uploadMLApi(@RequestParam(value = "file_name") String fileName,
                                       @RequestParam("access_token") String accessToken,
                                       @RequestParam Map<String,Object> params,
                                       @PathVariable("apiType") Integer apiType,
@@ -513,6 +508,7 @@ public class ComponentApiController {
         if(!response.isSuccess()){
             return response;
         }
+
         API api =componentApiService.getAPIById(apiId);
         if(api.getPub().equals(0)){
             String apikey=accessToken.split("\\.")[0];
@@ -522,53 +518,10 @@ public class ComponentApiController {
             }
         }
 
-        File train;
-        if(trainName!=null){
-            train=new File(Const.UPLOAD_DATASET,trainName);
-        }else{
-            if(trainFile!=null){
-                ServerResponse fileResponse=fileService.checkFileSize(trainFile);
-                if(!fileResponse.isSuccess()){
-                    return fileResponse;
-                }
-                if(apiType.equals(3)){
-                    train = fileService.addFile(trainFile,Const.FILE_CLASSIFY_ROOT,"train");
-                }else{
-                    train = fileService.addFile(trainFile,Const.FILE_REGRESSION_ROOT,"train");
-                }
+        CsvDivider.divide(new File(Const.UPLOAD_DATASET,fileName),0.8);
+        File train=new File(CsvDivider.getTrainFileName(fileName,0.8));
+        File test=new File(CsvDivider.getTestFileName(fileName,0.8));
 
-            }else{
-                if(apiType.equals(3)){
-                    train = fileService.addFile(base64Train,Const.FILE_CLASSIFY_ROOT,"train");
-                }else{
-                    train = fileService.addFile(base64Train,Const.FILE_REGRESSION_ROOT,"train");
-                }
-
-            }
-        }
-        File test;
-        if(testName!=null){
-            test=new File(Const.UPLOAD_DATASET,testName);
-        }else{
-            if(testFile!=null){
-                ServerResponse fileResponse=fileService.checkFileSize(testFile);
-                if(!fileResponse.isSuccess()){
-                    return fileResponse;
-                }
-                if(apiType.equals(3)){
-                    test = fileService.addFile(testFile,Const.FILE_CLASSIFY_ROOT,"test");
-                }else {
-                    test = fileService.addFile(testFile,Const.FILE_REGRESSION_ROOT,"test");
-                }
-
-            }else{
-                if(apiType.equals(3)){
-                    test = fileService.addFile(base64Test,Const.FILE_CLASSIFY_ROOT,"test");
-                }else {
-                    test = fileService.addFile(base64Test,Const.FILE_REGRESSION_ROOT,"test");
-                }
-            }
-        }
         return componentApiService.execUploadML(train.getAbsolutePath(),test.getAbsolutePath(),params,apiId,apiType);
     }
 
