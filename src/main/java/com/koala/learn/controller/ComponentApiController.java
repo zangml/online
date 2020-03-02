@@ -357,8 +357,8 @@ public class ComponentApiController {
         }
 
         CsvDivider.divide(new File(Const.UPLOAD_DATASET,fileName),0.8);
-        File train=new File(CsvDivider.getTrainFileName(fileName,0.8));
-        File test=new File(CsvDivider.getTestFileName(fileName,0.8));
+        File train=new File(Const.UPLOAD_DATASET,CsvDivider.getTrainFileName(fileName,0.8));
+        File test=new File(Const.UPLOAD_DATASET,CsvDivider.getTestFileName(fileName,0.8));
         return componentApiService.execRegressor(train.getAbsolutePath(),test.getAbsolutePath(),param,classifierId);
     }
 
@@ -497,19 +497,19 @@ public class ComponentApiController {
      * @param params
      * @return
      */
-    @PostMapping("/upload/ML/{apiType}/{apiId}")
+    @PostMapping("/upload/ML/{apiType}/{uploadAlgoId}")
     public ServerResponse uploadMLApi(@RequestParam(value = "file_name") String fileName,
                                       @RequestParam("access_token") String accessToken,
                                       @RequestParam Map<String,Object> params,
                                       @PathVariable("apiType") Integer apiType,
-                                      @PathVariable("apiId") Integer apiId) throws IOException {
+                                      @PathVariable("uploadAlgoId") Integer uploadAlgoId) throws IOException {
 
         ServerResponse response=authService.checkAccessToken(accessToken);
         if(!response.isSuccess()){
             return response;
         }
 
-        API api =componentApiService.getAPIById(apiId);
+        API api =componentApiService.getAPIByUploadAlgoId(uploadAlgoId);
         if(api.getPub().equals(0)){
             String apikey=accessToken.split("\\.")[0];
             ApiAuth apiAuth=authService.getApiAuthByApiKey(apikey);
@@ -519,10 +519,10 @@ public class ComponentApiController {
         }
 
         CsvDivider.divide(new File(Const.UPLOAD_DATASET,fileName),0.8);
-        File train=new File(CsvDivider.getTrainFileName(fileName,0.8));
-        File test=new File(CsvDivider.getTestFileName(fileName,0.8));
+        File train=new File(Const.UPLOAD_DATASET,CsvDivider.getTrainFileName(fileName,0.8));
+        File test=new File(Const.UPLOAD_DATASET,CsvDivider.getTestFileName(fileName,0.8));
 
-        return componentApiService.execUploadML(train.getAbsolutePath(),test.getAbsolutePath(),params,apiId,apiType);
+        return componentApiService.execUploadML(train.getAbsolutePath(),test.getAbsolutePath(),params,api.getUploadAlgoId(),apiType);
     }
 
 }

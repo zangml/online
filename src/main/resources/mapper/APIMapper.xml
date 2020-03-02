@@ -49,4 +49,11 @@
     from API
     where user_id=#{userId}
   </select>
+
+  <select id="selectByUploadAlgoId" resultType="com.koala.learn.entity.API">
+    select
+    <include refid="Base_Column_List"/>
+    from API
+    where upload_algo_id=#{uploadAlgoId}
+  </select>
 </mapper>

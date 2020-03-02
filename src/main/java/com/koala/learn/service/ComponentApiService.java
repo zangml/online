@@ -350,6 +350,9 @@ public class ComponentApiService {
     public String[] resolveOptions(Map<String,Object> param){
         List<String> paramList = new ArrayList<>();
         for (String key:param.keySet()){
+            if(key.equals("access_token") ||key.equals("file_name")){
+                continue;
+            }
             if (StringUtils.isNotBlank(param.get(key).toString())){
                 paramList.add(key);
                 paramList.add(param.get(key).toString());
@@ -366,9 +369,8 @@ public class ComponentApiService {
         return null;
     }
 
-    public ServerResponse execUploadML(String train, String test, Map<String, Object> params, Integer apiId,Integer apiType) {
-        API api= apiMapper.selectById(apiId);
-        Integer uploadAlgoId=api.getUploadAlgoId();
+    public ServerResponse execUploadML(String train, String test, Map<String, Object> params, Integer uploadAlgoId,Integer apiType) {
+
         UploadAlgo uploadAlgo= uploadAlgoMapper.selectById(uploadAlgoId);
 
         String[] options=resolveOptions(params);
@@ -395,5 +397,8 @@ public class ComponentApiService {
     }
 
 
+    public API getAPIByUploadAlgoId(Integer uploadAlgoId){
+        return apiMapper.selectByUploadAlgoId(uploadAlgoId);
+    }
 
 }

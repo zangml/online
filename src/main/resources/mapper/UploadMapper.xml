@@ -23,4 +23,11 @@
       #{algoType}, #{algoId}, #{userId},
       #{testFile}, #{algoAddress})
   </insert>
+
+  <select id="selectById" resultType="com.koala.learn.entity.UploadAlgo">
+    select
+    <include refid="Base_Column_List"/>
+    from upload_algo
+    where id=#{id}
+  </select>
 </mapper>
