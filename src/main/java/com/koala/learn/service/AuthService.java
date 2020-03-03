@@ -91,9 +91,8 @@ public class AuthService {
         }
         ApiAuth apiAuth=getApiAuthByApiKey(apikey);
         String geneToken=getAccessToken(authToken.getSalt(),apikey,apiAuth.getApiSecret());
-        String originToken=authToken.getAccessToken();
 
-        if(!geneToken.equals(originToken)){
+        if(!geneToken.equals(accessToken)){
             return ServerResponse.createByErrorMessage("access_token无效");
         }
         return ServerResponse.createBySuccess();
