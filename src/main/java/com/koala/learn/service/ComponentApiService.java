@@ -6,9 +6,9 @@ import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
 import com.koala.learn.dao.*;
 import com.koala.learn.entity.*;
-import com.koala.learn.utils.FTPUtil;
-import com.koala.learn.utils.FileTranslateUtil;
-import com.koala.learn.utils.PythonUtils;
+import com.koala.learn.utils.*;
+import com.koala.learn.utils.feature.IFeature;
+import com.koala.learn.utils.feature.WindowFeature;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +58,12 @@ public class ComponentApiService {
      */
     public ServerResponse checkPreIso(String path, String opath, String contamination) throws IOException {
 
+        File opathFile=new File(opath);
+        if(opathFile.exists()){
+            Map<String,Object> map=new HashMap<>();
+            map.put("file_name",opathFile.getName());
+            return ServerResponse.createBySuccess(map);
+        }
         StringBuilder sb = new StringBuilder("python ");
         sb.append(Const.FILE_ISOLATIONFOREST).append(" ");
         sb.append("contamination=").append(contamination).append(" ");
@@ -68,7 +74,6 @@ public class ComponentApiService {
 
         PythonUtils.execPy(sb.toString());
 
-        File opathFile=new File(opath);
         if(!opathFile.exists() || opathFile.length()<=0){
             return ServerResponse.createByErrorMessage("处理失败，请检验数据格式是否正确");
         }
@@ -104,6 +109,12 @@ public class ComponentApiService {
 //    }
 
     public ServerResponse execSMOTE(String path, String opath, String kNeighbors, String ratio) throws Exception {
+        File opathFile=new File(opath);
+        if(opathFile.exists()){
+            Map<String,Object> map=new HashMap<>();
+            map.put("file_name",opathFile.getName());
+            return ServerResponse.createBySuccess(map);
+        }
         StringBuilder sb = new StringBuilder("python ");
         sb.append(Const.FILE_SMOTE).append(" ");
         sb.append("k_neighbors=").append(kNeighbors).append(" ");
@@ -114,7 +125,6 @@ public class ComponentApiService {
         logger.info("开始执行smote算法，python语句为："+sb.toString());
 
         PythonUtils.execPy(sb.toString());
-        File opathFile=new File(opath);
         if(!opathFile.exists() || opathFile.length()<=0){
             return ServerResponse.createByErrorMessage("处理失败，请检验数据格式是否正确");
         }
@@ -128,6 +138,13 @@ public class ComponentApiService {
     }
 
     public ServerResponse execNormalization(String path, String opath) throws IOException {
+        File opathFile=new File(opath);
+        if(opathFile.exists()){
+            Map<String,Object> map=new HashMap<>();
+            map.put("file_name",opathFile.getName());
+            return ServerResponse.createBySuccess(map);
+        }
+
         StringBuilder sb = new StringBuilder("python ");
         sb.append(Const.FILE_NORMALIZATION).append(" ");
         sb.append("path=").append(path).append(" ");
@@ -137,7 +154,6 @@ public class ComponentApiService {
 
         PythonUtils.execPy(sb.toString());
 
-        File opathFile=new File(opath);
         if(!opathFile.exists() || opathFile.length()<=0){
             return ServerResponse.createByErrorMessage("处理失败，请检验数据格式是否正确");
         }
@@ -151,6 +167,13 @@ public class ComponentApiService {
     }
 
     public ServerResponse execFeatureTime(String path, String opath, Integer windowLength, Integer avg, Integer std, Integer var, Integer skew, Integer kur, Integer ptp) throws IOException {
+
+        File opathFile=new File(opath);
+        if(opathFile.exists()){
+            Map<String,Object> map=new HashMap<>();
+            map.put("file_name",opathFile.getName());
+            return ServerResponse.createBySuccess(map);
+        }
 
         StringBuilder sb = new StringBuilder("python ");
         sb.append(Const.FILE_TIMEFEATURE).append(" ");
@@ -167,7 +190,6 @@ public class ComponentApiService {
         logger.info("开始执行timeFeature算法，python语句为:"+sb.toString());
 
         PythonUtils.execPy(sb.toString());
-        File opathFile=new File(opath);
         if(!opathFile.exists() || opathFile.length()<=0){
             return ServerResponse.createByErrorMessage("处理失败，请检验数据格式是否正确");
         }
@@ -180,6 +202,12 @@ public class ComponentApiService {
     }
 
     public ServerResponse execFeatureFreq(String path, String opath, Integer windowLength, Integer minFre, Integer maxFre, Integer freq) throws IOException {
+        File opathFile=new File(opath);
+        if(opathFile.exists()){
+            Map<String,Object> map=new HashMap<>();
+            map.put("file_name",opathFile.getName());
+            return ServerResponse.createBySuccess(map);
+        }
         StringBuilder sb = new StringBuilder("python ");
         sb.append(Const.FILE_FREQFEATURE).append(" ");
         sb.append("len_piece=").append(windowLength).append(" ");
@@ -192,7 +220,6 @@ public class ComponentApiService {
         logger.info("开始执行freqFeature算法，python语句为:"+sb.toString());
 
         PythonUtils.execPy(sb.toString());
-        File opathFile=new File(opath);
         if(!opathFile.exists() || opathFile.length()<=0){
             return ServerResponse.createByErrorMessage("处理失败，请检验数据格式是否正确");
         }
@@ -205,6 +232,13 @@ public class ComponentApiService {
     }
 
     public ServerResponse execFeatureWav(String path, String opath, Integer windowLength, Integer waveLayer) throws IOException {
+        File opathFile=new File(opath);
+        if(opathFile.exists()){
+            Map<String,Object> map=new HashMap<>();
+            map.put("file_name",opathFile.getName());
+            return ServerResponse.createBySuccess(map);
+        }
+
         StringBuilder sb = new StringBuilder("python ");
         sb.append(Const.FILE_WAVFEATURE).append(" ");
         sb.append("len_piece=").append(windowLength).append(" ");
@@ -215,7 +249,6 @@ public class ComponentApiService {
         logger.info("开始执行waveFeature算法，python语句为:"+sb.toString());
 
         PythonUtils.execPy(sb.toString());
-        File opathFile=new File(opath);
         if(!opathFile.exists() || opathFile.length()<=0){
             return ServerResponse.createByErrorMessage("处理失败，请检验数据格式是否正确");
         }
@@ -319,6 +352,13 @@ public class ComponentApiService {
 
     public ServerResponse execUploadPreAndFea(String path, String opath, Map<String, Object> params,Integer apiId) throws IOException {
 
+        File opathFile=new File(opath);
+        if(opathFile.exists()){
+            Map<String,Object> map=new HashMap<>();
+            map.put("file_name",opathFile.getName());
+            return ServerResponse.createBySuccess(map);
+        }
+
         API api= apiMapper.selectById(apiId);
         Integer uploadAlgoId=api.getUploadAlgoId();
         UploadAlgo uploadAlgo= uploadAlgoMapper.selectById(uploadAlgoId);
@@ -334,7 +374,6 @@ public class ComponentApiService {
         logger.info(sb.toString());
         PythonUtils.execPy(sb.toString());
 
-        File opathFile=new File(opath);
         if(!opathFile.exists() || opathFile.length()<=0){
             return ServerResponse.createByErrorMessage("处理失败，请检验数据格式是否正确");
         }
@@ -401,4 +440,25 @@ public class ComponentApiService {
         return apiMapper.selectByUploadAlgoId(uploadAlgoId);
     }
 
+    public ServerResponse execWindow(String path, String opath, Integer windowLength, Integer stepLength) throws IOException {
+
+        File opathFile=new File(opath);
+        if(opathFile.exists()){
+            Map<String,Object> map=new HashMap<>();
+            map.put("file_name",opathFile.getName());
+            return ServerResponse.createBySuccess(map);
+        }
+
+        File windowOutArff=new File(opath.replace(".csv",".arff"));
+        WindowUtils.windowCSV(new File(path),windowLength,stepLength,windowOutArff);
+
+        WekaUtils.arff2csv(windowOutArff);
+
+        if(!opathFile.exists() || opathFile.length()<=0){
+            return ServerResponse.createByErrorMessage("处理失败，请检验数据格式是否正确");
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("file_name",opathFile.getName());
+        return ServerResponse.createBySuccess(map);
+    }
 }

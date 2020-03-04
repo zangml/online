@@ -193,9 +193,11 @@ public class WindowUtils {
     }
 
     public static void main(String[] args) throws IOException {
-        File in = new File("/Users/zangmenglei/data/data1.arff");
-        File out = new File("/Users/zangmenglei/data/data1_win_2.arff");
-        windowCSV(in,15,5,out);
+        File in = new File("/usr/local/data/upload/out_data_5839655255506236.csv");
+        File out = new File("/usr/local/data/upload/out_out_data_5839655255506236.csv");
+        File outArff=new File(out.getAbsolutePath().replace(".csv",".arff"));
+        windowCSV(in,15,5,outArff);
+        WekaUtils.arff2csv(outArff);
 //        WekaUtils.arff2csv(out);
     }
 }

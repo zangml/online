@@ -8,7 +8,6 @@ import com.koala.learn.service.AuthService;
 import com.koala.learn.service.ComponentApiService;
 import com.koala.learn.service.FileService;
 import com.koala.learn.utils.divider.CsvDivider;
-import com.koala.learn.utils.divider.RandomDivider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -141,6 +140,29 @@ public class ComponentApiController {
         }
         String opath= Const.FILE_OPATH_ROOT+"out_"+pathFile.getName();
         return componentApiService.execNormalization(pathFile.getAbsolutePath(),opath);
+    }
+
+    /**
+     * 特征处理--时间窗
+     * @param fileName
+     * @param accessToken
+     * @param windowLength
+     * @param stepLength
+     * @return
+     */
+    @PostMapping("/feature/window")
+    public ServerResponse window(@RequestParam(value = "file_name" ,required = false) String fileName,
+                                 @RequestParam("access_token") String accessToken,
+                                 @RequestParam(value = "window_length",defaultValue = "15",required = false)Integer windowLength,
+                                 @RequestParam(value = "step_length",defaultValue = "5",required = false)Integer stepLength) throws IOException {
+        ServerResponse response=authService.checkAccessToken(accessToken);
+        if(!response.isSuccess()){
+            return response;
+        }
+        File file=new File(Const.UPLOAD_DATASET,fileName);
+        String opath= Const.FILE_OPATH_ROOT+"out_"+file.getName();
+        return componentApiService.execWindow(file.getAbsolutePath(),opath,windowLength,stepLength);
+
     }
 
     /**
