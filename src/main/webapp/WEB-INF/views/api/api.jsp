@@ -97,6 +97,7 @@
                                         <li><a href="/api/get_list/6">时域</a></li>
                                         <li><a href="/api/get_list/7">频域</a></li>
                                         <li><a href="/api/get_list/8">时频域</a></li>
+                                        <li><a href="/api/get_list/20">时间窗</a></li>
                                     </ul>
                                 </div>
                             </div>
