@@ -63,7 +63,7 @@ public class ComponentApiController {
             }
         }
 
-        String opath= Const.FILE_OPATH_ROOT+"out_"+pathFile.getName();
+        String opath= Const.FILE_OPATH_ROOT+"iso_c"+contamination+"_"+pathFile.getName();
         return componentApiService.checkPreIso(pathFile.getAbsolutePath(),opath,contamination);
     }
 
@@ -79,9 +79,9 @@ public class ComponentApiController {
     public ServerResponse preHandleSMOTE(@RequestParam(value = "file",required = false) MultipartFile file,
                                          @RequestParam(value = "Base64_file" ,required = false) String base64Str,
                                          @RequestParam(value = "file_name" ,required = false) String fileName,
-                                       @RequestParam("access_token") String accessToken,
-                                       @RequestParam(value = "k_neighbors",required = false,defaultValue = "5") String kNeighbors,
-                                       @RequestParam(value="ratio",required = false,defaultValue = "auto") String ratio) throws Exception {
+                                         @RequestParam("access_token") String accessToken,
+                                         @RequestParam(value = "k_neighbors",required = false,defaultValue = "5") String kNeighbors,
+                                         @RequestParam(value="ratio",required = false,defaultValue = "auto") String ratio) throws Exception {
         ServerResponse response=authService.checkAccessToken(accessToken);
         if(!response.isSuccess()){
             return response;
@@ -102,7 +102,7 @@ public class ComponentApiController {
             }
         }
 
-        String opath= Const.FILE_OPATH_ROOT+"out_"+pathFile.getName();
+        String opath= Const.FILE_OPATH_ROOT+"smote_ratio"+ratio+"_k_"+kNeighbors+pathFile.getName();
         return componentApiService.execSMOTE(pathFile.getAbsolutePath(),opath,kNeighbors,ratio);
     }
 
@@ -117,7 +117,7 @@ public class ComponentApiController {
     public ServerResponse preHandleNormalization(@RequestParam(value = "file",required = false) MultipartFile file,
                                                  @RequestParam(value = "file_name" ,required = false) String fileName,
                                                  @RequestParam(value = "Base64_file" ,required = false) String base64Str,
-                                         @RequestParam("access_token") String accessToken)
+                                                 @RequestParam("access_token") String accessToken)
                                           throws Exception {
         ServerResponse response=authService.checkAccessToken(accessToken);
         if(!response.isSuccess()){
@@ -138,7 +138,7 @@ public class ComponentApiController {
                 pathFile = fileService.addFile(base64Str,Const.FILE_PRE_ROOT,"pre_nor");
             }
         }
-        String opath= Const.FILE_OPATH_ROOT+"out_"+pathFile.getName();
+        String opath= Const.FILE_OPATH_ROOT+"nor_"+pathFile.getName();
         return componentApiService.execNormalization(pathFile.getAbsolutePath(),opath);
     }
 
@@ -160,7 +160,7 @@ public class ComponentApiController {
             return response;
         }
         File file=new File(Const.UPLOAD_DATASET,fileName);
-        String opath= Const.FILE_OPATH_ROOT+"out_"+file.getName();
+        String opath= Const.FILE_OPATH_ROOT+"window_wl"+windowLength+"_sl_"+stepLength+file.getName();
         return componentApiService.execWindow(file.getAbsolutePath(),opath,windowLength,stepLength);
 
     }
@@ -206,7 +206,7 @@ public class ComponentApiController {
                 pathFile = fileService.addFile(base64Str,Const.FILE_FEATURE_ROOT,"fea_time");
             }
         }
-        String opath= Const.FILE_OPATH_ROOT+"out_"+pathFile.getName();
+        String opath= Const.FILE_OPATH_ROOT+"time_avg"+avg+"_std_"+std+"_var_"+var+"_skew_"+skew+"_kur_"+kur+"_ptp_"+ptp+pathFile.getName();
         return componentApiService.execFeatureTime(pathFile.getAbsolutePath(),opath,windowLength,avg,std,var,skew,kur,ptp);
     }
 
@@ -246,7 +246,7 @@ public class ComponentApiController {
                 pathFile = fileService.addFile(base64Str,Const.FILE_FEATURE_ROOT,"fea_freq");
             }
         }
-        String opath= Const.FILE_OPATH_ROOT+"out_"+pathFile.getName();
+        String opath= Const.FILE_OPATH_ROOT+"freq_wl"+windowLength+"_minf_"+minFre+"_maxf_"+maxFre+"_freq_"+freq+pathFile.getName();
         return componentApiService.execFeatureFreq(pathFile.getAbsolutePath(),opath,windowLength,minFre,maxFre,freq);
     }
 
@@ -285,7 +285,7 @@ public class ComponentApiController {
                 pathFile = fileService.addFile(base64Str,Const.FILE_FEATURE_ROOT,"fea_wav");
             }
         }
-        String opath= Const.FILE_OPATH_ROOT+"out_"+pathFile.getName();
+        String opath= Const.FILE_OPATH_ROOT+"wav_wl"+windowLength+"wave_layer"+waveLayer+pathFile.getName();
         return componentApiService.execFeatureWav(pathFile.getAbsolutePath(),opath,windowLength,waveLayer);
     }
 

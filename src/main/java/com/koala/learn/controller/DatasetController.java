@@ -50,9 +50,21 @@ public class DatasetController {
                          @RequestParam("type") final Integer type,
                          @RequestParam(name = "file", required = false) MultipartFile file,Model model) throws IOException {
         if(file==null || file.getSize()==0){
-            model.addAttribute("error", "文件为空");
+//            model.addAttribute("error", "文件为空");
+//            return "views/common/error";
+            Dataset dataset=new Dataset();
+            dataset.setName(name);
+            dataset.setProblem(problem);
+            dataset.setDataDesc(desc);
+//            dataset.setDownloadUrl(downloadUrl);
+            dataset.setType(type);
+//            dataset.setLocalUrl(uploadFile.getAbsolutePath());
+
+            datasetService.save(dataset);
+            model.addAttribute("error","数据集已上传");
             return "views/common/error";
         }
+
         if(file.getSize()>104857600l){
             model.addAttribute("error", "文件大小不能超过100M");
             return "views/common/error";
