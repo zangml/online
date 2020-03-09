@@ -140,6 +140,22 @@
                             </div>
                         </div>
                         <div class="card">
+                            <div class="card-header" id="headingSeven">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                        获取数据
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <ul>
+                                        <li><a href="/api/get_list/21">风机数据</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
                             <div class="card-header" id="headingFive">
                                 <h2 class="mb-0">
                                     <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
@@ -448,6 +464,7 @@
                     </code>
                     </pre>
                         </c:if>
+
                         <c:if test="${api.apiType ==4}">
                             <p>
                                 <strong>返回参数</strong>
@@ -514,6 +531,54 @@
                     </code>
                     </pre>
                         </c:if>
+                    <c:if test="${api.apiType ==5}">
+                        <p>
+                            <strong>返回参数</strong>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>参数名</th>
+                                <th>是否必选</th>
+                                <th>类型</th>
+                                <th>说明</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>data</td>
+                                <td>是</td>
+                                <td>map</td>
+                                <td>原始数据</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        </p>
+                        <p>
+                            <strong>返回示例</strong>
+                        </p>
+                        <pre>
+                             <code>
+{
+    "status": 0,
+    "msg": null,
+    "data": {
+    "data": [
+    {
+    "group1": [
+    1.859993305,
+    1.911624833,
+    1.635027361,
+    1.786233979,
+    1.786233979,
+    2.022263822,
+     ]}
+     ]
+    }
+}
+                    </code>
+                    </pre>
+                    </c:if>
                 </div>
             </div>
         </div>

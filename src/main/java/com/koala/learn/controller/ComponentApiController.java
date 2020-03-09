@@ -317,11 +317,11 @@ public class ComponentApiController {
     @RequestMapping("/ML/classify/2_file/{classifierId}")
     @ResponseBody
     public ServerResponse handleClassify2(@RequestParam(value = "train_file",required = false) MultipartFile trainFile,
-                                         @RequestParam(value = "Base64_train" ,required = false) String base64Train,
-                                         @RequestParam(value = "train_name" ,required = false) String trainName,
-                                         @RequestParam(value = "test_name" ,required = false) String testName,
-                                         @RequestParam(value = "test_file",required = false) MultipartFile testFile,
-                                         @RequestParam(value = "Base64_test" ,required = false) String base64Test,
+                                          @RequestParam(value = "Base64_train" ,required = false) String base64Train,
+                                          @RequestParam(value = "train_name" ,required = false) String trainName,
+                                          @RequestParam(value = "test_name" ,required = false) String testName,
+                                          @RequestParam(value = "test_file",required = false) MultipartFile testFile,
+                                          @RequestParam(value = "Base64_test" ,required = false) String base64Test,
                                           @RequestParam("access_token") String accessToken,
                                           @PathVariable("classifierId") Integer classifierId,
                                           @RequestParam Map<String,String> param) throws IOException {
@@ -370,9 +370,9 @@ public class ComponentApiController {
     @RequestMapping("/ML/regression/{classifierId}")
     @ResponseBody
     public ServerResponse handleRegression(@RequestParam(value = "file_name") String fileName,
-                                         @RequestParam("access_token") String accessToken,
-                                         @PathVariable("classifierId") Integer classifierId,
-                                         @RequestParam Map<String,String> param) {
+                                           @RequestParam("access_token") String accessToken,
+                                           @PathVariable("classifierId") Integer classifierId,
+                                           @RequestParam Map<String,String> param) {
         ServerResponse response=authService.checkAccessToken(accessToken);
         if(!response.isSuccess()){
             return response;
@@ -391,14 +391,14 @@ public class ComponentApiController {
     @RequestMapping("/ML/regression/2_file/{classifierId}")
     @ResponseBody
     public ServerResponse handleRegression2(@RequestParam(value = "train_file",required = false) MultipartFile trainFile,
-                                           @RequestParam(value = "Base64_train" ,required = false) String base64Train,
-                                          @RequestParam(value = "test_file",required =  false) MultipartFile testFile,
-                                           @RequestParam(value = "train_name" ,required = false) String trainName,
-                                           @RequestParam(value = "test_name" ,required = false) String testName,
-                                           @RequestParam(value = "Base64_test" ,required = false) String base64Test,
-                                          @RequestParam("access_token") String accessToken,
-                                          @PathVariable("classifierId") Integer classifierId,
-                                          @RequestParam Map<String,String> param) throws IOException {
+                                            @RequestParam(value = "Base64_train" ,required = false) String base64Train,
+                                            @RequestParam(value = "test_file",required =  false) MultipartFile testFile,
+                                            @RequestParam(value = "train_name" ,required = false) String trainName,
+                                            @RequestParam(value = "test_name" ,required = false) String testName,
+                                            @RequestParam(value = "Base64_test" ,required = false) String base64Test,
+                                            @RequestParam("access_token") String accessToken,
+                                            @PathVariable("classifierId") Integer classifierId,
+                                            @RequestParam Map<String,String> param) throws IOException {
         ServerResponse response=authService.checkAccessToken(accessToken);
         if(!response.isSuccess()){
             return response;
@@ -547,4 +547,19 @@ public class ComponentApiController {
         return componentApiService.execUploadML(train.getAbsolutePath(),test.getAbsolutePath(),params,api.getUploadAlgoId(),apiType);
     }
 
+    /**
+     * 获取风机数据
+     */
+
+    @PostMapping("/data/fengji")
+    public  ServerResponse getData( @RequestParam("access_token") String accessToken,
+                                    @RequestParam("divice_id") Integer diviceId,
+                                    @RequestParam("group_id")String groupIds,
+                                    @RequestParam("atrribute") String atrributeName) throws IOException {
+        ServerResponse response=authService.checkAccessToken(accessToken);
+        if(!response.isSuccess()){
+            return response;
+        }
+        return componentApiService.execFjData(diviceId,groupIds,atrributeName);
+    }
 }

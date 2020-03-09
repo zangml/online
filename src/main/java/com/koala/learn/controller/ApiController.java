@@ -27,7 +27,7 @@ public class ApiController {
     public String getApiList(@PathVariable(value = "id")Integer id, Model model){
         API api =apiService.getApiById(id);
         List<APIParam> apiParams;
-        if(api.getApiType().equals(0)){
+        if(api.getApiType().equals(0) || api.getApiType().equals(5) ){
             apiParams=apiService.getAllParamsByApiId(id);
         }else{
             apiParams=apiService.getAllParamsByApiIdIncludePub(id);

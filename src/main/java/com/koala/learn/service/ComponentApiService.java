@@ -14,9 +14,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import weka.core.Attribute;
+import weka.core.Instance;
+import weka.core.Instances;
+import weka.core.converters.ArffLoader;
+import weka.core.converters.CSVLoader;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -460,5 +466,49 @@ public class ComponentApiService {
         Map<String,Object> map=new HashMap<>();
         map.put("file_name",opathFile.getName());
         return ServerResponse.createBySuccess(map);
+    }
+
+    public ServerResponse execFjData(Integer diviceId,String groupIds,String attributeName) throws IOException {
+        if(!diviceId.equals(15) || !diviceId.equals(21)){
+            return ServerResponse.createByErrorMessage("divice_id 参数错误");
+        }
+        String[] groupIdStrs=groupIds.split(",");
+        if(groupIdStrs.length<=0){
+            return ServerResponse.createByErrorMessage("group_id 参数错误");
+        }
+
+        List<Integer> groupIdList=new ArrayList<>();
+        for(String id : groupIdStrs){
+            try {
+                groupIdList.add(Integer.parseInt(id));
+            }catch (Exception e){
+                return ServerResponse.createByErrorMessage("group_id 参数错误");
+            }
+        }
+        CSVLoader csvLoader = new CSVLoader();
+        csvLoader.setFile(new File(Const.ROOT_DATASET+"/fengji/"+diviceId+".csv"));
+        System.out.println(Const.ROOT_DATASET+"/fengji/"+diviceId+".csv");
+        Instances instances = csvLoader.getDataSet();
+        List<Map<String,List>> data =new ArrayList();
+        for(int groupId:groupIdList){
+            Map<String,List> mapData=new HashMap<>();
+            List listData=new ArrayList();
+            for(int i=0;i<instances.size();i++){
+                Instance instance=instances.get(i);
+                Attribute attribute=instances.attribute("group");
+                double value=instance.value(attribute);
+                if(value==(double)groupId){
+                    Attribute attributeData=instances.attribute(attributeName);
+                    listData.add(instance.value(attributeData));
+                }
+            }
+            mapData.put("group"+groupId,listData);
+            data.add(mapData);
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("data",data);
+        return ServerResponse.createBySuccess(map);
+
+
     }
 }

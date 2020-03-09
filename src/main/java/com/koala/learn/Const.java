@@ -10,6 +10,8 @@ public class Const {
 
     public static final String UPLOAD_DATASET = "/usr/local/data/upload/";//根目录
 
+    public static final String ROOT_DATASET = "/usr/local/data/";//根目录
+
     public static final String DOWNLOAD_FILE_PREFIX = "http://file.phmlearn.com/";
     public static final String UPLOAD_FILE_ROOT = "/ftpfile/fileForPHM/";
 
