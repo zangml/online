@@ -469,7 +469,7 @@ public class ComponentApiService {
     }
 
     public ServerResponse execFjData(Integer diviceId,String groupIds,String attributeName) throws IOException {
-        if(!diviceId.equals(15) || !diviceId.equals(21)){
+        if(!diviceId.equals(15) && !diviceId.equals(21)){
             return ServerResponse.createByErrorMessage("divice_id 参数错误");
         }
         String[] groupIdStrs=groupIds.split(",");
