@@ -110,5 +110,19 @@ public class DatasetController {
         return "views/data/data_des";
     }
 
+    @RequestMapping("dataDes/2/{id}")
+    public String getDataset2Des(@PathVariable("id") Integer id, Model model) throws IOException {
+
+        Dataset dataset=datasetService.getById(id);
+
+//        File file=new File(dataset.getLocalUrl());
+//
+//        List<String> attributeList = datasetService.resolveAttribute(file);
+//
+//        model.addAttribute("attributes",attributeList);
+        model.addAttribute("dataset",dataset);
+
+        return "views/data/data_des2";
+    }
 
 }

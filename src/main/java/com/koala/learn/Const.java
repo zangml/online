@@ -163,7 +163,7 @@ public class Const {
 
     public static final String FILE_SMOTE ="/usr/local/sk/smote_py.py";
 
-    public static final String FILE_TIMEFEATURE ="/usr/local/sk/timeFeatureForWxWithoutLable.py";
+    public static final String FILE_TIMEFEATURE ="/usr/local/sk/timeFeature.py";
 
     public static final String FILE_FREQFEATURE ="/usr/local/sk/freqFeature.py";
 
