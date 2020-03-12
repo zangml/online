@@ -186,4 +186,11 @@ public class UserController {
         session.removeAttribute("user");
         return "redirect:/";
     }
+
+    @RequestMapping("admin/user/list")
+    public String getUserList(Model model){
+        List<User> userList =mUserService.getAllUsers();
+        model.addAttribute("userList",userList);
+        return "templates/users/list";
+    }
 }

@@ -216,4 +216,11 @@
     FROM user
     WHERE username = #{username}
   </select>
+
+  <select id="selectAllUsers" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    order by id desc
+  </select>
 </mapper>

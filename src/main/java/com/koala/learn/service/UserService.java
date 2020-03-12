@@ -246,4 +246,8 @@ public class UserService {
         return res;
     }
 
+    public List<User> getAllUsers(){
+        return userMapper.selectAllUsers();
+    }
+
 }

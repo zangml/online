@@ -5,6 +5,8 @@ import com.koala.learn.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -22,4 +24,5 @@ public interface UserMapper {
     User selectByUsername(@Param("username") String username);
 
 
+    List<User> selectAllUsers();
 }
