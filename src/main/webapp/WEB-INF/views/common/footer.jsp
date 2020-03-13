@@ -21,8 +21,8 @@
 <div class="footer_container">
     <p>微信小程序</p>
     <img src="../../../static/images/wx.jpg">
-    <%--<p>Copyright © 2019 工业互联网在线实验平台 All Rights Reserved.</p>--%>
-    <p><a href="http://beian.miit.gov.cn"/>© 京ICP备19015152号-1</p>
+    <p>Copyright © 2019 北京邮电大学移动生活与新媒体实验室工业智能小组 All Rights Reserved.</p>
+    <p><a style="color: white" href="http://beian.miit.gov.cn"/>© 京ICP备19015152号-1</p>
 </div>
 </body>
 </html>
