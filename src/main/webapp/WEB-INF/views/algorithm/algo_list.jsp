@@ -64,6 +64,11 @@
         <p class="add_algo_img"><a href="/design/upload/classifier" class="iconfont icon-hao"></a></p>
         <p class="add_algo_text"><a href="/design/upload/classifier">上传算法</a></p>
     </div>
+
+    <div class="add_model_container">
+        <p class="add_algo_img"><a href="/design/upload/model" class="iconfont icon-hao"></a></p>
+        <p class="add_algo_text"><a href="/design/upload/model">上传模型</a></p>
+    </div>
     <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </div>
 </html>

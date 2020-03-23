@@ -468,47 +468,64 @@ public class ComponentApiService {
         return ServerResponse.createBySuccess(map);
     }
 
+    public ServerResponse getData(Integer dataId,Integer diviceId,String atrributeName) throws IOException {
+        if(dataId.equals(1)){
+            return execFjData(diviceId,null,atrributeName);
+        }
+        return ServerResponse.createByErrorMessage("data_id 参数错误");
+    }
     public ServerResponse execFjData(Integer diviceId,String groupIds,String attributeName) throws IOException {
         if(!diviceId.equals(15) && !diviceId.equals(21)){
             return ServerResponse.createByErrorMessage("divice_id 参数错误");
         }
-        String[] groupIdStrs=groupIds.split(",");
-        if(groupIdStrs.length<=0){
-            return ServerResponse.createByErrorMessage("group_id 参数错误");
-        }
+//        String[] groupIdStrs=groupIds.split(",");
+//        if(groupIdStrs.length<=0){
+//            return ServerResponse.createByErrorMessage("group_id 参数错误");
+//        }
 
-        List<Integer> groupIdList=new ArrayList<>();
-        for(String id : groupIdStrs){
-            try {
-                groupIdList.add(Integer.parseInt(id));
-            }catch (Exception e){
-                return ServerResponse.createByErrorMessage("group_id 参数错误");
-            }
-        }
+//        List<Integer> groupIdList=new ArrayList<>();
+//        for(String id : groupIdStrs){
+//            try {
+//                groupIdList.add(Integer.parseInt(id));
+//            }catch (Exception e){
+//                return ServerResponse.createByErrorMessage("group_id 参数错误");
+//            }
+//        }
         CSVLoader csvLoader = new CSVLoader();
         csvLoader.setFile(new File(Const.ROOT_DATASET+"/fengji/"+diviceId+".csv"));
-        System.out.println(Const.ROOT_DATASET+"/fengji/"+diviceId+".csv");
+//        System.out.println(Const.ROOT_DATASET+"/fengji/"+diviceId+".csv");
         Instances instances = csvLoader.getDataSet();
-        List<Map<String,List>> data =new ArrayList();
-        for(int groupId:groupIdList){
-            Map<String,List> mapData=new HashMap<>();
-            List listData=new ArrayList();
-            for(int i=0;i<instances.size();i++){
-                Instance instance=instances.get(i);
-                Attribute attribute=instances.attribute("group");
-                double value=instance.value(attribute);
-                if(value==(double)groupId){
-                    Attribute attributeData=instances.attribute(attributeName);
-                    listData.add(instance.value(attributeData));
-                }
-            }
-            mapData.put("group"+groupId,listData);
-            data.add(mapData);
+
+        List listData=new ArrayList();
+        for(int i=0;i<instances.size();i++){
+            Instance instance=instances.get(i);
+            Attribute attributeData=instances.attribute(attributeName);
+            listData.add(instance.value(attributeData));
         }
+
         Map<String,Object> map=new HashMap<>();
-        map.put("data",data);
+        map.put("data",listData);
         return ServerResponse.createBySuccess(map);
+    }
 
+    public ServerResponse execUploadModel(String fileName, Integer uploadAlgoId, Model model) {
 
+        UploadAlgo uploadAlgo= uploadAlgoMapper.selectById(uploadAlgoId);
+
+        File testFile =new File(Const.UPLOAD_DATASET,fileName);
+
+        StringBuilder sb = new StringBuilder("python ");
+        sb.append(uploadAlgo.getAlgoAddress());
+        sb.append(" model=").append(model.getFileAddress());
+        sb.append(" test=").append(testFile.getAbsolutePath());
+        logger.info(sb.toString());
+        String strResult = PythonUtils.execPy(sb.toString());
+        if(model.getModelType().equals(1)){
+            Result result = gson.fromJson(strResult, Result.class);
+            return ServerResponse.createBySuccess(result);
+        }else {
+            RegResult regResult=gson.fromJson(strResult,RegResult.class);
+            return ServerResponse.createBySuccess(regResult);
+        }
     }
 }

@@ -8,4 +8,5 @@ public interface UploadAlgoMapper {
 
     UploadAlgo selectById(Integer id);
 
+    int update(UploadAlgo uploadAlgo);
 }

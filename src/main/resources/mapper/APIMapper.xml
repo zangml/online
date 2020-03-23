@@ -56,4 +56,18 @@
     from API
     where upload_algo_id=#{uploadAlgoId}
   </select>
+
+  <update id="update" parameterType="com.koala.learn.entity.API">
+    update API
+    set name=#{name}, api_desc=#{APIdesc} , url=#{url}, request_method=#{requestMethod},
+     content_type=#{contentType},status=#{status},
+    creat_time=#{creatTime},update_time=#{updateTime},api_type=#{apiType},
+    upload_algo_id=#{uploadAlgoId},user_id=#{userId},pub=#{pub}
+    where id = #{id}
+  </update>
+
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from API
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
 </mapper>

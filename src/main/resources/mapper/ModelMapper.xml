@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koala.learn.dao.ModelMapper">
+  <resultMap id="BaseResultMap" type="com.koala.learn.entity.Model">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="model_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="model_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="model_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="creat_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="file_address" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, model_name, model_desc , model_type, creat_time, update_time,status,file_address
+  </sql>
+
+  <insert id="insert" parameterType="com.koala.learn.entity.Model" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
+    insert into model (model_name, model_desc , model_type, creat_time, update_time,status,file_address)
+    values ( #{modelName}, #{modelDesc},
+      #{modelType}, #{creatTime}, #{updateTime},
+      #{status},#{fileAddress})
+  </insert>
+
+  <select id="selectById" resultType="com.koala.learn.entity.Model">
+    select
+    <include refid="Base_Column_List"/>
+    from model
+    where id=#{id}
+  </select>
+</mapper>

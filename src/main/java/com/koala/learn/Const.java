@@ -30,7 +30,8 @@ public class Const {
     public static final int UPLOAD_ALGO_TYPE_FEA=2;
     public static final int UPLOAD_ALGO_TYPE_CLA=3;
     public static final int UPLOAD_ALGO_TYPE_REG=4;
-
+    public static final int UPLOAD_ALGO_TYPE_MODEL_CLA=6;
+    public static final int UPLOAD_ALGO_TYPE_MODEL_REG=7;
     public static final String UPDATE_CLASS_ROOT_PRE = "/usr/local/sk/upload/pre/"; //上传算法所在目录
 
     public static final String UPDATE_CLASS_ROOT_FEA = "/usr/local/sk/upload/fea/";
@@ -38,6 +39,8 @@ public class Const {
     public static final String UPDATE_CLASS_ROOT_CLA = "/usr/local/sk/upload/cla/";
 
     public static final String UPDATE_CLASS_ROOT_REG = "/usr/local/sk/upload/reg/";
+
+    public static final String UPDATE_CLASS_ROOT_MODEL = "/usr/local/sk/upload/model/";
 
     public static final String DEFAULT_AVATAR = "http://image.phmlearn.com/02a885be-28de-414c-9f61-47845fc1c35e.jpeg";
 

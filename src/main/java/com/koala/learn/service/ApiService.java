@@ -34,4 +34,8 @@ public class ApiService {
     public List<API> getAllParamsByUserId(Integer userId) {
         return apiMapper.getByUserId(userId);
     }
+
+    public int deleteById(Integer id) {
+        return apiMapper.deleteById(id);
+    }
 }

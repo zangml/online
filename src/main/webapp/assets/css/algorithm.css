@@ -60,12 +60,44 @@ a,a:link,a:focus,a:hover,a:visited{
 }
 .add_algo_container{
   position: fixed;
+  top: 30%;
+  transform: translateY(-50%);
+  right: 20px;
+  text-align: center;
+  width: 100px;
+}
+
+.add_model_container{
+  position: fixed;
   top: 50%;
   transform: translateY(-50%);
   right: 20px;
   text-align: center;
   width: 100px;
 }
+
+.add_model_container .add_algo_img{
+  height: 80px;
+  width: 80px;
+}
+.add_model_container .add_algo_img>a{
+  font-size: 100px;
+  color: black;
+}
+.add_model_container .add_algo_text{
+  padding-top: 5px;
+  height: 30px;
+  width: 100%;
+}
+.add_model_container .add_algo_text>a{
+  font-size: 16px;
+  color: #333;
+}
+.add_model_container:hover a{
+  color: darkslateblue;
+}
+
+
 .add_algo_container .add_algo_img{
   height: 80px;
   width: 80px;
@@ -86,6 +118,8 @@ a,a:link,a:focus,a:hover,a:visited{
 .add_algo_container:hover a{
   color: darkslateblue;
 }
+
+
 /*算法列表页结束*/
 /*算法详情页*/
 .algo_desc_container{

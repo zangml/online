@@ -401,6 +401,11 @@ public class LabDesignController {
         return "views/design/updateClassifier";
     }
 
+    @RequestMapping("/design/upload/model")
+    public String uploadModel() {
+        return "views/design/uploadModel";
+    }
+
 
     @RequestMapping("/design/page/result/{labId}/{labGroup}")
     public String goLabPageResult(Model model, HttpSession session,

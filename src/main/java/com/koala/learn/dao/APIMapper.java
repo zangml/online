@@ -15,4 +15,8 @@ public interface APIMapper {
     API selectByUploadAlgoId(Integer uploadAlgoId);
 
     List<API> getByUserId(Integer userId);
+
+    int update(API api);
+
+    int deleteById(Integer id);
 }

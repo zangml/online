@@ -120,8 +120,8 @@ public class DatasetController {
 //        List<String> attributeList = datasetService.resolveAttribute(file);
 //
 //        model.addAttribute("attributes",attributeList);
-        model.addAttribute("dataset",dataset);
 
+        model.addAttribute("dataset",dataset);
         return "views/data/data_des2";
     }
 

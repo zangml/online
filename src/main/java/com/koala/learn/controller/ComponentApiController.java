@@ -4,9 +4,11 @@ import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
 import com.koala.learn.entity.API;
 import com.koala.learn.entity.ApiAuth;
+import com.koala.learn.entity.Model;
 import com.koala.learn.service.AuthService;
 import com.koala.learn.service.ComponentApiService;
 import com.koala.learn.service.FileService;
+import com.koala.learn.service.ModelService;
 import com.koala.learn.utils.divider.CsvDivider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,8 @@ public class ComponentApiController {
     @Autowired
     AuthService authService;
 
+    @Autowired
+    ModelService modelService;
 
 
     /**
@@ -547,6 +551,21 @@ public class ComponentApiController {
         return componentApiService.execUploadML(train.getAbsolutePath(),test.getAbsolutePath(),params,api.getUploadAlgoId(),apiType);
     }
 
+    @PostMapping("/upload/ML/model/{modelId}/{uploadAlgoId}")
+    public ServerResponse uploadMLModelApi(@RequestParam(value = "file_name") String fileName,
+                                      @RequestParam("access_token") String accessToken,
+                                      @PathVariable("modelId") Integer modelId,
+                                      @PathVariable("uploadAlgoId") Integer uploadAlgoId) throws IOException {
+
+        ServerResponse response=authService.checkAccessToken(accessToken);
+        if(!response.isSuccess()){
+            return response;
+        }
+
+        Model model=modelService.getModelById(modelId);
+        return componentApiService.execUploadModel(fileName,uploadAlgoId,model);
+    }
+
     /**
      * 获取风机数据
      */
@@ -561,5 +580,21 @@ public class ComponentApiController {
             return response;
         }
         return componentApiService.execFjData(diviceId,groupIds,atrributeName);
+    }
+
+    /**
+     * 获取原始数据
+     */
+
+    @PostMapping("/data/{data_id}")
+    public  ServerResponse getData2( @RequestParam("access_token") String accessToken,
+                                     @PathVariable("data_id")Integer dataId,
+                                    @RequestParam("divice_id") Integer diviceId,
+                                    @RequestParam("atrribute") String atrributeName) throws IOException {
+        ServerResponse response=authService.checkAccessToken(accessToken);
+        if(!response.isSuccess()){
+            return response;
+        }
+        return componentApiService.getData(dataId,diviceId,atrributeName);
     }
 }

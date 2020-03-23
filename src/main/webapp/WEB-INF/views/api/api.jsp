@@ -78,6 +78,7 @@
                                         <li><a href="/api/get_list/3">非均衡处理</a></li>
                                         <li><a href="/api/get_list/4">异常值检测</a></li>
                                         <li><a href="/api/get_list/5">数据归一化</a></li>
+                                        <li><a href="/api/get_list/20">时间窗</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -97,7 +98,6 @@
                                         <li><a href="/api/get_list/6">时域</a></li>
                                         <li><a href="/api/get_list/7">频域</a></li>
                                         <li><a href="/api/get_list/8">时频域</a></li>
-                                        <li><a href="/api/get_list/20">时间窗</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -179,6 +179,10 @@
             <div class="col-10" style="box-sizing: border-box">
                 <div class="api_desc_header">
                     <div class="api_name">${api.name}</div>
+                    <c:if test="${isBlogOwner==1}">
+                        <a href="/api/update/${api.id}" class="btn btn-primary float-right">编辑</a>
+                        <a href="/api/delete/${api.id}" class="btn btn-danger float-right blog-delete-blog">删除</a>
+                    </c:if>
                 </div>
                 <div class="api_nav">
                     <ul>
@@ -398,7 +402,7 @@
 
                         </c:if>
 
-                        <c:if test="${api.apiType ==3}">
+                        <c:if test="${api.apiType ==3  || api.apiType ==6}">
                             <p>
                                 <strong>返回参数</strong>
                             <table>
@@ -465,7 +469,7 @@
                     </pre>
                         </c:if>
 
-                        <c:if test="${api.apiType ==4}">
+                        <c:if test="${api.apiType ==4 || api.apiType ==7}">
                             <p>
                                 <strong>返回参数</strong>
                             <table>

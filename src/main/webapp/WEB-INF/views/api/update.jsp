@@ -27,7 +27,7 @@
 
                 <span >
                 <a>
-                    上传算法
+                    编辑算法
                 </a></span>
 
         </div>
@@ -40,26 +40,20 @@
             <div class="panel panel-primary">
                 <div class="panel-heading"></div>
                 <div class="panel-body">
-                    <form class="form-horizontal" id="algoForm" role="form" action="/design/doUpload/classifier" method="post" enctype="multipart/form-data">
+                    <form class="form-horizontal" id="algoForm" role="form" action="/design/update/classifier/${api.id}" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="labName" class="col-sm-2 control-label">算法名称</label>
                             <div class="col-sm-10">
-                                <input type="text" name="name" class="form-control" id="labName" placeholder="请输入算法名称">
+                                <input type="text" name="name" class="form-control" id="labName" value=${api.name}>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="labDes" class="col-sm-2 control-label">算法描述</label>
                             <div class="col-sm-10">
-                                <textarea  rows="5" name="des" class="form-control" id="labDes" placeholder="请输入实验描述"></textarea>
+                                <textarea  rows="5" name="des" class="form-control" id="labDes"   >${api.desc}</textarea>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="AlgoDependence" class="col-sm-2 control-label">依赖算法库</label>
-                            <div class="col-sm-10">
-                                <textarea  rows="5" name="dependence" class="form-control" id="AlgoDependence" placeholder="请输入依赖算法库"></textarea>
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label for="algoType" class="col-sm-2 control-label">算法类别</label>
                             <div class="controls col-sm-10">
@@ -85,7 +79,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="labClassifier" class="col-sm-2 control-label ">上传算法</label>
+                            <label for="labClassifier" class="col-sm-2 control-label ">修改算法</label>
                             <div class="col-sm-10">
                                 <input  type="file" name="classifierFile" id="labClassifier" accept=".py">
                             </div>
@@ -116,7 +110,7 @@
                             <div class="col-sm-offset-3 col-sm-6">
                                 <button type="button" onclick="addParam()" class="btn btn-success">添加参数</button>
 
-                                <button type="submit" class="btn btn-primary">上传算法</button>
+                                <button type="submit" class="btn btn-primary">修改算法</button>
                             </div>
                         </div>
                     </form>

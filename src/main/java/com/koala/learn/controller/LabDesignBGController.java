@@ -8,6 +8,7 @@ import com.koala.learn.component.JedisAdapter;
 import com.koala.learn.dao.LabMapper;
 import com.koala.learn.dao.FeatureMapper;
 import com.koala.learn.entity.*;
+import com.koala.learn.service.ApiService;
 import com.koala.learn.service.LabDesignBGService;
 import com.koala.learn.service.WxComponentService;
 import com.koala.learn.utils.RedisKeyUtil;
@@ -75,6 +76,9 @@ public class LabDesignBGController {
 
     @Autowired
     WxComponentService wxComponentService;
+
+    @Autowired
+    ApiService apiService;
     private static Logger logger = LoggerFactory.getLogger(LabDesignBGController.class);
 
     @RequestMapping(path = "/file/{id}")
@@ -274,6 +278,90 @@ public class LabDesignBGController {
             }
             if (response.isSuccess()){
                 model.addAttribute("error","算法上传成功，可在api页面中我的api处查看~");
+                return "views/common/error";
+            }else {
+                model.addAttribute("error",response.getMsg());
+                return "views/common/error";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            model.addAttribute("error",e.getMessage());
+            return "views/common/error";
+        }
+
+    }
+
+    @RequestMapping(path = "/design/update/classifier/{api_id}")
+    public String doUpdate(@RequestParam(name = "classifierFile") MultipartFile uploadFile,
+                           @RequestParam(name = "testFile") MultipartFile testFile,
+                           @PathVariable("api_id")Integer apiId,
+                           @RequestParam Map<String,Object> params, Model model){
+
+        ServerResponse response = null;
+
+        try {
+            Integer algoType= Integer.parseInt((String)params.get("type"));
+
+            if(algoType==null){
+                model.addAttribute("error","算法类型不能为空");
+                return "views/common/error";
+            }
+
+            API api=apiService.getApiById(apiId);
+            if(!mHolder.getUser().getId().equals(api.getUserId())){
+                model.addAttribute("error","无权限操作");
+                return "views/common/error";
+            }
+            if(algoType.equals(Const.UPLOAD_ALGO_TYPE_PRE)){
+                response=mDesignBGService.updatePre(uploadFile,testFile,params,apiId);
+            }
+            if(algoType.equals(Const.UPLOAD_ALGO_TYPE_FEA)){
+                response=mDesignBGService.updateFea(uploadFile,testFile,params,apiId);
+            }
+            if(algoType.equals(Const.UPLOAD_ALGO_TYPE_CLA)){
+                response = mDesignBGService.updateClassifier(uploadFile,testFile,params,apiId);
+            }
+            if(algoType.equals(Const.UPLOAD_ALGO_TYPE_REG)){
+                response=mDesignBGService.updateRegressor(uploadFile,testFile,params,apiId);
+            }
+            if (response.isSuccess()){
+                model.addAttribute("error","算法修改成功，可在api页面中我的api处查看~");
+                return "views/common/error";
+            }else {
+                model.addAttribute("error",response.getMsg());
+                return "views/common/error";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            model.addAttribute("error",e.getMessage());
+            return "views/common/error";
+        }
+
+    }
+
+    @RequestMapping(path = "/design/doUpload/model")
+    public String doUploadModel(@RequestParam(name = "modelFile") MultipartFile uploadModel,
+                                @RequestParam(name = "classifierFile") MultipartFile uploadFile,
+                           @RequestParam(name = "testFile") MultipartFile testFile,
+                           @RequestParam Map<String,Object> params, Model model){
+
+        ServerResponse response = null;
+        System.out.println("上传模型，参数："+params);
+
+        try {
+            Integer algoType= Integer.parseInt((String)params.get("type"));
+            if(algoType==null){
+                model.addAttribute("error","算法类型不能为空");
+                return "views/common/error";
+            }
+            if(algoType.equals(Const.UPLOAD_ALGO_TYPE_CLA)){
+                response = mDesignBGService.uploadClassifierModel(uploadModel,uploadFile,testFile,params);
+            }
+            if(algoType.equals(Const.UPLOAD_ALGO_TYPE_REG)){
+                response=mDesignBGService.uploadRegModel(uploadModel,uploadFile,testFile,params);
+            }
+            if (response.isSuccess()){
+                model.addAttribute("error","模型上传成功，可在api页面中我的api处查看~");
                 return "views/common/error";
             }else {
                 model.addAttribute("error",response.getMsg());

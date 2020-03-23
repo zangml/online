@@ -41,5 +41,9 @@
   or API_id=0
 </select>
 
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from APIParam
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
 
 </mapper>

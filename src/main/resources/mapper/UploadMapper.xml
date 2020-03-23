@@ -6,6 +6,8 @@
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="algo_name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="algo_des" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="algo_dependence" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="algo_address" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="algo_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="algo_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -18,8 +20,8 @@
   </sql>
 
   <insert id="insert" parameterType="com.koala.learn.entity.UploadAlgo" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
-    insert into upload_algo ( algo_name, algo_des,algo_type, algo_id, user_id,test_file,algo_address)
-    values ( #{algoName}, #{algoDes},
+    insert into upload_algo ( algo_name, algo_des,algo_dependence,algo_type, algo_id, user_id,test_file,algo_address)
+    values ( #{algoName}, #{algoDes},#{algoDependence},
       #{algoType}, #{algoId}, #{userId},
       #{testFile}, #{algoAddress})
   </insert>
@@ -30,4 +32,17 @@
     from upload_algo
     where id=#{id}
   </select>
+
+  <update id="update" parameterType="com.koala.learn.entity.UploadAlgo">
+    update upload_algo
+    set algo_name = #{algoName},
+      algo_des = #{algoDes},
+      algo_dependence = #{algoDependence},
+      algo_type = #{algoType},
+      algo_id = #{algoId},
+      user_id = #{userId},
+      test_file = #{testFile},
+      algo_address=#{algoAddress}
+    where id = #{id}
+  </update>
 </mapper>

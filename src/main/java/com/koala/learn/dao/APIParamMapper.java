@@ -11,4 +11,6 @@ public interface APIParamMapper {
     List<APIParam> getAllByApiId(Integer apiId);
 
     List<APIParam> getAllByApiIdIncludePub(Integer id);
+
+    int deleteByPrimaryKey(Integer id);
 }
