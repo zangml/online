@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.koala.learn.dao.ScoreMapper">
+  <resultMap id="BaseResultMap" type="com.koala.learn.entity.Score">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="lab_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="group_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="final_score" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="accscore" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="precisionscore" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="recallscore" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="creat_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, lab_name, user_id , group_id, final_score,accscore, precisionscore,recallscore,creat_time,update_time
+  </sql>
+
+  <insert id="insert" parameterType="com.koala.learn.entity.Score" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
+    insert into score ( lab_name, user_id , group_id, final_score,accscore, precisionscore,recallscore,creat_time,update_time)
+    values ( #{labName}, #{userId},
+      #{groupId}, #{finalScore}, #{accscore},
+      #{precisionscore}, #{recallscore}, #{creatTime}, #{updateTime})
+  </insert>
+
+  <select id="selectById" resultType="com.koala.learn.entity.Score">
+    select
+    <include refid="Base_Column_List"/>
+    from score
+    where id=#{scoreId}
+  </select>
+
+  <select id="getByUserId" resultType="com.koala.learn.entity.Score">
+    select
+    <include refid="Base_Column_List"/>
+    from score
+    where user_id=#{userId}
+  </select>
+
+  <select id="selectAllScoreDesc" resultType="com.koala.learn.entity.Score">
+    select
+    <include refid="Base_Column_List"/>
+    from score
+    order by final_score desc
+  </select>
+
+  <select id="selectAllByUserId" resultType="com.koala.learn.entity.Score">
+    select
+    <include refid="Base_Column_List"/>
+    from score
+    where user_id=#{userId}
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from score
+    where id = #{scoreId}
+  </delete>
+
+</mapper>

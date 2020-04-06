@@ -40,6 +40,7 @@ public class Const {
 
     public static final String UPDATE_CLASS_ROOT_REG = "/usr/local/sk/upload/reg/";
 
+
     public static final String UPDATE_CLASS_ROOT_MODEL = "/usr/local/sk/upload/model/";
 
     public static final String DEFAULT_AVATAR = "http://image.phmlearn.com/02a885be-28de-414c-9f61-47845fc1c35e.jpeg";
@@ -52,6 +53,8 @@ public class Const {
     public static final String UPLOAD_CLASS_TEST_ROOT_CLA = "/Users/zangmenglei/data/upload/cla/";
 
     public static final String UPLOAD_CLASS_TEST_ROOT_REG = "/Users/zangmenglei/data/upload/reg/";
+
+    public static final String UPDATE_CLASS_ROOT_SCORE = "/usr/local/data/upload/score/";
 
     public static final String UPLOAD_CLASS_TEST_ROOT_PRE_OPATH = "/Users/zangmenglei/data/upload/pre/opath/"; //上传算法输出文件所在目录
 
@@ -160,6 +163,8 @@ public class Const {
 
     public static final String FILE_OPATH_ROOT="/usr/local/data/upload/";
 
+    public static final String FILE_OPATH_FEA_ZHOUCHENG="/usr/local/data/zhoucheng/feature/";
+
     public static final String FILE_ISOLATIONFOREST ="/usr/local/sk/IsolationForest.py";
 
     public static final String FILE_NORMALIZATION ="/usr/local/sk/Normalization.py";
@@ -172,7 +177,11 @@ public class Const {
 
     public static final String FILE_WAVFEATURE ="/usr/local/sk/waveFeature_api.py";
 
+    public static final String FILE_FEA_ZHOUCHENG ="/usr/local/sk/feature_zhoucheng.py";
 
+    public static final String FILE_SCORE_CWRU ="/usr/local/sk/score_cwru.py";//CWRU 打分文件
+
+    public static final String NAME_LAB_CWRU ="CWRU数据故障预测实验";
 
 
 }

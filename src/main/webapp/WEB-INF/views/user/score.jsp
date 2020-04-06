@@ -55,21 +55,19 @@
         <div class="user_right_container">
 
             <div class="titleContainer" style="display: flex;justify-content: space-between;box-sizing: border-box;padding: 10px 0;">
-                <strong>消息通知</strong>
+                <strong>提交记录</strong>
                 <c ></c>
                 <%--<span style="margin-right: 20px; font-size: 16px">未读消息：</span>--%>
             </div>
-            <c:forEach items="${msgList}" var="msg">
+            <c:forEach items="${scoreVoList}" var="score">
                 <div class="messageContainer">
                         <%--点击标题跳转到实验结果响应页--%>
                     <span></span>
-                    <p class="mesTitle" style="position: relative;text-indent: 30px"><a href="${msg.toUrl}&messageId=${msg.id}">${msg.title}</a>
-                        <c:if test="${msg.hasRead==0}">
-                        <span style="position: absolute;left: 10px;top: 10px;height: 5px;width: 5px;border-radius: 50%;background-color: red"></span>
-                        </c:if>
+                    <p class="mesTitle" style="position: relative;text-indent: 30px">${score.labName}
+
                         <a id='mes_del' onclick="showModal()"><img src="/static/images/ljx.png" style="height: 20px; width: 20px"/></a>
                     </p>
-                    <p class="mesContent" style="font-size: 14px">${msg.content}</p>
+                    <p class="mesContent" style="font-size: 14px">${score.content}</p>
                 </div>
 
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -77,10 +75,10 @@
                     <div class="modal-dialog" style="height: 200px;width: 300px">
                         <div class="modal-content">
                             <div class="modal-body" style="text-align: center;font-size: 20px">
-                                确认删除该条消息？
+                                确认删除该条记录？
                             </div>
                             <div class="modal-footer" style="text-align: center">
-                                <button onclick="deleteMes(${msg.id})" style="margin-right: 40px" type="button"
+                                <button onclick="deleteMes(${score.id})" style="margin-right: 40px" type="button"
                                         class="btn btn-danger"
                                         data-dismiss="modal">
                                     删除记录
@@ -106,10 +104,10 @@
     function showModal() {
         $('#myModal').modal('show');
     }
-    function deleteMes(msgId) {
+    function deleteMes(scoreId) {
         $.ajax({
             type: 'post',
-            url: '/user/message/delete/'+msgId,
+            url: '/user/score/delete/'+scoreId,
             async:true,
             success: function(data) {
                 console.log(data);

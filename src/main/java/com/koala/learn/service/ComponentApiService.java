@@ -528,4 +528,49 @@ public class ComponentApiService {
             return ServerResponse.createBySuccess(regResult);
         }
     }
+
+    public ServerResponse execPredict(String fileName, Map<String, Object> params, Integer classifierId) throws IOException {
+        Classifier classifier = classifierMapper.selectByPrimaryKey(classifierId);
+
+        List<ClassifierParam> paramList = classifierParamMapper.selectByClassifierId(classifierId);
+        for (ClassifierParam cp:paramList){
+            if (params.containsKey(cp.getParamName())){
+                cp.setDefaultValue((String) params.get(cp.getParamName()));
+            }
+        }
+        classifier.setParams(paramList);
+        String[] options = resolveOptions(classifier);
+        String opath=Const.UPLOAD_DATASET+"out_predict_fj_gbdt.csv";
+
+        StringBuilder sb = new StringBuilder("python ");
+        sb.append("/usr/local/sk/GBDT_predict.py");
+        for (int i = 0; i < options.length; i = i + 2) {
+            sb.append(" ").append(options[i].trim()).append("=").append(options[i + 1].trim());
+        }
+        sb.append(" train=").append(Const.UPLOAD_DATASET+fileName.trim());
+        sb.append(" opath=").append(opath);
+
+        logger.info(sb.toString());
+        PythonUtils.execPy(sb.toString());
+
+        File opathFile=new File(opath);
+        if(!opathFile.exists()){
+            return ServerResponse.createByErrorMessage("失败");
+        }
+
+        File predict=WekaUtils.csv2arff(opathFile);
+        Map<String,List<Integer>> map=new HashMap<>();
+
+        List list=new ArrayList<>();
+        ArffLoader arffLoader = new ArffLoader();
+        arffLoader.setFile(predict);
+        Instances instances=arffLoader.getDataSet();
+        Attribute attribute=instances.attribute(0);
+        for(int i=0;i<instances.size();i++){
+            Instance instance=instances.get(i);
+            list.add(instance.value(attribute));
+        }
+        map.put("predict",list);
+        return ServerResponse.createBySuccess(map);
+    }
 }

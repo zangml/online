@@ -4,11 +4,14 @@ import com.koala.learn.commen.ServerResponse;
 import com.koala.learn.component.HostHolder;
 import com.koala.learn.dao.MessageMapper;
 import com.koala.learn.entity.Message;
+import com.koala.learn.entity.Score;
 import com.koala.learn.entity.User;
 import com.koala.learn.service.EventProducer;
+import com.koala.learn.service.ScoreService;
 import com.koala.learn.service.UserService;
 import com.koala.learn.vo.LabFinishVo;
 
+import com.koala.learn.vo.ScoreVo;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +45,9 @@ public class UserController {
 
     @Autowired
     MessageMapper messageMapper;
+
+    @Autowired
+    ScoreService scoreService;
 
 
 
@@ -154,6 +161,24 @@ public class UserController {
         model.addAttribute("user",mHolder.getUser());
         return "views/user/mydata";
     }
+
+    @RequestMapping("user/score")
+    public String myScore(Model model){
+        User user=mHolder.getUser();
+        model.addAttribute("user",user);
+        List<Score> scoreList=scoreService.getScoreListByUserId(user.getId());
+        List<ScoreVo> scoreVoList=new ArrayList<>();
+        for(Score score:scoreList){
+            ScoreVo scoreVo=new ScoreVo();
+            scoreVo.setId(score.getId());
+            scoreVo.setLabName(score.getLabName());
+            String content="最终得分："+score.getFinalScore()+" 准确率："+score.getAccscore()+" 精确率："+score.getPrecisionscore()+" 召回率："+score.getRecallscore();
+            scoreVo.setContent(content);
+            scoreVoList.add(scoreVo);
+        }
+        model.addAttribute("scoreVoList",scoreVoList);
+        return "views/user/score";
+    }
     @RequestMapping("user/info")
     public String myInfo(Model model){
         model.addAttribute("user",mHolder.getUser());
@@ -175,6 +200,24 @@ public class UserController {
             return ServerResponse.createByErrorMessage("无权限操作");
         }
         int count= messageMapper.deleteByPrimaryKey(msgId);
+        if(count<=0){
+            return ServerResponse.createByErrorMessage("删除失败");
+        }
+        return ServerResponse.createBySuccess();
+    }
+
+    @RequestMapping("/user/score/delete/{scoreId}")
+    @ResponseBody
+    public ServerResponse deleteUserScore(@PathVariable("scoreId") Integer scoreId){
+        User user=mHolder.getUser();
+        if(user==null){
+            return ServerResponse.createByErrorMessage("请先登录");
+        }
+        Score score=scoreService.getScoreById(scoreId);
+        if(!score.getUserId().equals(user.getId())){
+            return ServerResponse.createByErrorMessage("无权限操作");
+        }
+        int count = scoreService.deleteById(scoreId);
         if(count<=0){
             return ServerResponse.createByErrorMessage("删除失败");
         }

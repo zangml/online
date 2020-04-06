@@ -49,6 +49,7 @@
                     <li><a href="/user/design" class="iconfont icon-sheji"> 我设计的实验</a></li>
                     <li><a href="/user/mydata" class="iconfont icon-gerenziliao current"> 我的个人资料</a></li>
                     <li><a href="/user/info" class="iconfont icon-xiaoxitishi"> 我的消息通知</a></li>
+                    <li><a href="/user/score" class="iconfont icon-tijiaojilu"> 我的提交记录</a></li>
                 </ul>
             </div>
         </div>

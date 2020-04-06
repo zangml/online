@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.Arrays;
 
 /**
  * Created by koala on 2018/3/6.
@@ -97,7 +98,8 @@ public class PythonUtils {
 
 //        transFile(new File("/Users/zangmenglei/PHM/572/random0.8diabetes_afterPrewindow-L1-S1test.csv"));
 
-        transFile(new File("/usr/local/data/diabetes.csv"));
+        String res=execPy("python /usr/local/sk/GBDT_predict.py");
+        System.out.println(res);
     }
 }
 

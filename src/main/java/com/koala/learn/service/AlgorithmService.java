@@ -2,6 +2,7 @@ package com.koala.learn.service;
 
 import com.google.gson.Gson;
 import com.koala.learn.Const;
+import com.koala.learn.commen.ServerResponse;
 import com.koala.learn.component.JedisAdapter;
 import com.koala.learn.dao.AlgorithmMapper;
 import com.koala.learn.entity.Algorithm;
@@ -10,6 +11,7 @@ import com.koala.learn.utils.RedisKeyUtil;
 import com.koala.learn.utils.treat.WxViewUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.supervised.instance.SMOTE;
@@ -31,6 +33,9 @@ public class AlgorithmService {
 
     @Autowired
     WxComponentService wxComponentService;
+
+    @Autowired
+    LabDesignBGService labDesignBGService;
 
     public Algorithm getAlgoById(Integer id){
         return algorithmMapper.getById(id);
@@ -172,5 +177,32 @@ public class AlgorithmService {
         String cacheOptions=gson.toJson(options);
         mJedisAdapter.set(key,cacheOptions);
         return cacheOptions;
+    }
+
+
+    public ServerResponse uploadPre(MultipartFile uploadFile, Integer labFile, Map<String, Object> params) {
+
+        return ServerResponse.createByErrorMessage("上传失败");
+    }
+
+    public ServerResponse uploadFea(MultipartFile uploadFile, Integer labFile, Map<String, Object> params) throws IOException {
+        //保存算法文件
+//        String uploadFileName=uploadFile.getOriginalFilename();
+//        String newFileName=labDesignBGService.getFileName("fea",uploadFileName);
+//        File feaFile = new File(Const.UPDATE_CLASS_ROOT_FEA,newFileName);
+//        uploadFile.transferTo(feaFile);
+//
+//        if(labFile.equals(4)){
+//
+//        }
+        return ServerResponse.createByErrorMessage("上传失败");
+    }
+
+    public ServerResponse uploadClassifier(MultipartFile uploadFile, Integer labFile, Map<String, Object> params) {
+        return ServerResponse.createByErrorMessage("上传失败");
+    }
+
+    public ServerResponse uploadRegressor(MultipartFile uploadFile, Integer labFile, Map<String, Object> params) {
+        return ServerResponse.createByErrorMessage("上传失败");
     }
 }

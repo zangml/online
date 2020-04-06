@@ -9,6 +9,7 @@ import com.koala.learn.service.AuthService;
 import com.koala.learn.service.ComponentApiService;
 import com.koala.learn.service.FileService;
 import com.koala.learn.service.ModelService;
+import com.koala.learn.utils.PythonUtils;
 import com.koala.learn.utils.divider.CsvDivider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -596,5 +598,47 @@ public class ComponentApiController {
             return response;
         }
         return componentApiService.getData(dataId,diviceId,atrributeName);
+    }
+
+    @PostMapping("/ML/predict/{classifierId}")
+    public  ServerResponse predict( @RequestParam("access_token") String accessToken,
+                                    @RequestParam(value = "file_name" ,required = false)String fileName,
+                                    @RequestParam Map<String,Object> params,
+                                    @PathVariable("classifierId") Integer classifierId) throws IOException {
+        ServerResponse response=authService.checkAccessToken(accessToken);
+        if(!response.isSuccess()){
+            return response;
+        }
+        return componentApiService.execPredict(fileName,params,classifierId);
+    }
+
+    @PostMapping("/feature/zhoucheng")
+    public  ServerResponse predict( @RequestParam("access_token") String accessToken,
+                                    @RequestParam(value = "file_name" ,required = false)String fileName) throws IOException {
+        ServerResponse response=authService.checkAccessToken(accessToken);
+        if(!response.isSuccess()){
+            return response;
+        }
+        String opath=Const.FILE_OPATH_FEA_ZHOUCHENG+"out_"+fileName+".csv";
+        File opathFile=new File(opath);
+        if(opathFile.exists()){
+            Map<String,Object> map=new HashMap<>();
+            map.put("file_name",opathFile.getName());
+            return ServerResponse.createBySuccess(map);
+        }
+
+        StringBuilder sb = new StringBuilder("python ");
+        sb.append(Const.FILE_FEA_ZHOUCHENG).append(" ");
+        sb.append("path=").append(Const.FILE_OPATH_FEA_ZHOUCHENG+fileName).append(" ");
+        sb.append("opath=").append(opath);
+
+        System.out.println(sb.toString());
+        PythonUtils.execPy(sb.toString());
+        if(!opathFile.exists() || opathFile.length()<=0){
+            return ServerResponse.createByErrorMessage("处理失败，请检验数据格式是否正确");
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("file_name",opathFile.getName());
+        return ServerResponse.createBySuccess(map);
     }
 }

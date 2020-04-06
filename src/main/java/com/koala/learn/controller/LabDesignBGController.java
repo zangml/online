@@ -8,6 +8,7 @@ import com.koala.learn.component.JedisAdapter;
 import com.koala.learn.dao.LabMapper;
 import com.koala.learn.dao.FeatureMapper;
 import com.koala.learn.entity.*;
+import com.koala.learn.service.AlgorithmService;
 import com.koala.learn.service.ApiService;
 import com.koala.learn.service.LabDesignBGService;
 import com.koala.learn.service.WxComponentService;
@@ -79,6 +80,10 @@ public class LabDesignBGController {
 
     @Autowired
     ApiService apiService;
+
+
+    @Autowired
+    AlgorithmService algorithmService;
     private static Logger logger = LoggerFactory.getLogger(LabDesignBGController.class);
 
     @RequestMapping(path = "/file/{id}")
@@ -248,12 +253,20 @@ public class LabDesignBGController {
 
 
 
+    @RequestMapping("/design/upload/classifier2")
+    public String uploadClassifier2() {
+        return "views/design/updateClassifier2";
+    }
+
+    @RequestMapping("/design/upload/classifier")
+    public String uploadClassifier() {
+        return "views/design/updateClassifier";
+    }
+
     @RequestMapping(path = "/design/doUpload/classifier")
     public String doUpload(@RequestParam(name = "classifierFile") MultipartFile uploadFile,
                            @RequestParam(name = "testFile") MultipartFile testFile,
-                           @RequestParam(name = "type",required = false) Integer type,
-                           @RequestParam Map<String,Object> params, Model model,
-                           HttpSession session){
+                           @RequestParam Map<String,Object> params, Model model){
 
         ServerResponse response = null;
         System.out.println("上传算法，参数："+params);
@@ -291,6 +304,42 @@ public class LabDesignBGController {
 
     }
 
+    @RequestMapping(path = "/design/doUpload/classifier2")
+    public String doUpload2(@RequestParam(name = "classifierFile") MultipartFile uploadFile,
+                           @RequestParam(name = "labFile") Integer labFile,
+                           @RequestParam(name = "type",required = false) Integer type,
+                           @RequestParam Map<String,Object> params, Model model,
+                           HttpSession session) throws IOException {
+
+        ServerResponse response = null;
+        System.out.println("上传算法，参数："+params);
+
+        Integer algoType= Integer.parseInt((String)params.get("type"));
+        if(algoType==null){
+            model.addAttribute("error","算法类型不能为空");
+            return "views/common/error";
+        }
+        if(algoType.equals(Const.UPLOAD_ALGO_TYPE_PRE)){
+            response=algorithmService.uploadPre(uploadFile,labFile,params);
+        }
+        if(algoType.equals(Const.UPLOAD_ALGO_TYPE_FEA)){
+            response=algorithmService.uploadFea(uploadFile,labFile,params);
+        }
+        if(algoType.equals(Const.UPLOAD_ALGO_TYPE_CLA)){
+            response = algorithmService.uploadClassifier(uploadFile,labFile,params);
+        }
+        if(algoType.equals(Const.UPLOAD_ALGO_TYPE_REG)){
+            response=algorithmService.uploadRegressor(uploadFile,labFile,params);
+        }
+        if (response.isSuccess()){
+            model.addAttribute("error","算法上传成功，可在api页面中我的api处查看~");
+            return "views/common/error";
+        }else {
+            model.addAttribute("error",response.getMsg());
+            return "views/common/error";
+        }
+
+    }
     @RequestMapping(path = "/design/update/classifier/{api_id}")
     public String doUpdate(@RequestParam(name = "classifierFile") MultipartFile uploadFile,
                            @RequestParam(name = "testFile") MultipartFile testFile,

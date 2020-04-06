@@ -55,6 +55,12 @@
                     API
                 </a>
         </span>
+
+        <span>
+                <a href="/score/doUpload">
+                    上传结果
+                </a>
+        </span>
     </div>
     <c:choose>
         <c:when test="${sessionScope.get('user') == null}">

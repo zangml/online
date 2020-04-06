@@ -75,7 +75,7 @@
                         <div class="form-group">
                             <label for="labModelClassifier" class="col-sm-2 control-label ">上传模型</label>
                             <div class="col-sm-10">
-                                <input  type="file" name="modelFile" id="labModelClassifier" accept=".model">
+                                <input  type="file" name="modelFile" id="labModelClassifier">
                             </div>
                         </div>
 

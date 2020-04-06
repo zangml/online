@@ -396,10 +396,6 @@ public class LabDesignController {
         return "views/design/lab_5";
     }
 
-    @RequestMapping("/design/upload/classifier")
-    public String uploadClassifier() {
-        return "views/design/updateClassifier";
-    }
 
     @RequestMapping("/design/upload/model")
     public String uploadModel() {
