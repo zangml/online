@@ -116,6 +116,7 @@
             <mvc:mapping path="/design/*" />
             <mvc:mapping path="/design" />
             <mvc:mapping path="/bbs" />
+            <mvc:mapping path="/score/**" />
             <mvc:mapping path="/api/**" />
             <mvc:exclude-mapping path="/wx/**"/>
 
@@ -130,6 +131,7 @@
             <mvc:mapping path="/design/**" />
             <mvc:mapping path="/bbs/**" />
             <mvc:mapping path="/course/**" />
+            <mvc:mapping path="/score/**" />
             <mvc:mapping path="/api/**" />
             <mvc:exclude-mapping path="/wx/**"/>
             <bean class="com.koala.learn.interceptor.LogInterceptor" />
