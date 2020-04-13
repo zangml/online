@@ -8,7 +8,7 @@ public interface ScoreMapper {
 
     int insert(Score score);
 
-    List<Score> selectAllScoreDesc();
+    List<Score> selectAllScoreDescByLabId(Integer labId);
 
     List<Score> selectAllByUserId(Integer userId);
 

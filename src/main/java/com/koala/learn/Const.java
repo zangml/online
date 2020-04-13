@@ -181,7 +181,11 @@ public class Const {
 
     public static final String FILE_SCORE_CWRU ="/usr/local/sk/score_cwru.py";//CWRU 打分文件
 
-    public static final String NAME_LAB_CWRU ="CWRU数据故障预测实验";
+    public static final String FILE_SCORE_CWRU_2 ="/usr/local/sk/score_cwru_2.py";//CWRU_2 打分文件
+
+    public static final String NAME_LAB_CWRU ="CWRU数据故障预测实验（一）";
+
+    public static final String NAME_LAB_CWRU_2 ="CWRU数据故障预测实验（二）";
 
 
 }

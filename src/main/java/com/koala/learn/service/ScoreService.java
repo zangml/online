@@ -29,8 +29,8 @@ public class ScoreService {
 
     private static final Logger logger= LoggerFactory.getLogger(ScoreService.class);
 
-    public List<Score> getScoreList(){
-        return scoreMapper.selectAllScoreDesc();
+    public List<Score> getScoreListByLabId(Integer labId){
+        return scoreMapper.selectAllScoreDescByLabId(labId);
     }
 
     public List<Score> getScoreListByUserId(Integer userId){
@@ -70,6 +70,7 @@ public class ScoreService {
             return ServerResponse.createByErrorMessage("上传数据错误，请检查格式是否正确~");
         }
         Score score=new Score();
+        score.setLabId(resultLabName);
         score.setLabName(getLabNameByresultLabName(resultLabName));
         score.setUserId(user.getId());
         score.setGroupId(groupId);
@@ -93,6 +94,9 @@ public class ScoreService {
         if(resultLabName.equals(1)){
             return Const.FILE_SCORE_CWRU;
         }
+        if(resultLabName.equals(2)){
+            return Const.FILE_SCORE_CWRU_2;
+        }
         return null;
     }
 
@@ -100,6 +104,9 @@ public class ScoreService {
     public String getLabNameByresultLabName(Integer resultLabName){
         if(resultLabName.equals(1)){
             return Const.NAME_LAB_CWRU;
+        }
+        if(resultLabName.equals(2)){
+            return Const.NAME_LAB_CWRU_2;
         }
         return null;
     }

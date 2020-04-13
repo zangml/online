@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.koala.learn.entity.Score">
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="lab_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="lab_name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="group_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -16,12 +17,12 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, lab_name, user_id , group_id, final_score,accscore, precisionscore,recallscore,creat_time,update_time
+    id, lab_id,lab_name, user_id , group_id, final_score,accscore, precisionscore,recallscore,creat_time,update_time
   </sql>
 
   <insert id="insert" parameterType="com.koala.learn.entity.Score" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
-    insert into score ( lab_name, user_id , group_id, final_score,accscore, precisionscore,recallscore,creat_time,update_time)
-    values ( #{labName}, #{userId},
+    insert into score ( lab_id,lab_name, user_id , group_id, final_score,accscore, precisionscore,recallscore,creat_time,update_time)
+    values ( #{labId},#{labName}, #{userId},
       #{groupId}, #{finalScore}, #{accscore},
       #{precisionscore}, #{recallscore}, #{creatTime}, #{updateTime})
   </insert>
@@ -40,10 +41,11 @@
     where user_id=#{userId}
   </select>
 
-  <select id="selectAllScoreDesc" resultType="com.koala.learn.entity.Score">
+  <select id="selectAllScoreDescByLabId" parameterType="java.lang.Integer" resultType="com.koala.learn.entity.Score" >
     select
     <include refid="Base_Column_List"/>
     from score
+    where lab_id=#{labId}
     order by final_score desc
   </select>
 

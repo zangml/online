@@ -61,8 +61,8 @@
         </div>
     </div>
     <div class="add_algo_container">
-        <p class="add_algo_img"><a href="/design/upload/classifier" class="iconfont icon-hao"></a></p>
-        <p class="add_algo_text"><a href="/design/upload/classifier">上传算法</a></p>
+        <p class="add_algo_img"><a href="/design/upload/classifier2" class="iconfont icon-hao"></a></p>
+        <p class="add_algo_text"><a href="/design/upload/classifier2">上传算法</a></p>
     </div>
 
     <div class="add_model_container">

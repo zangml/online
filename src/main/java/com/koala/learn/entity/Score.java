@@ -6,6 +6,8 @@ public class Score {
 
     private Integer id;
 
+    private Integer labId;
+
     private String labName;
 
     private Integer userId;
@@ -28,8 +30,9 @@ public class Score {
     public Score() {
     }
 
-    public Score(Integer id, String labName, Integer userId, Integer groupId, Double finalScore, Double accscore, Double precisionscore, Double recallscore, Date creatTime, Date updateTime) {
+    public Score(Integer id, Integer labId, String labName, Integer userId, Integer groupId, Double finalScore, Double accscore, Double precisionscore, Double recallscore, Date creatTime, Date updateTime) {
         this.id = id;
+        this.labId = labId;
         this.labName = labName;
         this.userId = userId;
         this.groupId = groupId;
@@ -119,5 +122,13 @@ public class Score {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getLabId() {
+        return labId;
+    }
+
+    public void setLabId(Integer labId) {
+        this.labId = labId;
     }
 }

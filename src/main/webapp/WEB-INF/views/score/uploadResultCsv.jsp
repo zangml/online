@@ -51,8 +51,8 @@
                             <label for="resultLabName" class="col-sm-2 control-label">实验名称</label>
                             <div class="controls col-sm-10">
                                 <select id="resultLabName" name="resultLabName">
-                                    <option value="1">CWRU数据故障预测实验</option>
-                                    <%--<option value="2">特征提取</option>--%>
+                                    <option value="1">CWRU数据故障预测第一组数据集实验</option>
+                                    <option value="2">CWRU数据故障预测第二组数据集实验</option>
                                     <%--<option value="3">故障诊断（分类）</option>--%>
                                     <%--<option value="4">寿命预测（回归）</option>--%>
                                 </select>

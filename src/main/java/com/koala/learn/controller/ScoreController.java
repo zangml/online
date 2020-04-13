@@ -36,22 +36,39 @@ public class ScoreController {
 
     @RequestMapping("/score/list")
     public String list(Model model){
-        List<Score> scoreList=scoreService.getScoreList();
+        List<Score> scoreList1=scoreService.getScoreListByLabId(1);
 
-        List<Score> scoreSingleList=new ArrayList<>();
+        List<Score> scoreSingleList1=new ArrayList<>();
 
-        Set<Integer> groupIds=new HashSet<>();
+        Set<Integer> groupIds1=new HashSet<>();
 
-        for(int i=0;i<scoreList.size();i++){
-            Score score=scoreList.get(i);
+        for(int i=0;i<scoreList1.size();i++){
+            Score score=scoreList1.get(i);
             int groupId=score.getGroupId();
-            if(groupIds.contains(groupId)){
+            if(groupIds1.contains(groupId)){
                 continue;
             }
-            groupIds.add(groupId);
-            scoreSingleList.add(score);
+            groupIds1.add(groupId);
+            scoreSingleList1.add(score);
         }
-        model.addAttribute("scoreSingleList",scoreSingleList);
+        model.addAttribute("scoreSingleList1",scoreSingleList1);
+
+        List<Score> scoreList2=scoreService.getScoreListByLabId(2);
+
+        List<Score> scoreSingleList2=new ArrayList<>();
+
+        Set<Integer> groupIds2=new HashSet<>();
+
+        for(int i=0;i<scoreList2.size();i++){
+            Score score=scoreList2.get(i);
+            int groupId=score.getGroupId();
+            if(groupIds2.contains(groupId)){
+                continue;
+            }
+            groupIds2.add(groupId);
+            scoreSingleList2.add(score);
+        }
+        model.addAttribute("scoreSingleList2",scoreSingleList2);
         return "views/score/list";
     }
 
