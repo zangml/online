@@ -91,17 +91,17 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="labFile" class="col-sm-2 control-label ">选择测试文件</label>
-                            <div class="col-sm-10">
-                                <select id="labFile" name="labFile">
-                                    <option value="1">风机数据集</option>
-                                    <option value="2">刀具数据集</option>
-                                    <option value="3">转子数据集</option>
-                                    <option value="4">轴承数据集</option>
-                                </select>
-                            </div>
-                        </div>
+                        <%--<div class="form-group">--%>
+                            <%--<label for="labFile" class="col-sm-2 control-label ">选择测试文件</label>--%>
+                            <%--<div class="col-sm-10">--%>
+                                <%--<select id="labFile" name="labFile">--%>
+                                    <%--<option value="1">风机数据集</option>--%>
+                                    <%--<option value="2">刀具数据集</option>--%>
+                                    <%--<option value="3">转子数据集</option>--%>
+                                    <%--<option value="4">轴承数据集</option>--%>
+                                <%--</select>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
                         <dev class="form-group">
                             <label class="control-label ">算法参数</label>
                             <div id="param" class="panel  col-sm-offset-2" style="display: none">

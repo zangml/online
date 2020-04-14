@@ -82,8 +82,8 @@
                     <div class="col-md-1 coll">${score.groupId}</div>
                     <div class="col-md-2 coll" style="font-size: 14px">${score.labName}</div>
                     <div class="col-md-2 coll">${score.finalScore}</div>
-                    <div class="col-md-2 coll">${score.precisionscore}</div>
                     <div class="col-md-2 coll">${score.accscore}</div>
+                    <div class="col-md-2 coll">${score.precisionscore}</div>
                     <div class="col-md-2 coll">${score.recallscore}</div>
                 </li>
             </c:forEach>
