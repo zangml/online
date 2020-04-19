@@ -568,6 +568,20 @@ public class ComponentApiController {
         return componentApiService.execUploadModel(fileName,uploadAlgoId,model);
     }
 
+    @PostMapping("/upload/zhoucheng/{apiType}/{apiId}")
+    public ServerResponse uploadPreFeaApi(@RequestParam(value = "file_name") String fileName,
+                                           @RequestParam("access_token") String accessToken,
+                                           @RequestParam Map<String,Object> params,
+                                           @PathVariable("apiType") Integer apiType,
+                                           @PathVariable("apiId") Integer apiId) throws IOException {
+
+        ServerResponse response=authService.checkAccessToken(accessToken);
+        if(!response.isSuccess()){
+            return response;
+        }
+        return componentApiService.execUploadPreAndFea2(fileName,params,apiType,apiId);
+    }
+
     /**
      * 获取风机数据
      */

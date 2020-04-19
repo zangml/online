@@ -54,12 +54,6 @@
                             </div>
                         </div>
 
-                        <%--<div class="form-group">--%>
-                            <%--<label for="AlgoDependence" class="col-sm-2 control-label">依赖算法库</label>--%>
-                            <%--<div class="col-sm-10">--%>
-                                <%--<textarea  rows="5" name="dependence" class="form-control" id="AlgoDependence" placeholder="请输入依赖算法库"></textarea>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
 
                         <div class="form-group">
                             <label for="algoType" class="col-sm-2 control-label">模型类别</label>

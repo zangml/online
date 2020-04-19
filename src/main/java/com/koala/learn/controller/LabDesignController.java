@@ -397,9 +397,14 @@ public class LabDesignController {
     }
 
 
+//    @RequestMapping("/design/upload/model")
+//    public String uploadModel() {
+//        return "views/design/uploadModel";
+//    }
+
     @RequestMapping("/design/upload/model")
     public String uploadModel() {
-        return "views/design/uploadModel";
+        return "views/algorithm/uploadModel";
     }
 
 

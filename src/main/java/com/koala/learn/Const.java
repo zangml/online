@@ -19,6 +19,8 @@ public class Const {
 
     public static final int CLASSIFIER = 1;
     public static final int REGRESSION = 2;
+    public static final int CLASSIFIER_PREDICT = 3;
+    public static final int REGRESSION_PREDICT = 4;
 
     /*
          <option value="1">数据预处理</option>
@@ -32,6 +34,8 @@ public class Const {
     public static final int UPLOAD_ALGO_TYPE_REG=4;
     public static final int UPLOAD_ALGO_TYPE_MODEL_CLA=6;
     public static final int UPLOAD_ALGO_TYPE_MODEL_REG=7;
+    public static final int UPLOAD_ALGO_TYPE_MODEL_PREDICT_CLA=8;
+    public static final int UPLOAD_ALGO_TYPE_MODEL_PREDICT_REG=9;
     public static final String UPDATE_CLASS_ROOT_PRE = "/usr/local/sk/upload/pre/"; //上传算法所在目录
 
     public static final String UPDATE_CLASS_ROOT_FEA = "/usr/local/sk/upload/fea/";
@@ -164,6 +168,8 @@ public class Const {
     public static final String FILE_OPATH_ROOT="/usr/local/data/upload/";
 
     public static final String DATA_ZHOUCHENG="/usr/local/data/zhoucheng/data/";
+
+    public static final String DATA_ZHOUCHENG_OUT="/usr/local/data/zhoucheng/data/out/";
 
     public static final String FILE_OPATH_FEA_ZHOUCHENG="/usr/local/data/zhoucheng/out/fea/";
 

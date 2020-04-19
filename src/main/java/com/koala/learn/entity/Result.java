@@ -6,11 +6,11 @@ import java.util.List;
  * Created by koala on 2018/3/13.
  */
 public class Result {
-    private double accuracy;
-    private double recall;
-    private double precision;
-    private double fMeasure;
-    private double rocArea;
+    private double accuracy; //准确率
+    private double recall;   //召回率
+    private double precision;  //精确率
+    private double fMeasure;  //F_measure值
+    private double rocArea;  //Roc值
     private List<Double> featureImportances=null;
 
     public Result() {

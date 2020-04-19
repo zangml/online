@@ -392,6 +392,37 @@ public class ComponentApiService {
 
     }
 
+    public ServerResponse execUploadPreAndFea2(String path,Map<String, Object> params, Integer apiType,Integer apiId) throws IOException {
+
+        String opath=Const.DATA_ZHOUCHENG_OUT+"out_api_"+apiId+System.nanoTime()+".csv";
+        File opathFile=new File(opath);
+        API api= apiMapper.selectById(apiId);
+        Integer uploadAlgoId=api.getUploadAlgoId();
+        UploadAlgo uploadAlgo= uploadAlgoMapper.selectById(uploadAlgoId);
+
+        String[] options=resolveOptions(params);
+
+        StringBuilder sb = new StringBuilder("python ");
+        sb.append(uploadAlgo.getAlgoAddress());
+        for (int i = 0; i < options.length; i = i + 2) {
+            sb.append(" ").append(options[i].trim()).append("=").append(options[i + 1].trim());
+        }
+        sb.append(" path=").append(path.trim()).append(" opath=").append(opath.trim());
+        logger.info(sb.toString());
+        PythonUtils.execPy(sb.toString());
+
+        if(!opathFile.exists() || opathFile.length()<=0){
+            return ServerResponse.createByErrorMessage("处理失败，请检验数据格式是否正确");
+        }
+//        uploadCsvAndXls(opathFile);
+        Map<String,Object> map=new HashMap<>();
+//        map.put("csv",Const.DOWNLOAD_FILE_PREFIX+opathFile.getName());
+//        map.put("xls",Const.DOWNLOAD_FILE_PREFIX+(opathFile.getName()).replace("csv","xls"));
+        map.put("file_name",opathFile.getName());
+        return ServerResponse.createBySuccess(map);
+
+    }
+
     public String[] resolveOptions(Map<String,Object> param){
         List<String> paramList = new ArrayList<>();
         for (String key:param.keySet()){
@@ -508,25 +539,53 @@ public class ComponentApiService {
         return ServerResponse.createBySuccess(map);
     }
 
-    public ServerResponse execUploadModel(String fileName, Integer uploadAlgoId, Model model) {
+    public ServerResponse execUploadModel(String fileName, Integer uploadAlgoId, Model model) throws IOException {
 
         UploadAlgo uploadAlgo= uploadAlgoMapper.selectById(uploadAlgoId);
 
         File testFile =new File(Const.UPLOAD_DATASET,fileName);
 
+        String opath=Const.UPLOAD_DATASET+"out_predict_"+model.getId()+"_"+fileName;
+
         StringBuilder sb = new StringBuilder("python ");
         sb.append(uploadAlgo.getAlgoAddress());
         sb.append(" model=").append(model.getFileAddress());
         sb.append(" test=").append(testFile.getAbsolutePath());
+        if(model.getModelType().equals(3) || model.getModelType().equals(4)){
+            sb.append(" opath=").append(opath);
+        }
         logger.info(sb.toString());
-        String strResult = PythonUtils.execPy(sb.toString());
+
         if(model.getModelType().equals(1)){
+            String strResult = PythonUtils.execPy(sb.toString());
             Result result = gson.fromJson(strResult, Result.class);
             return ServerResponse.createBySuccess(result);
-        }else {
+        }else if(model.getModelType().equals(2)) {
+            String strResult = PythonUtils.execPy(sb.toString());
             RegResult regResult=gson.fromJson(strResult,RegResult.class);
             return ServerResponse.createBySuccess(regResult);
+        }else if(model.getModelType().equals(3) || model.getModelType().equals(4)){
+            PythonUtils.execPy(sb.toString());
+            File opathFile=new File(opath);
+            if(!opathFile.exists()){
+                return ServerResponse.createByErrorMessage("运算失败");
+            }
+            File predict=WekaUtils.csv2arff(opathFile);
+            Map<String,List<Integer>> map=new HashMap<>();
+
+            List list=new ArrayList<>();
+            ArffLoader arffLoader = new ArffLoader();
+            arffLoader.setFile(predict);
+            Instances instances=arffLoader.getDataSet();
+            Attribute attribute=instances.attribute(0);
+            for(int i=0;i<instances.size();i++){
+                Instance instance=instances.get(i);
+                list.add(instance.value(attribute));
+            }
+            map.put("predict",list);
+            return ServerResponse.createBySuccess(map);
         }
+        return ServerResponse.createByErrorMessage("模型不存在!");
     }
 
     public ServerResponse execPredict(String fileName, Map<String, Object> params, Integer classifierId) throws IOException {
