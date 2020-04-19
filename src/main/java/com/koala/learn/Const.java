@@ -163,7 +163,13 @@ public class Const {
 
     public static final String FILE_OPATH_ROOT="/usr/local/data/upload/";
 
-    public static final String FILE_OPATH_FEA_ZHOUCHENG="/usr/local/data/zhoucheng/feature/";
+    public static final String DATA_ZHOUCHENG="/usr/local/data/zhoucheng/data/";
+
+    public static final String FILE_OPATH_FEA_ZHOUCHENG="/usr/local/data/zhoucheng/out/fea/";
+
+    public static final String FILE_OPATH_PRE_ZHOUCHENG="/usr/local/data/zhoucheng/out/pre/";
+
+
 
     public static final String FILE_ISOLATIONFOREST ="/usr/local/sk/IsolationForest.py";
 

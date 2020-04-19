@@ -585,6 +585,21 @@ public class ComponentApiController {
     }
 
     /**
+     * 获取轴承数据
+     */
+
+    @PostMapping("/data/zhoucheng")
+    public  ServerResponse getData( @RequestParam("access_token") String accessToken,
+                                    @RequestParam("divice_id") Integer diviceId,
+                                    @RequestParam("atrribute") String atrributeName) throws IOException {
+        ServerResponse response=authService.checkAccessToken(accessToken);
+        if(!response.isSuccess()){
+            return response;
+        }
+        return componentApiService.execZcData(diviceId,atrributeName);
+    }
+
+    /**
      * 获取原始数据
      */
 

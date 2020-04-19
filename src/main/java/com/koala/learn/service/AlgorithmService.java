@@ -202,128 +202,217 @@ public class AlgorithmService {
     }
 
 
-    public ServerResponse uploadPre(MultipartFile uploadFile, Integer labFile, Map<String, Object> params) {
 
-        return ServerResponse.createByErrorMessage("上传失败");
-    }
 
-    public ServerResponse uploadFea(MultipartFile uploadFile, Integer labFile, Map<String, Object> params) throws IOException {
+    public ServerResponse uploadFea(MultipartFile uploadFile, MultipartFile testFile, Map<String, Object> params) throws IOException {
         //保存算法文件
         String uploadFileName=uploadFile.getOriginalFilename();
         String newFileName=labDesignBGService.getFileName("fea",uploadFileName);
         File feaFile = new File(Const.UPDATE_CLASS_ROOT_FEA,newFileName);
         uploadFile.transferTo(feaFile);
 
-        if(labFile.equals(4)){
-            String fileName="B_data_ext";
 
-            String opath=Const.FILE_OPATH_FEA_ZHOUCHENG+"out_"+fileName+".csv";
-            File opathFile=new File(opath);
-            if(opathFile.exists()){
-                Map<String,Object> map=new HashMap<>();
-                map.put("file_name",opathFile.getName());
-                return ServerResponse.createBySuccess(map);
-            }
+        String opath=Const.FILE_OPATH_FEA_ZHOUCHENG+"out_"+newFileName+".csv";
 
-            StringBuilder sb = new StringBuilder("python ");
-            sb.append(feaFile).append(" ");
-            sb.append("path=").append(Const.FILE_OPATH_FEA_ZHOUCHENG+fileName).append(" ");
-            sb.append("opath=").append(opath);
+        File opathFile=new File(opath);
 
-            System.out.println(sb.toString());
-            PythonUtils.execPy(sb.toString());
-            if(!opathFile.exists() || opathFile.length()<=0){
-                return ServerResponse.createByErrorMessage("处理失败，请检验数据格式是否正确");
-            }
+        StringBuilder sb = new StringBuilder("python ");
+        sb.append(feaFile).append(" ");
+        sb.append("path=").append(Const.DATA_ZHOUCHENG).append(" ");
+        sb.append("opath=").append(opath);
 
+        System.out.println(sb.toString());
+        PythonUtils.execPy(sb.toString());
+        if(!opathFile.exists() || opathFile.length()<=0){
+            return ServerResponse.createByErrorMessage("处理失败，请检验数据格式是否正确");
+        }
 
-            UploadAlgo uploadAlgo=new UploadAlgo();
-            uploadAlgo.setAlgoName(params.get("name").toString());
-            uploadAlgo.setAlgoDes(params.get("des").toString());
-            uploadAlgo.setAlgoType(Const.UPLOAD_ALGO_TYPE_FEA);
+        UploadAlgo uploadAlgo=new UploadAlgo();
+        uploadAlgo.setAlgoName(params.get("name").toString());
+        uploadAlgo.setAlgoDes(params.get("des").toString());
+        uploadAlgo.setAlgoType(Const.UPLOAD_ALGO_TYPE_FEA);
 
-            uploadAlgo.setAlgoDependence(params.get("dependence").toString());
+        uploadAlgo.setAlgoDependence(params.get("dependence").toString());
 
-            Feature feature=new Feature();
-            feature.setName(params.get("name").toString());
-            feature.setDes(params.get("des").toString());
-            feature.setLabel(feaFile.getName());
-            feature.setFeatureType(-2); //待审核的特征提取算法
+        Feature feature=new Feature();
+        feature.setName(params.get("name").toString());
+        feature.setDes(params.get("des").toString());
+        feature.setLabel(feaFile.getName());
+        feature.setFeatureType(-2); //待审核的特征提取算法
 
-            int count = featureMapper.insert(feature);
-            if(count<=0){
-                return ServerResponse.createByErrorMessage("特征提取算法保存错误!");
-            }
+        int count = featureMapper.insert(feature);
+        if(count<=0){
+            return ServerResponse.createByErrorMessage("算法保存错误!");
+        }
 
-            uploadAlgo.setAlgoId(feature.getId());
-            uploadAlgo.setUserId(mHolder.getUser().getId());
+        uploadAlgo.setAlgoId(feature.getId());
+        uploadAlgo.setUserId(mHolder.getUser().getId());
 //            uploadAlgo.setTestFile(test.getAbsolutePath());
-            uploadAlgo.setAlgoAddress(feaFile.getAbsolutePath());
-            int insert = uploadAlgoMapper.insert(uploadAlgo);
-            if(insert<=0){
-                return ServerResponse.createByErrorMessage("预处理上传保存错误!");
-            }
-            API api=new API();
+        uploadAlgo.setAlgoAddress(feaFile.getAbsolutePath());
+        int insert = uploadAlgoMapper.insert(uploadAlgo);
+        if(insert<=0){
+            return ServerResponse.createByErrorMessage("上传保存错误!");
+        }
+        API api=new API();
 
-            api.setApiType(Const.UPLOAD_ALGO_TYPE_FEA);
-            api.setUploadAlgoId(uploadAlgo.getId());
-            api.setContentType("application/x-www-form-urlencoded");
-            api.setCreatTime(new Date());
-            api.setDesc(uploadAlgo.getAlgoDes());
-            api.setName(uploadAlgo.getAlgoName());
-            api.setRequestMethod("POST");
-            api.setStatus(0);
-            api.setUserId(uploadAlgo.getUserId());
-            api.setUpdateTime(new Date());
+        api.setApiType(Const.UPLOAD_ALGO_TYPE_FEA);
+        api.setUploadAlgoId(uploadAlgo.getId());
+        api.setContentType("application/x-www-form-urlencoded");
+        api.setCreatTime(new Date());
+        api.setDesc(uploadAlgo.getAlgoDes());
+        api.setName(uploadAlgo.getAlgoName());
+        api.setRequestMethod("POST");
+        api.setStatus(0);
+        api.setUserId(uploadAlgo.getUserId());
+        api.setUpdateTime(new Date());
 
-            api.setPub(Integer.parseInt(params.get("pub").toString()));
-            api.setUrl("https://api.phmlearn.com/component/upload/"+Const.UPLOAD_ALGO_TYPE_FEA+"/"+uploadAlgo.getId());
+        api.setPub(Integer.parseInt(params.get("pub").toString()));
+        api.setUrl("https://api.phmlearn.com/component/upload/"+Const.UPLOAD_ALGO_TYPE_FEA+"/"+uploadAlgo.getId());
 
-            int apiInsertCount = apiMapper.insert(api);
-            if(apiInsertCount<=0){
-                return ServerResponse.createByErrorMessage("保存API信息错误");
-            }
+        int apiInsertCount = apiMapper.insert(api);
+        if(apiInsertCount<=0){
+            return ServerResponse.createByErrorMessage("保存API信息错误");
+        }
 
 //
-            //保存参数信息
-            for (String key:params.keySet()) {
-                if (key.startsWith("paramName")) {
-                    if (StringUtils.isNotBlank(params.get(key).toString())) {
+        //保存参数信息
+        for (String key:params.keySet()) {
+            if (key.startsWith("paramName")) {
+                if (StringUtils.isNotBlank(params.get(key).toString())) {
 
-                        APIParam apiParam = new APIParam();
-                        apiParam.setName(params.get(key).toString());
-                        apiParam.setCreatTime(new Date());
-                        apiParam.setDefaultValue(params.get(key.replace("Name", "Value")).toString());
-                        apiParam.setParamDesc(params.get(key.replace("Name", "Des")).toString());
-                        apiParam.setIsNecessary(params.get(key.replace("Name", "Necessary")).toString());
-                        apiParam.setParamType(params.get(key.replace("Name", "Type")).toString());
-                        apiParam.setStatus(1);
-                        apiParam.setUpdateTime(new Date());
-                        apiParam.setAPIId(api.getId());
-                        apiParamMapper.insert(apiParam);
+                    APIParam apiParam = new APIParam();
+                    apiParam.setName(params.get(key).toString());
+                    apiParam.setCreatTime(new Date());
+                    apiParam.setDefaultValue(params.get(key.replace("Name", "Value")).toString());
+                    apiParam.setParamDesc(params.get(key.replace("Name", "Des")).toString());
+                    apiParam.setIsNecessary(params.get(key.replace("Name", "Necessary")).toString());
+                    apiParam.setParamType(params.get(key.replace("Name", "Type")).toString());
+                    apiParam.setStatus(1);
+                    apiParam.setUpdateTime(new Date());
+                    apiParam.setAPIId(api.getId());
+                    apiParamMapper.insert(apiParam);
 
-                        FeatureParam featureParam = new FeatureParam();
-                        featureParam.setFeatureId(feature.getId());
-                        featureParam.setShell(params.get(key).toString());
-                        featureParam.setName(params.get(key).toString());
-                        featureParam.setDes(params.get(key.replace("Name", "Des")).toString());
-                        featureParam.setDefaultValue(params.get(key.replace("Name", "Value")).toString());
-                        featureParamMapper.insert(featureParam);
+                    FeatureParam featureParam = new FeatureParam();
+                    featureParam.setFeatureId(feature.getId());
+                    featureParam.setShell(params.get(key).toString());
+                    featureParam.setName(params.get(key).toString());
+                    featureParam.setDes(params.get(key.replace("Name", "Des")).toString());
+                    featureParam.setDefaultValue(params.get(key.replace("Name", "Value")).toString());
+                    featureParamMapper.insert(featureParam);
 
-                    }
                 }
             }
-            return ServerResponse.createBySuccess();
-
         }
+        return ServerResponse.createBySuccess();
+    }
+
+    public ServerResponse uploadClassifier(MultipartFile uploadFile, MultipartFile testFile, Map<String, Object> params) {
         return ServerResponse.createByErrorMessage("上传失败");
     }
 
-    public ServerResponse uploadClassifier(MultipartFile uploadFile, Integer labFile, Map<String, Object> params) {
+    public ServerResponse uploadRegressor(MultipartFile uploadFile, MultipartFile testFile, Map<String, Object> params) {
         return ServerResponse.createByErrorMessage("上传失败");
     }
 
-    public ServerResponse uploadRegressor(MultipartFile uploadFile, Integer labFile, Map<String, Object> params) {
-        return ServerResponse.createByErrorMessage("上传失败");
+    public ServerResponse uploadPre(MultipartFile uploadFile, MultipartFile testFile, Map<String, Object> params) throws IOException {
+        //保存算法文件
+        String uploadFileName=uploadFile.getOriginalFilename();
+        String newFileName=labDesignBGService.getFileName("pre",uploadFileName);
+        File preFile = new File(Const.UPDATE_CLASS_ROOT_PRE,newFileName);
+        uploadFile.transferTo(preFile);
+
+
+        String opath=Const.FILE_OPATH_PRE_ZHOUCHENG+"out_"+newFileName+".csv";
+
+        File opathFile=new File(opath);
+
+        StringBuilder sb = new StringBuilder("python ");
+        sb.append(preFile).append(" ");
+        sb.append("path=").append(Const.DATA_ZHOUCHENG).append(" ");
+        sb.append("opath=").append(opath);
+
+        System.out.println(sb.toString());
+        PythonUtils.execPy(sb.toString());
+        if(!opathFile.exists() || opathFile.length()<=0){
+            return ServerResponse.createByErrorMessage("处理失败，请检验数据格式是否正确");
+        }
+
+        UploadAlgo uploadAlgo=new UploadAlgo();
+        uploadAlgo.setAlgoName(params.get("name").toString());
+        uploadAlgo.setAlgoDes(params.get("des").toString());
+        uploadAlgo.setAlgoType(Const.UPLOAD_ALGO_TYPE_PRE);
+
+        uploadAlgo.setAlgoDependence(params.get("dependence").toString());
+
+        Feature feature=new Feature();
+        feature.setName(params.get("name").toString());
+        feature.setDes(params.get("des").toString());
+        feature.setLabel(preFile.getName());
+        feature.setFeatureType(-2); //待审核的特征提取算法
+
+        int count = featureMapper.insert(feature);
+        if(count<=0){
+            return ServerResponse.createByErrorMessage("算法保存错误!");
+        }
+
+        uploadAlgo.setAlgoId(feature.getId());
+        uploadAlgo.setUserId(mHolder.getUser().getId());
+//            uploadAlgo.setTestFile(test.getAbsolutePath());
+        uploadAlgo.setAlgoAddress(preFile.getAbsolutePath());
+        int insert = uploadAlgoMapper.insert(uploadAlgo);
+        if(insert<=0){
+            return ServerResponse.createByErrorMessage("上传保存错误!");
+        }
+        API api=new API();
+
+        api.setApiType(Const.UPLOAD_ALGO_TYPE_PRE);
+        api.setUploadAlgoId(uploadAlgo.getId());
+        api.setContentType("application/x-www-form-urlencoded");
+        api.setCreatTime(new Date());
+        api.setDesc(uploadAlgo.getAlgoDes());
+        api.setName(uploadAlgo.getAlgoName());
+        api.setRequestMethod("POST");
+        api.setStatus(0);
+        api.setUserId(uploadAlgo.getUserId());
+        api.setUpdateTime(new Date());
+
+        api.setPub(Integer.parseInt(params.get("pub").toString()));
+        api.setUrl("https://api.phmlearn.com/component/upload/"+Const.UPLOAD_ALGO_TYPE_PRE+"/"+uploadAlgo.getId());
+
+        int apiInsertCount = apiMapper.insert(api);
+        if(apiInsertCount<=0){
+            return ServerResponse.createByErrorMessage("保存API信息错误");
+        }
+
+//
+        //保存参数信息
+        for (String key:params.keySet()) {
+            if (key.startsWith("paramName")) {
+                if (StringUtils.isNotBlank(params.get(key).toString())) {
+
+                    APIParam apiParam = new APIParam();
+                    apiParam.setName(params.get(key).toString());
+                    apiParam.setCreatTime(new Date());
+                    apiParam.setDefaultValue(params.get(key.replace("Name", "Value")).toString());
+                    apiParam.setParamDesc(params.get(key.replace("Name", "Des")).toString());
+                    apiParam.setIsNecessary(params.get(key.replace("Name", "Necessary")).toString());
+                    apiParam.setParamType(params.get(key.replace("Name", "Type")).toString());
+                    apiParam.setStatus(1);
+                    apiParam.setUpdateTime(new Date());
+                    apiParam.setAPIId(api.getId());
+                    apiParamMapper.insert(apiParam);
+
+                    FeatureParam featureParam = new FeatureParam();
+                    featureParam.setFeatureId(feature.getId());
+                    featureParam.setShell(params.get(key).toString());
+                    featureParam.setName(params.get(key).toString());
+                    featureParam.setDes(params.get(key.replace("Name", "Des")).toString());
+                    featureParam.setDefaultValue(params.get(key.replace("Name", "Value")).toString());
+                    featureParamMapper.insert(featureParam);
+
+                }
+            }
+        }
+        return ServerResponse.createBySuccess();
     }
 }

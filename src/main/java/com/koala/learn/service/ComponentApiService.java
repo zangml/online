@@ -573,4 +573,60 @@ public class ComponentApiService {
         map.put("predict",list);
         return ServerResponse.createBySuccess(map);
     }
+
+    public ServerResponse execZcData(Integer diviceId, String atrributeName) throws IOException {
+        CSVLoader csvLoader = new CSVLoader();
+
+        File dir=new File("/usr/local/data/zhoucheng/origin/");
+        File[] files = dir.listFiles();
+        File file=null;
+        for(int i=0;i<files.length;i++){
+            if(files[i].getName().endsWith(diviceId+".csv")){
+                file=files[i];
+                break;
+            }
+        }
+
+        if(file==null){
+            return ServerResponse.createByErrorMessage("divice_id 参数错误！");
+        }
+
+        Map<String,Object> map=new HashMap<>();
+        String name=file.getName();
+
+        Integer label;
+        if(name.startsWith("N")){
+            label=0;
+        }else if(name.startsWith("12k_Drive_End_B")){
+            label=1;
+        }else if(name.startsWith("12k_Drive_End_IR")){
+            label=2;
+        }else if(name.startsWith("12k_Drive_End_OR")) {
+            label = 3;
+        }else {
+            label=null;
+        }
+        map.put("label",label);
+
+        csvLoader.setFile(file);
+
+        Instances instances = csvLoader.getDataSet();
+
+        List listData=new ArrayList();
+        if(instances.attribute(atrributeName)==null){
+            map.put("data",listData);
+            return ServerResponse.createBySuccess(map);
+        }
+        for(int i=0;i<instances.size();i++){
+            Instance instance=instances.get(i);
+            Attribute attributeData=instances.attribute(atrributeName);
+            listData.add(instance.value(attributeData));
+            if(atrributeName.equals("RPM")){
+                break;
+            }
+        }
+        map.put("data",listData);
+
+        return ServerResponse.createBySuccess(map);
+    }
 }

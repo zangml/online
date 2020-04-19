@@ -151,6 +151,7 @@
                                 <div class="card-body">
                                     <ul>
                                         <li><a href="/api/get_list/21">风机数据</a></li>
+                                        <li><a href="/api/get_list/59">轴承数据</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -269,6 +270,58 @@
                     <%--</code>--%>
                     <%--</pre>--%>
                     <h2 class="api_desc_title" id="fanhui">返回说明</h2>
+
+                    <c:if test="${api.id ==59}">
+                    <p>
+                        <strong>返回参数</strong>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>参数名</th>
+                            <th>是否必选</th>
+                            <th>类型</th>
+                            <th>说明</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>label</td>
+                            <td>是</td>
+                            <td>int</td>
+                            <td>故障类别 0：正常 1：Ball 2:内圈故障 3：外圈故障</td>
+                        </tr>
+                        <tr>
+                            <td>data</td>
+                            <td>是</td>
+                            <td>float</td>
+                            <td>要获取的属性数值列表</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </p>
+                    <p>
+                        <strong>返回示例</strong>
+                    </p>
+                    <pre>
+                             <code>
+{
+    "status": 0,
+    "msg": null,
+    "data": {
+        "label": 1,
+        "data": [
+                  1.859993305,
+                  1.911624833,
+                  1.635027361,
+                  1.786233979,
+                  1.786233979,
+                  2.022263822,]
+    },
+    "success": true
+}
+                    </code>
+                    </pre>
+                    </c:if>
 
                     <c:if test="${api.id ==18}">
                         <p>

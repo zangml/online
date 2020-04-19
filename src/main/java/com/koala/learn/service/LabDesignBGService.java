@@ -488,6 +488,10 @@ public class LabDesignBGService {
     }
     public ServerResponse uploadClassifier(MultipartFile uploadFile,MultipartFile testFile, Map<String,Object> params) throws IOException {
 
+        if(testFile==null || testFile.getSize()==0){
+            return ServerResponse.createByErrorMessage("测试数据不能为空");
+        }
+
         //保存算法文件
         String uploadFileName=uploadFile.getOriginalFilename();
         String newFileName=getFileName("cla",uploadFileName);

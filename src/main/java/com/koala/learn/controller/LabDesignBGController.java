@@ -306,8 +306,7 @@ public class LabDesignBGController {
 
     @RequestMapping(path = "/design/doUpload/classifier2")
     public String doUpload2(@RequestParam(name = "classifierFile") MultipartFile uploadFile,
-                           @RequestParam(name = "labFile") Integer labFile,
-                           @RequestParam(name = "type",required = false) Integer type,
+                            @RequestParam(name = "testFile") MultipartFile testFile,
                            @RequestParam Map<String,Object> params, Model model,
                            HttpSession session) throws IOException {
 
@@ -320,16 +319,16 @@ public class LabDesignBGController {
             return "views/common/error";
         }
         if(algoType.equals(Const.UPLOAD_ALGO_TYPE_PRE)){
-            response=algorithmService.uploadPre(uploadFile,labFile,params);
+            response=algorithmService.uploadPre(uploadFile,testFile,params);
         }
         if(algoType.equals(Const.UPLOAD_ALGO_TYPE_FEA)){
-            response=algorithmService.uploadFea(uploadFile,labFile,params);
+            response=algorithmService.uploadFea(uploadFile,testFile,params);
         }
         if(algoType.equals(Const.UPLOAD_ALGO_TYPE_CLA)){
-            response = algorithmService.uploadClassifier(uploadFile,labFile,params);
+            response = mDesignBGService.uploadClassifier(uploadFile,testFile,params);
         }
         if(algoType.equals(Const.UPLOAD_ALGO_TYPE_REG)){
-            response=algorithmService.uploadRegressor(uploadFile,labFile,params);
+            response=mDesignBGService.uploadClassifier(uploadFile,testFile,params);
         }
         if (response.isSuccess()){
             model.addAttribute("error","算法上传成功，可在api页面中我的api处查看~");
