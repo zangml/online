@@ -581,7 +581,7 @@ public class ComponentApiService {
         File[] files = dir.listFiles();
         File file=null;
         for(int i=0;i<files.length;i++){
-            if(files[i].getName().endsWith(diviceId+".csv")){
+            if(files[i].getName().endsWith("_"+diviceId+".csv")){
                 file=files[i];
                 break;
             }
