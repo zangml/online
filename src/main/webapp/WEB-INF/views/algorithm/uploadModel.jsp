@@ -72,6 +72,7 @@
                                 <select id="resultType" name="resultType">
                                     <option value="1">获取评估指标</option>
                                     <option value="2">获取预测结果</option>
+                                    <option value="3">两者都要</option>
                                 </select>
                             </div>
 

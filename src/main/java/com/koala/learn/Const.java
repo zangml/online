@@ -21,6 +21,8 @@ public class Const {
     public static final int REGRESSION = 2;
     public static final int CLASSIFIER_PREDICT = 3;
     public static final int REGRESSION_PREDICT = 4;
+    public static final int CLASSIFIER_PREDICT_RESULT = 5;
+    public static final int REGRESSION_PREDICT_RESULT = 6;
 
     /*
          <option value="1">数据预处理</option>
@@ -36,6 +38,8 @@ public class Const {
     public static final int UPLOAD_ALGO_TYPE_MODEL_REG=7;
     public static final int UPLOAD_ALGO_TYPE_MODEL_PREDICT_CLA=8;
     public static final int UPLOAD_ALGO_TYPE_MODEL_PREDICT_REG=9;
+    public static final int UPLOAD_ALGO_TYPE_MODEL_PREDICT_RES_CLA=10;
+    public static final int UPLOAD_ALGO_TYPE_MODEL_PREDICT_RES_REG=11;
     public static final String UPDATE_CLASS_ROOT_PRE = "/usr/local/sk/upload/pre/"; //上传算法所在目录
 
     public static final String UPDATE_CLASS_ROOT_FEA = "/usr/local/sk/upload/fea/";

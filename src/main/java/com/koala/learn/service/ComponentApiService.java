@@ -551,39 +551,104 @@ public class ComponentApiService {
         sb.append(uploadAlgo.getAlgoAddress());
         sb.append(" model=").append(model.getFileAddress());
         sb.append(" test=").append(testFile.getAbsolutePath());
-        if(model.getModelType().equals(3) || model.getModelType().equals(4)){
+        if(model.getModelType().equals(3) || model.getModelType().equals(4)
+                || model.getModelType().equals(5) || model.getModelType().equals(6)){
             sb.append(" opath=").append(opath);
         }
         logger.info(sb.toString());
 
         if(model.getModelType().equals(1)){
-            String strResult = PythonUtils.execPy(sb.toString());
-            Result result = gson.fromJson(strResult, Result.class);
-            return ServerResponse.createBySuccess(result);
+            try{
+                String strResult = PythonUtils.execPy(sb.toString());
+                Result result = gson.fromJson(strResult, Result.class);
+                return ServerResponse.createBySuccess(result);
+            }catch (Exception e){
+                return ServerResponse.createByErrorMessage("运算失败~");
+            }
         }else if(model.getModelType().equals(2)) {
-            String strResult = PythonUtils.execPy(sb.toString());
-            RegResult regResult=gson.fromJson(strResult,RegResult.class);
-            return ServerResponse.createBySuccess(regResult);
+            try{
+                String strResult = PythonUtils.execPy(sb.toString());
+                RegResult regResult=gson.fromJson(strResult,RegResult.class);
+                return ServerResponse.createBySuccess(regResult);
+            }catch (Exception e){
+                return ServerResponse.createByErrorMessage("运算失败~");
+            }
         }else if(model.getModelType().equals(3) || model.getModelType().equals(4)){
-            PythonUtils.execPy(sb.toString());
-            File opathFile=new File(opath);
-            if(!opathFile.exists()){
+            try{
+                PythonUtils.execPy(sb.toString());
+                File opathFile=new File(opath);
+                if(!opathFile.exists()){
+                    return ServerResponse.createByErrorMessage("运算失败");
+                }
+                File predict=WekaUtils.csv2arff(opathFile);
+                Map<String,List<Integer>> map=new HashMap<>();
+
+                List list=new ArrayList<>();
+                ArffLoader arffLoader = new ArffLoader();
+                arffLoader.setFile(predict);
+                Instances instances=arffLoader.getDataSet();
+                Attribute attribute=instances.attribute(0);
+                for(int i=0;i<instances.size();i++){
+                    Instance instance=instances.get(i);
+                    list.add(instance.value(attribute));
+                }
+                map.put("predict",list);
+                return ServerResponse.createBySuccess(map);
+            }catch (Exception e){
+                return ServerResponse.createByErrorMessage("运算失败~");
+            }
+        }else if(model.getModelType().equals(5)){
+            try{
+                String strResult = PythonUtils.execPy(sb.toString());
+                Result result = gson.fromJson(strResult, Result.class);
+                File opathFile=new File(opath);
+                if(!opathFile.exists()){
+                    return ServerResponse.createByErrorMessage("运算失败");
+                }
+                File predict=WekaUtils.csv2arff(opathFile);
+                Map<String,Object> map=new HashMap<>();
+
+                List list=new ArrayList<>();
+                ArffLoader arffLoader = new ArffLoader();
+                arffLoader.setFile(predict);
+                Instances instances=arffLoader.getDataSet();
+                Attribute attribute=instances.attribute(0);
+                for(int i=0;i<instances.size();i++){
+                    Instance instance=instances.get(i);
+                    list.add(instance.value(attribute));
+                }
+                map.put("result",result);
+                map.put("predict",list);
+                return ServerResponse.createBySuccess(map);
+            }catch (Exception e){
+                return ServerResponse.createByErrorMessage("运算失败~");
+            }
+        }else if(model.getModelType().equals(6)){
+            try{
+                String strResult = PythonUtils.execPy(sb.toString());
+                RegResult regResult=gson.fromJson(strResult,RegResult.class);
+                File opathFile=new File(opath);
+                if(!opathFile.exists()){
+                    return ServerResponse.createByErrorMessage("运算失败");
+                }
+                File predict=WekaUtils.csv2arff(opathFile);
+                Map<String,Object> map=new HashMap<>();
+
+                List list=new ArrayList<>();
+                ArffLoader arffLoader = new ArffLoader();
+                arffLoader.setFile(predict);
+                Instances instances=arffLoader.getDataSet();
+                Attribute attribute=instances.attribute(0);
+                for(int i=0;i<instances.size();i++){
+                    Instance instance=instances.get(i);
+                    list.add(instance.value(attribute));
+                }
+                map.put("result",regResult);
+                map.put("predict",list);
+                return ServerResponse.createBySuccess(map);
+            }catch (Exception e){
                 return ServerResponse.createByErrorMessage("运算失败");
             }
-            File predict=WekaUtils.csv2arff(opathFile);
-            Map<String,List<Integer>> map=new HashMap<>();
-
-            List list=new ArrayList<>();
-            ArffLoader arffLoader = new ArffLoader();
-            arffLoader.setFile(predict);
-            Instances instances=arffLoader.getDataSet();
-            Attribute attribute=instances.attribute(0);
-            for(int i=0;i<instances.size();i++){
-                Instance instance=instances.get(i);
-                list.add(instance.value(attribute));
-            }
-            map.put("predict",list);
-            return ServerResponse.createBySuccess(map);
         }
         return ServerResponse.createByErrorMessage("模型不存在!");
     }

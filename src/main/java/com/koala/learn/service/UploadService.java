@@ -80,9 +80,13 @@ public class UploadService {
         sb.append(claFile.getAbsolutePath()).append(" ");
         sb.append("model=").append(modelFile.getAbsolutePath());
         sb.append(" test=").append(test.getAbsolutePath());
-        if(resultType.equals(2)){
+        if(resultType.equals(2) || resultType.equals(3)){
             sb.append(" opath=").append(opath);
         }
+
+        Model model=new Model();
+        API api=new API();
+        UploadAlgo uploadAlgo=new UploadAlgo();
 
         logger.info("开始测试上传的分类模型，python语句为："+sb.toString());
 
@@ -99,6 +103,9 @@ public class UploadService {
             if(result==null){
                 return ServerResponse.createByErrorMessage("算法验证失败");
             }
+            model.setModelType(Const.CLASSIFIER);
+            api.setApiType(Const.UPLOAD_ALGO_TYPE_MODEL_CLA);
+            uploadAlgo.setAlgoType(Const.UPLOAD_ALGO_TYPE_MODEL_CLA);
         }else if(resultType.equals(2)){
 
             PythonUtils.execPy(sb.toString());
@@ -106,11 +113,35 @@ public class UploadService {
             if(!opathFile.exists()){
                 return ServerResponse.createByErrorMessage("失败");
             }
+            model.setModelType(Const.CLASSIFIER_PREDICT);
+            api.setApiType(Const.UPLOAD_ALGO_TYPE_MODEL_PREDICT_CLA);
+            uploadAlgo.setAlgoType(Const.UPLOAD_ALGO_TYPE_MODEL_PREDICT_CLA);
+
+        }else if(resultType.equals(3)){
+            String res = PythonUtils.execPy(sb.toString());
+            logger.info("得到结果："+res);
+            Result result;
+            try{
+                result=gson.fromJson(res,Result.class);
+            }catch (Exception e){
+                e.printStackTrace();
+                return ServerResponse.createByErrorMessage("算法验证失败");
+            }
+            if(result==null){
+                return ServerResponse.createByErrorMessage("算法验证失败");
+            }
+            File opathFile=new File(opath);
+            if(!opathFile.exists()){
+                return ServerResponse.createByErrorMessage("获取预测结果失败");
+            }
+            model.setModelType(Const.CLASSIFIER_PREDICT_RESULT);
+            api.setApiType(Const.UPLOAD_ALGO_TYPE_MODEL_PREDICT_RES_CLA);
+            uploadAlgo.setAlgoType(Const.UPLOAD_ALGO_TYPE_MODEL_PREDICT_RES_CLA);
         }
-        Model model=new Model();
+
         model.setModelName(params.get("name").toString());
         model.setModelDesc(params.get("des").toString());
-        model.setModelType(Const.CLASSIFIER_PREDICT);
+
         model.setCreatTime(new Date());
         model.setUpdateTime(new Date());
         model.setFileAddress(modelFile.getAbsolutePath());
@@ -122,14 +153,9 @@ public class UploadService {
             return ServerResponse.createByErrorMessage("分类算法模型保存错误!");
         }
 
-        UploadAlgo uploadAlgo=new UploadAlgo();
         uploadAlgo.setAlgoName(params.get("name").toString());
         uploadAlgo.setAlgoDes(params.get("des").toString());
-        if(resultType.equals(1)){
-            uploadAlgo.setAlgoType(Const.UPLOAD_ALGO_TYPE_MODEL_CLA);
-        }else if(resultType.equals(2)){
-            uploadAlgo.setAlgoType(Const.UPLOAD_ALGO_TYPE_MODEL_PREDICT_CLA);
-        }
+
 //        uploadAlgo.setAlgoDependence(params.get("dependence").toString());
 
 
@@ -153,9 +179,7 @@ public class UploadService {
         if(insert<=0){
             return ServerResponse.createByErrorMessage("分类算法保存上传信息错误!");
         }
-        API api=new API();
 
-        api.setApiType(Const.UPLOAD_ALGO_TYPE_MODEL_PREDICT_CLA);
         api.setUploadAlgoId(uploadAlgo.getId());
         api.setContentType("application/x-www-form-urlencoded");
         api.setCreatTime(new Date());
@@ -203,9 +227,13 @@ public class UploadService {
         sb.append(claFile.getAbsolutePath()).append(" ");
         sb.append("model=").append(modelFile.getAbsolutePath());
         sb.append(" test=").append(test.getAbsolutePath());
-        if(resultType.equals(2)){
+        if(resultType.equals(2) || resultType.equals(3)){
             sb.append(" opath=").append(opath);
         }
+
+        Model model=new Model();
+        UploadAlgo uploadAlgo=new UploadAlgo();
+        API api=new API();
 
         logger.info("开始测试上传的回归模型，python语句为："+sb.toString());
 
@@ -222,6 +250,9 @@ public class UploadService {
             if(regResult==null){
                 return ServerResponse.createByErrorMessage("算法验证失败");
             }
+            model.setModelType(Const.REGRESSION);
+            uploadAlgo.setAlgoType(Const.UPLOAD_ALGO_TYPE_MODEL_REG);
+            api.setApiType(Const.UPLOAD_ALGO_TYPE_MODEL_REG);
         }else if(resultType.equals(2)){
 
             PythonUtils.execPy(sb.toString());
@@ -229,11 +260,33 @@ public class UploadService {
             if(!opathFile.exists()){
                 return ServerResponse.createByErrorMessage("失败");
             }
+            model.setModelType(Const.REGRESSION_PREDICT);
+            uploadAlgo.setAlgoType(Const.UPLOAD_ALGO_TYPE_MODEL_PREDICT_REG);
+            api.setApiType(Const.UPLOAD_ALGO_TYPE_MODEL_PREDICT_REG);
+
+        }else if(resultType.equals(3)){
+            String res = PythonUtils.execPy(sb.toString());
+            logger.info("得到结果："+res);
+            RegResult regResult;
+            try{
+                regResult=gson.fromJson(res,RegResult.class);
+            }catch (Exception e){
+                e.printStackTrace();
+                return ServerResponse.createByErrorMessage("算法验证失败");
+            }
+            if(regResult==null){
+                return ServerResponse.createByErrorMessage("算法验证失败");
+            }
+            File opathFile=new File(opath);
+            if(!opathFile.exists()){
+                return ServerResponse.createByErrorMessage("获取预测结果失败");
+            }
+            model.setModelType(Const.REGRESSION_PREDICT_RESULT);
+            uploadAlgo.setAlgoType(Const.UPLOAD_ALGO_TYPE_MODEL_PREDICT_RES_REG);
+            api.setApiType(Const.UPLOAD_ALGO_TYPE_MODEL_PREDICT_RES_REG);
         }
-        Model model=new Model();
         model.setModelName(params.get("name").toString());
         model.setModelDesc(params.get("des").toString());
-        model.setModelType(Const.REGRESSION_PREDICT);
         model.setCreatTime(new Date());
         model.setUpdateTime(new Date());
         model.setFileAddress(modelFile.getAbsolutePath());
@@ -245,14 +298,10 @@ public class UploadService {
             return ServerResponse.createByErrorMessage("回归算法模型保存错误!");
         }
 
-        UploadAlgo uploadAlgo=new UploadAlgo();
+
         uploadAlgo.setAlgoName(params.get("name").toString());
         uploadAlgo.setAlgoDes(params.get("des").toString());
-        if(resultType.equals(1)){
-            uploadAlgo.setAlgoType(Const.UPLOAD_ALGO_TYPE_MODEL_REG);
-        }else if(resultType.equals(2)){
-            uploadAlgo.setAlgoType(Const.UPLOAD_ALGO_TYPE_MODEL_PREDICT_REG);
-        }
+
 //        uploadAlgo.setAlgoDependence(params.get("dependence").toString());
 
 
@@ -276,9 +325,7 @@ public class UploadService {
         if(insert<=0){
             return ServerResponse.createByErrorMessage("回归算法保存上传信息错误!");
         }
-        API api=new API();
 
-        api.setApiType(Const.UPLOAD_ALGO_TYPE_MODEL_PREDICT_REG);
         api.setUploadAlgoId(uploadAlgo.getId());
         api.setContentType("application/x-www-form-urlencoded");
         api.setCreatTime(new Date());
