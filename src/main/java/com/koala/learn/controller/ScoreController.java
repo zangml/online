@@ -5,6 +5,7 @@ import com.koala.learn.component.HostHolder;
 import com.koala.learn.entity.Score;
 import com.koala.learn.entity.User;
 import com.koala.learn.service.ScoreService;
+import com.koala.learn.utils.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class ScoreController {
@@ -82,6 +80,26 @@ public class ScoreController {
         if(user==null){
             return "redirect:/goLog";
         }
+
+        Date date=new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        date =calendar.getTime();
+
+        List<Score> scoreList=scoreService.getScoreListByDate(user.getId(),date);
+
+        if(scoreList.size()>=3){
+            Date date1=scoreList.get(0).getCreatTime();
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(date1);
+            calendar2.add(Calendar.DAY_OF_MONTH, 1);
+            date1 =calendar2.getTime();
+            String dataFormat= DateTimeUtil.dateToStr(date1,"yyyy-MM-dd HH:mm");
+            model.addAttribute("error","您当天已上传3次，请于"+dataFormat+"之后再尝试~");
+            return "views/common/error";
+        }
+
         ServerResponse response=scoreService.doUpload(resultLabName,groupId,resultFile,user);
 
         if(!response.isSuccess()){

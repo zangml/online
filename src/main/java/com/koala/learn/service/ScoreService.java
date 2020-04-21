@@ -119,4 +119,8 @@ public class ScoreService {
     public int deleteById(Integer scoreId) {
         return scoreMapper.deleteById(scoreId);
     }
+
+    public List<Score> getScoreListByDate(Integer userId,Date date) {
+        return scoreMapper.selectAllByUserIdAndDate(userId,date);
+    }
 }

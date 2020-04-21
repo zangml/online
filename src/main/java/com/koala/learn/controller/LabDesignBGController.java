@@ -258,15 +258,15 @@ public class LabDesignBGController {
         return "views/design/updateClassifier2";
     }
 
-//    @RequestMapping("/design/upload/classifier")
-//    public String uploadClassifier() {
-//        return "views/design/updateClassifier";
-//    }
-
     @RequestMapping("/design/upload/classifier")
     public String uploadClassifier() {
-        return "views/algorithm/uploadPreFea";
+        return "views/design/updateClassifier";
     }
+
+//    @RequestMapping("/design/upload/classifier")
+//    public String uploadClassifier() {
+//        return "views/algorithm/uploadPreFea";
+//    }
 
     @RequestMapping(path = "/design/doUpload/classifier")
     public String doUpload(@RequestParam(name = "classifierFile") MultipartFile uploadFile,

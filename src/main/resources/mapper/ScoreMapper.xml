@@ -61,4 +61,13 @@
     where id = #{scoreId}
   </delete>
 
+
+  <select id="selectAllByUserIdAndDate" resultType="com.koala.learn.entity.Score">
+    select
+    <include refid="Base_Column_List"/>
+    from score
+    where user_id=#{userId}
+    and creat_time > #{creatTime}
+    order by creat_time
+  </select>
 </mapper>
