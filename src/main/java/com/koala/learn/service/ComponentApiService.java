@@ -360,7 +360,7 @@ public class ComponentApiService {
 
         UploadAlgo uploadAlgo= uploadAlgoMapper.selectById(uploadAlgoId);
 
-        String opath=Const.UPLOAD_DATASET_OUT+"out_"+apiType+"_"+System.nanoTime()+".csv";
+        String opath=Const.UPLOAD_DATASET+"out_"+apiType+"_"+System.nanoTime()+".csv";
         File opathFile=new File(opath);
         String[] options=resolveOptions(params);
 

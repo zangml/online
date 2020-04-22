@@ -483,6 +483,7 @@ public class ComponentApiController {
         if(api.getPub().equals(0)){
             String apikey=accessToken.split("\\.")[0];
             ApiAuth apiAuth=authService.getApiAuthByApiKey(apikey);
+            System.out.println(apiAuth.getUserId()+"  "+api.getUserId());
             if(!apiAuth.getUserId().equals(api.getUserId())){
                 return ServerResponse.createByErrorMessage("该api是私有的，您无使用权限");
             }
