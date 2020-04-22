@@ -854,14 +854,19 @@ public class LabDesignBGService {
         File preFile = new File(Const.UPDATE_CLASS_ROOT_PRE,newFileName);
         uploadFile.transferTo(preFile);
 
+        File test;
         //保存测试数据
-        String testFileName=testFile.getOriginalFilename();
-        String newTestName=getFileName("pre",testFileName);
-        File test = new File(Const.UPLOAD_CLASS_TEST_ROOT_PRE,newTestName);
-        testFile.transferTo(test);
+        if(testFile!=null && testFile.getSize()>0){
+            String testFileName=testFile.getOriginalFilename();
+            String newTestName=getFileName("pre",testFileName);
+            test = new File(Const.UPLOAD_CLASS_TEST_ROOT_PRE,newTestName);
+            testFile.transferTo(test);
+        }else {
+            test=new File(Const.UPLOAD_DATASET,"TEST1.csv");
+        }
 
         String path=test.getAbsolutePath();
-        String opath=Const.UPLOAD_CLASS_TEST_ROOT_PRE_OPATH+"out_"+test.getName();
+        String opath=Const.UPLOAD_CLASS_TEST_ROOT_PRE_OPATH+"out_"+preFile.getName();
         StringBuilder sb = new StringBuilder("python ");
         sb.append(preFile.getAbsolutePath()).append(" ");
         sb.append("path=").append(path).append(" ");
@@ -1186,14 +1191,18 @@ public class LabDesignBGService {
         File feaFile = new File(Const.UPDATE_CLASS_ROOT_FEA,newFileName);
         uploadFile.transferTo(feaFile);
 
+        File test;
         //保存测试数据
-        String testFileName=testFile.getOriginalFilename();
-        String newTestName=getFileName("fea",testFileName);
-        File test = new File(Const.UPLOAD_CLASS_TEST_ROOT_FEA,newTestName);
-        testFile.transferTo(test);
-
+        if(testFile!=null && testFile.getSize()>0){
+            String testFileName=testFile.getOriginalFilename();
+            String newTestName=getFileName("fea",testFileName);
+            test = new File(Const.UPLOAD_CLASS_TEST_ROOT_FEA,newTestName);
+            testFile.transferTo(test);
+        }else {
+            test=new File(Const.UPLOAD_DATASET,"TEST1.csv");
+        }
         String path=test.getAbsolutePath();
-        String opath=Const.UPLOAD_CLASS_TEST_ROOT_FEA_OPATH+"out_"+test.getName();
+        String opath=Const.UPLOAD_CLASS_TEST_ROOT_FEA_OPATH+"out_"+feaFile.getName();
         StringBuilder sb = new StringBuilder("python ");
         sb.append(feaFile.getAbsolutePath()).append(" ");
         sb.append("path=").append(path).append(" ");
@@ -1286,6 +1295,10 @@ public class LabDesignBGService {
         return ServerResponse.createBySuccess(api.getUrl());
     }
     public ServerResponse uploadRegressor(MultipartFile uploadFile, MultipartFile testFile, Map<String, Object> params) throws IOException {
+        if(testFile==null || testFile.getSize()==0){
+            return ServerResponse.createByErrorMessage("测试数据不能为空");
+        }
+
         String uploadFileName=uploadFile.getOriginalFilename();
         String newFileName=getFileName("reg",uploadFileName);
         File regFile = new File(Const.UPDATE_CLASS_ROOT_REG,newFileName);

@@ -49,6 +49,8 @@ public class Const {
     public static final String UPDATE_CLASS_ROOT_REG = "/usr/local/sk/upload/reg/";
 
 
+    public static final String UPLOAD_DATASET_OUT="/usr/local/data/upload/out/";
+
     public static final String UPDATE_CLASS_ROOT_MODEL = "/usr/local/sk/upload/model/";
 
     public static final String DEFAULT_AVATAR = "http://image.phmlearn.com/02a885be-28de-414c-9f61-47845fc1c35e.jpeg";

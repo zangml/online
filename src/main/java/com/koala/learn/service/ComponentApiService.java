@@ -356,26 +356,22 @@ public class ComponentApiService {
         return options;
     }
 
-    public ServerResponse execUploadPreAndFea(String path, String opath, Map<String, Object> params,Integer apiId) throws IOException {
+    public ServerResponse execUploadPreAndFea(String path, Map<String, Object> params,Integer apiType,Integer uploadAlgoId) throws IOException {
 
-        File opathFile=new File(opath);
-        if(opathFile.exists()){
-            Map<String,Object> map=new HashMap<>();
-            map.put("file_name",opathFile.getName());
-            return ServerResponse.createBySuccess(map);
-        }
-
-        API api= apiMapper.selectById(apiId);
-        Integer uploadAlgoId=api.getUploadAlgoId();
         UploadAlgo uploadAlgo= uploadAlgoMapper.selectById(uploadAlgoId);
 
+        String opath=Const.UPLOAD_DATASET_OUT+"out_"+apiType+"_"+System.nanoTime()+".csv";
+        File opathFile=new File(opath);
         String[] options=resolveOptions(params);
 
         StringBuilder sb = new StringBuilder("python ");
         sb.append(uploadAlgo.getAlgoAddress());
-        for (int i = 0; i < options.length; i = i + 2) {
-            sb.append(" ").append(options[i].trim()).append("=").append(options[i + 1].trim());
+        if(options!=null){
+            for (int i = 0; i < options.length; i = i + 2) {
+                sb.append(" ").append(options[i].trim()).append("=").append(options[i + 1].trim());
+            }
         }
+
         sb.append(" path=").append(path.trim()).append(" opath=").append(opath.trim());
         logger.info(sb.toString());
         PythonUtils.execPy(sb.toString());

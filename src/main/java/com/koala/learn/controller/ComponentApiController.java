@@ -463,26 +463,23 @@ public class ComponentApiController {
 
     /**
      * 上传的算法生成的api
-     * @param file
-     * @param base64Str
      * @param accessToken
      * @param params
      * @return
      */
-    @PostMapping("/upload/{apiType}/{apiId}")
-    public ServerResponse uploadApi(@RequestParam(value = "file",required = false) MultipartFile file,
-                                    @RequestParam(value = "Base64_file" ,required = false) String base64Str,
-                                    @RequestParam(value = "file_name" ,required = false) String fileName,
+    @PostMapping("/upload/{apiType}/{uploadAlgoId}")
+    public ServerResponse uploadApi(@RequestParam(value = "file_name" ,required = false) String fileName,
                                     @RequestParam("access_token") String accessToken,
                                     @RequestParam Map<String,Object> params,
                                     @PathVariable("apiType") Integer apiType,
-                                    @PathVariable("apiId") Integer apiId) throws IOException {
+                                    @PathVariable("uploadAlgoId") Integer uploadAlgoId) throws IOException {
         ServerResponse response=authService.checkAccessToken(accessToken);
         if(!response.isSuccess()){
             return response;
         }
 
-        API api =componentApiService.getAPIById(apiId);
+        API api =componentApiService.getAPIByUploadAlgoId(uploadAlgoId);
+        System.out.println(api);
         if(api.getPub().equals(0)){
             String apikey=accessToken.split("\\.")[0];
             ApiAuth apiAuth=authService.getApiAuthByApiKey(apikey);
@@ -490,33 +487,8 @@ public class ComponentApiController {
                 return ServerResponse.createByErrorMessage("该api是私有的，您无使用权限");
             }
         }
-        File pathFile;
-        if(fileName!=null){
-            pathFile=new File(Const.UPLOAD_DATASET,fileName);
-        }else{
-            if(file!=null && base64Str==null){
-                ServerResponse fileResponse=fileService.checkFileSize(file);
-                if(!fileResponse.isSuccess()){
-                    return fileResponse;
-                }
-                if(apiType.equals(1)){
-                    pathFile = fileService.addFile(file,Const.FILE_PRE_ROOT,"upload_pre");
-                }else{
-                    pathFile = fileService.addFile(file,Const.FILE_FEATURE_ROOT,"upload_fea");
-                }
 
-            }else{
-                if(apiType.equals(1)){
-                    pathFile = fileService.addFile(base64Str,Const.FILE_PRE_ROOT,"upload_pre");
-
-                }else{
-                    pathFile = fileService.addFile(base64Str,Const.FILE_FEATURE_ROOT,"upload_fea");
-
-                }
-            }
-        }
-        String opath= Const.FILE_OPATH_ROOT+"out_"+pathFile.getName();
-        return componentApiService.execUploadPreAndFea(pathFile.getAbsolutePath(),opath,params,apiId);
+        return componentApiService.execUploadPreAndFea(Const.UPLOAD_DATASET+fileName,params,apiType,uploadAlgoId);
     }
 
     /**

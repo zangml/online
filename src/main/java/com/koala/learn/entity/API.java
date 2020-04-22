@@ -166,4 +166,24 @@ public class API {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    @Override
+    public String toString() {
+        return "API{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", APIdesc='" + APIdesc + '\'' +
+                ", url='" + url + '\'' +
+                ", requestMethod='" + requestMethod + '\'' +
+                ", contentType='" + contentType + '\'' +
+                ", status=" + status +
+                ", creatTime=" + creatTime +
+                ", updateTime=" + updateTime +
+                ", apiType=" + apiType +
+                ", paramList=" + paramList +
+                ", uploadAlgoId=" + uploadAlgoId +
+                ", userId=" + userId +
+                ", pub=" + pub +
+                '}';
+    }
 }

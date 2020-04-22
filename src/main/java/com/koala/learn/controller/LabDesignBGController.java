@@ -270,7 +270,7 @@ public class LabDesignBGController {
 
     @RequestMapping(path = "/design/doUpload/classifier")
     public String doUpload(@RequestParam(name = "classifierFile") MultipartFile uploadFile,
-                           @RequestParam(name = "testFile") MultipartFile testFile,
+                           @RequestParam(name = "testFile",required = false) MultipartFile testFile,
                            @RequestParam Map<String,Object> params, Model model){
 
         ServerResponse response = null;
