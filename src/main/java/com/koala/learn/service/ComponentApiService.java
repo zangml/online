@@ -737,10 +737,18 @@ public class ComponentApiService {
             map.put("data",listData);
             return ServerResponse.createBySuccess(map);
         }
+
         for(int i=0;i<instances.size();i++){
             Instance instance=instances.get(i);
             Attribute attributeData=instances.attribute(atrributeName);
-            listData.add(instance.value(attributeData));
+            double value = instance.value(attributeData);
+            if(atrributeName.equals("file")){
+                if(!listData.contains(value)){
+                    listData.add(value);
+                }
+            }else{
+                listData.add(value);
+            }
             if(atrributeName.equals("RPM")){
                 break;
             }
@@ -749,4 +757,5 @@ public class ComponentApiService {
 
         return ServerResponse.createBySuccess(map);
     }
+
 }
