@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
+import com.koala.learn.component.JedisAdapter;
 import com.koala.learn.dao.*;
 import com.koala.learn.entity.*;
 import com.koala.learn.utils.*;
@@ -50,6 +51,8 @@ public class ComponentApiService {
 
     @Autowired
     UploadAlgoMapper uploadAlgoMapper;
+    @Autowired
+    JedisAdapter jedisAdapter;
 
     private static Logger logger = LoggerFactory.getLogger(ComponentApiService.class);
 
@@ -695,6 +698,10 @@ public class ComponentApiService {
     }
 
     public ServerResponse execZcData(Integer diviceId, String atrributeName) throws IOException {
+
+        Map<String,Object> map=new HashMap<>();
+
+
         CSVLoader csvLoader = new CSVLoader();
 
         File dir=new File("/usr/local/data/zhoucheng/origin/");
@@ -711,7 +718,6 @@ public class ComponentApiService {
             return ServerResponse.createByErrorMessage("divice_id 参数错误！");
         }
 
-        Map<String,Object> map=new HashMap<>();
         String name=file.getName();
 
         Integer label;
@@ -727,6 +733,16 @@ public class ComponentApiService {
             label=null;
         }
         map.put("label",label);
+
+        String zhouchengDataKey = RedisKeyUtil.getZhouchengDataKey(diviceId, atrributeName);
+        String cacheValue = jedisAdapter.get(zhouchengDataKey);
+        if(cacheValue!=null){
+            System.out.println("从缓存中获取：");
+            List listData =gson.fromJson(cacheValue, new ArrayList().getClass());
+            map.put("data",listData);
+            return ServerResponse.createBySuccess(map);
+
+        }
 
         csvLoader.setFile(file);
 
@@ -754,6 +770,7 @@ public class ComponentApiService {
             }
         }
         map.put("data",listData);
+        jedisAdapter.set(zhouchengDataKey,gson.toJson(listData));
 
         return ServerResponse.createBySuccess(map);
     }

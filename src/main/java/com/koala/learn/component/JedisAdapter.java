@@ -30,7 +30,7 @@ public class JedisAdapter implements InitializingBean {
     private static int MAX_IDLE = 8;
 
     //等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException；
-    private static int MAX_WAIT = 3000;
+    private static int MAX_WAIT = 6000;
 
     //超时时间
     private static int TIMEOUT = 10000;

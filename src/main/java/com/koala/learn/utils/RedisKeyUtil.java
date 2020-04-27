@@ -64,6 +64,8 @@ public class RedisKeyUtil {
 
     private static String BIZ_PCA_KEY = "PCA";
 
+    private static String DATA_ZHOUCHENG_KEY="DATA_ZHOUCHENG";
+
     private static Gson gson = new Gson();
 
     public static String getIsolationKey(){
@@ -110,6 +112,10 @@ public class RedisKeyUtil {
 
     public static String getPCAKey(int dimension){
         return BIZ_PCA_KEY+SPLIT+ String.valueOf(dimension);
+
+    }
+    public static String getZhouchengDataKey(Integer diviceId, String atrributeName){
+        return DATA_ZHOUCHENG_KEY+SPLIT+ String.valueOf(diviceId)+SPLIT+atrributeName;
 
     }
     public static String getLikeKey(int entityType, int entityId) {
