@@ -51,17 +51,17 @@
         <property name="configLocation" value="classpath:mybatis-config.xml" />
         <property name="typeAliasesPackage" value="com.koala.learn.entity" />
         <property name="mapperLocations" value="classpath:mapper/*.xml" />
-        <property name="plugins">
-             <array>
-                  <bean class="com.github.pagehelper.PageInterceptor">
-                        <property name="properties">
-                              <value>
-                                   helperDialect=mysql
-                              </value>
-                        </property>
-                  </bean>
-             </array>
-        </property>
+        <!--<property name="plugins">-->
+             <!--<array>-->
+                  <!--<bean class="com.github.pagehelper.PageInterceptor">-->
+                        <!--<property name="properties">-->
+                              <!--<value>-->
+                                   <!--helperDialect=mysql-->
+                              <!--</value>-->
+                        <!--</property>-->
+                  <!--</bean>-->
+             <!--</array>-->
+        <!--</property>-->
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
