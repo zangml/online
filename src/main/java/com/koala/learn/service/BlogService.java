@@ -4,6 +4,7 @@ import com.koala.learn.entity.Blog;
 import com.koala.learn.entity.BlogComment;
 import com.koala.learn.entity.Catalog;
 import com.koala.learn.entity.User;
+import com.koala.learn.vo.TagVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -96,4 +97,26 @@ public interface BlogService {
 	 * @return
 	 */
 	void removeVote(Long blogId, Integer voteId);
+
+    Page<Blog> listHotestEsBlogs(String keyword, Pageable pageable);
+
+	Page<Blog> listNewestEsBlogs(String keyword, Pageable pageable);
+
+	Page<Blog> listEsBlogs(Pageable pageable);
+
+	List<Blog> listHotestBlogs();
+
+	List<Blog> listNewestBlogs();
+
+	List<Blog> listBlogs();
+
+	List<Blog> listTop5NewestEsBlogs();
+
+	List<Blog> listTop5HotestEsBlogs();
+
+	List<TagVO> listTop30Tags();
+
+	List<User> listTop12Users();
+
+	List<Blog> getBlogsByCatalog(int catalogId);
 }

@@ -16,4 +16,12 @@ public interface BlogMapper {
     List<Blog> findByCatalog(Integer catalogId);
     List<Blog> findByUserAndTitleLikeOrderByReadsize(@Param("userId") Integer userId,@Param("title")  String title);
     List<Blog> findByTitleLikeAndUserOrTagsLikeAndUserOrderByCreateTimeDesc(@Param("title") String title, @Param("tags")  String tags,@Param("userId") Integer userId);
+
+    List<Blog> selectByReadSizeDesc();
+
+    List<Blog> selectByCreatTimeDesc();
+
+    List<Blog> selectAll();
+
+    List<Blog> selectByCatalogId(int catalogId);
 }

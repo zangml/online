@@ -250,7 +250,8 @@ public class UserspaceController {
 
 		// 判断操作用户是否是博客的所有者
 		boolean isBlogOwner = false;
-		if(holder.getUser()!=null && holder.getUser().getRole()==1){
+		if((holder.getUser()!=null && holder.getUser().getId().equals(userId))
+				||( holder.getUser().getRole()==1) ){
 			principal=holder.getUser();
 			isBlogOwner=true;
 		}
@@ -355,16 +356,20 @@ public class UserspaceController {
 	 */
 	@PostMapping("/{username}/blogs/edit")
 	public ResponseEntity<Response> saveBlog(@PathVariable("username") String username, @RequestBody Blog blog) {
-		if(holder.getUser().getRole()==0){
+
+		User user=holder.getUser();
+
+
+		if( holder.getUser().getRole()==0 && blog.getId()!=87 && !user.getUsername().equals(username)){
 			return ResponseEntity.ok().body(new Response(false,"无权限操作"));
 		}
 		// 对 Catalog 进行空处理
-		if (blog.getCatalogId() == null) {
+		if (blog.getCatalogId() == null && blog.getId()!=87) {
 			return ResponseEntity.ok().body(new Response(false,"未选择分类，先要创建分类再来发布哦~"));
 		}
 		try {
 			// 判断是修改还是新增
-			if (blog.getId()!=null && blog.getId()!=8 && blog.getId()!=9) {//修改
+			if (blog.getId()!=null && blog.getId()!=8 && blog.getId()!=9 && blog.getId()!=87) {//修改
 				Blog orignalBlog = blogService.getBlogById(blog.getId());
 				orignalBlog.setTitle(blog.getTitle());
 				orignalBlog.setContent(blog.getContent());
@@ -374,7 +379,6 @@ public class UserspaceController {
 				blogService.saveBlog(orignalBlog);
 	        } else {
 				blog.setId(null);
-				User user = holder.getUser();
 	    		blog.setUserId(user.getId());
 	    		blog.setPublish(1);
 				blogService.saveBlog(blog);

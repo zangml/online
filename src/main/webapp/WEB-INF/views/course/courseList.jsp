@@ -83,9 +83,9 @@
                     </div>
                 </c:forEach>
                 <div class="productItem">
-                    <a href="/u/blogs/model/9"><img
+                    <a href="/u/blogs/model/87"><img
                             src="../../static/images/add.png" style="width: 150px;height: 150px;margin-top: 30px">
-                        <span class="productItemDesc">创建文章</span>
+                        <span class="productItemDesc">实验报告模板</span>
                     </a>
                 </div>
             </div>

@@ -6,12 +6,14 @@ import com.koala.learn.dao.BlogMapper;
 import com.koala.learn.dao.UserMapper;
 import com.koala.learn.dao.VoteMapper;
 import com.koala.learn.entity.*;
+import com.koala.learn.vo.TagVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -145,6 +147,88 @@ public class BlogServiceImpl implements BlogService {
 		voteMapper.deleteById(voteId);
 		originalBlog.setVoteSize(originalBlog.getVoteSize()-1);
 		this.saveBlog(originalBlog);
+	}
+
+	@Override
+	public Page<Blog> listHotestEsBlogs(String keyword, Pageable pageable) {
+		return null;
+	}
+
+	@Override
+	public Page<Blog> listNewestEsBlogs(String keyword, Pageable pageable) {
+		return null;
+	}
+
+	@Override
+	public Page<Blog> listEsBlogs(Pageable pageable) {
+		return null;
+	}
+
+	@Override
+	public List<Blog> listHotestBlogs() {
+		return blogMapper.selectByReadSizeDesc();
+	}
+
+	@Override
+	public List<Blog> listNewestBlogs() {
+		return blogMapper.selectByCreatTimeDesc();
+	}
+
+	@Override
+	public List<Blog> listBlogs() {
+		return blogMapper.selectAll();
+	}
+
+	@Override
+	public List<Blog> listTop5NewestEsBlogs() {
+		List<Blog> blogList=blogMapper.selectByCreatTimeDesc();
+		List<Blog> res=new ArrayList<>();
+		for(int i=0; i<5;i++){
+			res.add(blogList.get(i));
+		}
+		return res;
+	}
+
+	@Override
+	public List<Blog> listTop5HotestEsBlogs() {
+		List<Blog> blogList=blogMapper.selectByReadSizeDesc();
+		List<Blog> res=new ArrayList<>();
+		for(int i=0; i<5;i++){
+			res.add(blogList.get(i));
+		}
+		return res;
+	}
+
+	@Override
+	public List<TagVO> listTop30Tags() {
+		List<TagVO> res=new ArrayList<>();
+
+		TagVO tagVO1=new TagVO("数据预处理",50L);
+		TagVO tagVO2=new TagVO("特征提取",40L);
+		TagVO tagVO3=new TagVO("分类",30L);
+		TagVO tagVO4=new TagVO("回归",20L);
+		TagVO tagVO5=new TagVO("算法",10L);
+		res.add(tagVO1);
+		res.add(tagVO2);
+		res.add(tagVO3);
+		res.add(tagVO4);
+		res.add(tagVO5);
+		return res;
+	}
+
+	@Override
+	public List<User> listTop12Users() {
+		List<User> res=new ArrayList<>();
+		User user1=userMapper.selectByPrimaryKey(26);
+		res.add(user1);
+		User user2=userMapper.selectByPrimaryKey(25);
+		res.add(user2);
+		return res;
+	}
+
+	@Override
+	public List<Blog> getBlogsByCatalog(int catalogId) {
+		return blogMapper.selectByCatalogId(catalogId);
 	}
 
 }

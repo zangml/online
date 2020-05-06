@@ -19,19 +19,19 @@
 		                <div class="card-block">
 		                 	<h2 class="card-title">
 		                 		<span>
-				                  <a href="/u/waylau" title="waylau" th:href="'/u/' + ${blog.username}"  th:title="${blog.username}">
-				                    <img src="/static/images/avatar-defualt.jpg" th:src="${blog.avatar} == null ? '/static/images/avatar-defualt.jpg' : ${blog.avatar}"  class="blog-avatar-50">
+				                  <a href="/u/waylau" title="waylau" th:href="'/u/' + ${blog.user.username}"  th:title="${blog.user.username}">
+				                    <img src="/static/images/avatar-default.jpg" th:src="${blog.user.avatar} == null ? '/static/images/avatar-default.jpg' : ${blog.user.avatar}"  class="blog-avatar-50">
 				                  </a>
 						        </span>
 		                        <a href="/u/waylau/blogs/1" class="card-link" title="waylau" 
-		                        	th:href="'/u/' + ${blog.username} + '/blogs/'+ ${blog.blogId}"  th:title="${blog.title}" th:text="${blog.title}">
+		                        	th:href="'/u/' + ${blog.user.username} + '/blogs/'+ ${blog.id}"  th:title="${blog.title}" th:text="${blog.title}">
 		                            OAuth 2.0 认证的原理与实践
 		                        </a>
 		                    </h2>
 		                    <p class="card-text" th:text="${blog.summary}">使用 OAuth 2.0 认证的的好处是显然易见的。你只需要用同一个账号密码，就能在各个网站进行访问，而免去了在每个网站都进行注册的繁琐过程。 本文将介绍
 		                        OAuth 2.0 的原理，并基于 Spring Security 和 GitHub 账号，来演示 OAuth 2.0 的认证的过程。</p>
 		                    <div class="card-text">
-		                        <a href="/u/waylau" th:href="'/u/' + ${blog.username}" class="card-link" th:text="${blog.username}">waylau</a> 发表于 [[${#dates.format(blog.createTime, 'yyyy-MM-dd HH:mm')}]] <i class="fa fa-eye" aria-hidden="true">[[${blog.readSize}]]</i>
+		                        <a href="/u/waylau" th:href="'/u/' + ${blog.user.username}" class="card-link" th:text="${blog.user.username}">waylau</a> 发表于 [[${#dates.format(blog.createTime, 'yyyy-MM-dd HH:mm')}]] <i class="fa fa-eye" aria-hidden="true">[[${blog.readSize}]]</i>
 		                        <i class="fa fa-heart-o" aria-hidden="true">[[${blog.voteSize}]]</i> <i class="fa fa-comment-o"
 		                                                                              aria-hidden="true">[[${blog.commentSize}]]</i>
 		                    </div>
@@ -81,7 +81,7 @@
                     <h5 class="card-header"><i class="fa fa-fire" aria-hidden="true"></i> 热门文章</h5>
 
                     <ul class="list-group" th:each="hotblog , hotblogStat : ${hotest}" th:object="${hotblog}">
-                        <a  th:href="'/u/'+*{username} +'/blogs/'+ *{blogId}" class="list-group-item">
+                        <a  th:href="'/u/'+*{user.username} +'/blogs/'+ *{id}" class="list-group-item">
                             [[*{title}]]<span class="badge badge-pill" th:classappend="${hotblogStat.index} eq 0 ? 'badge-danger': (${hotblogStat.index} eq 1 ? 'badge-warning':(${hotblogStat.index} eq 2 ? 'badge-info':'badge-default'))">[[*{readSize}]]</span>
                         </a>
                     </ul>
@@ -93,7 +93,7 @@
                     <h5 class="card-header"><i class="fa fa-line-chart" aria-hidden="true"></i> 最新发布</h5>
                     <div class="list-group">
                         <ul class="list-group" th:each="newblog : ${newest}" th:object="${newblog}">
-                        <a  th:href="'/u/'+*{username} +'/blogs/'+ *{blogId}" class="list-group-item" th:text="*{title}">
+                        <a  th:href="'/u/'+*{user.username} +'/blogs/'+ *{id}" class="list-group-item" th:text="*{title}">
                         </a>
  
                         </ul>

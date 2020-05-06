@@ -20,13 +20,13 @@
 <body>
 <div class="headbar">
     <%--<h1><a href="/">PHM开发者实验室</a></h1>--%>
-    <h1><a href="/">PHM</a></h1>
+    <h1><a href="/">首页</a></h1>
 
     <div class="rightMenu">
 
          <span>
-                <a href="/">
-                    教程
+                <a href="/blogs">
+                    博客
                 </a>
         </span>
         <span>

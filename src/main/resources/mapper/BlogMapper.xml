@@ -110,4 +110,32 @@
         from blog
         where user_id=#{userId}
     </select>
+
+    <select id="selectByReadSizeDesc" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from blog
+        order by read_size desc
+    </select>
+
+    <select id="selectByCreatTimeDesc" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from blog
+        order by create_time desc
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from blog
+    </select>
+
+    <select id="selectByCatalogId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from blog
+        where catalog_id=#{catalogId}
+        order by create_time desc
+    </select>
 </mapper>

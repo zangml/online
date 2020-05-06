@@ -3,12 +3,16 @@ package com.koala.learn.controller;
 import com.koala.learn.commen.ServerResponse;
 import com.koala.learn.component.HostHolder;
 import com.koala.learn.dao.MessageMapper;
+import com.koala.learn.entity.Blog;
 import com.koala.learn.entity.Message;
 import com.koala.learn.entity.Score;
 import com.koala.learn.entity.User;
+import com.koala.learn.service.BlogService;
 import com.koala.learn.service.EventProducer;
 import com.koala.learn.service.ScoreService;
 import com.koala.learn.service.UserService;
+import com.koala.learn.utils.DateTimeUtil;
+import com.koala.learn.vo.BlogDzyVo;
 import com.koala.learn.vo.LabFinishVo;
 
 import com.koala.learn.vo.ScoreVo;
@@ -49,6 +53,8 @@ public class UserController {
     @Autowired
     ScoreService scoreService;
 
+    @Autowired
+    BlogService blogService;
 
 
 
@@ -235,5 +241,31 @@ public class UserController {
         List<User> userList =mUserService.getAllUsers();
         model.addAttribute("userList",userList);
         return "templates/users/list";
+    }
+
+    @RequestMapping("admin/blog/list")
+    public String getBlogList(Model model){
+        List<Blog> blogList =blogService.getBlogsByCatalog(6);
+
+        List<BlogDzyVo> blogVoList =new ArrayList<>();
+
+        for(Blog blog:blogList){
+
+            if(blog.getId().equals(87l)){
+                continue;
+            }
+            BlogDzyVo blogDzyVo=new BlogDzyVo();
+
+            blogDzyVo.setBlogId(blog.getId());
+            blogDzyVo.setCreateTime(DateTimeUtil.dateToStr(blog.getCreateTime()));
+            blogDzyVo.setBlogTitle(blog.getTitle());
+            User user=mUserService.getUserById(blog.getUserId());
+
+            blogDzyVo.setUsername(user.getUsername());
+            blogDzyVo.setEmail(user.getEmail());
+            blogVoList.add(blogDzyVo);
+        }
+        model.addAttribute("blogVoList",blogVoList);
+        return "templates/blog/list";
     }
 }
