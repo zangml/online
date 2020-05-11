@@ -19,11 +19,12 @@ public class Blog {
     private Integer catalogId;
     private String tags;  // 标签
     private Integer publish; //博客状态  0代表未审核，1代表审核通过，默认为0
+    private String cover;//封面图片
 
 
     public Blog(){}
 
-    public Blog(Long id, String title, String summary, String content, String htmlContent, Integer userId, Date createTime, Integer readSize, Integer commentSize, Integer voteSize, Integer catalogId, String tags, Integer publish) {
+    public Blog(Long id, String title, String summary, String content, String htmlContent, Integer userId, Date createTime, Integer readSize, Integer commentSize, Integer voteSize, Integer catalogId, String tags, Integer publish, String cover) {
         this.id = id;
         this.title = title;
         this.summary = summary;
@@ -37,6 +38,15 @@ public class Blog {
         this.catalogId = catalogId;
         this.tags = tags;
         this.publish = publish;
+        this.cover = cover;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
     public Long getId() {

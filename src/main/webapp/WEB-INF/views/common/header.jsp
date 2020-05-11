@@ -20,15 +20,26 @@
 <body>
 <div class="headbar">
     <%--<h1><a href="/">PHM开发者实验室</a></h1>--%>
-    <h1><a href="/">首页</a></h1>
+    <h1><a href="/">PHM</a></h1>
 
     <div class="rightMenu">
 
-         <span>
-                <a href="/blogs">
-                    博客
+        <span>
+                <a href="/">
+                    教程
                 </a>
         </span>
+        <span>
+                <a href="/u/blogs/edit">
+                    发布
+                </a>
+        </span>
+         <%--<span>--%>
+                <%--<a href="/blogs">--%>
+                    <%--博客--%>
+                <%--</a>--%>
+        <%--</span>--%>
+
         <span>
                 <a href="/labs">
                     实验
@@ -61,6 +72,8 @@
                     上传结果
                 </a>
         </span>
+
+
     </div>
     <c:choose>
         <c:when test="${sessionScope.get('user') == null}">

@@ -70,4 +70,12 @@
     delete from API
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <select id="selectAllApis" resultType="com.koala.learn.entity.API">
+    select
+    <include refid="Base_Column_List"/>
+    from API
+    order by
+    creat_time desc
+  </select>
 </mapper>

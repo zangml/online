@@ -30,6 +30,16 @@
 					
                     <textarea class="blog-textarea" placeholder="请填写文章摘要"  id="summary" name="summary"  th:text="*{summary}" maxlength="300"></textarea>
 
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            选择模板
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/u/blogs/model/87">实验报告</a>
+                            <a class="dropdown-item" href="/u/blogs/model/8">案例模板</a>
+                            <a class="dropdown-item" href="/u/blogs/model/9">技术报告模板</a>
+                        </div>
+                    </div>
                     <hr>
                     <textarea id="md" data-provide="markdown" data-hidden-buttons="cmdImage" name="content"  th:text="*{content}"></textarea>
 
@@ -77,6 +87,24 @@
 								</select>
                             </div>
                         </div>
+
+                        <!--<div class="card ">-->
+                            <!--<h5 class="card-header"><i class="fa fa-file-image-o" aria-hidden="true"></i> 封面上传</h5>-->
+                            <!--<div class="card-block">-->
+                                <!--<div class="row mt-1">-->
+                                    <!--<div  class="col-lg-12">-->
+                                        <!--<form  enctype="multipart/form-data"  id="uploadforcover"  >-->
+                                            <!--<input type="file" name="cover" accept="image/png,image/gif,image/jpeg" id="cover">-->
+                                            <!--<button class="btn btn-primary float-right"  type="button" id="uploadCover" >插入</button>-->
+
+                                        <!--</form>-->
+
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                        <!--&lt;!&ndash; 图片上传 &ndash;&gt;-->
                         <div class="row mt-1">
                             <div  class="col-lg-12">
 								<button class="btn btn-primary float-right" id="submitBlog"  th:attr="userName=${blogModel.username}">发布</button>

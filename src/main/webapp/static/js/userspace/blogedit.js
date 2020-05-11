@@ -74,7 +74,27 @@ $(function() {
 		}).done(function(res) {
 			$('#file').val('');
 		}).fail(function(res) {});
- 	})
+ 	});
+
+    // $("#uploadCover").click(function() {
+    //     $.ajax({
+    //         url: '/u/'+ $(this).attr("userName") +'/blogs/image/upload',
+    //         type: 'POST',
+    //         cache: false,
+    //         data: new FormData($('#uploadforcover')[0]),
+    //         processData: false,
+    //         contentType: false,
+    //         success: function(data){
+    //             $('#cover').val(data.data);
+    //             // var mdcontent=$("#md").val();
+    //             //  $("#md").val(mdcontent + "\n![]("+data.data +") \n");
+    //             // $("#md").insertAtCaret("\n![]("+data.data +") \n");
+    //
+    //         }
+    //     }).done(function(res) {
+    //         $('#cover').val(res.data);
+    //     }).fail(function(res) {});
+    // })
 
 
  	// 发布博客
@@ -90,7 +110,8 @@ $(function() {
 		    	"summary": $('#summary').val() , 
 		    	"content": $('#md').val(), 
 		    	"catalogId":$('#catalogSelect').val(),
-		    	"tags":$('.form-control-tag').val()
+		    	"tags":$('.form-control-tag').val(),
+                // "cover":$('#cover').val()
 		    	}),
 			 success: function(data){
 				 if (data.success) {

@@ -309,6 +309,24 @@ public class UserspaceController {
 		model.addAttribute("username",username);
 		return new ModelAndView("templates/userspace/blogedit", "blogModel", model);
 	}
+
+	/**
+	 * 获取新增博客的界面
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/blogs/edit")
+	public ModelAndView createBlogFromHead(Model model) {
+		User user=holder.getUser();
+
+
+		List<Catalog> catalogs = catalogService.listCatalogs(userMapper.selectByPrimaryKey(23));
+
+		model.addAttribute("blog", new Blog());
+		model.addAttribute("catalogs", catalogs);
+		model.addAttribute("username",user.getUsername());
+		return new ModelAndView("templates/userspace/blogedit", "blogModel", model);
+	}
 	
 	/**
 	 * 获取编辑博客的界面
@@ -376,11 +394,13 @@ public class UserspaceController {
 				orignalBlog.setSummary(blog.getSummary());
 				orignalBlog.setCatalogId(blog.getCatalogId());
 				orignalBlog.setTags(blog.getTags());
+//				orignalBlog.setCover(blog.getCover());
 				blogService.saveBlog(orignalBlog);
 	        } else {
 				blog.setId(null);
 	    		blog.setUserId(user.getId());
 	    		blog.setPublish(1);
+	    		blog.setCover("/images/lab.png");
 				blogService.saveBlog(blog);
 	        }
 			

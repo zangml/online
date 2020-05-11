@@ -38,4 +38,8 @@ public class ApiService {
     public int deleteById(Integer id) {
         return apiMapper.deleteById(id);
     }
+
+    public List<API> getAll() {
+        return apiMapper.selectAllApis();
+    }
 }

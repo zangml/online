@@ -19,4 +19,6 @@ public interface APIMapper {
     int update(API api);
 
     int deleteById(Integer id);
+
+    List<API> selectAllApis();
 }

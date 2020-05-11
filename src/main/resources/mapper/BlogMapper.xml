@@ -16,18 +16,19 @@
             <arg column="catalog_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
             <arg column="tags" jdbcType="VARCHAR" javaType="java.lang.String" />
             <arg column="publish" jdbcType="TINYINT" javaType="java.lang.Integer" />
+            <arg column="cover" jdbcType="VARCHAR" javaType="java.lang.String" />
         </constructor>
     </resultMap>
     <sql id="Base_Column_List" >
     id, title, summary,content,html_content,user_id,create_time,read_size,
-    comment_size,vote_size,catalog_id,tags,publish
+    comment_size,vote_size,catalog_id,tags,publish,cover
     </sql>
 
     <insert id="save" parameterType="com.koala.learn.entity.Blog" useGeneratedKeys="true" keyProperty="id">
         insert into blog(id,title, summary,content,html_content,user_id,create_time,read_size,
-        comment_size,vote_size,catalog_id,tags,publish)
+        comment_size,vote_size,catalog_id,tags,publish,cover)
         values (#{id},#{title},#{summary},#{content},#{htmlContent},#{userId},now(),#{readSize}
-        ,#{commentSize},#{voteSize},#{catalogId},#{tags},#{publish})
+        ,#{commentSize},#{voteSize},#{catalogId},#{tags},#{publish},#{cover})
     </insert>
     <delete id="deleteById" parameterType="java.lang.Long" >
     delete from blog
@@ -78,6 +79,9 @@
             </if>
             <if test="publish != null" >
                 publish = #{publish,jdbcType=TINYINT},
+            </if>
+            <if test="cover != null" >
+                cover = #{cover,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}

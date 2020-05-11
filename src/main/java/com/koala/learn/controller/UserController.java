@@ -3,14 +3,8 @@ package com.koala.learn.controller;
 import com.koala.learn.commen.ServerResponse;
 import com.koala.learn.component.HostHolder;
 import com.koala.learn.dao.MessageMapper;
-import com.koala.learn.entity.Blog;
-import com.koala.learn.entity.Message;
-import com.koala.learn.entity.Score;
-import com.koala.learn.entity.User;
-import com.koala.learn.service.BlogService;
-import com.koala.learn.service.EventProducer;
-import com.koala.learn.service.ScoreService;
-import com.koala.learn.service.UserService;
+import com.koala.learn.entity.*;
+import com.koala.learn.service.*;
 import com.koala.learn.utils.DateTimeUtil;
 import com.koala.learn.vo.BlogDzyVo;
 import com.koala.learn.vo.LabFinishVo;
@@ -55,6 +49,9 @@ public class UserController {
 
     @Autowired
     BlogService blogService;
+
+    @Autowired
+    ApiService apiService;
 
 
 
@@ -266,6 +263,31 @@ public class UserController {
             blogVoList.add(blogDzyVo);
         }
         model.addAttribute("blogVoList",blogVoList);
+        return "templates/blog/list";
+    }
+
+    @RequestMapping("admin/api/list")
+    public String getAPIList(Model model){
+        List<API> apiList =apiService.getAll();
+
+        List<DzyApiVo> apiVoList =new ArrayList<>();
+
+        for(API api:apiList){
+
+            if(api.getUserId().equals(26)){
+                continue;
+            }
+            DzyApiVo apiVo=new DzyApiVo();
+
+            apiVo.setApiName(api.getName());
+            apiVo.setCreateTime(DateTimeUtil.dateToStr(api.getCreatTime()));
+            apiVo.setApiDesc(api.getDesc());
+            User user=mUserService.getUserById(api.getUserId());
+
+            apiVo.setUsername(user.getUsername());
+            apiVoList.add(apiVo);
+        }
+        model.addAttribute("apiVoList",apiVoList);
         return "templates/blog/list";
     }
 }
