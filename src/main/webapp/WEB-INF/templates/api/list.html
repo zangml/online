@@ -26,11 +26,11 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th data-field="id">api</th>
-					<th data-field="username">上传者</th>
+					<th>api</th>
+					<th>上传者</th>
 					<!--<th data-field="name">姓名</th>-->
-					<th data-field="email">api描述</th>
-					<th data-field="authorities">发布时间</th>
+					<th>发布时间</th>
+					<th style="text-align: center">api描述</th>
 					<!--<th data-field="operation">操作</th>-->
 
 				</tr>
@@ -49,9 +49,8 @@
 					<td th:text="${apiVo.apiName}">1</td>
 					<td th:text="${apiVo.username}">1</td>
 					<!--<td th:text="${user.name}">waylau</td>-->
-					<td th:text="${apiVo.apiDesc}">zangml</td>
-
 					<td th:text="${apiVo.createTime}">2020-05-05</td>
+					<td style="font-size: 15px;text-align: center" th:text="${apiVo.apiDesc}">zangml</td>
 
 					<!--</td>-->
 						<!--<div>-->

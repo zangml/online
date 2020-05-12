@@ -288,6 +288,6 @@ public class UserController {
             apiVoList.add(apiVo);
         }
         model.addAttribute("apiVoList",apiVoList);
-        return "templates/blog/list";
+        return "templates/api/list";
     }
 }
