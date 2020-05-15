@@ -108,7 +108,8 @@ div.categoryWithCarousel{
     position:relative;
 }
 div.headbar{
-    background-color: rgb(48,54,69);
+    /*background-color: rgb(48,54,69);*/
+    background-color: #282e35;
     height: 60px;
 }
 div.headbar .button{
