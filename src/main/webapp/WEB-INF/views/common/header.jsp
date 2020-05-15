@@ -22,7 +22,7 @@
     <%--<h1><a href="/">PHM开发者实验室</a></h1>--%>
     <%--<h1><a href="/">PHM</a></h1>--%>
 
-        <img style="height: 95%" src="/static/images/IAI%20Logo2_lab.png" href="/">
+        <img style="height: 95%" src="/static/images/IAI%20Logo3_lab.png" href="/">
     <div class="rightMenu">
 
 
