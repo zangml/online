@@ -20,9 +20,11 @@
 <body>
 <div class="headbar">
     <%--<h1><a href="/">PHM开发者实验室</a></h1>--%>
-    <h1><a href="/">PHM</a></h1>
+    <%--<h1><a href="/">PHM</a></h1>--%>
 
+        <img style="height: 100%" src="/static/images/IAI%20Logo2.png" href="/">
     <div class="rightMenu">
+
 
         <span>
                 <a href="/">

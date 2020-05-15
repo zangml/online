@@ -243,6 +243,10 @@ public class UserspaceController {
 		Integer userId=blog.getUserId();
 		User blogUser=userMapper.selectByPrimaryKey(userId);
 
+		if(!blogUser.getUsername().equals(username)){
+			return "";
+		}
+
 		// 每次读取，简单的可以认为阅读量增加1次
 		if(holder.getUser()!=null) {
 			blogService.readingIncrease(id);
@@ -251,7 +255,7 @@ public class UserspaceController {
 		// 判断操作用户是否是博客的所有者
 		boolean isBlogOwner = false;
 		if((holder.getUser()!=null && holder.getUser().getId().equals(userId))
-				||( holder.getUser().getRole()==1) ){
+				||( holder.getUser().getRole()==1) || id.equals(100l) ){
 			principal=holder.getUser();
 			isBlogOwner=true;
 		}
@@ -378,11 +382,11 @@ public class UserspaceController {
 		User user=holder.getUser();
 
 
-		if( holder.getUser().getRole()==0 && blog.getId()!=87 && !user.getUsername().equals(username)){
+		if( holder.getUser().getRole()==0 && !blog.getId().equals(87) && !blog.getId().equals(100) && !user.getUsername().equals(username)){
 			return ResponseEntity.ok().body(new Response(false,"无权限操作"));
 		}
 		// 对 Catalog 进行空处理
-		if (blog.getCatalogId() == null && blog.getId()!=87) {
+		if (blog.getCatalogId() == null && blog.getId()!=87 && blog.getId()!=100) {
 			return ResponseEntity.ok().body(new Response(false,"未选择分类，先要创建分类再来发布哦~"));
 		}
 		try {
