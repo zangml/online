@@ -300,8 +300,16 @@
                   </div><p></p>
                     <p style="color: white">4.算法选择及调优</p>
                     <p style="color: white">${des}</p>
-        <a href="/learn/lab4/${lab.id}/${instance}" class="button1" style="background-color: white" ><b>已完成，下一步</b></a> </br>
 
+                     <c:if test="${selectedClassifiers.size()==0}">
+                         <a href="/learn/lab4/${lab.id}/${instance}" class="button1" style="background-color: white;" >
+            <input type="button" disabled="disabled"  value="未完成" ></a>
+                     </c:if>
+                     <c:if test="${selectedClassifiers.size()>0}">
+                         <a href="/learn/lab4/${lab.id}/${instance}" class="button1" style="background-color: white;" >
+            <input type="button" value="已完成,下一步" ></a>
+                     </c:if>
+                     </br>
                      </form>
                      </br>
                      <p></p>
@@ -326,8 +334,10 @@
             success:function (data) {
                 console.log(data)
                 if(data.status==0){
-                    alert("算法选择成功")
-                    location.reload()
+                    alert("算法选择成功");
+                    location.reload();
+                    // $("#button1").attr("disabled", false);
+                    // $("#button1").attr("value", "已完成，下一步");
                 }
                 console.log(data)
             },

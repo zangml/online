@@ -4,20 +4,33 @@ public class DzyApiVo {
 
     private String apiName;
 
+    private Integer userId;
+
     private String username;
 
     private String apiDesc;
 
     private String createTime;
 
+    private String apiType;
+
     public DzyApiVo() {
     }
 
-    public DzyApiVo(String apiName, String userName, String apiDesc, String createTime) {
-        this.apiName = apiName;
-        this.username = userName;
-        this.apiDesc = apiDesc;
-        this.createTime = createTime;
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getApiType() {
+        return apiType;
+    }
+
+    public void setApiType(String apiType) {
+        this.apiType = apiType;
     }
 
     public String getApiName() {

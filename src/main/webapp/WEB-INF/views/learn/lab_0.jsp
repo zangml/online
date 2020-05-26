@@ -260,7 +260,9 @@
                     <hr>
                     <p style="color: white">1、数据预处理</p>
          <p style="color: white">${des}</p>
-        <a href="/learn/lab1/${labId}/${instance}" class="button1" style="background-color: white" ><b>已完成，下一步</b></a> </br>
+        <a href="/learn/lab1/${labId}/${instance}" class="button1" style="background-color: white;" >
+            <input type="button" disabled="disabled" id="button1" value="未完成" ></a>
+        </br>
         <p></p>
                 <div class="border1"><a class="a3" href="#nowhere"><strong> 2.数据可视化</strong></a></div>
                 <div class="border1"><a class="a3" href="#nowhere"><strong> 3.特征提取</strong></a></div>
@@ -290,6 +292,8 @@
                 $('#ajaxloader2').modal('hide')
                 if(data.status==0){
                     alert("数据预处理成功")
+                    $("#button1").attr("disabled", false);
+                    $("#button1").attr("value", "已完成，下一步");
                 }
                 console.log(data)
             },

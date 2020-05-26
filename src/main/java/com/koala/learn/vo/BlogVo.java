@@ -18,6 +18,7 @@ public class BlogVo {
     private Integer catalogId;
     private String tags;  // 标签
     private Integer publish; //博客状态  0代表未审核，1代表审核通过，默认为0
+    private String cover;
 
     public BlogVo(){}
 
@@ -35,6 +36,14 @@ public class BlogVo {
         this.catalogId = catalogId;
         this.tags = tags;
         this.publish = publish;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
     public Long getId() {

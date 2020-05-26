@@ -119,4 +119,6 @@ public interface BlogService {
 	List<User> listTop12Users();
 
 	List<Blog> getBlogsByCatalog(int catalogId);
+
+	List<Blog> listTop5project();
 }

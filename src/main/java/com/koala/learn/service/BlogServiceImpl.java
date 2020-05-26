@@ -231,4 +231,9 @@ public class BlogServiceImpl implements BlogService {
 		return blogMapper.selectByCatalogId(catalogId);
 	}
 
+	@Override
+	public List<Blog> listTop5project() {
+		return blogMapper.selectTop5project();
+	}
+
 }

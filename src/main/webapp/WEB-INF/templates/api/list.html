@@ -9,15 +9,6 @@
 
 	<div class="input-group col-md-7 col-xl-6">
 
-		<!--<input type="text" class="form-control" id="searchName"-->
-			<!--placeholder="输入用户名称进行搜索"> <span class="input-group-btn">-->
-			<!--<button class="btn btn-secondary" type="button" id="searchNameBtn">-->
-				<!--<i class="fa fa-search" aria-hidden="true"></i>-->
-			<!--</button>-->
-		<!--</span> <a class="btn btn-primary" data-toggle="modal"-->
-			<!--data-target="#flipFlop" role="button" id="addUser"><i-->
-			<!--class="fa fa-plus" aria-hidden="true"></i></a>-->
-
 	</div>
 </div>
 
@@ -32,44 +23,23 @@
 					<th>发布时间</th>
 					<th style="text-align: center">api描述</th>
 					<!--<th data-field="operation">操作</th>-->
-
 				</tr>
 			</thead>
 			<tbody>
 
 				<tr th:each="apiVo : ${apiVoList}">
-					<!--<td><a href="/zangml/blogs/7" th:href="'/u/' + ${blogVo.username} + '/blogs/'+ ${blogVo.blogId}"  th:text="${blogVo.blogTitle}">-->
-						<!--风机叶片结冰故障预测-->
-					<!--</a></td>-->
 
-					<!--<a href="/zangml/blogs/7"-->
-					   <!--th:href="'/u/' + ${blogVo.username} + '/blogs/'+ ${blogVo.blogId}"  th:text="${blogVo.blogTitle}">-->
-						<!--风机叶片结冰故障预测-->
-					<!--</a>-->
 					<td th:text="${apiVo.apiName}">1</td>
 					<td th:text="${apiVo.username}">1</td>
 					<!--<td th:text="${user.name}">waylau</td>-->
 					<td th:text="${apiVo.createTime}">2020-05-05</td>
 					<td style="font-size: 15px;text-align: center" th:text="${apiVo.apiDesc}">zangml</td>
 
-					<!--</td>-->
-						<!--<div>-->
-							<!--<a class="blog-edit-user" data-toggle="modal"-->
-								<!--data-target="#flipFlop" role="button"-->
-								<!--data-th-attr="userId=${user.id}"> <i-->
-								<!--class="fa fa-pencil-square-o" aria-hidden="true"></i>-->
-							<!--</a> <a class="blog-delete-user" role="button"-->
-								<!--data-th-attr="userId=${user.id}"> <i class="fa fa-times"-->
-								<!--aria-hidden="true"></i>-->
-							<!--</a>-->
-						<!--</div>-->
-					<!--</td>-->
 				</tr>
 
 			</tbody>
 
 		</table>
-		<!--<div th:replace="templates/fragments/page :: page">...</div>-->
 
 	</div>
 </div>

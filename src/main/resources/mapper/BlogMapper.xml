@@ -142,4 +142,14 @@
         where catalog_id=#{catalogId}
         order by create_time desc
     </select>
+
+    <select id="selectTop5project" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from blog
+        where catalog_id=6
+        and id !=87
+        order by read_size desc
+        limit 5
+    </select>
 </mapper>

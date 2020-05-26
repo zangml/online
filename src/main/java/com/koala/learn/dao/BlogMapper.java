@@ -24,4 +24,6 @@ public interface BlogMapper {
     List<Blog> selectAll();
 
     List<Blog> selectByCatalogId(int catalogId);
+
+    List<Blog> selectTop5project();
 }

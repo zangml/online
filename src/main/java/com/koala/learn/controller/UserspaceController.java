@@ -255,7 +255,7 @@ public class UserspaceController {
 		// 判断操作用户是否是博客的所有者
 		boolean isBlogOwner = false;
 		if((holder.getUser()!=null && holder.getUser().getId().equals(userId))
-				||( holder.getUser().getRole()==1) || id.equals(100l) ){
+				||( holder.getUser().getRole()==1) ){
 			principal=holder.getUser();
 			isBlogOwner=true;
 		}
@@ -382,11 +382,11 @@ public class UserspaceController {
 		User user=holder.getUser();
 
 
-		if( holder.getUser().getRole()==0 && !blog.getId().equals(87) && !blog.getId().equals(100) && !user.getUsername().equals(username)){
+		if( holder.getUser().getRole()==0 && !blog.getId().equals(87) && !user.getUsername().equals(username)){
 			return ResponseEntity.ok().body(new Response(false,"无权限操作"));
 		}
 		// 对 Catalog 进行空处理
-		if (blog.getCatalogId() == null && blog.getId()!=87 && blog.getId()!=100) {
+		if (blog.getCatalogId() == null && blog.getId()!=87) {
 			return ResponseEntity.ok().body(new Response(false,"未选择分类，先要创建分类再来发布哦~"));
 		}
 		try {
@@ -404,7 +404,7 @@ public class UserspaceController {
 				blog.setId(null);
 	    		blog.setUserId(user.getId());
 	    		blog.setPublish(1);
-	    		blog.setCover("/images/lab.png");
+	    		blog.setCover("/static/images/demo.jpg");
 				blogService.saveBlog(blog);
 	        }
 			
@@ -419,7 +419,7 @@ public class UserspaceController {
 		System.out.println("重新定向到："+redirectUrl);
 		return ResponseEntity.ok().body(new Response(true, "处理成功", redirectUrl));
 	}
-	private List<BlogVo> blogListToBlogVoList(List<Blog> list){
+	public List<BlogVo> blogListToBlogVoList(List<Blog> list){
 		List<BlogVo> result=new ArrayList<>();
 		for(Blog blog:list){
 			BlogVo blogVo=new BlogVo();
@@ -436,6 +436,7 @@ public class UserspaceController {
 			blogVo.setReadSize(blog.getReadSize());
 			blogVo.setPublish(blog.getPublish());
 			blogVo.setCreateTime(blog.getCreateTime());
+			blogVo.setCover(blog.getCover());
 			result.add(blogVo);
 		}
 		return result;

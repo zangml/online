@@ -31,9 +31,14 @@
                     教程
                 </a>
         </span>
+        <%--<span>--%>
+                <%--<a href="/u/blogs/edit">--%>
+                    <%--发布--%>
+                <%--</a>--%>
+        <%--</span>--%>
         <span>
-                <a href="/u/blogs/edit">
-                    发布
+                <a href="/project/list">
+                    项目
                 </a>
         </span>
          <%--<span>--%>

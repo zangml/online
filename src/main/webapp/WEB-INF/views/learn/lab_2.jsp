@@ -268,8 +268,10 @@
                   </div><p></p>
                     <p style="color: white">3、特征提取</p>
          <p style="color: white">${des}</p>
-        <a href="/learn/lab3/${labId}/${instance}" class="button1" style="background-color: white" ><b>已完成，下一步</b></a> </br>
-                     <p></p>
+        <a href="/learn/lab3/${labId}/${instance}" class="button1" style="background-color: white;" >
+            <input type="button" disabled="disabled" id="button1" value="未完成" ></a>
+        </br>
+        <p></p>
                 <div class="border1"><a class="a3" href="#nowhere"><strong> 4.算法选择及调参</strong></a></div>
                 <div class="border1"><a class="a3" href="#nowhere"><strong> 5.划分测试集和训练集</strong></a></div>
                 <div class="border1"><a class="a3" href="#nowhere"><strong> 6.查看训练结果</strong></a></div>
@@ -296,6 +298,8 @@
                 $('#ajaxloader2').modal('hide')
                 if(data.status==0){
                     alert("特征提取成功")
+                    $("#button1").attr("disabled", false);
+                    $("#button1").attr("value", "已完成，下一步");
                 }
                 console.log(data)
             },

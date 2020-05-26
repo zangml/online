@@ -270,24 +270,58 @@ public class UserController {
     public String getAPIList(Model model){
         List<API> apiList =apiService.getAll();
 
-        List<DzyApiVo> apiVoList =new ArrayList<>();
+        List<List<DzyApiVo>> apiVoLists=new ArrayList<>();
+
 
         for(API api:apiList){
-
-            if(api.getUserId().equals(26)){
+            User user=mUserService.getUserById(api.getUserId());
+            if(user.getRole().equals(1)){
                 continue;
             }
-            DzyApiVo apiVo=new DzyApiVo();
-
-            apiVo.setApiName(api.getName());
-            apiVo.setCreateTime(DateTimeUtil.dateToStr(api.getCreatTime()));
-            apiVo.setApiDesc(api.getDesc());
-            User user=mUserService.getUserById(api.getUserId());
-
-            apiVo.setUsername(user.getUsername());
-            apiVoList.add(apiVo);
+            boolean contains=false;
+            for(int i=0;i<apiVoLists.size();i++){
+                List<DzyApiVo> apiVos=apiVoLists.get(i);
+                if(apiVos.size()>0 && apiVos.get(0).getUserId().equals(api.getUserId())){
+                    apiVos.add(apiToVo(api));
+                    contains=true;
+                    break;
+                }
+            }
+            if(!contains){
+                List<DzyApiVo> list=new ArrayList<>();
+                list.add(apiToVo(api));
+                apiVoLists.add(list);
+            }
         }
-        model.addAttribute("apiVoList",apiVoList);
-        return "templates/api/list";
+
+        System.out.println(apiVoLists);
+        model.addAttribute("apiVoLists",apiVoLists);
+        return "views/api/list";
+    }
+
+    private DzyApiVo apiToVo(API api){
+        DzyApiVo apiVo=new DzyApiVo();
+
+        apiVo.setApiName(api.getName());
+        apiVo.setCreateTime(DateTimeUtil.dateToStr(api.getCreatTime()));
+        apiVo.setApiDesc(api.getDesc());
+        User user=mUserService.getUserById(api.getUserId());
+
+        apiVo.setUsername(user.getUsername());
+        apiVo.setUserId(api.getUserId());
+        if(api.getApiType().equals(1)){
+            apiVo.setApiType("数据预处理");
+        }
+        if(api.getApiType().equals(2)){
+            apiVo.setApiType("特征提取");
+        }
+        if(api.getApiType().equals(3)){
+            apiVo.setApiType("分类模型");
+        }
+        if(api.getApiType().equals(4)){
+            apiVo.setApiType("回归模型");
+        }
+        return apiVo;
+         //类型 1预处理  2特征提取 3分类 4回归
     }
 }

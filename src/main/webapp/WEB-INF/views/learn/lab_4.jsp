@@ -273,7 +273,8 @@
                     <p style="color: white">5、划分训练集和测试集</p>
         <p style="color: white">${des}</p>
           <form action="/learn/lab5/${lab.id}/${instance}" method="post">
-            <button data-toggle="modal" data-target="#ajaxloader2" data-backdrop="static" id="next" class="button1" >已完成，下一步</button> </br>
+              <%--<input type="button" class="button1" value="未完成" disabled="disabled" id="next" data-toggle="modal" data-target="#ajaxloader2" data-backdrop="static"  >--%>
+              <button data-toggle="modal" data-target="#ajaxloader2" data-backdrop="static" id="next" class="button1" disabled="disabled"><span id="next1">未完成</span></button></br>
 
         </form>
         <p></p>
@@ -304,6 +305,8 @@
                 $('#ajaxloader2').modal('hide')
                 if(data.status==0){
                     alert("训练集和测试集划分成功")
+                    $("#next").attr("disabled", false);
+                    $("#next1").html("已完成，下一步");
                 }else {
                     alert(data.msg)
                 }
