@@ -108,6 +108,7 @@
         <mvc:interceptor>
             <mvc:mapping path="/algo/**"/>
             <mvc:mapping path="/data/**"/>
+            <mvc:mapping path="/project/**"/>
             <mvc:mapping path="/u/**"/>
             <mvc:mapping path="/labs/*"/>
             <mvc:mapping path="/labs" />
@@ -124,6 +125,7 @@
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/algo/**"/>
+            <mvc:mapping path="/project/**"/>
             <mvc:mapping path="/u/**"/>
             <mvc:mapping path="/data/**"/>
             <mvc:mapping path="/u/**"/>

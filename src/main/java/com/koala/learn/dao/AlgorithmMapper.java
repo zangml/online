@@ -9,4 +9,6 @@ public interface AlgorithmMapper {
     List<Algorithm> selectAllAlgorithm();
 
     Algorithm getById(Integer id);
+
+    List<Algorithm> getAlgosByTypeId(Integer typeId);
 }

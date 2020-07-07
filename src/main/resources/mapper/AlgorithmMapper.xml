@@ -29,4 +29,11 @@
     from algorithm
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="getAlgosByTypeId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from algorithm
+    where type = #{typeId}
+  </select>
 </mapper>

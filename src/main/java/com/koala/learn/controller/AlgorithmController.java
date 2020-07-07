@@ -9,8 +9,10 @@ import com.koala.learn.dao.ClassifierParamMapper;
 import com.koala.learn.dao.MessageMapper;
 import com.koala.learn.entity.*;
 import com.koala.learn.service.*;
+import com.koala.learn.vo.AlgoZyVo;
 import com.koala.learn.vo.FeatureVo;
 import org.apache.commons.lang.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,6 +66,7 @@ public class AlgorithmController {
         List<Algorithm> featureList=new ArrayList<>();
         List<Algorithm> classfierList=new ArrayList<>();
         List<Algorithm> regressionList=new ArrayList<>();
+        List<Algorithm> deepLearningList=new ArrayList<>();
 
         for(Algorithm algorithm :algorithmList){
             if(algorithm.getType().equals(0)){
@@ -81,11 +84,15 @@ public class AlgorithmController {
                     regressionList.add(algorithm);
                 }
             }
+            if(algorithm.getType().equals(3)){
+                deepLearningList.add(algorithm);
+            }
         }
         model.addAttribute("preList",preList);
         model.addAttribute("featureList",featureList);
         model.addAttribute("classfierList",classfierList);
         model.addAttribute("regressionList",regressionList);
+        model.addAttribute("deepLearningList",deepLearningList);
         return "views/algorithm/algo_list";
     }
 
@@ -148,6 +155,30 @@ public class AlgorithmController {
         model.addAttribute("blog",blog);
         return "views/algorithm/algo_detail";
 
+    }
+
+    @RequestMapping("get_algo_detail/zy/{typeId}")
+    public String getZyAlgoDetail(@PathVariable("typeId")Integer typeId, Model model){
+        List<Algorithm> algorithmList =algorithmService.getAlgoByTypeId(typeId);
+
+        List<AlgoZyVo> algoZyVos =new ArrayList<>();
+        for(Algorithm algorithm:algorithmList){
+            AlgoZyVo algoZyVo=new AlgoZyVo();
+            algoZyVo.setAlgoDesc(algorithm.getAlgoDesc());
+            algoZyVo.setBlog(blogService.getBlogById(algorithm.getBlogId()));
+            algoZyVo.setCata_desc(algorithm.getCata_desc());
+            algoZyVo.setDataDesc(algorithm.getDataDesc());
+            algoZyVo.setId(algorithm.getId());
+            algoZyVo.setName(algorithm.getName());
+            algoZyVo.setType(algorithm.getType());
+            algoZyVo.setTypeId(algorithm.getTypeId());
+            algoZyVo.setUseFor(algorithm.getUseFor());
+
+            algoZyVos.add(algoZyVo);
+        }
+
+        model.addAttribute("algorithms",algoZyVos);
+        return "views/algorithm/zy_algo_detail";
     }
     @RequestMapping("get_init_echart/{id}")
     @ResponseBody

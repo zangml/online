@@ -12,7 +12,7 @@ public class Algorithm {
 
     private String dataDesc;
 
-    private Integer type; //0代表特征提取或者预处理的算法 1 代表机器学习算法 2代表特征提取算法
+    private Integer type; //0代表特征提取或者预处理的算法 1 代表机器学习算法 2代表特征提取算法 3代表深度学习算法 4代表专有算法-预处理 5 专有算法-分类 6专有算法-回归
 
     private Integer typeId;
 

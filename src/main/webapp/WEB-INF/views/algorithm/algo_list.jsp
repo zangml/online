@@ -59,6 +59,14 @@
                 </c:forEach>
             </ul>
         </div>
+        <div class="algo_list">
+            <h2>专用算法</h2>
+            <ul class="algo_list">
+                <li><a href="/algo/get_algo_detail/zy/4">数据预处理</a></li>
+                <li><a href="/algo/get_algo_detail/zy/5">故障诊断</a></li>
+                <li><a href="/algo/get_algo_detail/zy/6">寿命预测</a></li>
+            </ul>
+        </div>
     </div>
 
     <%--<div class="add_algo_2_container">--%>
@@ -66,10 +74,12 @@
         <%--<p class="add_algo_text"><a href="/design/upload/classifier2">上传算法（大作业）</a></p>--%>
     <%--</div>--%>
 
+
     <div class="add_algo_container">
         <p class="add_algo_img"><a href="/design/upload/classifier" class="iconfont icon-hao"></a></p>
         <p class="add_algo_text"><a href="/design/upload/classifier">上传算法</a></p>
     </div>
+    
 
 
     <div class="add_model_container">

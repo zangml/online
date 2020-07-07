@@ -415,4 +415,8 @@ public class AlgorithmService {
         }
         return ServerResponse.createBySuccess();
     }
+
+    public List<Algorithm> getAlgoByTypeId(Integer typeId) {
+        return algorithmMapper.getAlgosByTypeId(typeId);
+    }
 }

@@ -292,6 +292,10 @@ a,a:link,a:focus,a:hover,a:visited{
 .post-content {
   padding-top: 10px;
 }
+.post-zy-content {
+  padding-top: 10px;
+  font-size:14px;
+}
 /*.post-content h3{*/
   /*color: #237ab7;*/
   /*text-indent: 1em;*/
