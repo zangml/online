@@ -37,7 +37,7 @@
                     <input type="hidden" name="_xsrf" value="21aa1c8d254df2899b23ab9afbd62a53">
                     <div class="group-inputs">
                         <div class="email input-wrapper">
-                            <input type="text" name="username" aria-label="手机号或邮箱" placeholder="手机号或邮箱" required="">
+                            <input type="text" name="username" aria-label="用户名" placeholder="用户名" required="">
                         </div>
                         <div class="input-wrapper">
                             <input type="password" name="password" aria-label="密码" placeholder="密码" required="">
