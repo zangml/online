@@ -415,9 +415,10 @@ public class LabDesignController {
         LabGroup group = mLabDesignerService.selectByGroupId(groupId);
         List<Lab> labs = mLabDesignerService.selectLabsByGroup(group.getId());
         Message message =messageMapper.selectByLabIdAndInstanceId(labId,-1);
-        message.setHasRead(1);
-
-        messageMapper.updateByPrimaryKeySelective(message);
+        if(message!=null){
+            message.setHasRead(1);
+            messageMapper.updateByPrimaryKeySelective(message);
+        }
         List<List<?>> res=new ArrayList<>();
         if (group.getLabType() == 1) {
             res.add(Arrays.asList("算法名", "召回率", "准确率", "精确率", "F-Measure", "ROC-Area"));

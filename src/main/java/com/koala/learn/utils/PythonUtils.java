@@ -8,9 +8,6 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Arrays;
 
-/**
- * Created by koala on 2018/3/6.
- */
 public class PythonUtils {
 
     private static final String HOST="39.105.62.140";
