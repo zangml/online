@@ -432,7 +432,7 @@ public class LabDesignController {
             String dividerOutKey = RedisKeyUtil.getDividerOutKey(labId, -1);
             File train = new File(mAdapter.hget(dividerOutKey, "train"));
             String cacheKye = RedisKeyUtil.getCacheKey(labId,train.getAbsolutePath(),classifier.getName()+value.hashCode());
-            System.out.println("获取实验结果的key："+cacheKye);
+//            System.out.println("获取实验结果的key："+cacheKye);
             String cacheRes= mAdapter.get(cacheKye);
             if(cacheRes!=null){
                 if(group.getLabType() == 1){
@@ -464,7 +464,7 @@ public class LabDesignController {
         model.addAttribute("labState",labState);
         model.addAttribute("res",res);
 
-        System.out.println("res.size():"+res.size());
+//        System.out.println("res.size():"+res.size());
 
         List<InstanceResultVo> resList= mLabService.getDesignResult(labId,classifierList,group);
         model.addAttribute("resList",resList);

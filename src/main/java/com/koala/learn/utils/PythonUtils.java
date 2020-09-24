@@ -31,7 +31,7 @@ public class PythonUtils {
             stdOut.close();
         } catch (IOException e) {
             sb.append(e.getMessage());
-            System.out.println(e.getMessage());
+//            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return sb.toString();
