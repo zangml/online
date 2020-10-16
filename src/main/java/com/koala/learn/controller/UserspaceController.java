@@ -255,7 +255,7 @@ public class UserspaceController {
 		// 判断操作用户是否是博客的所有者
 		boolean isBlogOwner = false;
 		if((holder.getUser()!=null && holder.getUser().getId().equals(userId))
-				||( holder.getUser().getRole()==1) ){
+				||(holder.getUser()!=null &&  holder.getUser().getRole()==1) ){
 			principal=holder.getUser();
 			isBlogOwner=true;
 		}

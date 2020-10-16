@@ -102,10 +102,13 @@
     <!--</bean>-->
 
     <mvc:interceptors>
+
         <!--对所有的请求记性拦截-->
+
         <bean class="com.koala.learn.interceptor.PassportInterceptor"/>
 
         <mvc:interceptor>
+
             <mvc:mapping path="/algo/**"/>
             <mvc:mapping path="/data/**"/>
             <mvc:mapping path="/project/**"/>
@@ -119,6 +122,8 @@
             <mvc:mapping path="/bbs" />
             <mvc:mapping path="/score/**" />
             <mvc:mapping path="/api/**" />
+            <mvc:exclude-mapping path="/course/lab/145"/>
+            <mvc:exclude-mapping path="/u/zangml/blogs/145"/>
             <mvc:exclude-mapping path="/wx/**"/>
 
             <bean class="com.koala.learn.interceptor.LoginRequiredInterceptor" />
@@ -133,9 +138,10 @@
             <mvc:mapping path="/oj/**" />
             <mvc:mapping path="/design/**" />
             <mvc:mapping path="/bbs/**" />
-            <mvc:mapping path="/course/**" />
             <mvc:mapping path="/score/**" />
             <mvc:mapping path="/api/**" />
+            <mvc:exclude-mapping path="/course/lab/145"/>
+            <mvc:exclude-mapping path="/u/zangml/blogs/145"/>
             <mvc:exclude-mapping path="/wx/**"/>
             <bean class="com.koala.learn.interceptor.LogInterceptor" />
         </mvc:interceptor>
