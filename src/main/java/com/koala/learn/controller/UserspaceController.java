@@ -238,6 +238,13 @@ public class UserspaceController {
 	 */
 	@GetMapping("/{username}/blogs/{id}")
 	public String getBlogById(@PathVariable("username") String username, @PathVariable("id") Long id, Model model) {
+		User holderUser=holder.getUser();
+
+		if((!id.equals(7l)) && (!id.equals(145l)) && (holderUser!=null) && (holderUser.getRole().equals(2))){
+			model.addAttribute("error","此部分暂不对体验用户开放，敬请期待~");
+			return "views/common/error";
+		}
+
 		User principal = null;
 		Blog blog = blogService.getBlogById(id);
 		Integer userId=blog.getUserId();
@@ -247,16 +254,17 @@ public class UserspaceController {
 			return "";
 		}
 
+
 		// 每次读取，简单的可以认为阅读量增加1次
-		if(holder.getUser()!=null) {
+		if(holderUser!=null) {
 			blogService.readingIncrease(id);
 		}
 
 		// 判断操作用户是否是博客的所有者
 		boolean isBlogOwner = false;
-		if((holder.getUser()!=null && holder.getUser().getId().equals(userId))
-				||(holder.getUser()!=null &&  holder.getUser().getRole()==1) ){
-			principal=holder.getUser();
+		if((holderUser!=null && holderUser.getId().equals(userId))
+				||(holderUser!=null &&  holderUser.getRole()==1) ){
+			principal=holderUser;
 			isBlogOwner=true;
 		}
 		

@@ -56,6 +56,11 @@ public class LabListController {
     public String getExperimentDetail(@PathVariable("id") int id, Model model){
         model.addAttribute("labGroup", mLabService.getGroupById(id));
         model.addAttribute("labs",mLabService.getLabListByGroup(id));
+        User user=holder.getUser();
+        if(user!=null && (user.getRole().equals(2))&& (id!=353) && (id!=354) ){
+            model.addAttribute("error","此部分暂不对体验用户开放，敬请期待~");
+            return "views/common/error";
+        }
         return "views/lab/labpage";
     }
 
