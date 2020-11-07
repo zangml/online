@@ -60,6 +60,11 @@ public class AuthController {
     public ServerResponse getToken(@RequestParam("api_key")String apiKey,
                                    @RequestParam("api_secret")String apiSecret){
 
+        //先判断api_key是否有效
+        ApiAuth apiAuth=authService.getApiAuthByApiKey(apiKey);
+        if(apiAuth==null){
+            return ServerResponse.createByErrorMessage("api_key 无效！");
+        }
         //查找指定apikey并且status为0的有效access_token
         AuthToken authToken=authService.getAuthTokenByApiKey(apiKey);
         if(authToken!=null){
