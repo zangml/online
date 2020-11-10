@@ -21,7 +21,11 @@ public class Lab {
 
     private Integer groupId;
 
-    public Lab(Integer id, String title, String des, String file, String tag, Integer userId, Integer publish, String cover, Integer lableType, Integer groupId) {
+    private Integer usedCount; //点击次数
+
+    private Integer finishedCount;// 完成次数
+
+    public Lab(Integer id, String title, String des, String file, String tag, Integer userId, Integer publish, String cover, Integer lableType, Integer groupId, Integer usedCount, Integer finishedCount) {
         this.id = id;
         this.title = title;
         this.des = des;
@@ -32,6 +36,24 @@ public class Lab {
         this.cover = cover;
         this.lableType = lableType;
         this.groupId = groupId;
+        this.usedCount = usedCount;
+        this.finishedCount = finishedCount;
+    }
+
+    public Integer getUsedCount() {
+        return usedCount;
+    }
+
+    public void setUsedCount(Integer usedCount) {
+        this.usedCount = usedCount;
+    }
+
+    public Integer getFinishedCount() {
+        return finishedCount;
+    }
+
+    public void setFinishedCount(Integer finishedCount) {
+        this.finishedCount = finishedCount;
     }
 
     public Lab() {

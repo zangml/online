@@ -13,10 +13,12 @@
       <arg column="cover" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="lable_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="group_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="used_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="finished_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    id, title, des, file, tag, user_id, publish, cover, lable_type, group_id
+    id, title, des, file, tag, user_id, publish, cover, lable_type, group_id,used_count,finished_count
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -36,7 +38,7 @@
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}, 
       #{file,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
       #{publish,jdbcType=INTEGER}, #{cover,jdbcType=VARCHAR}, #{lableType,jdbcType=INTEGER}, 
-      #{groupId,jdbcType=INTEGER})
+      #{groupId,jdbcType=INTEGER},#{usedCount,jdbcType=INTEGER},#{finishedCount,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.koala.learn.entity.Lab">
     insert into lab
@@ -71,6 +73,12 @@
       <if test="groupId != null">
         group_id,
       </if>
+      <if test="usedCount != null">
+        used_count,
+      </if>
+      <if test="finishedCount != null">
+        finished_count,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -102,6 +110,12 @@
       </if>
       <if test="groupId != null">
         #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="usedCount != null">
+        #{usedCount,jdbcType=INTEGER},
+      </if>
+      <if test="finishedCount != null">
+        #{finishedCount,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -135,6 +149,12 @@
       <if test="groupId != null">
         group_id = #{groupId,jdbcType=INTEGER},
       </if>
+      <if test="usedCount != null">
+        used_count = #{usedCount,jdbcType=INTEGER},
+      </if>
+      <if test="finishedCount != null">
+        finished_count = #{finishedCount,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -148,7 +168,9 @@
       publish = #{publish,jdbcType=INTEGER},
       cover = #{cover,jdbcType=VARCHAR},
       lable_type = #{lableType,jdbcType=INTEGER},
-      group_id = #{groupId,jdbcType=INTEGER}
+      group_id = #{groupId,jdbcType=INTEGER},
+      used_count = #{usedCount,jdbcType=INTEGER},
+      finished_count = #{finishedCount,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

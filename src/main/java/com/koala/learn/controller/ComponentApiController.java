@@ -2,6 +2,7 @@ package com.koala.learn.controller;
 
 import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
+import com.koala.learn.dao.APIMapper;
 import com.koala.learn.entity.API;
 import com.koala.learn.entity.ApiAuth;
 import com.koala.learn.entity.Model;
@@ -36,6 +37,9 @@ public class ComponentApiController {
     @Autowired
     ModelService modelService;
 
+    @Autowired
+    APIMapper apiMapper;
+
 
     /**
      * 预处理-异常值检测并清除(IsolationForest算法)
@@ -52,6 +56,9 @@ public class ComponentApiController {
         if(!response.isSuccess()){
             return response;
         }
+        API api=apiMapper.selectById(4);
+        api.setUsedCount(api.getUsedCount()+1);
+        apiMapper.update(api);
 
         File pathFile;
         if(fileName!=null){
@@ -92,6 +99,9 @@ public class ComponentApiController {
         if(!response.isSuccess()){
             return response;
         }
+        API api=apiMapper.selectById(3);
+        api.setUsedCount(api.getUsedCount()+1);
+        apiMapper.update(api);
         File pathFile;
         if(fileName!=null){
             pathFile=new File(Const.UPLOAD_DATASET,fileName);
@@ -129,6 +139,9 @@ public class ComponentApiController {
         if(!response.isSuccess()){
             return response;
         }
+        API api=apiMapper.selectById(5);
+        api.setUsedCount(api.getUsedCount()+1);
+        apiMapper.update(api);
         File pathFile;
         if(fileName!=null){
             pathFile=new File(Const.UPLOAD_DATASET,fileName);
@@ -165,6 +178,9 @@ public class ComponentApiController {
         if(!response.isSuccess()){
             return response;
         }
+        API api=apiMapper.selectById(20);
+        api.setUsedCount(api.getUsedCount()+1);
+        apiMapper.update(api);
         File file=new File(Const.UPLOAD_DATASET,fileName);
         String opath= Const.FILE_OPATH_ROOT+"window_wl"+windowLength+"_sl_"+stepLength+file.getName();
         return componentApiService.execWindow(file.getAbsolutePath(),opath,windowLength,stepLength);
@@ -195,6 +211,9 @@ public class ComponentApiController {
         if(!response.isSuccess()){
             return response;
         }
+        API api=apiMapper.selectById(6);
+        api.setUsedCount(api.getUsedCount()+1);
+        apiMapper.update(api);
 
         File pathFile;
 
@@ -237,6 +256,9 @@ public class ComponentApiController {
         if(!response.isSuccess()){
             return response;
         }
+        API api=apiMapper.selectById(7);
+        api.setUsedCount(api.getUsedCount()+1);
+        apiMapper.update(api);
         File pathFile;
         if(fileName!=null){
             pathFile=new File(Const.UPLOAD_DATASET,fileName);
@@ -276,6 +298,9 @@ public class ComponentApiController {
         if(!response.isSuccess()){
             return response;
         }
+        API api=apiMapper.selectById(8);
+        api.setUsedCount(api.getUsedCount()+1);
+        apiMapper.update(api);
         File pathFile;
         if(fileName!=null){
             pathFile=new File(Const.UPLOAD_DATASET,fileName);
@@ -309,6 +334,36 @@ public class ComponentApiController {
         if(!response.isSuccess()){
             return response;
         }
+        if(classifierId==7){
+            API api=apiMapper.selectById(10);
+            api.setUsedCount(api.getUsedCount()+1);
+            apiMapper.update(api);
+        }
+        if(classifierId==38){
+            API api=apiMapper.selectById(11);
+            api.setUsedCount(api.getUsedCount()+1);
+            apiMapper.update(api);
+        }
+        if(classifierId==13){
+            API api=apiMapper.selectById(12);
+            api.setUsedCount(api.getUsedCount()+1);
+            apiMapper.update(api);
+        }
+        if(classifierId==48){
+            API api=apiMapper.selectById(13);
+            api.setUsedCount(api.getUsedCount()+1);
+            apiMapper.update(api);
+        }
+        if(classifierId==44){
+            API api=apiMapper.selectById(14);
+            api.setUsedCount(api.getUsedCount()+1);
+            apiMapper.update(api);
+        }
+        if(classifierId==43){
+            API api=apiMapper.selectById(15);
+            api.setUsedCount(api.getUsedCount()+1);
+            apiMapper.update(api);
+        }
 
         CsvDivider.divide(new File(Const.UPLOAD_DATASET,fileName),0.8);
         File train=new File(Const.UPLOAD_DATASET,CsvDivider.getTrainFileName(fileName,0.8));
@@ -334,6 +389,36 @@ public class ComponentApiController {
         ServerResponse response=authService.checkAccessToken(accessToken);
         if(!response.isSuccess()){
             return response;
+        }
+        if(classifierId==7){
+            API api=apiMapper.selectById(10);
+            api.setUsedCount(api.getUsedCount()+1);
+            apiMapper.update(api);
+        }
+        if(classifierId==38){
+            API api=apiMapper.selectById(11);
+            api.setUsedCount(api.getUsedCount()+1);
+            apiMapper.update(api);
+        }
+        if(classifierId==13){
+            API api=apiMapper.selectById(12);
+            api.setUsedCount(api.getUsedCount()+1);
+            apiMapper.update(api);
+        }
+        if(classifierId==48){
+            API api=apiMapper.selectById(13);
+            api.setUsedCount(api.getUsedCount()+1);
+            apiMapper.update(api);
+        }
+        if(classifierId==44){
+            API api=apiMapper.selectById(14);
+            api.setUsedCount(api.getUsedCount()+1);
+            apiMapper.update(api);
+        }
+        if(classifierId==43){
+            API api=apiMapper.selectById(15);
+            api.setUsedCount(api.getUsedCount()+1);
+            apiMapper.update(api);
         }
         File train;
         if(trainName!=null){
@@ -478,8 +563,9 @@ public class ComponentApiController {
             return response;
         }
 
+
         API api =componentApiService.getAPIByUploadAlgoId(uploadAlgoId);
-        System.out.println(api);
+
         if(api.getPub().equals(0)){
             String apikey=accessToken.split("\\.")[0];
             ApiAuth apiAuth=authService.getApiAuthByApiKey(apikey);
@@ -488,6 +574,8 @@ public class ComponentApiController {
                 return ServerResponse.createByErrorMessage("该api是私有的，您无使用权限");
             }
         }
+        api.setUsedCount(api.getUsedCount()+1);
+        apiMapper.update(api);
 
         return componentApiService.execUploadPreAndFea(Const.UPLOAD_DATASET+fileName,params,apiType,uploadAlgoId);
     }
@@ -519,6 +607,9 @@ public class ComponentApiController {
             }
         }
 
+        api.setUsedCount(api.getUsedCount()+1);
+        apiMapper.update(api);
+
         CsvDivider.divide(new File(Const.UPLOAD_DATASET,fileName),0.8);
         File train=new File(Const.UPLOAD_DATASET,CsvDivider.getTrainFileName(fileName,0.8));
         File test=new File(Const.UPLOAD_DATASET,CsvDivider.getTestFileName(fileName,0.8));
@@ -538,6 +629,7 @@ public class ComponentApiController {
         }
 
         Model model=modelService.getModelById(modelId);
+
         return componentApiService.execUploadModel(fileName,uploadAlgoId,model);
     }
 
@@ -552,6 +644,9 @@ public class ComponentApiController {
         if(!response.isSuccess()){
             return response;
         }
+        API api=componentApiService.getAPIById(apiId);
+        api.setUsedCount(api.getUsedCount()+1);
+        apiMapper.update(api);
         return componentApiService.execUploadPreAndFea2(fileName,params,apiType,apiId);
     }
 
@@ -568,6 +663,9 @@ public class ComponentApiController {
         if(!response.isSuccess()){
             return response;
         }
+        API api=componentApiService.getAPIById(21);
+        api.setUsedCount(api.getUsedCount()+1);
+        apiMapper.update(api);
         return componentApiService.execFjData(diviceId,groupIds,atrributeName);
     }
 
@@ -583,6 +681,9 @@ public class ComponentApiController {
         if(!response.isSuccess()){
             return response;
         }
+        API api=componentApiService.getAPIById(59);
+        api.setUsedCount(api.getUsedCount()+1);
+        apiMapper.update(api);
         return componentApiService.execZcData(diviceId,atrributeName);
     }
 

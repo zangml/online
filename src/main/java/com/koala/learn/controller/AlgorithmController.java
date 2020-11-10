@@ -107,6 +107,8 @@ public class AlgorithmController {
             messageMapper.updateByPrimaryKeySelective(message);
         }
         Algorithm algorithm=algorithmService.getAlgoById(id);
+        algorithm.setUsedCount(algorithm.getUsedCount()+1);
+        algorithmService.updateByPrimaryKeySelective(algorithm);
 
         Blog blog = blogService.getBlogById(algorithm.getBlogId());
         int type=algorithm.getType();

@@ -63,6 +63,10 @@ public class AlgorithmService {
         return algorithmMapper.getById(id);
     }
 
+    public int updateByPrimaryKeySelective(Algorithm algorithm){
+        return algorithmMapper.updateByPrimaryKeySelective(algorithm);
+    }
+
     public List<Algorithm> getAllAlgos(){
         return  algorithmMapper.selectAllAlgorithm();
     }

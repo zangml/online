@@ -33,15 +33,15 @@ public class API {
 
     private Integer pub; //0私有 1公开
 
+    private Integer usedCount;
+
     public API() {
     }
 
-    public API(Integer id, String name, String desc, String url, String requestMethod,
-               String contentType, Integer status, Date creatTime, Date updateTime,
-               Integer apiType, List<APIParam> paramList, Integer uploadAlgoId,Integer userId,Integer pub) {
+    public API(Integer id, String name, String APIdesc, String url, String requestMethod, String contentType, Integer status, Date creatTime, Date updateTime, Integer apiType, List<APIParam> paramList, Integer uploadAlgoId, Integer userId, Integer pub, Integer usedCount) {
         this.id = id;
         this.name = name;
-        this.APIdesc = desc;
+        this.APIdesc = APIdesc;
         this.url = url;
         this.requestMethod = requestMethod;
         this.contentType = contentType;
@@ -50,9 +50,26 @@ public class API {
         this.updateTime = updateTime;
         this.apiType = apiType;
         this.paramList = paramList;
-        this.uploadAlgoId=uploadAlgoId;
-        this.userId=userId;
-        this.pub=pub;
+        this.uploadAlgoId = uploadAlgoId;
+        this.userId = userId;
+        this.pub = pub;
+        this.usedCount = usedCount;
+    }
+
+    public String getAPIdesc() {
+        return APIdesc;
+    }
+
+    public void setAPIdesc(String APIdesc) {
+        this.APIdesc = APIdesc;
+    }
+
+    public Integer getUsedCount() {
+        return usedCount;
+    }
+
+    public void setUsedCount(Integer usedCount) {
+        this.usedCount = usedCount;
     }
 
     public Integer getPub() {

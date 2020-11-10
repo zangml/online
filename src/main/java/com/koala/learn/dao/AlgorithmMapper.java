@@ -11,4 +11,6 @@ public interface AlgorithmMapper {
     Algorithm getById(Integer id);
 
     List<Algorithm> getAlgosByTypeId(Integer typeId);
+
+    int updateByPrimaryKeySelective(Algorithm algorithm);
 }

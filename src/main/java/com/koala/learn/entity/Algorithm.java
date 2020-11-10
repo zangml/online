@@ -20,10 +20,9 @@ public class Algorithm {
 
     private String cata_desc;//算法分类
 
-    public Algorithm() {
-    }
+    private Integer usedCount; //使用次数
 
-    public Algorithm(Integer id, String name, String algoDesc, String useFor, String dataDesc, Integer type, Integer typeId,Long blogId ,String cata_desc) {
+    public Algorithm(Integer id, String name, String algoDesc, String useFor, String dataDesc, Integer type, Integer typeId, Long blogId, String cata_desc, Integer usedCount) {
         this.id = id;
         this.name = name;
         this.algoDesc = algoDesc;
@@ -31,8 +30,12 @@ public class Algorithm {
         this.dataDesc = dataDesc;
         this.type = type;
         this.typeId = typeId;
-        this.blogId=blogId;
-        this.cata_desc=cata_desc;
+        this.blogId = blogId;
+        this.cata_desc = cata_desc;
+        this.usedCount = usedCount;
+    }
+
+    public Algorithm() {
     }
 
     public String getCata_desc() {
@@ -42,6 +45,16 @@ public class Algorithm {
     public void setCata_desc(String cata_desc) {
         this.cata_desc = cata_desc;
     }
+
+    public Integer getUsedCount() {
+        return usedCount;
+    }
+
+    public void setUsedCount(Integer usedCount) {
+        this.usedCount = usedCount;
+    }
+
+
 
     public Long getBlogId() {
         return blogId;

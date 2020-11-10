@@ -88,6 +88,9 @@ public class LabLearnController {
         instance.setCreateTime(new Date());
         instance.setResult(0);
         mLabInstanceMapper.insert(instance);
+        Lab lab=mLabService.getLabById(labId);
+        lab.setUsedCount(lab.getUsedCount()+1);
+        mLabService.updateByPrimaryKeySelective(lab);
         return "redirect:/learn/lab0/" + labId + "/" + instance.getId();
     }
 
@@ -340,6 +343,8 @@ public class LabLearnController {
                 model.addAttribute("classNames", classifierNameList);
                 model.addAttribute("lab", mLabMapper.selectByPrimaryKey(labId));
                 model.addAttribute("labState", labState);
+                lab.setFinishedCount(lab.getFinishedCount()+1);
+                mLabService.updateByPrimaryKeySelective(lab);
                 return "views/learn/lab_5";
             } else {
                 model.addAttribute("error", "训练失败");

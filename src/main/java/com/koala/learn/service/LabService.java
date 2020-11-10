@@ -540,4 +540,8 @@ public class LabService {
         }
         return null;
     }
+
+    public void updateByPrimaryKeySelective(Lab lab){
+        mLabMapper.updateByPrimaryKeySelective(lab);
+    }
 }

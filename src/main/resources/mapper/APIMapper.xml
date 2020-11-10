@@ -16,19 +16,20 @@
       <arg column="upload_algo_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="pub" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="used_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
     id, name, api_desc , url, request_method, content_type,status,creat_time,update_time,api_type,
-    upload_algo_id,user_id,pub
+    upload_algo_id,user_id,pub,used_count
   </sql>
 
   <insert id="insert" parameterType="com.koala.learn.entity.API" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
     insert into API ( name, api_desc , url, request_method, content_type,status,creat_time,update_time,api_type,
-    upload_algo_id,user_id,pub)
+    upload_algo_id,user_id,pub,used_count)
     values ( #{name}, #{APIdesc},
       #{url}, #{requestMethod}, #{contentType},
-      #{status}, #{creatTime}, #{updateTime}, #{apiType}, #{uploadAlgoId}, #{userId},#{pub})
+      #{status}, #{creatTime}, #{updateTime}, #{apiType}, #{uploadAlgoId}, #{userId},#{pub},#{usedCount})
   </insert>
 
   <select id="selectById" resultType="com.koala.learn.entity.API">
@@ -62,7 +63,7 @@
     set name=#{name}, api_desc=#{APIdesc} , url=#{url}, request_method=#{requestMethod},
      content_type=#{contentType},status=#{status},
     creat_time=#{creatTime},update_time=#{updateTime},api_type=#{apiType},
-    upload_algo_id=#{uploadAlgoId},user_id=#{userId},pub=#{pub}
+    upload_algo_id=#{uploadAlgoId},user_id=#{userId},pub=#{pub},used_count=#{usedCount}
     where id = #{id}
   </update>
 

@@ -19,6 +19,9 @@ public class ApiService {
     @Autowired
     APIParamMapper apiParamMapper;
 
+    public int update(API api){
+        return apiMapper.update(api);
+    }
 
     public API getApiById(Integer id) {
         return apiMapper.selectById(id);

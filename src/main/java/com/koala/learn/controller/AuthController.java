@@ -1,9 +1,11 @@
 package com.koala.learn.controller;
 
 import com.koala.learn.commen.ServerResponse;
+import com.koala.learn.entity.API;
 import com.koala.learn.entity.ApiAuth;
 import com.koala.learn.entity.AuthToken;
 import com.koala.learn.entity.User;
+import com.koala.learn.service.ApiService;
 import com.koala.learn.service.AuthService;
 import com.koala.learn.service.UserService;
 import com.koala.learn.utils.DateTimeUtil;
@@ -27,6 +29,9 @@ public class AuthController {
     @Autowired
     AuthService authService;
 
+    @Autowired
+    ApiService apiService;
+
 
     @PostMapping("/auth/apiInfo")
     public ServerResponse getApiKey(@RequestParam("username")String username,
@@ -36,6 +41,9 @@ public class AuthController {
         if(!response.isSuccess()){
             return response;
         }
+        API api=apiService.getApiById(17);
+        api.setUsedCount(api.getUsedCount()+1);
+        apiService.update(api);
         User user=userService.getUserByUsername(username);
         ApiAuth apiAuth=authService.getApiAuthByUserId(user.getId());
         if(apiAuth!=null){
@@ -65,6 +73,9 @@ public class AuthController {
         if(apiAuth==null){
             return ServerResponse.createByErrorMessage("api_key 无效！");
         }
+        API api=apiService.getApiById(18);
+        api.setUsedCount(api.getUsedCount()+1);
+        apiService.update(api);
         //查找指定apikey并且status为0的有效access_token
         AuthToken authToken=authService.getAuthTokenByApiKey(apiKey);
         if(authToken!=null){
