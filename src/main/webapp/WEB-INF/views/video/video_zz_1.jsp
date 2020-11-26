@@ -45,7 +45,7 @@
         </div>
         <div class="m">
             <video id="my-video" class="video-js" controls preload="auto" width="960" height="500"
-                   poster="http://image.phmlearn.com/500faeed-f070-4e33-b65f-0e4dc910f3e6.PNG" data-setup="{}">
+                   poster="http://image.phmlearn.com/8ec1cd75-3428-47cf-8b5e-0bce5355b123.png" data-setup="{}">
                 <source src="http://file.phmlearn.com/exp3-1.mp4" type="video/mp4">
             </video>
 

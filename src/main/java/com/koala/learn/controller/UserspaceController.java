@@ -15,7 +15,6 @@ import com.koala.learn.utils.PropertiesUtil;
 import com.koala.learn.vo.BlogVo;
 import com.koala.learn.vo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,18 +24,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 
 /**
  * 用户主页空间控制器.
- * 
- * @since 1.0.0 2017年3月25日
- * @author <a href="https://waylau.com">Way Lau</a> 
  */
 @Controller
 @RequestMapping("/u")
@@ -44,9 +37,6 @@ public class UserspaceController {
 
 	@Autowired
 	private UserMapper userMapper;
-
-	@Autowired
-	private BlogMapper blogMapper;
 
 	@Autowired
 	private BlogService blogService;

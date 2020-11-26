@@ -574,7 +574,11 @@ public class ComponentApiController {
                 return ServerResponse.createByErrorMessage("该api是私有的，您无使用权限");
             }
         }
-        api.setUsedCount(api.getUsedCount()+1);
+        if(api.getUsedCount()==null){
+            api.setUsedCount(1);
+        }else{
+            api.setUsedCount(api.getUsedCount()+1);
+        }
         apiMapper.update(api);
 
         return componentApiService.execUploadPreAndFea(Const.UPLOAD_DATASET+fileName,params,apiType,uploadAlgoId);
@@ -606,8 +610,11 @@ public class ComponentApiController {
                 return ServerResponse.createByErrorMessage("该api是私有的，您无使用权限");
             }
         }
-
-        api.setUsedCount(api.getUsedCount()+1);
+        if(api.getUsedCount()==null){
+            api.setUsedCount(1);
+        }else{
+            api.setUsedCount(api.getUsedCount()+1);
+        }
         apiMapper.update(api);
 
         CsvDivider.divide(new File(Const.UPLOAD_DATASET,fileName),0.8);
@@ -645,7 +652,11 @@ public class ComponentApiController {
             return response;
         }
         API api=componentApiService.getAPIById(apiId);
-        api.setUsedCount(api.getUsedCount()+1);
+        if(api.getUsedCount()==null){
+            api.setUsedCount(1);
+        }else{
+            api.setUsedCount(api.getUsedCount()+1);
+        }
         apiMapper.update(api);
         return componentApiService.execUploadPreAndFea2(fileName,params,apiType,apiId);
     }
@@ -664,7 +675,11 @@ public class ComponentApiController {
             return response;
         }
         API api=componentApiService.getAPIById(21);
-        api.setUsedCount(api.getUsedCount()+1);
+        if(api.getUsedCount()==null){
+            api.setUsedCount(1);
+        }else{
+            api.setUsedCount(api.getUsedCount()+1);
+        }
         apiMapper.update(api);
         return componentApiService.execFjData(diviceId,groupIds,atrributeName);
     }
@@ -682,7 +697,11 @@ public class ComponentApiController {
             return response;
         }
         API api=componentApiService.getAPIById(59);
-        api.setUsedCount(api.getUsedCount()+1);
+        if(api.getUsedCount()==null){
+            api.setUsedCount(1);
+        }else{
+            api.setUsedCount(api.getUsedCount()+1);
+        }
         apiMapper.update(api);
         return componentApiService.execZcData(diviceId,atrributeName);
     }
