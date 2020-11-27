@@ -441,7 +441,7 @@ public class ComponentApiService {
             }
             return options;
         }
-        return null;
+        return new String[]{};
     }
 
     public ServerResponse execUploadML(String train, String test, Map<String, Object> params, Integer uploadAlgoId,Integer apiType) {
