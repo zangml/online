@@ -2,12 +2,14 @@ package com.koala.learn.controller;
 
 import com.koala.learn.commen.LogAnnotation;
 import com.koala.learn.component.HostHolder;
+import com.koala.learn.component.JedisAdapter;
 import com.koala.learn.entity.*;
 import com.koala.learn.service.BlogService;
 import com.koala.learn.service.CourseService;
 
 import com.koala.learn.service.LabCourseService;
 import com.koala.learn.service.UserService;
+import com.koala.learn.utils.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,6 +42,9 @@ public class CourseController {
     @Autowired
     HostHolder holder;
 
+    @Autowired
+    JedisAdapter jedisAdapter;
+
     @RequestMapping(path = {"/","/index"})
     public String courseList(Model model){
         List<CourseType> typeList = mCourseService.getCourseTypeList();
@@ -51,6 +57,18 @@ public class CourseController {
             }else if(labCourse.getType().equals(2)){
                 guideList.add(labCourse);
             }
+        }
+
+        Date date = new Date();
+        String today = DateTimeUtil.dateToStr(date,"yyyy-MM-dd");
+
+        jedisAdapter.lpush("PHM_HOME_INDEX:"+today,DateTimeUtil.dateToStr(date));
+        String homeIndexCountKey = "PHM_HOME_INDEX_COUNT";
+        String count = jedisAdapter.get(homeIndexCountKey);
+        if(count==null){
+            jedisAdapter.set(homeIndexCountKey,"1");
+        }else{
+            jedisAdapter.set(homeIndexCountKey,String.valueOf(Integer.valueOf(count)+1));
         }
         model.addAttribute("typeList",typeList);
         model.addAttribute("labCourseList",labCourseList);
