@@ -191,7 +191,7 @@ public class UploadService {
         api.setUpdateTime(new Date());
         api.setPub(1);
 
-        api.setUrl("https://api.phmlearn.com/component/upload/ML/model/"+model.getId()+"/"+uploadAlgo.getId());
+        api.setUrl("https://phmlearn.com/component/upload/ML/model/"+model.getId()+"/"+uploadAlgo.getId());
 
         int apiInsetCount = apiMapper.insert(api);
         if(apiInsetCount<=0){
@@ -337,7 +337,7 @@ public class UploadService {
         api.setUpdateTime(new Date());
         api.setPub(1);
 
-        api.setUrl("https://api.phmlearn.com/component/upload/ML/model/"+model.getId()+"/"+uploadAlgo.getId());
+        api.setUrl("https://phmlearn.com/component/upload/ML/model/"+model.getId()+"/"+uploadAlgo.getId());
 
         int apiInsetCount = apiMapper.insert(api);
         if(apiInsetCount<=0){
@@ -410,7 +410,7 @@ public class UploadService {
         api.setUpdateTime(new Date());
 
         api.setPub(Integer.parseInt(params.get("pub").toString()));
-        api.setUrl("https://api.phmlearn.com/component/upload/zhoucheng/"+Const.UPLOAD_ALGO_TYPE_PRE+"/"+uploadAlgo.getId());
+        api.setUrl("https://phmlearn.com/component/upload/zhoucheng/"+Const.UPLOAD_ALGO_TYPE_PRE+"/"+uploadAlgo.getId());
 
         int apiInsertCount = apiMapper.insert(api);
         if(apiInsertCount<=0){
@@ -512,7 +512,7 @@ public class UploadService {
         api.setUpdateTime(new Date());
 
         api.setPub(Integer.parseInt(params.get("pub").toString()));
-        api.setUrl("https://api.phmlearn.com/component/upload/zhoucheng/"+Const.UPLOAD_ALGO_TYPE_FEA+"/"+uploadAlgo.getId());
+        api.setUrl("https://phmlearn.com/component/upload/zhoucheng/"+Const.UPLOAD_ALGO_TYPE_FEA+"/"+uploadAlgo.getId());
 
         int apiInsertCount = apiMapper.insert(api);
         if(apiInsertCount<=0){

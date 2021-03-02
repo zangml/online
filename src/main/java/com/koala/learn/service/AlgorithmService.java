@@ -271,7 +271,7 @@ public class AlgorithmService {
         api.setUpdateTime(new Date());
 
         api.setPub(Integer.parseInt(params.get("pub").toString()));
-        api.setUrl("https://api.phmlearn.com/component/upload/"+Const.UPLOAD_ALGO_TYPE_FEA+"/"+uploadAlgo.getId());
+        api.setUrl("https://phmlearn.com/component/upload/"+Const.UPLOAD_ALGO_TYPE_FEA+"/"+uploadAlgo.getId());
 
         int apiInsertCount = apiMapper.insert(api);
         if(apiInsertCount<=0){
@@ -381,7 +381,7 @@ public class AlgorithmService {
         api.setUpdateTime(new Date());
 
         api.setPub(Integer.parseInt(params.get("pub").toString()));
-        api.setUrl("https://api.phmlearn.com/component/upload/"+Const.UPLOAD_ALGO_TYPE_PRE+"/"+uploadAlgo.getId());
+        api.setUrl("https://phmlearn.com/component/upload/"+Const.UPLOAD_ALGO_TYPE_PRE+"/"+uploadAlgo.getId());
 
         int apiInsertCount = apiMapper.insert(api);
         if(apiInsertCount<=0){
