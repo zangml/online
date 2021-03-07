@@ -77,6 +77,7 @@ public class AuthService {
     public ApiAuth getApiAuthByApiKey(String apiKey){
         return apiAuthMapper.selectByApiKey(apiKey);
     }
+
     public ServerResponse checkAccessToken(String accessToken){
         if(accessToken==null || accessToken.isEmpty()){
             return ServerResponse.createByErrorMessage("access_token不能为空");
@@ -95,7 +96,7 @@ public class AuthService {
         if(!geneToken.equals(accessToken)){
             return ServerResponse.createByErrorMessage("access_token无效");
         }
-        return ServerResponse.createBySuccess();
+        return ServerResponse.createBySuccess(apiAuth.getUserId());
     }
 
     public static void main(String[] args) {

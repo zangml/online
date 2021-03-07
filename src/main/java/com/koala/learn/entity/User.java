@@ -29,7 +29,7 @@ public class User {
 
     private String avatar;//头像地址
 
-    private Integer role;//约定0为普通用户，1为管理员
+    private Integer role;//约定0为普通用户，1为管理员 2为体验用户 权限最低
 
     public User(){}
     public User(Integer id, String username, String password, String salt, String school, Integer classId, Integer sex, Integer studentId, String email, Integer state, String headUrl, String grade, String relname, String avatar, Integer role) {
