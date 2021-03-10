@@ -21,4 +21,6 @@ public interface APIMapper {
     int deleteById(Integer id);
 
     List<API> selectAllApis();
+
+    API getAPIByDataId(Integer dataId);
 }

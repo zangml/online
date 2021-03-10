@@ -16,17 +16,28 @@ public class Dataset {
 
     private String localUrl;
 
-    public Dataset() {
-    }
+    private Integer userId;
 
-    public Dataset(Integer id, String name, String problem, String dataDesc, String downloadUrl, Integer type,String localUrl) {
+    public Dataset(Integer id, String name, String problem, String dataDesc, String downloadUrl, Integer type, String localUrl, Integer userId) {
         this.id = id;
         this.name = name;
         this.problem = problem;
         this.dataDesc = dataDesc;
         this.downloadUrl = downloadUrl;
         this.type = type;
-        this.localUrl=localUrl;
+        this.localUrl = localUrl;
+        this.userId = userId;
+    }
+
+    public Dataset() {
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getLocalUrl() {

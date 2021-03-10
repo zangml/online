@@ -3,11 +3,9 @@ package com.koala.learn.controller;
 import com.koala.learn.Const;
 import com.koala.learn.commen.ServerResponse;
 import com.koala.learn.dao.APIMapper;
+import com.koala.learn.dao.DatasetMapper;
 import com.koala.learn.dao.UserRecordMapper;
-import com.koala.learn.entity.API;
-import com.koala.learn.entity.ApiAuth;
-import com.koala.learn.entity.Model;
-import com.koala.learn.entity.UserRecord;
+import com.koala.learn.entity.*;
 import com.koala.learn.service.AuthService;
 import com.koala.learn.service.ComponentApiService;
 import com.koala.learn.service.FileService;
@@ -45,6 +43,9 @@ public class ComponentApiController {
 
     @Autowired
     UserRecordMapper userRecordMapper;
+
+    @Autowired
+    DatasetMapper datasetMapper;
 
 
     /**
@@ -791,11 +792,11 @@ public class ComponentApiController {
         ServerResponse serverResponse = componentApiService.execUploadPreAndFea(Const.UPLOAD_DATASET + fileName, params, apiType, uploadAlgoId);
         if(serverResponse.isSuccess()){
             userRecord.setState(0);
+            userRecord.setMsg("upload");
         }else{
             userRecord.setState(1);
             userRecord.setMsg(serverResponse.getMsg());
         }
-        userRecord.setMsg("upload");
         userRecordMapper.insert(userRecord);
 
         return serverResponse;
@@ -850,11 +851,11 @@ public class ComponentApiController {
 
         if(serverResponse.isSuccess()){
             userRecord.setState(0);
+            userRecord.setMsg("upload");
         }else{
             userRecord.setState(1);
             userRecord.setMsg(serverResponse.getMsg());
         }
-        userRecord.setMsg("upload");
         userRecordMapper.insert(userRecord);
 
         return serverResponse;
@@ -876,18 +877,18 @@ public class ComponentApiController {
         UserRecord userRecord = new UserRecord();
         userRecord.setUserId((int) response.getData());
         userRecord.setRecordTime(new Date());
-        userRecord.setRecordType(3);
+        userRecord.setRecordType(4);
         userRecord.setRecordTypeId(modelId);
 
         ServerResponse serverResponse = componentApiService.execUploadModel(fileName, uploadAlgoId, model);
 
         if(serverResponse.isSuccess()){
             userRecord.setState(0);
+            userRecord.setMsg("upload");
         }else{
             userRecord.setState(1);
             userRecord.setMsg(serverResponse.getMsg());
         }
-        userRecord.setMsg("upload");
         userRecordMapper.insert(userRecord);
 
         return serverResponse;
@@ -1011,19 +1012,45 @@ public class ComponentApiController {
     }
 
     /**
-     * 获取原始数据
+     * 获取上传的原始数据
      */
 
-    @PostMapping("/data/{data_id}")
+    @PostMapping("/upload/data/{fileName}")
+    @ResponseBody
     public ServerResponse getData2(@RequestParam("access_token") String accessToken,
-                                   @PathVariable("data_id") Integer dataId,
-                                   @RequestParam("divice_id") Integer diviceId,
-                                   @RequestParam("atrribute") String atrributeName) throws IOException {
+                                   @RequestParam("attribute") String attributeName,
+                                   @PathVariable("fileName") String fileName) throws IOException {
         ServerResponse response = authService.checkAccessToken(accessToken);
         if (!response.isSuccess()) {
             return response;
         }
-        return componentApiService.getData(dataId, diviceId, atrributeName);
+
+        String localUrl = Const.UPLOAD_DATASET + fileName + ".csv";
+        System.out.println(localUrl);
+        Dataset dataset = datasetMapper.selectByLocalUrl(localUrl);
+        if(dataset==null){
+            return ServerResponse.createByErrorMessage("数据集不存在");
+        }
+        API api = apiMapper.getAPIByDataId(dataset.getId());
+
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId((int) response.getData());
+        userRecord.setRecordTime(new Date());
+        userRecord.setRecordType(3);
+        userRecord.setRecordTypeId(api.getId());
+
+        ServerResponse serverResponse = componentApiService.getData(dataset.getId(),attributeName);
+
+        if(serverResponse.isSuccess()){
+            userRecord.setState(0);
+            userRecord.setMsg("upload");
+        }else{
+            userRecord.setState(1);
+            userRecord.setMsg(serverResponse.getMsg());
+        }
+        userRecordMapper.insert(userRecord);
+
+        return serverResponse;
     }
 
     @PostMapping("/ML/predict/{classifierId}")
@@ -1035,6 +1062,7 @@ public class ComponentApiController {
         if (!response.isSuccess()) {
             return response;
         }
+
         return componentApiService.execPredict(fileName, params, classifierId);
     }
 

@@ -29,8 +29,9 @@
             <div class="line"></div                                                                                                                                                >
             <ul>
                 <li><a href="/data/dataDes/1">风机结冰故障预测数据</a></li>
-                <li><a href="#">刀具剩余寿命预测数据</a></li>
+                <li><a href="/data/dataDes/2/402">刀具剩余寿命预测数据</a></li>
                 <li><a href="/data/dataDes/2/42">转子部件脱落故障预测数据</a></li>
+                <li><a href="/data/dataDes/2/403">轴承剩余使用寿命预测数据</a></li>
             </ul>
         </div>
         <div class="dataset_upload">

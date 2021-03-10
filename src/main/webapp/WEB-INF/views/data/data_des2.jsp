@@ -52,10 +52,26 @@
                     <div class="data_desp_title">
                         3. 数据集下载
                     </div>
+                <c:if test="${dataset.id == 42}">
                     <div style="font-size: 16px;">
                         &nbsp;&nbsp;&nbsp;下载链接：<a href="https://pan.baidu.com/s/1OTzN6XqVXJtydcpudSKzCQ">https://pan.baidu.com/s/1OTzN6XqVXJtydcpudSKzCQ</a>
                         提取码： 15ih
                     </div>
+                </c:if>
+
+                <c:if test="${dataset.id == 402}">
+                    <div style="font-size: 16px;">
+                        &nbsp;&nbsp;&nbsp;下载链接：<a href="https://pan.baidu.com/s/1D-Z3SegQdVo50AhjEWdMvw">https://pan.baidu.com/s/1D-Z3SegQdVo50AhjEWdMvw </a>
+                        提取码： c8yp
+                    </div>
+                </c:if>
+
+                <c:if test="${dataset.id == 403}">
+                    <div style="font-size: 16px;">
+                        &nbsp;&nbsp;&nbsp;下载链接：<a href="https://pan.baidu.com/s/1n_erEhFDUl4v0K6mpdwsow">https://pan.baidu.com/s/1n_erEhFDUl4v0K6mpdwsow </a>
+                        提取码： 8jht
+                    </div>
+                </c:if>
                 </div>
             </div>
         </div>

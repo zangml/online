@@ -8,6 +8,8 @@ public interface DatasetMapper {
 
     Dataset selectById(Integer id);
 
-    int save(Dataset dataset);
+    int insert(Dataset dataset);
+
+    Dataset selectByLocalUrl(String localUrl);
 
 }

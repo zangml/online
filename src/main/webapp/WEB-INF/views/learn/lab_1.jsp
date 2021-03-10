@@ -109,7 +109,7 @@
             <p style="color: white">${item.name}:${item.des}</p>
         </c:forEach>
         <a href="/learn/lab2/${lab.id}/${instance}" class="button1" style="background-color: white" ><b>下一步</b></a>
-        <button id="submitAttri" onclick="submitAttri()" class="btn btn-primary" style="margin-left: 30px;">提交</button>
+<%--        <button id="submitAttri" onclick="submitAttri()" class="btn btn-primary" style="margin-left: 30px;">提交</button>--%>
         <p></p>
                 <div class="border1"><a class="a3" href="#nowhere"><strong> 3.特征提取</strong></a></div>
                 <div class="border1"><a class="a3" href="#nowhere"><strong> 4.算法选择及调参</strong></a></div>

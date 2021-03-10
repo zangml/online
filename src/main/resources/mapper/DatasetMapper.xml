@@ -10,15 +10,16 @@
             <arg column="download_url" jdbcType="VARCHAR" javaType="java.lang.String" />
             <arg column="type" jdbcType="TINYINT" javaType="java.lang.Integer" />
             <arg column="local_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
         </constructor>
     </resultMap>
     <sql id="Base_Column_List" >
-    id, name, problem,data_desc,download_url,type,local_url
+    id, name, problem,data_desc,download_url,type,local_url,user_id
     </sql>
 
-    <insert id="save" parameterType="com.koala.learn.entity.Dataset" >
-    insert into dataset(id,name,problem,data_desc,download_url,type,local_url)
-    values (#{id}, #{name},#{problem},#{dataDesc},#{downloadUrl},#{type},#{localUrl})
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.koala.learn.entity.Dataset" >
+    insert into dataset(id,name,problem,data_desc,download_url,type,local_url,user_id)
+    values (#{id}, #{name},#{problem},#{dataDesc},#{downloadUrl},#{type},#{localUrl},#{userId})
     </insert>
 
     <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -26,6 +27,21 @@
         <include refid="Base_Column_List" />
     from dataset
     where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByLocalUrl" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from dataset
+        where local_url = #{localUrl}
+    </select>
+
+    <select id="getAPIByDataId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from dataset
+        where api_type = 5
+        and upload_algo_id = #{dataId}
     </select>
 
 </mapper>

@@ -13,7 +13,7 @@ public class UserRecord {
 
     private Date recordTime;
 
-    private int recordType;  // 记录类型 0 博客， 1 算法， 2 api 3模型
+    private int recordType;  // 记录类型 0 博客， 1 算法， 2 api 3数据 4模型
 
     private long recordTypeId; // 对应的记录类型在数据库表中的id;
 

@@ -34,6 +34,7 @@ public class Const {
     public static final int UPLOAD_ALGO_TYPE_FEA=2;
     public static final int UPLOAD_ALGO_TYPE_CLA=3;
     public static final int UPLOAD_ALGO_TYPE_REG=4;
+    public static final int UPLOAD_ALGO_TYPE_DATA=5; // 上传数据集
     public static final int UPLOAD_ALGO_TYPE_MODEL_CLA=6;
     public static final int UPLOAD_ALGO_TYPE_MODEL_REG=7;
     public static final int UPLOAD_ALGO_TYPE_MODEL_PREDICT_CLA=8;

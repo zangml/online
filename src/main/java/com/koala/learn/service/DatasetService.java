@@ -43,8 +43,8 @@ public class DatasetService {
 
     }
 
-    public void save(Dataset dataset){
-        datasetMapper.save(dataset);
+    public int save(Dataset dataset){
+        return datasetMapper.insert(dataset);
     }
 
     public List<String> resolveAttribute(File file) throws IOException {

@@ -53,6 +53,9 @@ public class ComponentApiService {
     @Autowired
     JedisAdapter jedisAdapter;
 
+    @Autowired
+    DatasetMapper datasetMapper;
+
     private static Logger logger = LoggerFactory.getLogger(ComponentApiService.class);
 
 
@@ -501,11 +504,28 @@ public class ComponentApiService {
         return ServerResponse.createBySuccess(map);
     }
 
-    public ServerResponse getData(Integer dataId, Integer diviceId, String atrributeName) throws IOException {
-        if (dataId.equals(1)) {
-            return execFjData(diviceId, null, atrributeName);
+    public ServerResponse getData(Integer  dataId, String attributeName) throws IOException {
+
+        CSVLoader csvLoader = new CSVLoader();
+
+        Dataset dataset = datasetMapper.selectById(dataId);
+        if(dataset==null){
+            return ServerResponse.createByErrorMessage("数据集不存在~");
         }
-        return ServerResponse.createByErrorMessage("data_id 参数错误");
+        csvLoader.setFile(new File(dataset.getLocalUrl()));
+        Instances instances = csvLoader.getDataSet();
+
+        List listData = new ArrayList();
+        for (int i = 0; i < instances.size(); i++) {
+            Instance instance = instances.get(i);
+            Attribute attributeData = instances.attribute(attributeName);
+            listData.add(instance.value(attributeData));
+        }
+
+        System.out.println(listData.size());
+        Map<String, Object> map = new HashMap<>();
+        map.put("data", listData);
+        return ServerResponse.createBySuccess(map);
     }
 
     public ServerResponse execFjData(Integer diviceId, String groupIds, String attributeName) throws IOException {

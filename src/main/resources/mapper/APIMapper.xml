@@ -58,6 +58,14 @@
     where upload_algo_id=#{uploadAlgoId}
   </select>
 
+  <select id="getAPIByDataId" resultType="com.koala.learn.entity.API">
+    select
+    <include refid="Base_Column_List"/>
+    from API
+    where api_type=5
+    and upload_algo_id=#{dataId}
+  </select>
+
   <update id="update" parameterType="com.koala.learn.entity.API">
     update API
     set name=#{name}, api_desc=#{APIdesc} , url=#{url}, request_method=#{requestMethod},
@@ -79,4 +87,7 @@
     order by
     creat_time desc
   </select>
+
+
+
 </mapper>
