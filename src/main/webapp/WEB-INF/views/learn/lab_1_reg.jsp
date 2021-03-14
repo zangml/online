@@ -22,7 +22,8 @@
     <link href="http://how2j.cn/study/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
     <script src="http://how2j.cn/study/js/bootstrap/3.3.6/bootstrap.min.js"></script>
     <script src="http://echarts.baidu.com/dist/echarts.min.js"></script>
-    <link href="<%=basePath%>assets/styles/lab_1.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.min.js"></script>
+    <script src="http://echarts.baidu.com/resource/echarts-gl-latest/dist/echarts-gl.min.js"></script>    <link href="<%=basePath%>assets/styles/lab_1.css" rel="stylesheet">
     <link rel="stylesheet" href="<%=basePath%>assets/css/style.css">
     <script  src="<%=basePath%>assets/js/index.js"></script>
     <title>${lab.title}</title>

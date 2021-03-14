@@ -74,7 +74,7 @@ public class Const {
 
     public static final String IMAGE = "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3972224591,2666750413&fm=173&s=84DB4D325D8A604F4E6125DA0000C0B2&w=600&h=475&img.JPEG";
 
-    public static final String IMAGE_FINISH = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1522231621827&di=4f6231d529616d30d4ab7d6efb4a2c94&imgtype=0&src=http%3A%2F%2Fi1.bbswater.fd.zol-img.com.cn%2Ft_s480x480%2Fg5%2FM00%2F03%2F0C%2FChMkJ1lKEKaIAukFAAMbOVmHWTAAAdKmQPU0cEAAxtR277.png";
+    public static final String IMAGE_FINISH = "http://image.phmlearn.com/55e21aa2-a91c-4a8b-a101-a97cf193bab1.jpeg";
 
     public static final String RELATIVE_CMD = "/usr/local/sk/relative.py";  //生成分类模型特征重要性分析的python文件
 
