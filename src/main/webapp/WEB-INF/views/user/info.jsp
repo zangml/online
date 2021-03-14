@@ -62,13 +62,22 @@
             <c:forEach items="${msgList}" var="msg">
                 <div class="messageContainer">
                         <%--点击标题跳转到实验结果响应页--%>
-                    <span></span>
-                    <p class="mesTitle" style="position: relative;text-indent: 30px"><a href="${msg.toUrl}?messageId=${msg.id}">${msg.title}</a>
-                        <c:if test="${msg.hasRead==0}">
-                        <span style="position: absolute;left: 10px;top: 10px;height: 5px;width: 5px;border-radius: 50%;background-color: red"></span>
-                        </c:if>
-                        <a id='mes_del' onclick="showModal()"><img src="/static/images/ljx.png" style="height: 20px; width: 20px"/></a>
-                    </p>
+                    <c:if test="${msg.labId != null}">
+                        <p class="mesTitle" style="position: relative;text-indent: 30px"><a href="${msg.toUrl}?messageId=${msg.id}">${msg.title}</a>
+                            <c:if test="${msg.hasRead==0}">
+                                <span style="position: absolute;left: 10px;top: 10px;height: 5px;width: 5px;border-radius: 50%;background-color: red"></span>
+                            </c:if>
+                            <a id='mes_del' onclick="showModal()"><img src="/static/images/ljx.png" style="height: 20px; width: 20px"/></a>
+                        </p>
+                   </c:if>
+                            <c:if test="${msg.labId == null}">
+                                <p class="mesTitle" style="position: relative;text-indent: 30px"><a href="${msg.toUrl}&messageId=${msg.id}">${msg.title}</a>
+                                    <c:if test="${msg.hasRead==0}">
+                                        <span style="position: absolute;left: 10px;top: 10px;height: 5px;width: 5px;border-radius: 50%;background-color: red"></span>
+                                    </c:if>
+                                    <a id='mes_del' onclick="showModal()"><img src="/static/images/ljx.png" style="height: 20px; width: 20px"/></a>
+                                </p>
+                            </c:if>
                     <p class="mesContent" style="font-size: 14px">${msg.content}</p>
                 </div>
 

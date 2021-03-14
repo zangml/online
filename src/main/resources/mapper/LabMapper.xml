@@ -34,7 +34,7 @@
     insert into lab (id, title, des, 
       file, tag, user_id, 
       publish, cover, lable_type, 
-      group_id,usedCount,finishedCount)
+      group_id,used_count,finished_count)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}, 
       #{file,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
       #{publish,jdbcType=INTEGER}, #{cover,jdbcType=VARCHAR}, #{lableType,jdbcType=INTEGER}, 

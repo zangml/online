@@ -146,6 +146,7 @@ public class AlgorithmController {
         }
         if (paramsKey != null) {
             String paramStr = jedisAdapter.get(paramsKey);
+            System.out.println(paramStr);
             model.addAttribute("paramStr", paramStr);
         }
         model.addAttribute("res", res);

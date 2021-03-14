@@ -90,6 +90,8 @@ public class LabDesignerService {
         lab.setFile(group.getFile());
         lab.setGroupId(groupId);
         lab.setTitle(name);
+        lab.setUsedCount(0);
+        lab.setFinishedCount(0);
         mLabMapper.insert(lab);
         if (group.getFile().endsWith("csv")){
             mExecutor.execute(new Runnable() {

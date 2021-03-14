@@ -295,13 +295,6 @@ public class LabDesignController {
 
                     res.add(Arrays.asList(classifier.getName(),null,null,null,null,null));
 //                    model.addAttribute("error","您选择的算法包含深度学习算法，正在为您加紧训练中，训练完成后会以站内信的形式通知您，请注意查收~");
-                    model.addAttribute("res", res);
-                    model.addAttribute("options", new EchatsOptions());
-                    classifierNameList.add("快速特征选择");
-                    model.addAttribute("labState",labState);
-                    model.addAttribute("classNames", classifierNameList);
-                    model.addAttribute("labUserId",mHolder.getUser().getId());
-                    return "views/design/lab_5";
                 }
             }
         }
@@ -309,6 +302,9 @@ public class LabDesignController {
 
         for (String value : classifierList) {
             Classifier classifier = mGson.fromJson(value, Classifier.class);
+            if(classifier.getLabId().equals(3) || classifier.getLabId().equals(4)){
+                continue;
+            }
             classifierNameList.add(classifier.getName());
             String[] options = mLabLearnService.resolveOptions(classifier);
             if (classifier.getPath().endsWith("py")) {

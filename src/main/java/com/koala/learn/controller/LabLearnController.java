@@ -218,6 +218,7 @@ public class LabLearnController {
                     String dividerOutKey = RedisKeyUtil.getDividerOutKey(labId,instanceId);
                     File train = new File(mJedisAdapter.hget(dividerOutKey,"train"));
                     String cacheKye = RedisKeyUtil.getCacheKey(labId,train.getAbsolutePath(),classifier.getName()+str.hashCode());
+                    System.out.println(cacheKye+"**************************************");
                     String cacheValue = mJedisAdapter.get(cacheKye);
                     if(cacheValue==null){
                         DeepLearningMessage message=new DeepLearningMessage();
@@ -230,20 +231,19 @@ public class LabLearnController {
                         mqSender.sendLabMessage(message);
 //                        model.addAttribute("error","您选择的算法包含深度学习算法，正在为您加紧训练中，训练完成后会以站内信的形式通知您，请注意查收~");
                         res.add(Arrays.asList(classifier.getName(),null,null,null,null,null));
-                        model.addAttribute("res", res);
-                        model.addAttribute("labState",labState);
-                        model.addAttribute("options",new EchatsOptions());
-                        List<String> classifierNameList = new ArrayList<>();
-                        classifierNameList.add("快速特征选择");
-                        model.addAttribute("classNames",classifierNameList);
-                        model.addAttribute("lab", mLabMapper.selectByPrimaryKey(labId));
-                        LabInstance labInstance = mLabInstanceMapper.selectByPrimaryKey(instanceId);
-                        GroupInstance groupInstance = groupInstanceMapper.selectByPrimaryKey(labInstance.getGroupInstanceId());
-                        model.addAttribute("labId",labId);
-                        model.addAttribute("instanceId",instanceId);
-                        model.addAttribute("groupInstanceId", groupInstance.getId());
-                        model.addAttribute("groupId", groupInstance.getGroupId());
-                        return "views/learn/lab_5";
+//                        model.addAttribute("res", res);
+//                        model.addAttribute("labState",labState);
+//                        model.addAttribute("options",new EchatsOptions());
+//                        List<String> classifierNameList = new ArrayList<>();
+//                        classifierNameList.add("快速特征选择");
+//                        model.addAttribute("classNames",classifierNameList);
+//                        model.addAttribute("lab", mLabMapper.selectByPrimaryKey(labId));
+//                        LabInstance labInstance = mLabInstanceMapper.selectByPrimaryKey(instanceId);
+//                        GroupInstance groupInstance = groupInstanceMapper.selectByPrimaryKey(labInstance.getGroupInstanceId());
+//                        model.addAttribute("labId",labId);
+//                        model.addAttribute("instanceId",instanceId);
+//                        model.addAttribute("groupInstanceId", groupInstance.getId());
+//                        model.addAttribute("groupId", groupInstance.getGroupId());
                     }
                 }
             }

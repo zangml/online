@@ -38,6 +38,9 @@
                                 <c:when test="${lab.id==426}">
                                     <img src="../../../static/images/timg.jpg" alt="">
                                 </c:when>
+                                <c:when test="${lab.id==593 || lab.id==596}">
+                                    <img src="http://image.phmlearn.com/14c10645-bc6d-4191-9914-18885f9b0f4e.jpg" alt="">
+                                </c:when>
                                 <c:otherwise>
                                     <img src="../../../static/images/th.jpg" alt="">
                                 </c:otherwise>

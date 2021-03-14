@@ -80,6 +80,9 @@ public class LabMQReceiver implements MessageListener {
             boolean isSuccessGetResult=true;
             for(String str: classifierList){
                 Classifier classifier =gson.fromJson(str, Classifier.class);
+                if(!(classifier.getLabId().equals(3) || classifier.getLabId().equals(4))){
+                    continue;
+                }
                 try {
                     boolean isSuccess= handleResult(labId,labType,instanceId,classifier);
                     if(!isSuccess){
