@@ -1,5 +1,6 @@
 package com.koala.learn.controller;
 
+import com.google.gson.Gson;
 import com.koala.learn.commen.LogAnnotation;
 import com.koala.learn.component.HostHolder;
 import com.koala.learn.component.JedisAdapter;
@@ -45,19 +46,37 @@ public class CourseController {
     @Autowired
     JedisAdapter jedisAdapter;
 
+    @Autowired
+    Gson gson;
+
     @RequestMapping(path = {"/","/index"})
     public String courseList(Model model){
-        List<CourseType> typeList = mCourseService.getCourseTypeList();
-        List<LabCourse> labCourseListAll=labCourseService.getAllLabCourse();
-        List<LabCourse> labCourseList=new ArrayList<>();
-        List<LabCourse> guideList=new ArrayList<>();
-        for(LabCourse labCourse:labCourseListAll){
-            if(labCourse.getType().equals(1)){
-                labCourseList.add(labCourse);
-            }else if(labCourse.getType().equals(2)){
-                guideList.add(labCourse);
+
+        String indexCacheStr = jedisAdapter.get("INDEX_CACHE");
+        List<CourseType> typeList;
+        List<LabCourse> labCourseList;
+        List<LabCourse> guideList;
+        if(indexCacheStr==null){
+            typeList = mCourseService.getCourseTypeList();
+            List<LabCourse> labCourseListAll=labCourseService.getAllLabCourse();
+            labCourseList=new ArrayList<>();
+            guideList=new ArrayList<>();
+            for(LabCourse labCourse:labCourseListAll){
+                if(labCourse.getType().equals(1)){
+                    labCourseList.add(labCourse);
+                }else if(labCourse.getType().equals(2)){
+                    guideList.add(labCourse);
+                }
             }
+            IndexCache cache = new IndexCache(typeList,labCourseList,guideList);
+            jedisAdapter.set("INDEX_CACHE",gson.toJson(cache));
+        }else {
+            IndexCache indexCache = gson.fromJson(indexCacheStr,IndexCache.class);
+            typeList = indexCache.getTypeList();
+            labCourseList = indexCache.getLabCourseList();
+            guideList = indexCache.getGuideList();
         }
+
 
         Date date = new Date();
         String today = DateTimeUtil.dateToStr(date,"yyyy-MM-dd");

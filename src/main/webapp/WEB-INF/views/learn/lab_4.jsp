@@ -236,7 +236,7 @@
                         <form id="random">
                             <div class="input-group">
                                 <span class="input-group-addon">${divider.label}</span>
-                                <input type="text" class="form-control" name="radio" placeholder="">
+                                <input type="text" class="form-control" name="radio" placeholder="0.8">
                             </div>
                             <input type="hidden" name="type" value="${divider.type}">
                             <input type="hidden" name="dividerId" value="${divider.id}">
