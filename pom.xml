@@ -63,7 +63,7 @@
     <dependency>
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-jpa</artifactId>
-      <version>1.10.4.RELEASE</version>
+      <version>1.11.23.RELEASE</version>
     </dependency>
     <!--&lt;!&ndash; 引入Elasticsearch相关jar包&ndash;&gt;-->
     <!--<dependency>-->
