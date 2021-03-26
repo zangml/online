@@ -72,6 +72,12 @@
                         提取码： 8jht
                     </div>
                 </c:if>
+                <c:if test="${dataset.id == 446}">
+                    <div style="font-size: 16px;">
+                        &nbsp;&nbsp;&nbsp;下载链接：<a href="https://pan.baidu.com/s/1XKx-JKbngyCjEqTfQ8z_Vg ">https://pan.baidu.com/s/1XKx-JKbngyCjEqTfQ8z_Vg </a>
+                        提取码： c74c
+                    </div>
+                </c:if>
                 </div>
             </div>
         </div>
