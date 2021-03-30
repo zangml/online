@@ -70,6 +70,23 @@ public class ScoreController {
             scoreSingleList2.add(score);
         }
         model.addAttribute("scoreSingleList2",scoreSingleList2);
+
+        List<Score> scoreList3=scoreService.getScoreListByLabId(3);
+
+        List<Score> scoreSingleList3=new ArrayList<>();
+
+        Set<Integer> groupIds3=new HashSet<>();
+
+        for(int i=0;i<scoreList3.size();i++){
+            Score score=scoreList3.get(i);
+            int groupId=score.getGroupId();
+            if(groupIds3.contains(groupId)){
+                continue;
+            }
+            groupIds3.add(groupId);
+            scoreSingleList3.add(score);
+        }
+        model.addAttribute("scoreSingleList3",scoreSingleList3);
         return "views/score/list";
     }
 

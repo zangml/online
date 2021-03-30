@@ -42,6 +42,7 @@ public class ScoreService {
 
         String scoreFile = getScoreFileByresultLabName(resultLabName);
 
+
         //保存结果文件
         String resultFileName=resultFile.getOriginalFilename();
         String newFileName=labDesignBGService.getFileName("score",resultFileName);
@@ -49,8 +50,15 @@ public class ScoreService {
         resultFile.transferTo(resultCsv);
 
         StringBuilder sb = new StringBuilder("python ");
-        sb.append(scoreFile).append(" ");
-        sb.append("file=").append(resultCsv.getAbsolutePath());
+        if (scoreFile.contains(",")){
+            String[] scoreFiles = scoreFile.split(",");
+            sb.append(scoreFiles[0]).append(" ");
+            sb.append("studentcsv=").append(resultCsv.getAbsolutePath()).append(" ");
+            sb.append("teachercsv=").append(scoreFiles[1]);
+        }else {
+            sb.append(scoreFile).append(" ");
+            sb.append("file=").append(resultCsv.getAbsolutePath());
+        }
 
         logger.info("开始测试上传的实验结果，python语句为："+sb.toString());
         String res = PythonUtils.execPy(sb.toString());
@@ -97,6 +105,9 @@ public class ScoreService {
         if(resultLabName.equals(2)){
             return Const.FILE_SCORE_CWRU_2;
         }
+        if (resultLabName.equals(3)){
+            return Const.FILE_SCORE_PARDENBORN+","+Const.FILE_SOCRE_CSV;
+        }
         return null;
     }
 
@@ -107,6 +118,9 @@ public class ScoreService {
         }
         if(resultLabName.equals(2)){
             return Const.NAME_LAB_CWRU_2;
+        }
+        if (resultLabName.equals(3)){
+            return Const.NAME_LAB_PADERNBORN;
         }
         return null;
     }

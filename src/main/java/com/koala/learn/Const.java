@@ -202,9 +202,15 @@ public class Const {
 
     public static final String FILE_SCORE_CWRU_2 ="/usr/local/sk/score_cwru_2.py";//CWRU_2 打分文件
 
+    public static final String FILE_SCORE_PARDENBORN = "/usr/local/sk/score_paderborn.py";//Padernborn实验 python文件
+
+    public static final String FILE_SOCRE_CSV = "/usr/local/sk/teacher.csv";//Padernborn实验  标准csv文件
+
     public static final String NAME_LAB_CWRU ="CWRU数据故障预测实验（一）";
 
     public static final String NAME_LAB_CWRU_2 ="CWRU数据故障预测实验（二）";
+
+    public static final String NAME_LAB_PADERNBORN = "Paderborn滚动轴承状态监测";
 
 
 }

@@ -53,7 +53,7 @@
                                 <select id="resultLabName" name="resultLabName">
                                     <option value="1">CWRU数据故障预测第一组数据集实验</option>
                                     <option value="2">CWRU数据故障预测第二组数据集实验</option>
-                                    <%--<option value="3">故障诊断（分类）</option>--%>
+                                    <option value="3">Paderborn滚动轴承状态监测数据实验</option>
                                     <%--<option value="4">寿命预测（回归）</option>--%>
                                 </select>
                             </div>

@@ -43,6 +43,10 @@ public class JedisAdapter implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         pool = new JedisPool("188.131.184.204",6379);
     }
+//    @Override
+//    public void afterPropertiesSet() throws Exception {
+//        pool = new JedisPool("localhost",6379);
+//    }
 
     public long sadd(String key, String value) {
         Jedis jedis = null;
