@@ -74,8 +74,15 @@
                 </c:if>
                 <c:if test="${dataset.id == 446}">
                     <div style="font-size: 16px;">
-                        &nbsp;&nbsp;&nbsp;下载链接：<a href="https://pan.baidu.com/s/1XKx-JKbngyCjEqTfQ8z_Vg ">https://pan.baidu.com/s/1XKx-JKbngyCjEqTfQ8z_Vg </a>
+                        &nbsp;&nbsp;&nbsp;训练集下载链接：<a
+                            href="https://pan.baidu.com/s/1XKx-JKbngyCjEqTfQ8z_Vg ">https://pan.baidu.com/s/1XKx-JKbngyCjEqTfQ8z_Vg </a>
                         提取码： c74c
+                    </div>
+                    <div></div>
+                    <div style="font-size: 16px;">
+                        &nbsp;&nbsp;&nbsp;测试集(一)下载链接：<a
+                            href="https://pan.baidu.com/s/1q-O_p2hnM3PtWPhSp-myOA ">https://pan.baidu.com/s/1XKx-JKbngyCjEqTfQ8z_Vg </a>
+                        提取码： ujnv
                     </div>
                 </c:if>
                 </div>
