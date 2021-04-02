@@ -62,6 +62,9 @@ public class ScoreController {
 
         for(int i=0;i<scoreList2.size();i++){
             Score score=scoreList2.get(i);
+            if(score.getGroupId()==null){
+                continue;
+            }
             int groupId=score.getGroupId();
             if(groupIds2.contains(groupId)){
                 continue;
@@ -79,6 +82,9 @@ public class ScoreController {
 
         for(int i=0;i<scoreList3.size();i++){
             Score score=scoreList3.get(i);
+            if(score.getGroupId()==null){
+                continue;
+            }
             int groupId=score.getGroupId();
             if(groupIds3.contains(groupId)){
                 continue;

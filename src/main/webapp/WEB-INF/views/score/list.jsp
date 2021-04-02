@@ -102,6 +102,7 @@
         </div>
         <ul>
             <c:forEach items="${scoreSingleList3}" var="score" varStatus="index">
+                    <c:if test="${score.groupId>=1 && score.groupId<=19}">
                 <li class="row">
                     <div class="col-md-1 coll">${index.count}</div>
                     <div class="col-md-1 coll">${score.groupId}</div>
@@ -111,6 +112,7 @@
                     <div class="col-md-2 coll">${score.accscore}</div>
                     <div class="col-md-2 coll">${score.recallscore}</div>
                 </li>
+                    </c:if>
             </c:forEach>
 
         </ul>
