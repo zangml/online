@@ -86,7 +86,7 @@ public class ScoreController {
                 continue;
             }
             int groupId=score.getGroupId();
-            if(groupId<1 || groupId >19){
+            if(groupId<0 || groupId >19){
                 continue;
             }
             if(groupIds3.contains(groupId)){
