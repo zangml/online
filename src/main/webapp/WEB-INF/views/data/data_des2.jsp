@@ -72,7 +72,7 @@
                         提取码： 8jht
                     </div>
                 </c:if>
-                <c:if test="${dataset.id == 443}">
+                <c:if test="${dataset.id == 446}">
                     <div style="font-size: 16px;">
                         &nbsp;&nbsp;&nbsp;训练集下载链接：<a
                             href="https://pan.baidu.com/s/1XKx-JKbngyCjEqTfQ8z_Vg ">https://pan.baidu.com/s/1XKx-JKbngyCjEqTfQ8z_Vg </a>
