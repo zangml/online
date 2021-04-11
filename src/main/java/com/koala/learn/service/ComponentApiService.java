@@ -799,4 +799,29 @@ public class ComponentApiService {
         return ServerResponse.createBySuccess(map);
     }
 
+    public ServerResponse execPzcData(String workingCondition, String attributeName) throws IOException {
+
+
+        File file = new File(Const.ROOT_DATASET + "/paderborn/" + workingCondition + ".csv");
+        if (!file.exists()){
+            return ServerResponse.createByErrorMessage("working_condition 参数错误！");
+        }
+        if (!(attributeName.equals("force")||attributeName.equals("phase_current_1")||
+        attributeName.equals("phase_current_2")||attributeName.equals("speed")||
+        attributeName.equals("torque")||attributeName.equals("vibration_1"))){
+            return ServerResponse.createByErrorMessage("attribute 参数错误！");
+        }
+        CSVLoader csvLoader = new CSVLoader();
+        csvLoader.setFile(file);
+        Instances instances = csvLoader.getDataSet();
+        List listData = new ArrayList();
+        for (int i = 0; i < instances.size(); i++) {
+            Instance instance = instances.get(i);
+            Attribute attributeData = instances.attribute(attributeName);
+            listData.add(instance.value(attributeData));
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("data", listData);
+        return ServerResponse.createBySuccess(map);
+    }
 }

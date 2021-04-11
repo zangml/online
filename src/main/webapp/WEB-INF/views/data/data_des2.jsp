@@ -72,17 +72,23 @@
                         提取码： 8jht
                     </div>
                 </c:if>
-                <c:if test="${dataset.id == 446}">
+                <c:if test="${dataset.id == 443}">
                     <div style="font-size: 16px;">
                         &nbsp;&nbsp;&nbsp;训练集下载链接：<a
                             href="https://pan.baidu.com/s/1XKx-JKbngyCjEqTfQ8z_Vg ">https://pan.baidu.com/s/1XKx-JKbngyCjEqTfQ8z_Vg </a>
                         提取码： c74c
                     </div>
-                    <div></div>
+                    <br>
                     <div style="font-size: 16px;">
                         &nbsp;&nbsp;&nbsp;测试集(一)下载链接：<a
                             href="https://pan.baidu.com/s/1q-O_p2hnM3PtWPhSp-myOA ">https://pan.baidu.com/s/1XKx-JKbngyCjEqTfQ8z_Vg </a>
                         提取码： ujnv
+                    </div>
+                    <br>
+                    <div style="font-size: 16px;">
+                        &nbsp;&nbsp;&nbsp;测试集(二)下载链接：<a
+                            href="https://pan.baidu.com/s/1YNGsbTBEWnpODqIOsHQIbg ">https://pan.baidu.com/s/1YNGsbTBEWnpODqIOsHQIbg </a>
+                        提取码： z3rg
                     </div>
                 </c:if>
                 </div>

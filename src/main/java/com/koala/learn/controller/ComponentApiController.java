@@ -1012,6 +1012,44 @@ public class ComponentApiController {
     }
 
     /**
+     *  获取paderborn轴承数据
+     */
+    @PostMapping("/data/paderborn")
+    public ServerResponse getData(@RequestParam("working_condition")String workingCondition,
+                                  @RequestParam("access_token")String accessToken,
+                                  @RequestParam("attribute")String attributeName) throws IOException {
+        ServerResponse response = authService.checkAccessToken(accessToken);
+        if (!response.isSuccess()) {
+            return response;
+        }
+        API api = componentApiService.getAPIById(355);
+        if (api.getUsedCount() == null) {
+            api.setUsedCount(1);
+        } else {
+            api.setUsedCount(api.getUsedCount() + 1);
+        }
+        apiMapper.update(api);
+
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId((int) response.getData());
+        userRecord.setRecordTime(new Date());
+        userRecord.setRecordType(3);
+        userRecord.setRecordTypeId(api.getId());
+
+        ServerResponse serverResponse = componentApiService.execPzcData(workingCondition, attributeName);
+
+        if(serverResponse.isSuccess()){
+            userRecord.setState(0);
+        }else{
+            userRecord.setState(1);
+            userRecord.setMsg(serverResponse.getMsg());
+        }
+        userRecordMapper.insert(userRecord);
+
+        return serverResponse;
+
+    }
+    /**
      * 获取上传的原始数据
      */
 

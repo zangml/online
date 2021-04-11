@@ -108,6 +108,9 @@ public class ScoreService {
         if (resultLabName.equals(3)){
             return Const.FILE_SCORE_PARDENBORN+","+Const.FILE_SOCRE_CSV;
         }
+        if (resultLabName.equals(4)){
+            return Const.FILE_SCORE_PARDENBORN+","+Const.FILE_SOCRE_CSV_2;
+        }
         return null;
     }
 
@@ -122,11 +125,13 @@ public class ScoreService {
         if (resultLabName.equals(3)){
             return Const.NAME_LAB_PADERNBORN;
         }
+        if (resultLabName.equals(4)){
+            return Const.NAME_LAB_PADERNBORN_2;
+        }
         return null;
     }
 
     public Score getScoreById(Integer scoreId) {
-
         return scoreMapper.selectById(scoreId);
     }
 
@@ -137,4 +142,10 @@ public class ScoreService {
     public List<Score> getScoreListByDate(Integer userId,Date date) {
         return scoreMapper.selectAllByUserIdAndDate(userId,date);
     }
+
+    public List<Score> getScoreListByLabIdAndGroupId(Integer groupId,Integer LabId){
+        return scoreMapper.selectAllByGroupIdAndLabId(groupId,LabId);
+    }
+
+
 }

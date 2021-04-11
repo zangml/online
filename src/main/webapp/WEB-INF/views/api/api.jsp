@@ -152,6 +152,7 @@
                                     <ul>
                                         <li><a href="/api/get_list/21">风机数据</a></li>
                                         <li><a href="/api/get_list/59">轴承数据</a></li>
+                                        <li><a href="/api/get_list/355">Paderborn轴承数据</a> </li>
                                     </ul>
                                 </div>
                             </div>
