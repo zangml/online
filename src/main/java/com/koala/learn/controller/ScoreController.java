@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Console;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -126,7 +129,7 @@ public class ScoreController {
     public String uploadResultCsv(@RequestParam("resultLabName") Integer resultLabName,
                                   @RequestParam("groupId") Integer groupId,
                                   @RequestParam("resultFile")MultipartFile resultFile,
-                                  Model model) throws IOException {
+                                  Model model) throws IOException, ParseException {
 
         User user =holder.getUser();
         if(user==null){
@@ -144,6 +147,15 @@ public class ScoreController {
             List<Score> scoreList = scoreService.getScoreListByLabIdAndGroupId(groupId, 4);
             if (scoreList.size()>=3){
                 model.addAttribute("error","您已上传3次，无法再次上传！");
+                return "views/common/error";
+            }
+            Date date_now=new Date();
+            String ddlTime = "2021-04-14 12:00:00";
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date ddl_date = format.parse(ddlTime);
+            if(date_now.after(ddl_date)){
+                System.out.println(date_now);
+                model.addAttribute("error","提交已截止，无法上传！");
                 return "views/common/error";
             }
         }else {
