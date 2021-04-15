@@ -30,8 +30,8 @@ public class FileJob {
 	@Scheduled(cron="0 0 3 ? * 6")//每周 星期天3点执行 0 0 3 ? * 1
 	public void cronJob(){
 		//  Const.UPLOAD_DATASET
-		deleteFiles("/Users/houlixin/Desktop/te/");
-		//deleteFiles(Const.UPLOAD_DATASET);
+		//deleteFiles("/Users/houlixin/Desktop/te/");
+		deleteFiles(Const.UPLOAD_DATASET);
 	}
 	public static void deleteFiles(String pathDir){
 
