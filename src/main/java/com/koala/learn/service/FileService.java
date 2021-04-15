@@ -95,24 +95,25 @@ public class FileService {
      * @throws Exception
      */
 
-    @Scheduled(cron="0 0 3 ? * 1")//每周星期天3点执行
-    public void cronJob(){
-        deleteFiles(Const.UPLOAD_DATASET);
-    }
-    private void deleteFiles(String pathDir){
+//    @Scheduled(cron="0 0 3 ? * 1")//每周星期天3点执行
+//    public void cronJob(){
+//        deleteFiles(Const.UPLOAD_DATASET);
+//    }
+//    private void deleteFiles(String pathDir){
+//
+//        File file=new File(pathDir);
+//        if(file.isFile()) { // 判断是否是文件夹
+//            file.delete();
+//        }else{
+//            File[] files = file.listFiles();
+//            for(int i=0;i<files.length;i++){
+//                if(files[i].getName().startsWith("out")){
+//                    files[i].delete();
+//                }
+//            }
+//        }
+//    }
 
-        File file=new File(pathDir);
-        if(file.isFile()) { // 判断是否是文件夹
-            file.delete();
-        }else{
-            File[] files = file.listFiles();
-            for(int i=0;i<files.length;i++){
-                if(files[i].getName().startsWith("out")){
-                    files[i].delete();
-                }
-            }
-        }
-    }
 
     public static void main(String[] args) throws Exception {
 //        File testFile=new File("/Users/zangmenglei/data/diabetes.csv");
