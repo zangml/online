@@ -1015,7 +1015,7 @@ public class ComponentApiController {
      *  获取paderborn轴承数据
      */
     @PostMapping("/data/paderborn")
-    public ServerResponse getData(@RequestParam("working_condition")String workingCondition,
+    public ServerResponse getData(@RequestParam("device_id")Integer deviceId,
                                   @RequestParam("access_token")String accessToken,
                                   @RequestParam("attribute")String attributeName) throws IOException {
         ServerResponse response = authService.checkAccessToken(accessToken);
@@ -1036,7 +1036,8 @@ public class ComponentApiController {
         userRecord.setRecordType(3);
         userRecord.setRecordTypeId(api.getId());
 
-        ServerResponse serverResponse = componentApiService.execPzcData(workingCondition, attributeName);
+
+        ServerResponse serverResponse = componentApiService.execPzcData(deviceId, attributeName);
 
         if(serverResponse.isSuccess()){
             userRecord.setState(0);

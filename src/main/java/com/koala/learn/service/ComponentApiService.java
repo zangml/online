@@ -799,12 +799,13 @@ public class ComponentApiService {
         return ServerResponse.createBySuccess(map);
     }
 
-    public ServerResponse execPzcData(String workingCondition, String attributeName) throws IOException {
+    public ServerResponse execPzcData(Integer deviceId, String attributeName) throws IOException {
 
 
-        File file = new File(Const.ROOT_DATASET + "/paderborn/" + workingCondition + ".csv");
+        //Const.ROOT_DATASET
+        File file = new File(Const.ROOT_DATASET + "paderborn/" + deviceId + ".csv");
         if (!file.exists()){
-            return ServerResponse.createByErrorMessage("working_condition 参数错误！");
+            return ServerResponse.createByErrorMessage("设备号不存在！");
         }
         if (!(attributeName.equals("force")||attributeName.equals("phase_current_1")||
         attributeName.equals("phase_current_2")||attributeName.equals("speed")||
@@ -821,7 +822,7 @@ public class ComponentApiService {
             listData.add(instance.value(attributeData));
         }
         Map<String, Object> map = new HashMap<>();
-        map.put("data", listData);
+        map.put(attributeName, listData);
         return ServerResponse.createBySuccess(map);
     }
 }
