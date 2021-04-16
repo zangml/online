@@ -97,7 +97,7 @@
                                 <input  type="file" name="testFile" id="labFile" accept=".csv">
                             </div>
                             <div class="col-sm-10 col-sm-offset-2">
-                                <p class="help-block">实验文件只支持csv格式，默认最后一列为类属性。csv文件的第一行必须为属性名称。</p>
+                                <p class="help-block">实验文件只支持csv格式，默认最后一列为类属性。csv文件的第一行必须为属性名称。文件大小不能超过8M</p>
                             </div>
                         </div>
                         <dev class="form-group">
