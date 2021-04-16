@@ -1017,7 +1017,9 @@ public class ComponentApiController {
     @PostMapping("/data/paderborn")
     public ServerResponse getData(@RequestParam("device_id")Integer deviceId,
                                   @RequestParam("access_token")String accessToken,
-                                  @RequestParam("attribute")String attributeName) throws IOException {
+                                  @RequestParam("attribute")String attributeName,
+                                  @RequestParam("start_time")Integer startTime,
+                                  @RequestParam("end_time")Integer endTime) throws IOException {
         ServerResponse response = authService.checkAccessToken(accessToken);
         if (!response.isSuccess()) {
             return response;
@@ -1037,7 +1039,7 @@ public class ComponentApiController {
         userRecord.setRecordTypeId(api.getId());
 
 
-        ServerResponse serverResponse = componentApiService.execPzcData(deviceId, attributeName);
+        ServerResponse serverResponse = componentApiService.execPzcData(deviceId, attributeName,startTime,endTime);
 
         if(serverResponse.isSuccess()){
             userRecord.setState(0);

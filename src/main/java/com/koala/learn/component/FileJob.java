@@ -27,11 +27,13 @@ import java.util.Date;
 public class FileJob {
 	private static final Logger logger= LoggerFactory.getLogger(UploadService.class);
 
-	@Scheduled(cron="0 0 3 ? * 6")//每周 星期天3点执行 0 0 3 ? * 1
+	@Scheduled(cron="0 45 10 ? * FRI")//每周 星期天3点执行 0 0 3 ? * 1
 	public void cronJob(){
+		System.out.println("准备执行删除操作"+new Date());
 		//  Const.UPLOAD_DATASET
 		//deleteFiles("/Users/houlixin/Desktop/te/");
 		deleteFiles(Const.UPLOAD_DATASET);
+
 	}
 	public static void deleteFiles(String pathDir){
 
@@ -52,7 +54,7 @@ public class FileJob {
 
 					if((date_now.getTime()/1000-date_create.getTime()/1000>15768000) && files[i].getName().startsWith("out")){//相差的时间不能大于一年31536000
 						files[i].delete();
-						logger.info("删除的文件为"+files[i].getAbsolutePath());
+						logger.info("删除时间："+date_now+"/删除的文件为"+files[i].getAbsolutePath());
 					}
 
 //					String pattern = "yyyy-MM-dd HH:mm:ss";
