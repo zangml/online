@@ -52,7 +52,7 @@ public class FileJob {
 					Date date_create = new Date(time.toMillis());
 					Date date_now = new Date();
 
-					if((date_now.getTime()/1000-date_create.getTime()/1000>15768000) && files[i].getName().startsWith("out")){//相差的时间不能大于一年31536000
+					if(((date_now.getTime()/1000-date_create.getTime()/1000>15768000) && files[i].getName().startsWith("out"))||files[i].getName().startsWith("model_cla")||files[i].getName().startsWith("model_reg")){//相差的时间不能大于一年31536000
 						files[i].delete();
 						logger.info("删除时间："+date_now+"/删除的文件为"+files[i].getAbsolutePath());
 					}
