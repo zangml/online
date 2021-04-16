@@ -799,11 +799,11 @@ public class ComponentApiService {
         return ServerResponse.createBySuccess(map);
     }
 
-    public ServerResponse execPzcData(Integer deviceId, String attributeName,Integer startTime,Integer endTime) throws IOException {
+    public ServerResponse execPzcData(String deviceId, String attributeName) throws IOException {
 
 
-        //Const.ROOT_DATASET
-        File file = new File( Const.ROOT_DATASET+"paderborn/"+ deviceId + ".csv");
+        //Const.ROOT_DATASET+"paderborn/"
+        File file = new File( Const.ROOT_DATASET+"paderborn/" +deviceId+ ".csv");
         if (!file.exists()){
             return ServerResponse.createByErrorMessage("设备号不存在！");
         }
@@ -816,15 +816,9 @@ public class ComponentApiService {
         csvLoader.setFile(file);
         Instances instances = csvLoader.getDataSet();
         List listData = new ArrayList();
-        if (endTime<0||startTime<0||startTime>=endTime){
-            return ServerResponse.createByErrorMessage("无效时间段！");
 
-        }
-        if ((endTime > instances.size()||startTime > instances.size())){
-            return ServerResponse.createByErrorMessage("时间段超过有效值！");
-        }
-        System.out.println(instances.size());
-        for (int i = startTime*2560; i < endTime*2560; i++) {
+        //System.out.println(instances.size());
+        for (int i = 0; i < instances.size(); i++) {
             Instance instance = instances.get(i);
             Attribute attributeData = instances.attribute(attributeName);
             listData.add(instance.value(attributeData));

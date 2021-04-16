@@ -27,7 +27,7 @@ import java.util.Date;
 public class FileJob {
 	private static final Logger logger= LoggerFactory.getLogger(UploadService.class);
 
-	@Scheduled(cron="0 10 12 ? * FRI")//每周 星期天3点执行 0 0 3 ? * 1
+	@Scheduled(cron="0 0 3 ? * *")//每周 星期天3点执行 0 0 3 ? * 1
 	public void cronJob(){
 		System.out.println("准备执行删除操作"+new Date());
 		//  Const.UPLOAD_DATASET
