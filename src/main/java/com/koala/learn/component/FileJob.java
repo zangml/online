@@ -35,7 +35,7 @@ public class FileJob {
 		deleteFiles(Const.UPLOAD_DATASET);
 
 	}
-	@Scheduled(cron = "0 38 20 ? * *")
+	@Scheduled(cron = "0 59 20 ? * *")
 	public void deleteTomcatTempFile(){
 		logger.info("准备执行删除操作-----");
 		File file=new File("/usr/local/zangml/apache-tomcat-8.5.38/temp/");
@@ -52,7 +52,8 @@ public class FileJob {
 					Date date_create = new Date(time.toMillis());
 					Date date_now = new Date();
 
-					if(((date_now.getTime()/1000-date_create.getTime()/1000>15768000) && files[i].getName().endsWith(".tmp"))){//相差的时间不能大于一年31536000
+					if(((date_now.getTime()/1000-date_create.getTime()/1000>175200) && files[i].getName().endsWith(
+							".tmp"))){//相差的时间大于20天且以.tmp结尾的文件
 						files[i].delete();
 						logger.info("删除时间："+date_now+"/删除的文件为"+files[i].getAbsolutePath());
 					}
