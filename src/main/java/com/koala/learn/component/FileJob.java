@@ -29,11 +29,48 @@ public class FileJob {
 
 	@Scheduled(cron="0 0 3 ? * *")//每周 星期天3点执行 0 0 3 ? * 1
 	public void cronJob(){
-		System.out.println("准备执行删除操作"+new Date());
+		logger.info("准备执行删除操作-----");
 		//  Const.UPLOAD_DATASET
 		//deleteFiles("/Users/houlixin/Desktop/te/");
 		deleteFiles(Const.UPLOAD_DATASET);
 
+	}
+	@Scheduled(cron = "0 38 20 ? * *")
+	public void deleteTomcatTempFile(){
+		logger.info("准备执行删除操作-----");
+		File file=new File("/usr/local/zangml/apache-tomcat-8.5.38/temp/");
+		if(file.isFile()) { // 判断是否是文件夹
+			file.delete();
+		}else{
+			File[] files = file.listFiles();
+			for(int i=0;i<files.length;i++){
+				File file1 = new File(files[i].getAbsolutePath());
+				BasicFileAttributes attrs;
+				try {
+					attrs = Files.readAttributes(file1.toPath(), BasicFileAttributes.class);
+					FileTime time = attrs.creationTime();
+					Date date_create = new Date(time.toMillis());
+					Date date_now = new Date();
+
+					if(((date_now.getTime()/1000-date_create.getTime()/1000>15768000) && files[i].getName().endsWith(".tmp"))){//相差的时间不能大于一年31536000
+						files[i].delete();
+						logger.info("删除时间："+date_now+"/删除的文件为"+files[i].getAbsolutePath());
+					}
+
+//					String pattern = "yyyy-MM-dd HH:mm:ss";
+//					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+//
+//					String formatted = simpleDateFormat.format( new Date( time.toMillis() ) );
+//
+//					System.out.println( "文件创建日期和时间是: " + formatted );
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+//				if(files[i].getName().startsWith("out")){
+//					files[i].delete();
+//				}
+			}
+		}
 	}
 	public static void deleteFiles(String pathDir){
 
