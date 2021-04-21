@@ -871,6 +871,13 @@ public class ComponentApiController {
         if (!response.isSuccess()) {
             return response;
         }
+        API api = componentApiService.getAPIByUploadAlgoId(uploadAlgoId);
+        if (api.getUsedCount() == null) {
+            api.setUsedCount(1);
+        } else {
+            api.setUsedCount(api.getUsedCount() + 1);
+        }
+        apiMapper.update(api);
 
         Model model = modelService.getModelById(modelId);
 
