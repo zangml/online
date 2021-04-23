@@ -478,8 +478,12 @@ public class ComponentApiService {
     }
 
 
-    public API getAPIByUploadAlgoId(Integer uploadAlgoId) {
-        return apiMapper.selectByUploadAlgoId(uploadAlgoId);
+    public API getAPIByUploadAlgoId(Integer uploadAlgoId, Integer apiType) {
+        return apiMapper.selectByUploadAlgoId(uploadAlgoId, apiType);
+    }
+
+    public API getAPIByUploadAlgoId1(Integer uploadAlgoId, Integer apiType){
+        return apiMapper.selectByUploadAlgoId1(uploadAlgoId,apiType);
     }
 
     public ServerResponse execWindow(String path, String opath, Integer windowLength, Integer stepLength) throws IOException {

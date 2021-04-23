@@ -1317,7 +1317,7 @@ public class LabDesignBGService {
         sb.append("test=").append(dividerFiles.get(0).getAbsolutePath()).append(" ");
         sb.append("train=").append(dividerFiles.get(1).getAbsolutePath());
 
-        logger.info("开始测试上传的分类算法，python语句为："+sb.toString());
+        logger.info("开始测试上传的回归算法，python语句为："+sb.toString());
         String res = PythonUtils.execPy(sb.toString());
         logger.info("得到结果："+res);
 

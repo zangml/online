@@ -12,7 +12,9 @@ public interface APIMapper {
 
     API selectById(Integer id);
 
-    API selectByUploadAlgoId(Integer uploadAlgoId);
+    API selectByUploadAlgoId(Integer uploadAlgoId,Integer apiType);
+
+    API selectByUploadAlgoId1(Integer uploadAlgoId, Integer apiType);
 
     List<API> getByUserId(Integer userId);
 

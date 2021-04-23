@@ -56,6 +56,15 @@
     <include refid="Base_Column_List"/>
     from API
     where upload_algo_id=#{uploadAlgoId}
+    and api_type!={apiType}
+  </select>
+
+  <select id="selectByUploadAlgoId1" resultType="com.koala.learn.entity.API">
+    select
+    <include refid="Base_Column_List"/>
+    from API
+    where upload_algo_id=#{uploadAlgoId}
+    and api_type=#{apiType}
   </select>
 
   <select id="getAPIByDataId" resultType="com.koala.learn.entity.API">

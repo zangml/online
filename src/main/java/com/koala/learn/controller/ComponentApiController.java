@@ -766,7 +766,7 @@ public class ComponentApiController {
         }
 
 
-        API api = componentApiService.getAPIByUploadAlgoId(uploadAlgoId);
+        API api = componentApiService.getAPIByUploadAlgoId1(uploadAlgoId,apiType);
 
         if (api.getPub().equals(0)) {
             String apikey = accessToken.split("\\.")[0];
@@ -822,7 +822,7 @@ public class ComponentApiController {
             return response;
         }
 
-        API api = componentApiService.getAPIByUploadAlgoId(uploadAlgoId);
+        API api = componentApiService.getAPIByUploadAlgoId1(uploadAlgoId,apiType);
         if (api.getPub().equals(0)) {
             String apikey = accessToken.split("\\.")[0];
             ApiAuth apiAuth = authService.getApiAuthByApiKey(apikey);
@@ -871,7 +871,8 @@ public class ComponentApiController {
         if (!response.isSuccess()) {
             return response;
         }
-        API api = componentApiService.getAPIByUploadAlgoId(uploadAlgoId);
+
+        API api = componentApiService.getAPIByUploadAlgoId(uploadAlgoId,5);
         if (api.getUsedCount() == null) {
             api.setUsedCount(1);
         } else {
