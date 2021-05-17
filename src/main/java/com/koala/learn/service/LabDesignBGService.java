@@ -1459,12 +1459,5 @@ public class LabDesignBGService {
         return res.append(prefixStr).append(suffix).toString();
     }
 
-//    public static void main(String[] args) {
-//////        System.out.println(getFileName("pre","smote.py"));
-////
-////        File file =new File("/usr/local/sk/upload/pre/1.csv");
-////
-////        System.out.println(file.exists());
-//    }
 
 }

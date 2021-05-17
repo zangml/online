@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head th:replace= "templates/fragments/header :: header">
+</head>
+<body>
+<div class="card-header bg-dark font-white">
+
+	<div class="input-group col-md-7 col-xl-6">
+
+		<input type="text" class="form-control" id="searchName"
+			placeholder="输入用户名称进行搜索"> <span class="input-group-btn">
+			<button class="btn btn-secondary" type="button" id="searchNameBtn">
+				<i class="fa fa-search" aria-hidden="true"></i>
+			</button>
+		</span> <a class="btn btn-primary" data-toggle="modal"
+			data-target="#flipFlop" role="button" id="addUser"><i
+			class="fa fa-plus" aria-hidden="true"></i></a>
+
+	</div>
+</div>
+
+<div id="mainContainer" class="container">
+	<div id="mainContainerRepleace" class="row">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th data-field="username">账号</th>
+					<th data-field="email">邮箱</th>
+					<th data-field="authorities">角色</th>
+					<th data-field="operation">操作</th>
+
+				</tr>
+			</thead>
+			<tbody>
+
+				<tr th:each="user : ${userList}">
+					<td th:text="${user.username}">zangml</td>
+					<td th:text="${user.email}">zangml@qq.com</td>
+					<td th:if="${user.role} eq 0">普通用户</td>
+					<td th:if="${user.role} eq 2">测试账号</td>
+					<td>
+						<a th:href=" '/admin/user/verify/list?userId=' + ${user.id}">审核通过</a>
+					</td>
+				</tr>
+
+			</tbody>
+
+		</table>
+
+	</div>
+</div>
+
+</body>
+</html>

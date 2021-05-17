@@ -217,6 +217,14 @@
     WHERE username = #{username}
   </select>
 
+  <select id="selectAllVerifyUsers" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM user
+    WHERE state = 0
+    order by id desc
+  </select>
+
   <select id="selectAllUsers" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
