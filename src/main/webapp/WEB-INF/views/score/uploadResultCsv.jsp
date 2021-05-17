@@ -53,8 +53,8 @@
                                 <select id="resultLabName" name="resultLabName">
                                     <option value="1">CWRU数据故障预测第一组数据集实验</option>
                                     <option value="2">CWRU数据故障预测第二组数据集实验</option>
-                                    <%--<option value="3">故障诊断（分类）</option>--%>
-                                    <%--<option value="4">寿命预测（回归）</option>--%>
+                                    <option value="3">Paderborn滚动轴承状态监测第一组数据实验</option>
+                                    <option value="4">Paderborn滚动轴承状态监测第二组数据实验</option>
                                 </select>
                             </div>
 
@@ -73,7 +73,7 @@
                                 <input  type="file" name="resultFile" id="resultFile" accept=".csv">
                             </div>
                             <div class="col-sm-10 col-sm-offset-2">
-                                <p class="help-block">实验结果文件只支持csv格式,csv文件的第一行必须为属性名称。</p>
+                                <p class="help-block">实验结果文件只支持csv格式,文件内容要求一列且第一行（列名）为label，结果文件行信息需与测试集的行信息一一对应。</p>
                             </div>
                         </div>
                         <div class="form-group">

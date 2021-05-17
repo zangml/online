@@ -866,7 +866,7 @@ public class LabDesignBGService {
         }
 
         String path=test.getAbsolutePath();
-        String opath=Const.UPLOAD_CLASS_TEST_ROOT_PRE_OPATH+"out_"+preFile.getName();
+        String opath=Const.UPLOAD_CLASS_TEST_ROOT_PRE_OPATH+"out_"+test.getName();
         StringBuilder sb = new StringBuilder("python ");
         sb.append(preFile.getAbsolutePath()).append(" ");
         sb.append("path=").append(path).append(" ");
@@ -1202,7 +1202,7 @@ public class LabDesignBGService {
             test=new File(Const.UPLOAD_DATASET,"TEST1.csv");
         }
         String path=test.getAbsolutePath();
-        String opath=Const.UPLOAD_CLASS_TEST_ROOT_FEA_OPATH+"out_"+feaFile.getName();
+        String opath=Const.UPLOAD_CLASS_TEST_ROOT_FEA_OPATH+"out_"+test.getName();
         StringBuilder sb = new StringBuilder("python ");
         sb.append(feaFile.getAbsolutePath()).append(" ");
         sb.append("path=").append(path).append(" ");
@@ -1317,7 +1317,7 @@ public class LabDesignBGService {
         sb.append("test=").append(dividerFiles.get(0).getAbsolutePath()).append(" ");
         sb.append("train=").append(dividerFiles.get(1).getAbsolutePath());
 
-        logger.info("开始测试上传的分类算法，python语句为："+sb.toString());
+        logger.info("开始测试上传的回归算法，python语句为："+sb.toString());
         String res = PythonUtils.execPy(sb.toString());
         logger.info("得到结果："+res);
 

@@ -478,8 +478,12 @@ public class ComponentApiService {
     }
 
 
-    public API getAPIByUploadAlgoId(Integer uploadAlgoId) {
-        return apiMapper.selectByUploadAlgoId(uploadAlgoId);
+    public API getAPIByUploadAlgoId(Integer uploadAlgoId, Integer apiType) {
+        return apiMapper.selectByUploadAlgoId(uploadAlgoId, apiType);
+    }
+
+    public API getAPIByUploadAlgoId1(Integer uploadAlgoId, Integer apiType){
+        return apiMapper.selectByUploadAlgoId1(uploadAlgoId,apiType);
     }
 
     public ServerResponse execWindow(String path, String opath, Integer windowLength, Integer stepLength) throws IOException {
@@ -799,4 +803,32 @@ public class ComponentApiService {
         return ServerResponse.createBySuccess(map);
     }
 
+    public ServerResponse execPzcData(String deviceId, String attributeName) throws IOException {
+
+
+        //Const.ROOT_DATASET+"paderborn/"
+        File file = new File( Const.ROOT_DATASET+"paderborn/" +deviceId+ ".csv");
+        if (!file.exists()){
+            return ServerResponse.createByErrorMessage("设备号不存在！");
+        }
+        if (!(attributeName.equals("force")||attributeName.equals("phase_current_1")||
+        attributeName.equals("phase_current_2")||attributeName.equals("speed")||
+        attributeName.equals("torque")||attributeName.equals("vibration_1"))){
+            return ServerResponse.createByErrorMessage("attribute 参数错误！");
+        }
+        CSVLoader csvLoader = new CSVLoader();
+        csvLoader.setFile(file);
+        Instances instances = csvLoader.getDataSet();
+        List listData = new ArrayList();
+
+        //System.out.println(instances.size());
+        for (int i = 0; i < instances.size(); i++) {
+            Instance instance = instances.get(i);
+            Attribute attributeData = instances.attribute(attributeName);
+            listData.add(instance.value(attributeData));
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put(attributeName, listData);
+        return ServerResponse.createBySuccess(map);
+    }
 }

@@ -70,4 +70,13 @@
     and creat_time > #{creatTime}
     order by creat_time
   </select>
+
+  <select id="selectAllByGroupIdAndLabId" resultType="com.koala.learn.entity.Score">
+    select
+    <include refid="Base_Column_List"/>
+    from score
+    where group_id=#{groupId}
+    and lab_id=#{labId}
+    order by creat_time
+  </select>
 </mapper>

@@ -27,11 +27,11 @@ public class ProjectController {
     @RequestMapping("/project/list")
     public String list(Model model){
 
-        User user=holder.getUser();
-        if(user!=null && user.getRole().equals(0)){
-            model.addAttribute("error","本功能暂不对普通用户开放，敬请期待~");
-            return "views/common/error";
-        }
+//        User user=holder.getUser();
+//        if(user!=null && user.getRole().equals(0)){
+//            model.addAttribute("error","本功能暂不对普通用户开放，敬请期待~");
+//            return "views/common/error";
+//        }
 
         List<Blog> blogList=blogService.getBlogsByCatalog(6);
 

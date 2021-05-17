@@ -19,4 +19,6 @@ public interface ScoreMapper {
     int deleteById(Integer scoreId);
 
     List<Score> selectAllByUserIdAndDate(@Param("userId") Integer userId,@Param("creatTime")  Date creatTime);
+
+    List<Score> selectAllByGroupIdAndLabId(@Param("groupId") Integer groupId,@Param("labId") Integer labId);
 }

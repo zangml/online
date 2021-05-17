@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Console;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -62,6 +65,9 @@ public class ScoreController {
 
         for(int i=0;i<scoreList2.size();i++){
             Score score=scoreList2.get(i);
+            if(score.getGroupId()==null){
+                continue;
+            }
             int groupId=score.getGroupId();
             if(groupIds2.contains(groupId)){
                 continue;
@@ -70,6 +76,52 @@ public class ScoreController {
             scoreSingleList2.add(score);
         }
         model.addAttribute("scoreSingleList2",scoreSingleList2);
+
+        List<Score> scoreList3=scoreService.getScoreListByLabId(3);
+
+        List<Score> scoreSingleList3=new ArrayList<>();
+
+        Set<Integer> groupIds3=new HashSet<>();
+
+        for(int i=0;i<scoreList3.size();i++){
+            Score score=scoreList3.get(i);
+            if(score.getGroupId()==null){
+                continue;
+            }
+            int groupId=score.getGroupId();
+            if(groupId<0 || groupId >19){
+                continue;
+            }
+            if(groupIds3.contains(groupId)){
+                continue;
+            }
+            groupIds3.add(groupId);
+            scoreSingleList3.add(score);
+        }
+        model.addAttribute("scoreSingleList3",scoreSingleList3);
+
+        List<Score> scoreList4=scoreService.getScoreListByLabId(4);
+
+        List<Score> scoreSingleList4=new ArrayList<>();
+
+        Set<Integer> groupIds4=new HashSet<>();
+
+        for(int i=0;i<scoreList4.size();i++){
+            Score score=scoreList4.get(i);
+            if(score.getGroupId()==null){
+                continue;
+            }
+            int groupId=score.getGroupId();
+            if(groupId<=0 || groupId >19){
+                continue;
+            }
+            if(groupIds4.contains(groupId)){
+                continue;
+            }
+            groupIds4.add(groupId);
+            scoreSingleList4.add(score);
+        }
+        model.addAttribute("scoreSingleList4",scoreSingleList4);
         return "views/score/list";
     }
 
@@ -77,7 +129,7 @@ public class ScoreController {
     public String uploadResultCsv(@RequestParam("resultLabName") Integer resultLabName,
                                   @RequestParam("groupId") Integer groupId,
                                   @RequestParam("resultFile")MultipartFile resultFile,
-                                  Model model) throws IOException {
+                                  Model model) throws IOException, ParseException {
 
         User user =holder.getUser();
         if(user==null){
@@ -90,17 +142,34 @@ public class ScoreController {
         calendar.add(Calendar.DAY_OF_MONTH, -1);
         date =calendar.getTime();
 
-        List<Score> scoreList=scoreService.getScoreListByDate(user.getId(),date);
 
-        if(scoreList.size()>=3){
-            Date date1=scoreList.get(0).getCreatTime();
-            Calendar calendar2 = Calendar.getInstance();
-            calendar2.setTime(date1);
-            calendar2.add(Calendar.DAY_OF_MONTH, 1);
-            date1 =calendar2.getTime();
-            String dataFormat= DateTimeUtil.dateToStr(date1,"yyyy-MM-dd HH:mm");
-            model.addAttribute("error","您当天已上传3次，请于"+dataFormat+"之后再尝试~");
-            return "views/common/error";
+        if (resultLabName==4){
+            List<Score> scoreList = scoreService.getScoreListByLabIdAndGroupId(groupId, 4);
+            if (scoreList.size()>=3){
+                model.addAttribute("error","您已上传3次，无法再次上传！");
+                return "views/common/error";
+            }
+            Date date_now=new Date();
+            String ddlTime = "2021-04-14 12:00:00";
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date ddl_date = format.parse(ddlTime);
+            if(date_now.after(ddl_date)){
+                System.out.println(date_now);
+                model.addAttribute("error","提交已截止，无法上传！");
+                return "views/common/error";
+            }
+        }else {
+            List<Score> scoreList=scoreService.getScoreListByDate(user.getId(),date);
+            if(scoreList.size()>=3){
+                Date date1=scoreList.get(0).getCreatTime();
+                Calendar calendar2 = Calendar.getInstance();
+                calendar2.setTime(date1);
+                calendar2.add(Calendar.DAY_OF_MONTH, 1);
+                date1 =calendar2.getTime();
+                String dataFormat= DateTimeUtil.dateToStr(date1,"yyyy-MM-dd HH:mm");
+                model.addAttribute("error","您当天已上传3次，请于"+dataFormat+"之后再尝试~");
+                return "views/common/error";
+            }
         }
 
         ServerResponse response=scoreService.doUpload(resultLabName,groupId,resultFile,user);
@@ -110,7 +179,13 @@ public class ScoreController {
             return "views/common/error";
         }
 
-        model.addAttribute("error","最终得分 准确率 精确率 召回率分别是： "+response.getData());
+        if(resultLabName==4){
+            model.addAttribute("error",
+                    "最终得分 准确率 精确率 召回率分别是： "+response.getData()+"<br>当前已上传"+scoreService.getScoreListByLabIdAndGroupId(groupId, 4).size()+"次,还剩余"+(3-scoreService.getScoreListByLabIdAndGroupId(groupId, 4).size())+"次");
+        }else {
+            model.addAttribute("error",
+                    "最终得分 准确率 精确率 召回率分别是： "+response.getData());
+        }
 
         return "views/common/error";
 

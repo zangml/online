@@ -89,9 +89,63 @@
             </c:forEach>
 
         </ul>
+
+
+        <div class="row rowContainer" style="color: #f7f7f7">
+            <div class="col-md-1 coll rankTitle">排名</div>
+            <div class="col-md-1 coll rankTitle">组号</div>
+            <div class="col-md-2 coll rankTitle">实验名称</div>
+            <div class="col-md-2 coll rankTitle">得分</div>
+            <div class="col-md-2 coll rankTitle">准确率</div>
+            <div class="col-md-2 coll rankTitle">精确率</div>
+            <div class="col-md-2 coll rankTitle">召回率</div>
+        </div>
+        <ul>
+            <c:forEach items="${scoreSingleList3}" var="score" varStatus="index">
+                    <c:if test="${score.groupId>=0 && score.groupId<=19}">
+                <li class="row">
+                    <div class="col-md-1 coll">${index.count}</div>
+                    <div class="col-md-1 coll">${score.groupId}</div>
+                    <div class="col-md-2 coll" style="font-size: 14px">${score.labName}</div>
+                    <div class="col-md-2 coll">${score.finalScore}</div>
+                    <div class="col-md-2 coll">${score.precisionscore}</div>
+                    <div class="col-md-2 coll">${score.accscore}</div>
+                    <div class="col-md-2 coll">${score.recallscore}</div>
+                </li>
+                    </c:if>
+            </c:forEach>
+
+        </ul>
+
+        <div class="row rowContainer" style="color: #f7f7f7">
+            <div class="col-md-1 coll rankTitle">排名</div>
+            <div class="col-md-1 coll rankTitle">组号</div>
+            <div class="col-md-2 coll rankTitle">实验名称</div>
+            <div class="col-md-2 coll rankTitle">得分</div>
+            <div class="col-md-2 coll rankTitle">准确率</div>
+            <div class="col-md-2 coll rankTitle">精确率</div>
+            <div class="col-md-2 coll rankTitle">召回率</div>
+        </div>
+        <ul>
+            <c:forEach items="${scoreSingleList4}" var="score" varStatus="index">
+                <c:if test="${score.groupId>=1 && score.groupId<=19}">
+                <li class="row">
+                    <div class="col-md-1 coll">${index.count}</div>
+                    <div class="col-md-1 coll">${score.groupId}</div>
+                    <div class="col-md-2 coll" style="font-size: 14px">${score.labName}</div>
+                    <div class="col-md-2 coll">${score.finalScore}</div>
+                    <div class="col-md-2 coll">${score.precisionscore}</div>
+                    <div class="col-md-2 coll">${score.accscore}</div>
+                    <div class="col-md-2 coll">${score.recallscore}</div>
+                </li>
+                </c:if>
+            </c:forEach>
+
+        </ul>
+
+
     </div>
 
 </div>
-
 </body>
 </html>

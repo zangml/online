@@ -766,7 +766,7 @@ public class ComponentApiController {
         }
 
 
-        API api = componentApiService.getAPIByUploadAlgoId(uploadAlgoId);
+        API api = componentApiService.getAPIByUploadAlgoId1(uploadAlgoId,apiType);
 
         if (api.getPub().equals(0)) {
             String apikey = accessToken.split("\\.")[0];
@@ -822,7 +822,7 @@ public class ComponentApiController {
             return response;
         }
 
-        API api = componentApiService.getAPIByUploadAlgoId(uploadAlgoId);
+        API api = componentApiService.getAPIByUploadAlgoId1(uploadAlgoId,apiType);
         if (api.getPub().equals(0)) {
             String apikey = accessToken.split("\\.")[0];
             ApiAuth apiAuth = authService.getApiAuthByApiKey(apikey);
@@ -871,6 +871,14 @@ public class ComponentApiController {
         if (!response.isSuccess()) {
             return response;
         }
+
+        API api = componentApiService.getAPIByUploadAlgoId(uploadAlgoId,5);
+        if (api.getUsedCount() == null) {
+            api.setUsedCount(1);
+        } else {
+            api.setUsedCount(api.getUsedCount() + 1);
+        }
+        apiMapper.update(api);
 
         Model model = modelService.getModelById(modelId);
 
@@ -1011,6 +1019,45 @@ public class ComponentApiController {
         return serverResponse;
     }
 
+    /**
+     *  获取paderborn轴承数据
+     */
+    @PostMapping("/data/paderborn")
+    public ServerResponse getData(@RequestParam("device_id")String deviceId,
+                                  @RequestParam("access_token")String accessToken,
+                                  @RequestParam("attribute")String attributeName) throws IOException {
+        ServerResponse response = authService.checkAccessToken(accessToken);
+        if (!response.isSuccess()) {
+            return response;
+        }
+        API api = componentApiService.getAPIById(355);
+        if (api.getUsedCount() == null) {
+            api.setUsedCount(1);
+        } else {
+            api.setUsedCount(api.getUsedCount() + 1);
+        }
+        apiMapper.update(api);
+
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId((int) response.getData());
+        userRecord.setRecordTime(new Date());
+        userRecord.setRecordType(3);
+        userRecord.setRecordTypeId(api.getId());
+
+
+        ServerResponse serverResponse = componentApiService.execPzcData(deviceId, attributeName);
+
+        if(serverResponse.isSuccess()){
+            userRecord.setState(0);
+        }else{
+            userRecord.setState(1);
+            userRecord.setMsg(serverResponse.getMsg());
+        }
+        userRecordMapper.insert(userRecord);
+
+        return serverResponse;
+
+    }
     /**
      * 获取上传的原始数据
      */

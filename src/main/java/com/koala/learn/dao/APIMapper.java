@@ -1,6 +1,7 @@
 package com.koala.learn.dao;
 
 import com.koala.learn.entity.API;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,7 +13,9 @@ public interface APIMapper {
 
     API selectById(Integer id);
 
-    API selectByUploadAlgoId(Integer uploadAlgoId);
+    API selectByUploadAlgoId(@Param("uploadAlgoId")Integer uploadAlgoId, @Param("apiType")Integer apiType);
+
+    API selectByUploadAlgoId1(@Param("uploadAlgoId")Integer uploadAlgoId, @Param("apiType")Integer apiType);
 
     List<API> getByUserId(Integer userId);
 

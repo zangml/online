@@ -152,6 +152,7 @@
                                     <ul>
                                         <li><a href="/api/get_list/21">风机数据</a></li>
                                         <li><a href="/api/get_list/59">轴承数据</a></li>
+                                        <li><a href="/api/get_list/355">Paderborn轴承数据</a> </li>
                                     </ul>
                                 </div>
                             </div>
@@ -323,6 +324,71 @@
                     </pre>
                     </c:if>
 
+                    <c:if test="${api.id ==355}">
+                        <p>
+                            <strong>返回参数</strong>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>参数名</th>
+                                <th>类型</th>
+                                <th>说明</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>stauts</td>
+                                <td>int</td>
+                                <td>状态标识： 0代表请求成功；1代表请求失败</td>
+                            </tr>
+                            <tr>
+                                <td>msg</td>
+                                <td>string</td>
+                                <td>具体信息：成功后为null；失败后为失败具体原因</td>
+                            </tr>
+                            <tr>
+                                <td>data</td>
+                                <td>MAP集合</td>
+                                <td>用于存放返回的数据的集合</td>
+                            </tr>
+                            <tr>
+                                <td>force</td>
+                                <td>数组</td>
+                                <td>该属性的时间序列值</td>
+                            </tr>
+                            <tr>
+                                <td>success</td>
+                                <td>boolean</td>
+                                <td>true代表成功；false代表失败</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </p>
+                        <p>
+                            <strong>返回示例</strong>
+                        </p>
+                        <pre>
+                             <code>
+{
+    "status": 0,
+    "msg": null,
+    "data": {
+        "force": [
+                1035.2950188227485,
+                1044.1451164731495,
+                1042.619237567908,
+                1060.929784430807,
+                1056.3521477150823,
+                1073.7471672348363,
+                1068.8643547380634,
+                1077.714452388465
+                ......           ]
+    },
+    "success": true
+}
+                    </code>
+                    </pre>
+                    </c:if>
                     <c:if test="${api.id ==18}">
                         <p>
                             <strong>返回参数</strong>

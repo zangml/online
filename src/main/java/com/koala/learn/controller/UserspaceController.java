@@ -243,9 +243,9 @@ public class UserspaceController {
         Integer userId = blog.getUserId();
         User blogUser = userMapper.selectByPrimaryKey(userId);
 
-        if (!blogUser.getUsername().equals(username)) {
-            return "";
-        }
+//        if (!blogUser.getUsername().equals(username)) {
+//            return "";
+//        }
 
 
         // 每次读取，简单的可以认为阅读量增加1次
