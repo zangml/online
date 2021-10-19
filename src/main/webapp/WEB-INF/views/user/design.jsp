@@ -13,7 +13,7 @@
     <script src="http://how2j.cn/study/js/jquery/2.0.0/jquery.min.js"></script>
     <link href="http://how2j.cn/study/css/bootstrap/3.3.6/bootstrap.min.css" rel="stylesheet">
     <script src="http://how2j.cn/study/js/bootstrap/3.3.6/bootstrap.min.js"></script>
-    <title>基于机器学习的PHM系统</title>
+    <title>基于机器学习的PHM系统1</title>
     <link href="<%=basePath%>assets/fonts/iconfont.css" rel="stylesheet">
     <link href="<%=basePath%>assets/css/user.css" rel="stylesheet">
     <script src="../../../static/js/userInfos/userInfo.js"></script>
