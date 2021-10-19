@@ -1022,6 +1022,7 @@ public class ComponentApiController {
     /**
      *  获取paderborn轴承数据
      */
+    @CrossOrigin("*")
     @PostMapping("/data/paderborn")
     public ServerResponse getData(@RequestParam("device_id")String deviceId,
                                   @RequestParam("access_token")String accessToken,
