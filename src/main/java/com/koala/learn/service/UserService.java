@@ -281,4 +281,11 @@ public class UserService {
         return ServerResponse.createBySuccessMessage("Done！");
     }
 
+    public List<User> getVeryfyUsers() {
+        return userMapper.selectAllVerifyUsers();
+    }
+
+    public int doVerifyByUserId(User user) {
+        return userMapper.updateByPrimaryKeySelective(user);
+    }
 }

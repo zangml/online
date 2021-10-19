@@ -25,4 +25,6 @@ public interface UserMapper {
 
 
     List<User> selectAllUsers();
+
+    List<User> selectAllVerifyUsers();
 }

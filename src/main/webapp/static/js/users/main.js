@@ -72,7 +72,7 @@ $(function() {
 	// 提交变更后，清空表单
 	$("#submitEdit").click(function() {
 		$.ajax({ 
-			 url: "/users", 
+			 url: "/user/verify",
 			 type: 'POST',
 			 data:$('#userForm').serialize(),
 			 success: function(data){
